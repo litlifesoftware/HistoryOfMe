@@ -3,6 +3,8 @@ import 'package:history_of_me/lit_route_controller/focus/route_controller.dart';
 import 'package:history_of_me/lit_ui_kit_temp/lit_titled_dialog.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';
 
+import '../../../lit_ui_kit_temp/exclamation_rectangle.dart';
+
 class ConfirmDiscardDraftDialog extends StatefulWidget {
   final String titleText;
   final String discardButtonLabel;
@@ -47,6 +49,7 @@ class _ConfirmDiscardDraftDialogState extends State<ConfirmDiscardDraftDialog>
   Widget build(BuildContext context) {
     return LitTitledDialog(
       titleText: widget.titleText,
+      margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
       actionButtons: [
         LitGradientButton(
           boxShadow: [],
@@ -81,16 +84,37 @@ class _ConfirmDiscardDraftDialogState extends State<ConfirmDiscardDraftDialog>
             mainAxisSize: MainAxisSize.min,
             children: [
               Padding(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 4.0,
-                ),
-                child: Text(
-                  widget.unsavedChangesDetectedText,
-                  textAlign: TextAlign.center,
-                  style: LitTextStyles.sansSerif.copyWith(
-                    color: HexColor('#B57B79'),
-                  ),
-                ),
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                child: LayoutBuilder(builder:
+                    (BuildContext context, BoxConstraints constraints) {
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      SizedBox(
+                        width: constraints.maxWidth * 0.25,
+                        child: ExclamationRectangle(
+                          width: (constraints.maxWidth * 0.25) - 4,
+                          height: (constraints.maxWidth * 0.25) - 4,
+                        ),
+                      ),
+                      SizedBox(
+                        width: constraints.maxWidth * 0.66,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 4.0,
+                          ),
+                          child: Text(
+                            widget.unsavedChangesDetectedText,
+                            textAlign: TextAlign.left,
+                            style: LitTextStyles.sansSerif.copyWith(
+                              color: LitColors.lightGrey,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  );
+                }),
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(
