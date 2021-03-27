@@ -224,41 +224,44 @@ class _UserCreatedColorCardState extends State<UserCreatedColorCard>
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               !enableColorMix
-                  ? Padding(
+                  ? LitRoundedElevatedButton(
+                      color: LitColors.lightGrey,
+                      boxShadow: widget.buttonBoxShadow,
                       padding: const EdgeInsets.symmetric(
-                        vertical: 4.0,
+                        vertical: 6.0,
+                        horizontal: 12.0,
                       ),
-                      child: LitRoundedElevatedButton(
-                        color: LitColors.lightGrey,
-                        boxShadow: widget.buttonBoxShadow,
-                        child: Text(
-                          "Show ${showAllColors ? 'less' : 'more'}",
-                          style: LitTextStyles.sansSerif.copyWith(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w700,
-                          ),
+                      child: Text(
+                        "Show ${showAllColors ? 'less' : 'more'}",
+                        style: LitTextStyles.sansSerif.copyWith(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w700,
+                          fontSize: 13.0,
                         ),
-                        onPressed: toggleAllColors,
                       ),
+                      onPressed: toggleAllColors,
                     )
                   : Align(
                       alignment: Alignment.centerLeft,
-                      child: LitRoundedElevatedButton(
-                        color: LitColors.midRed,
-                        boxShadow: widget.buttonBoxShadow,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                            vertical: 4.0,
-                            horizontal: 8.0,
-                          ),
-                          child: Icon(
-                            LitIcons.times,
-                            color: Colors.white,
-                            size: 14.0,
-                          ),
-                        ),
-                        onPressed: resetColorChannelValues,
-                      ),
+                      child: colorValuesSet
+                          ? LitRoundedElevatedButton(
+                              color: LitColors.midRed,
+                              boxShadow: widget.buttonBoxShadow,
+                              padding: const EdgeInsets.symmetric(
+                                vertical: 6.0,
+                                horizontal: 12.0,
+                              ),
+                              child: Text(
+                                "Reset",
+                                style: LitTextStyles.sansSerif.copyWith(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 13.0,
+                                ),
+                              ),
+                              onPressed: resetColorChannelValues,
+                            )
+                          : SizedBox(),
                     ),
               showAllColors
                   ? Align(
@@ -266,22 +269,26 @@ class _UserCreatedColorCardState extends State<UserCreatedColorCard>
                       child: LitRoundedElevatedButton(
                         color: LitColors.lightPink,
                         boxShadow: widget.buttonBoxShadow,
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 6.0,
+                          horizontal: 12.0,
+                        ),
                         child: enableColorMix
                             ? Padding(
                                 padding: const EdgeInsets.symmetric(
-                                  vertical: 4.0,
-                                  horizontal: 8.0,
+                                  horizontal: 4.0,
+                                  vertical: 2.0,
                                 ),
                                 child: colorValuesSet
                                     ? Icon(
                                         LitIcons.check,
                                         color: LitColors.mediumOliveGreen,
-                                        size: 14.0,
+                                        size: 15.0,
                                       )
                                     : Icon(
                                         LitIcons.chevron_left_solid,
                                         color: Colors.white,
-                                        size: 14.0,
+                                        size: 15.0,
                                       ),
                               )
                             : Text(
@@ -289,6 +296,7 @@ class _UserCreatedColorCardState extends State<UserCreatedColorCard>
                                 style: LitTextStyles.sansSerif.copyWith(
                                   color: Colors.white,
                                   fontWeight: FontWeight.w700,
+                                  fontSize: 13.0,
                                 ),
                               ),
                         onPressed: handleColorMixerPress,
