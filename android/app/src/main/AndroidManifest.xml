@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.litlifesoftware.history_of_me">
    <application
-        android:label="history_of_me"
+        android:label="History of Me"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
