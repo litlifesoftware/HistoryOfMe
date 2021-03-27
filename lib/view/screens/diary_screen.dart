@@ -90,6 +90,7 @@ class _DiaryScreenState extends State<DiaryScreen>
   @override
   void dispose() {
     _listViewAnimation.dispose();
+    _animateLabelOnScroll.dispose();
     super.dispose();
   }
 

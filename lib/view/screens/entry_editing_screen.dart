@@ -96,9 +96,11 @@ class _EntryEditingScreenState extends State<EntryEditingScreen>
   }
 
   bool _isChanged(DiaryEntry databaseEntry) {
-    return (_title != databaseEntry.title ||
-        _content != databaseEntry.content ||
-        _moodScore != databaseEntry.moodScore);
+    bool _titleChanged =
+        _title != databaseEntry.title && !(_title == initialDiaryEntryTitle);
+    bool _contentChanged = _content != databaseEntry.content;
+    bool _moodScoreChanged = _moodScore != databaseEntry.moodScore;
+    return (_titleChanged || _contentChanged || _moodScoreChanged);
   }
 
   // void _resetAllChangedValues() {
@@ -218,17 +220,17 @@ class _EntryEditingScreenState extends State<EntryEditingScreen>
     return ValueListenableBuilder(
       valueListenable: HiveDBService().getDiaryEntries(),
       builder: (BuildContext context, Box<dynamic> entriesBox, Widget _) {
-        final DiaryEntry newDiaryEntry = entriesBox.get(widget.diaryEntry.uid);
+        final DiaryEntry dbDiaryEntry = entriesBox.get(widget.diaryEntry.uid);
         return LitScaffold(
           appBar: FixedOnScrollAppbar(
             scrollController: _scrollController,
             backgroundColor: Colors.white,
             height: 50.0,
             child: EditableItemMetaInfo(
-              lastUpdateTimestamp: newDiaryEntry.lastUpdated,
-              showUnsavedBadge: _isChanged(newDiaryEntry),
+              lastUpdateTimestamp: dbDiaryEntry.lastUpdated,
+              showUnsavedBadge: _isChanged(dbDiaryEntry),
             ),
-            shouldNavigateBack: !_isChanged(newDiaryEntry),
+            shouldNavigateBack: !_isChanged(dbDiaryEntry),
             onInvalidNavigation: _handleDiscardDraft,
           ),
           body: SafeArea(
@@ -265,7 +267,7 @@ class _EntryEditingScreenState extends State<EntryEditingScreen>
                                         bottom: 4.0,
                                       ),
                                       lastUpdateTimestamp:
-                                          newDiaryEntry.lastUpdated,
+                                          dbDiaryEntry.lastUpdated,
                                     ),
                                     EditableTitleHeader(
                                       textEditingController:
@@ -352,7 +354,7 @@ class _EntryEditingScreenState extends State<EntryEditingScreen>
                             ],
                           ),
                         ),
-                        _isChanged(newDiaryEntry)
+                        _isChanged(dbDiaryEntry)
                             ? LitDraggable(
                                 initialDragOffset: Offset(
                                   MediaQuery.of(context).size.width - 90.0,

@@ -14,16 +14,19 @@ class StripedDesign extends StatelessWidget implements BookmarkDesign {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Column(
-          children: StripedDesignController(
-            radius: radius,
-            color: Color(userData.bookmarkColor),
-            count: userData.stripeCount,
-          ).stripes,
-        ),
-      ],
+    return ClipRRect(
+      borderRadius: BorderRadius.all(Radius.circular(radius)),
+      child: Stack(
+        children: [
+          Column(
+            children: StripedDesignController(
+              radius: radius,
+              color: Color(userData.bookmarkColor),
+              count: userData.stripeCount,
+            ).stripes,
+          ),
+        ],
+      ),
     );
   }
 }

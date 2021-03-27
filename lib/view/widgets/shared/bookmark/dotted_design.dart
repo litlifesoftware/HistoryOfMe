@@ -21,31 +21,25 @@ class DottedDesign extends StatelessWidget implements BookmarkDesign {
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedBuilder(
-      animation: animationController,
-      builder: (context, child) {
-        return Stack(children: [
-          AspectRatio(
-            aspectRatio: BookmarkConstants.bookmarkDimensions.aspectRatio,
-            child: Container(
-              decoration: BoxDecoration(
-                /// Increase the provided color's brightness and set it
-                /// to be the background color of the design.
-                color: Color.lerp(
-                    Color(userData.bookmarkColor), Colors.white, 0.6),
-                borderRadius: BorderRadius.circular(radius),
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(radius),
+      child: AnimatedBuilder(
+        animation: animationController,
+        builder: (context, child) {
+          return Stack(children: [
+            AspectRatio(
+              aspectRatio: BookmarkConstants.bookmarkDimensions.aspectRatio,
+              child: Container(
+                decoration: BoxDecoration(
+                  /// Increase the provided color's brightness and set it
+                  /// to be the background color of the design.
+                  color: Color.lerp(
+                      Color(userData.bookmarkColor), Colors.white, 0.6),
+                  borderRadius: BorderRadius.circular(radius),
+                ),
               ),
             ),
-          ),
-
-          /// The [ClipRRect] widget will wrap the [DottedDesignPainter] to
-          /// ensure the painter will stay in the [Stack] provided boudaries
-          /// an will clip, if the paint will exceed these. This will enable
-          /// the paint so overlap exceed the given constraints without being
-          /// visible.
-          ClipRRect(
-            borderRadius: BorderRadius.circular(radius),
-            child: CustomPaint(
+            CustomPaint(
               painter: DottedDesignPainter(
                 userData: userData,
                 animation:
@@ -56,9 +50,9 @@ class DottedDesign extends StatelessWidget implements BookmarkDesign {
               /// will be displayed.
               child: Container(),
             ),
-          ),
-        ]);
-      },
+          ]);
+        },
+      ),
     );
   }
 }
