@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:history_of_me/controller/database/hive_db_service.dart';
+import 'package:history_of_me/model/user_data.dart';
 import 'package:history_of_me/view/screens/home_screen.dart';
 import 'package:history_of_me/view/screens/splash_screen.dart';
 import 'package:hive/hive.dart';
@@ -107,7 +108,7 @@ class _DatabaseStateScreenBuilderState
             // the privacy screen and sign up screen.
             return ValueListenableBuilder(
               valueListenable: _dbService.getUserData(),
-              builder: (BuildContext context, Box<dynamic> userData, _) {
+              builder: (BuildContext context, Box<UserData> userData, _) {
                 if (userData.isEmpty) {
                   return LitOfflineAppDisclaimerScreen(
                     onConfirm: _onPrivacyConfirmed,

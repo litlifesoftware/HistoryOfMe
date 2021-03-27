@@ -4,6 +4,7 @@ import 'package:history_of_me/controller/database/hive_db_service.dart';
 import 'package:history_of_me/controller/database/hive_query_controller.dart';
 import 'package:history_of_me/lit_route_controller/focus/route_controller.dart';
 import 'package:history_of_me/lit_ui_kit_temp/exclamation_rectangle.dart';
+import 'package:history_of_me/model/diary_entry.dart';
 import 'package:history_of_me/model/user_data.dart';
 import 'package:history_of_me/view/widgets/shared/bookmark_front_preview.dart';
 import 'package:history_of_me/view/widgets/diary_screen/create_entry_dialog.dart';
@@ -50,11 +51,7 @@ class _DiaryScreenState extends State<DiaryScreen>
     //_animationController.reverse().then((_) => _animationController.forward());
   }
 
-  // void createDummyUserData() {
-  //   HiveDBService().createUserData("Bella");
-  // }
-
-  List<dynamic> _getDiaryEntriesSorted(Box entriesBox) {
+  List<DiaryEntry> _getDiaryEntriesSorted(Box entriesBox) {
     return entriesBox.values.toList()
       ..sort(HiveQueryController().sortEntriesByDateAscending);
   }
@@ -101,7 +98,7 @@ class _DiaryScreenState extends State<DiaryScreen>
       body: SafeArea(
         child: ValueListenableBuilder(
           valueListenable: HiveDBService().getUserData(),
-          builder: (BuildContext context, Box<dynamic> userDataBox, Widget _) {
+          builder: (BuildContext context, Box<UserData> userDataBox, Widget _) {
             print("user data box length: ${userDataBox.length}");
             // Hive-retrieved user data object.
             //
@@ -111,9 +108,9 @@ class _DiaryScreenState extends State<DiaryScreen>
             return ValueListenableBuilder(
               valueListenable: HiveDBService().getDiaryEntries(),
               builder:
-                  (BuildContext context, Box<dynamic> entriesBox, Widget _) {
+                  (BuildContext context, Box<DiaryEntry> entriesBox, Widget _) {
                 // Diary entries sorted ascending.
-                List<dynamic> diaryEntriesListSorted =
+                List<DiaryEntry> diaryEntriesListSorted =
                     _getDiaryEntriesSorted(entriesBox);
                 return diaryEntriesListSorted.isNotEmpty
                     ? Stack(

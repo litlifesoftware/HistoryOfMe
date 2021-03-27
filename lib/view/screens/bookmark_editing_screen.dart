@@ -1,8 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:history_of_me/controller/database/hive_db_service.dart';
+import 'package:history_of_me/data/constants.dart';
 import 'package:history_of_me/lit_route_controller/focus/route_controller.dart';
 import 'package:history_of_me/lit_ui_kit_temp/lit_draggable.dart';
+import 'package:history_of_me/model/user_created_color.dart';
 import 'package:history_of_me/model/user_data.dart';
 import 'package:history_of_me/view/widgets/shared/bookmark_back_preview.dart';
 import 'package:history_of_me/view/widgets/shared/bookmark_front_preview.dart';
@@ -224,22 +226,22 @@ class _BookmarkEditingScreenState extends State<BookmarkEditingScreen>
   //   );
   // }
 
-  bool _handleAddColor(Color color) {
-    // if (_colors.contains(color)) {
-    //   _handleColorDuplicate();
-    //   return false;
-    // } else {
-    //   setState(() {
-    //     _colors.add(color);
-    //   });
-    //   return true;
-    // }
-    return HiveDBService()
-        .addUserCreatedColor(color.alpha, color.red, color.green, color.blue);
-  }
+  // void _handleAddColor(Color color) {
+  //   // if (_colors.contains(color)) {
+  //   //   _handleColorDuplicate();
+  //   //   return false;
+  //   // } else {
+  //   //   setState(() {
+  //   //     _colors.add(color);
+  //   //   });
+  //   //   return true;
+  //   // }
+  //   return HiveDBService(debug: debug)
+  //       .addUserCreatedColor(color.alpha, color.red, color.green, color.blue);
+  // }
 
   void _onSaveChanges() {
-    HiveDBService()
+    HiveDBService(debug: debug)
         .updateUserData(_mapUserData(DateTime.now().millisecondsSinceEpoch));
   }
 
@@ -290,7 +292,7 @@ class _BookmarkEditingScreenState extends State<BookmarkEditingScreen>
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
       valueListenable: HiveDBService().getUserData(),
-      builder: (BuildContext context, Box<dynamic> userDataBox, Widget _) {
+      builder: (BuildContext context, Box<UserData> userDataBox, Widget _) {
         UserData updatedUserData = userDataBox.getAt(0);
         return LitScaffold(
           appBar: FixedOnScrollAppbar(
@@ -361,42 +363,58 @@ class _BookmarkEditingScreenState extends State<BookmarkEditingScreen>
                         ),
                       ),
                       //Text("stripe count $stripeCount"),
-                      ConstrainedBox(
-                        constraints: BoxConstraints(
-                            minHeight:
-                                MediaQuery.of(context).size.height - 64.0),
-                        child: Column(
-                          children: [
-                            _designPattern == 0
-                                ? PatternConfigCard(
-                                    patternLabel: "Stripes",
-                                    patternValue: _stripeCount,
-                                    onPatternSliderChange: onStripeSliderChange,
-                                    min: 1,
-                                    max: 32,
-                                  )
-                                : PatternConfigCard(
-                                    patternLabel: "Dotes",
-                                    patternValue: _dotSize,
-                                    onPatternSliderChange: onDotsSliderChange,
-                                    min: 12,
-                                    max: 32,
-                                  ),
-                            UserCreatedColorCard(
-                              selectedColorValue: _bookmarkColor,
-                              onSelectColorCallback: setBookmarkColor,
-
-                              //colors: _colors,
-                              addColor: _handleAddColor,
+                      ValueListenableBuilder(
+                        valueListenable: HiveDBService().getUserCreatedColors(),
+                        builder: (BuildContext context,
+                            Box<UserCreatedColor> colorsBox, Widget _) {
+                          // List<UserCreatedColor> userColors = colorsBox.values
+                          //     .toList()
+                          //     .cast<UserCreatedColor>();
+                          List<UserCreatedColor> userColors =
+                              colorsBox.values.toList();
+                          print(userColors);
+                          return ConstrainedBox(
+                            constraints: BoxConstraints(
+                                minHeight:
+                                    MediaQuery.of(context).size.height - 64.0),
+                            child: Column(
+                              children: [
+                                _designPattern == 0
+                                    ? PatternConfigCard(
+                                        patternLabel: "Stripes",
+                                        patternValue: _stripeCount,
+                                        onPatternSliderChange:
+                                            onStripeSliderChange,
+                                        min: 1,
+                                        max: 32,
+                                      )
+                                    : PatternConfigCard(
+                                        patternLabel: "Dotes",
+                                        patternValue: _dotSize,
+                                        onPatternSliderChange:
+                                            onDotsSliderChange,
+                                        min: 12,
+                                        max: 32,
+                                      ),
+                                UserCreatedColorCard(
+                                  selectedColorValue: _bookmarkColor,
+                                  onSelectColorCallback: setBookmarkColor,
+                                  userCreatedColors: userColors,
+                                  //colors: _colors,
+                                  //addColor: _handleAddColor,
+                                  onAddColorError: () =>
+                                      _snackbarController.showSnackBar(),
+                                ),
+                                QuoteCard(
+                                  initialAuthor: _quoteAuthor,
+                                  initialQuote: _quote,
+                                  onAuthorChanged: setQuoteAuthor,
+                                  onQuoteChanged: setQuote,
+                                ),
+                              ],
                             ),
-                            QuoteCard(
-                              initialAuthor: _quoteAuthor,
-                              initialQuote: _quote,
-                              onAuthorChanged: setQuoteAuthor,
-                              onQuoteChanged: setQuote,
-                            ),
-                          ],
-                        ),
+                          );
+                        },
                       )
                     ],
                   ),

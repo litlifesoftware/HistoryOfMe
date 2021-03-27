@@ -1,35 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:history_of_me/controller/database/hive_db_service.dart';
+import 'package:history_of_me/data/constants.dart';
 import 'package:history_of_me/lit_ui_kit_temp/lit_deletable_container.dart';
 import 'package:history_of_me/model/user_created_color.dart';
 import 'package:history_of_me/view/widgets/edit_bookmark_screen/color_mixer.dart';
 import 'package:history_of_me/view/widgets/edit_bookmark_screen/selectable_color_tile.dart';
-import 'package:hive/hive.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';
 
 class UserCreatedColorCard extends StatefulWidget {
   final int selectedColorValue;
   final void Function(Color) onSelectColorCallback;
   //final List<Color> colors;
-  final bool Function(Color) addColor;
+  //final void Function(Color) addColor;
+  final void Function() onAddColorError;
   //final void Function() handleColorDuplicate;
   final List<BoxShadow> buttonBoxShadow;
-  const UserCreatedColorCard(
-      {Key key,
-      @required this.selectedColorValue,
-      @required this.onSelectColorCallback,
-      //this.colors = const [],
-      @required this.addColor,
-      //@required this.handleColorDuplicate,
-      this.buttonBoxShadow = const [
-        const BoxShadow(
-          blurRadius: 2.0,
-          color: Colors.black12,
-          offset: Offset(2, 1),
-          spreadRadius: 0.5,
-        ),
-      ]})
-      : super(key: key);
+  final List<UserCreatedColor> userCreatedColors;
+  const UserCreatedColorCard({
+    Key key,
+    @required this.selectedColorValue,
+    @required this.onSelectColorCallback,
+    //this.colors = const [],
+    //@required this.addColor,
+    @required this.onAddColorError,
+    //@required this.handleColorDuplicate,
+    this.buttonBoxShadow = const [
+      const BoxShadow(
+        blurRadius: 2.0,
+        color: Colors.black12,
+        offset: Offset(2, 1),
+        spreadRadius: 0.5,
+      ),
+    ],
+    @required this.userCreatedColors,
+  }) : super(key: key);
 
   @override
   _UserCreatedColorCardState createState() => _UserCreatedColorCardState();
@@ -132,9 +136,13 @@ class _UserCreatedColorCardState extends State<UserCreatedColorCard>
   }
 
   void _addColor(Color color) {
-    if (widget.addColor(color)) {
+    try {
+      HiveDBService(debug: debug)
+          .addUserCreatedColor(color.alpha, color.red, color.green, color.blue);
       resetColorChannelValues();
       toggleEnableColorMix();
+    } catch (e) {
+      widget.onAddColorError();
     }
   }
 
@@ -170,146 +178,139 @@ class _UserCreatedColorCardState extends State<UserCreatedColorCard>
 
   @override
   Widget build(BuildContext context) {
-    return ValueListenableBuilder(
-        valueListenable: HiveDBService().getUserCreatedColors(),
-        builder: (BuildContext context, Box<dynamic> colorsBox, Widget _) {
-          print("colors box length: ${colorsBox.length}");
-          List<dynamic> userColors = colorsBox.values.toList();
-          return LitElevatedCard(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "Color",
-                  style: LitTextStyles.sansSerif.copyWith(
-                    color: HexColor('#878787'),
-                    fontSize: 22.0,
-                  ),
-                ),
-                !enableColorMix
-                    ? Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.symmetric(
-                              vertical: 8.0,
-                            ),
-                            child: _UserCreatedColorGrid(
-                              additionalColorsAnimationController:
-                                  _additionalColorsAnimationController,
-                              boxShadow: widget.buttonBoxShadow,
-                              onSelectColorCallback:
-                                  widget.onSelectColorCallback,
-                              selectedColorValue: widget.selectedColorValue,
-                              showAllColors: showAllColors,
-                              userColors: userColors,
-                            ),
-                          ),
-                        ],
-                      )
-                    : ColorMixer(
-                        alphaChannel: alphaChannel,
-                        redChannel: redChannel,
-                        greenChanne: greenChannel,
-                        blueChannel: blueChannel,
-                        onAlphaChannelChange: onAlphaChannelChange,
-                        onRedColorChannelChange: onRedColorChannelChange,
-                        onGreenColorChannelChange: onGreenColorChannelChange,
-                        onBlueColorChannelChange: onBlueColorChannelChange,
-                        animationController: _colorSliderAnimationController,
-                      ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return LitElevatedCard(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            "Design Color",
+            style: LitTextStyles.sansSerif.copyWith(
+              color: HexColor('#878787'),
+              fontSize: 22.0,
+            ),
+          ),
+          !enableColorMix
+              ? Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    !enableColorMix
-                        ? Padding(
-                            padding: const EdgeInsets.symmetric(
-                              vertical: 4.0,
-                            ),
-                            child: LitRoundedElevatedButton(
-                              color: LitColors.lightGrey,
-                              boxShadow: widget.buttonBoxShadow,
-                              child: Text(
-                                "Show ${showAllColors ? 'less' : 'more'}",
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 8.0,
+                      ),
+                      child: UserCreatedColorGrid(
+                        additionalColorsAnimationController:
+                            _additionalColorsAnimationController,
+                        boxShadow: widget.buttonBoxShadow,
+                        onSelectColorCallback: widget.onSelectColorCallback,
+                        selectedColorValue: widget.selectedColorValue,
+                        showAllColors: showAllColors,
+                        userColors: widget.userCreatedColors,
+                      ),
+                    ),
+                  ],
+                )
+              : ColorMixer(
+                  alphaChannel: alphaChannel,
+                  redChannel: redChannel,
+                  greenChanne: greenChannel,
+                  blueChannel: blueChannel,
+                  onAlphaChannelChange: onAlphaChannelChange,
+                  onRedColorChannelChange: onRedColorChannelChange,
+                  onGreenColorChannelChange: onGreenColorChannelChange,
+                  onBlueColorChannelChange: onBlueColorChannelChange,
+                  animationController: _colorSliderAnimationController,
+                ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              !enableColorMix
+                  ? Padding(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 4.0,
+                      ),
+                      child: LitRoundedElevatedButton(
+                        color: LitColors.lightGrey,
+                        boxShadow: widget.buttonBoxShadow,
+                        child: Text(
+                          "Show ${showAllColors ? 'less' : 'more'}",
+                          style: LitTextStyles.sansSerif.copyWith(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                        onPressed: toggleAllColors,
+                      ),
+                    )
+                  : Align(
+                      alignment: Alignment.centerLeft,
+                      child: LitRoundedElevatedButton(
+                        color: LitColors.midRed,
+                        boxShadow: widget.buttonBoxShadow,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 4.0,
+                            horizontal: 8.0,
+                          ),
+                          child: Icon(
+                            LitIcons.times,
+                            color: Colors.white,
+                            size: 14.0,
+                          ),
+                        ),
+                        onPressed: resetColorChannelValues,
+                      ),
+                    ),
+              showAllColors
+                  ? Align(
+                      alignment: Alignment.centerRight,
+                      child: LitRoundedElevatedButton(
+                        color: LitColors.lightPink,
+                        boxShadow: widget.buttonBoxShadow,
+                        child: enableColorMix
+                            ? Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 4.0,
+                                  horizontal: 8.0,
+                                ),
+                                child: colorValuesSet
+                                    ? Icon(
+                                        LitIcons.check,
+                                        color: LitColors.mediumOliveGreen,
+                                        size: 14.0,
+                                      )
+                                    : Icon(
+                                        LitIcons.chevron_left_solid,
+                                        color: Colors.white,
+                                        size: 14.0,
+                                      ),
+                              )
+                            : Text(
+                                "Create Color",
                                 style: LitTextStyles.sansSerif.copyWith(
                                   color: Colors.white,
                                   fontWeight: FontWeight.w700,
                                 ),
                               ),
-                              onPressed: toggleAllColors,
-                            ),
-                          )
-                        : Align(
-                            alignment: Alignment.centerLeft,
-                            child: LitRoundedElevatedButton(
-                              color: LitColors.midRed,
-                              boxShadow: widget.buttonBoxShadow,
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                  vertical: 4.0,
-                                  horizontal: 8.0,
-                                ),
-                                child: Icon(
-                                  LitIcons.times,
-                                  color: Colors.white,
-                                  size: 14.0,
-                                ),
-                              ),
-                              onPressed: resetColorChannelValues,
-                            ),
-                          ),
-                    showAllColors
-                        ? Align(
-                            alignment: Alignment.centerRight,
-                            child: LitRoundedElevatedButton(
-                              color: LitColors.lightPink,
-                              boxShadow: widget.buttonBoxShadow,
-                              child: enableColorMix
-                                  ? Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                        vertical: 4.0,
-                                        horizontal: 8.0,
-                                      ),
-                                      child: colorValuesSet
-                                          ? Icon(
-                                              LitIcons.check,
-                                              color: LitColors.mediumOliveGreen,
-                                              size: 14.0,
-                                            )
-                                          : Icon(
-                                              LitIcons.chevron_left_solid,
-                                              color: Colors.white,
-                                              size: 14.0,
-                                            ),
-                                    )
-                                  : Text(
-                                      "Create Color",
-                                      style: LitTextStyles.sansSerif.copyWith(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.w700,
-                                      ),
-                                    ),
-                              onPressed: handleColorMixerPress,
-                            ),
-                          )
-                        : SizedBox(),
-                  ],
-                )
-              ],
-            ),
-          );
-        });
+                        onPressed: handleColorMixerPress,
+                      ),
+                    )
+                  : SizedBox(),
+            ],
+          )
+        ],
+      ),
+    );
   }
 }
 
-class _UserCreatedColorGrid extends StatefulWidget {
+class UserCreatedColorGrid extends StatefulWidget {
   final AnimationController additionalColorsAnimationController;
   final List<BoxShadow> boxShadow;
   final bool showAllColors;
-  final List<dynamic> userColors;
+  final List<UserCreatedColor> userColors;
   final void Function(Color) onSelectColorCallback;
   final int selectedColorValue;
-  const _UserCreatedColorGrid({
+  const UserCreatedColorGrid({
     Key key,
     @required this.additionalColorsAnimationController,
     @required this.boxShadow,
@@ -319,10 +320,10 @@ class _UserCreatedColorGrid extends StatefulWidget {
     @required this.selectedColorValue,
   }) : super(key: key);
   @override
-  __UserCreatedColorGridState createState() => __UserCreatedColorGridState();
+  _UserCreatedColorGridState createState() => _UserCreatedColorGridState();
 }
 
-class __UserCreatedColorGridState extends State<_UserCreatedColorGrid>
+class _UserCreatedColorGridState extends State<UserCreatedColorGrid>
     with TickerProviderStateMixin {
   bool _deletionEnabled;
 

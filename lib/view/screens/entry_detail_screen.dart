@@ -140,10 +140,6 @@ class _EntryDetailScreenState extends State<EntryDetailScreen>
     );
   }
 
-  // bool _validIndex(Box<dynamic> entriesBox) {
-  //   return entriesBox.length > widget.index;
-  // }
-
   @override
   void initState() {
     super.initState();
@@ -188,7 +184,7 @@ class _EntryDetailScreenState extends State<EntryDetailScreen>
       ),
       body: ValueListenableBuilder(
         valueListenable: HiveDBService().getDiaryEntries(),
-        builder: (BuildContext context, Box<dynamic> entriesBox, Widget _) {
+        builder: (BuildContext context, Box<DiaryEntry> entriesBox, Widget _) {
           /// Ensure the entry has not been deleted yet (if it's the latest one available).
 
           final DiaryEntry diaryEntry = entriesBox.get(widget.diaryEntryUid);

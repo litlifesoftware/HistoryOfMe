@@ -8,63 +8,81 @@ import 'package:history_of_me/model/user_created_color.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
+/// A controller class to access the [Hive] database API.
+///
+/// It includes methods to fetch data from the local Hive instance and to update or
+/// delete a specific entry on the database.
 class HiveDBService {
-  Future<void> initDB() async {
+  final bool debug;
+
+  /// Creates a [HiveDBService].
+  ///
+  /// * [debug] states whether to show console output to log current activity.
+  const HiveDBService({this.debug = false});
+  Future<void> initHiveDB() async {
     await Hive.initFlutter();
-    Hive.registerAdapter(AppSettingsAdapter());
+    //Hive.registerAdapter(AppSettingsAdapter());
     Hive.registerAdapter(UserDataAdapter());
     Hive.registerAdapter(UserCreatedColorAdapter());
     Hive.registerAdapter(DiaryEntryAdapter());
   }
 
+  /// The key to access the [AppSettings] Box.
   static const String _appSettingsKey = 'app_settings';
   static const String _userDataKey = 'app_settings';
   static const String _userCreatedColorsKey = 'user_created_colors';
   static const String _diaryEntriesKey = 'diary_entries';
 
-  Future<Box<dynamic>> openAppSettingsBox() {
+  /// Opens the [AppSettings] Box.
+  Future<Box<AppSettings>> openAppSettingsBox() {
     if (!Hive.isBoxOpen(_appSettingsKey)) {
-      return Hive.openBox(_appSettingsKey);
+      return Hive.openBox<AppSettings>(_appSettingsKey);
     } else {
       return Future(() {
-        return Hive.box(_appSettingsKey);
+        return Hive.box<AppSettings>(_appSettingsKey);
       });
     }
   }
 
-  Future<Box<dynamic>> openUserDataBox() {
+  /// Opens the [UserData] Box.
+  Future<Box<UserData>> openUserDataBox() {
     if (!Hive.isBoxOpen(_userDataKey)) {
-      return Hive.openBox(_userDataKey);
+      return Hive.openBox<UserData>(_userDataKey);
     } else {
       return Future(() {
-        return Hive.box(_userDataKey);
+        return Hive.box<UserData>(_userDataKey);
       });
     }
   }
 
-  Future<Box<dynamic>> openUserCreatedColorsDataBox() {
-    if (!Hive.isBoxOpen(_userCreatedColorsKey)) {
-      return Hive.openBox(_userCreatedColorsKey);
-    } else {
-      return Future(() {
-        return Hive.box(_userCreatedColorsKey);
-      });
-    }
-  }
-
-  Future<Box<dynamic>> openDiaryEntryDataBox() {
+  /// Opens the [DiaryEntry] Box.
+  Future<Box<DiaryEntry>> openDiaryEntryDataBox() {
     if (!Hive.isBoxOpen(_diaryEntriesKey)) {
-      return Hive.openBox(_diaryEntriesKey);
+      return Hive.openBox<DiaryEntry>(_diaryEntriesKey);
     } else {
       return Future(() {
-        return Hive.box(_diaryEntriesKey);
+        return Hive.box<DiaryEntry>(_diaryEntriesKey);
       });
     }
   }
 
+  /// Opens the [UserCreatedColor].
+  Future<Box<UserCreatedColor>> openUserCreatedColorsDataBox() {
+    if (!Hive.isBoxOpen(_userCreatedColorsKey)) {
+      return Hive.openBox<UserCreatedColor>(_userCreatedColorsKey);
+    } else {
+      return Future(() {
+        return Hive.box<UserCreatedColor>(_userCreatedColorsKey);
+      });
+    }
+  }
+
+  /// Opens all [Box]es used across the app.
+  ///
+  /// Returns an integer value to state whether opening the [Box]es was successful.
   Future<int> openBoxes() async {
     try {
-      await openAppSettingsBox();
+      //await openAppSettingsBox();
       await openUserDataBox();
       await openUserCreatedColorsDataBox();
       await openDiaryEntryDataBox();
@@ -77,16 +95,19 @@ class HiveDBService {
     }
   }
 
-  ValueListenable<Box<dynamic>> getAppSettings() {
-    return Hive.box(_appSettingsKey).listenable();
+  /// Gets the [AppSettings] from the Hive box as a [ValueListenable].
+  ValueListenable<Box<AppSettings>> getAppSettings() {
+    return Hive.box<AppSettings>(_appSettingsKey).listenable();
   }
 
+  /// Updates the [AppSettings].
   void updateAppSettings(AppSettings appSettings) {
-    Hive.box(_appSettingsKey).putAt(0, appSettings);
+    Hive.box<AppSettings>(_appSettingsKey).putAt(0, appSettings);
   }
 
-  ValueListenable<Box<dynamic>> getUserData() {
-    return Hive.box(_userDataKey).listenable();
+  /// Gets the [UserData] from the Hive box as a [ValueListenable].
+  ValueListenable<Box<UserData>> getUserData() {
+    return Hive.box<UserData>(_userDataKey).listenable();
   }
 
   /// Stores the initial [UserData] model to the Hive database on the first app startup.
@@ -104,8 +125,8 @@ class HiveDBService {
       quoteAuthor: BookmarkConstants.initialQuoteAuthor,
       lastUpdated: DateTime.now().millisecondsSinceEpoch,
     );
-    if (Hive.box(_userDataKey).isEmpty) {
-      Hive.box(_userDataKey).add(userData);
+    if (Hive.box<UserData>(_userDataKey).isEmpty) {
+      Hive.box<UserData>(_userDataKey).add(userData);
     } else {
       print("UserData object already created");
     }
@@ -116,9 +137,15 @@ class HiveDBService {
   /// Note that all existing value will be overridden on excecution, so the provided
   /// [UserData] should hold non-null values.
   void updateUserData(UserData userData) {
-    Hive.box(_userDataKey).putAt(0, userData);
+    Hive.box<UserData>(_userDataKey).putAt(0, userData);
   }
 
+  /// Updates the [UserData]'s username property value on the Hive database.
+  ///
+  /// * [initialUserData] is required in order to retain the existing values on the
+  ///   Hive database in order to only update the username.
+  ///
+  /// * [updatedName] is the new username that should be stored on the database.
   void updateUsername(UserData initialUserData, String updatedName) {
     UserData updatedUserData = UserData(
       name: updatedName,
@@ -134,22 +161,18 @@ class HiveDBService {
     updateUserData(updatedUserData);
   }
 
-  // ValueListenable<Box<dynamic>> getUserCreatedColors() {
-  //   return Hive.box(_userCreatedColorsKey).listenable();
-  // }
-
-  // void addUserCreatedColor(UserCreatedColor userCreatedColor) {
-  //   Hive.box(_userCreatedColorsKey).add(userCreatedColor);
-  // }
-
-  // void deleteUserCreatedColor(int index) {
-  //   Hive.box(_userCreatedColorsKey).deleteAt(index);
-  // }
-
-  ValueListenable<Box<dynamic>> getDiaryEntries() {
-    return Hive.box(_diaryEntriesKey).listenable();
+  /// Gets the [DiaryEntry]s from the Hive box as a [ValueListenable].
+  ///
+  /// The [Box] is structured like a list, each [DiaryEntry] available should be able
+  /// to be extracted from the box itself.
+  ValueListenable<Box<DiaryEntry>> getDiaryEntries() {
+    return Hive.box<DiaryEntry>(_diaryEntriesKey).listenable();
   }
 
+  /// Adds a new diary entry to the Hive database.
+  ///
+  /// * [date] is the date of the dairy entry, that should be set as the entry's actual
+  ///   date.
   DiaryEntry addDiaryEntry({
     @required DateTime date,
   }) {
@@ -166,14 +189,23 @@ class HiveDBService {
       backdropPhotoId: initalDiaryEntryBackdropId,
     );
 
-    Hive.box(_diaryEntriesKey).put(diaryEntry.uid, diaryEntry);
+    Hive.box<DiaryEntry>(_diaryEntriesKey).put(diaryEntry.uid, diaryEntry);
     return diaryEntry;
   }
 
+  /// Updates an existing diary entry on the Hive database using the provided updated
+  /// [diaryEntry].
+  ///
+  /// The Hive entry will be determine using the [DiaryEntry]'s uid
   void updateDiaryEntry(DiaryEntry diaryEntry) {
-    Hive.box(_diaryEntriesKey).put(diaryEntry.uid, diaryEntry);
+    Hive.box<DiaryEntry>(_diaryEntriesKey).put(diaryEntry.uid, diaryEntry);
   }
 
+  /// Updates the background on the provided [DiaryEntry] by updating the database entry.
+  ///
+  /// * [newBackdropPhotoId] is the new backdrop id value.
+  /// * [diaryEntry] is entry on which the change will be applied. It will also provided
+  ///   the entrie's id.
   void updateDiaryEntryBackdrop(DiaryEntry diaryEntry, int newBackdropPhotoId) {
     /// Updated Hive entry
     final DiaryEntry updatedDiaryEntry = DiaryEntry(
@@ -191,10 +223,14 @@ class HiveDBService {
     updateDiaryEntry(updatedDiaryEntry);
   }
 
+  /// Deletes an existing [DiaryEntry].
+  ///
+  /// * [diaryEntryUid] is the [DiaryEntry]'s uid value which will act like an key.
   void deleteDiaryEntry(String diaryEntryUid) {
-    Hive.box(_diaryEntriesKey).delete(diaryEntryUid);
+    Hive.box<DiaryEntry>(_diaryEntriesKey).delete(diaryEntryUid);
   }
 
+  /// States whether a [DiaryEntry] for a specified date already exists.
   bool entryWithDateDoesExist(DateTime date) {
     bool doesExist = false;
 
@@ -213,11 +249,17 @@ class HiveDBService {
     return doesExist;
   }
 
-  ValueListenable<Box<dynamic>> getUserCreatedColors() {
-    return Hive.box(_userCreatedColorsKey).listenable();
+  /// Gets the [UserCreatedColor] from the Hive box as a [ValueListenable].
+  ValueListenable<Box<UserCreatedColor>> getUserCreatedColors() {
+    return Hive.box<UserCreatedColor>(_userCreatedColorsKey).listenable();
   }
 
-  bool addUserCreatedColor(int alpha, int red, int green, int blue) {
+  /// Adds an [UserCreatedColor] to the database.
+  ///
+  /// The validation will include a check to ensure only non-existing colors
+  /// will be added to the database. If the provided colors do match with an
+  /// existing entry, the color will not be added and an Exception is thrown.
+  void addUserCreatedColor(int alpha, int red, int green, int blue) {
     UserCreatedColor userCreatedColor = UserCreatedColor(
       uid: _createUniqueID(),
       alpha: alpha,
@@ -225,24 +267,27 @@ class HiveDBService {
       green: green,
       blue: blue,
     );
-    for (UserCreatedColor ucc in Hive.box(_userCreatedColorsKey).values) {
-      if (ucc.alpha == alpha &&
-          ucc.green == green &&
-          ucc.red == red &&
-          ucc.blue == blue) {
-        return false;
+    for (UserCreatedColor ucc
+        in Hive.box<UserCreatedColor>(_userCreatedColorsKey).values) {
+      bool alphaMatch = ucc.alpha == alpha;
+      bool gMatch = ucc.green == green;
+      bool rMatch = ucc.red == red;
+      bool bMatch = ucc.blue == blue;
+      if (alphaMatch && gMatch && rMatch && bMatch) {
+        if (debug)
+          print("'UserCreatedColor' with provided values already exists.");
+        throw Exception("Color does already exist.");
       }
     }
-    Hive.box(_userCreatedColorsKey).add(userCreatedColor);
-    return true;
+    Hive.box<UserCreatedColor>(_userCreatedColorsKey).add(userCreatedColor);
   }
 
   void deleteUserCreatedColor(int index) {
-    Hive.box(_userCreatedColorsKey).deleteAt(index);
+    Hive.box<UserCreatedColor>(_userCreatedColorsKey).deleteAt(index);
   }
 
   void addInitialColors() {
-    if (Hive.box(_userCreatedColorsKey).isEmpty) {
+    if (Hive.box<UserCreatedColor>(_userCreatedColorsKey).isEmpty) {
       for (Color color in initialColors) {
         addUserCreatedColor(color.alpha, color.red, color.green, color.blue);
       }

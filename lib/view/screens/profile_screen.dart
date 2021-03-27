@@ -60,8 +60,8 @@ class _ProfileScreenState extends State<ProfileScreen>
             ValueListenableBuilder(
               valueListenable: HiveDBService().getUserData(),
               builder:
-                  (BuildContext context, Box<dynamic> userDataBox, Widget _) {
-                UserData userData = userDataBox.getAt(0) as UserData;
+                  (BuildContext context, Box<UserData> userDataBox, Widget _) {
+                UserData userData = userDataBox.getAt(0);
                 return ScrollableColumn(
                   controller: _scrollController,
                   children: [

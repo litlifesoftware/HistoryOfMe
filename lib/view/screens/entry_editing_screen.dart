@@ -219,7 +219,7 @@ class _EntryEditingScreenState extends State<EntryEditingScreen>
     print("title: ${_titleEditingController.text}");
     return ValueListenableBuilder(
       valueListenable: HiveDBService().getDiaryEntries(),
-      builder: (BuildContext context, Box<dynamic> entriesBox, Widget _) {
+      builder: (BuildContext context, Box<DiaryEntry> entriesBox, Widget _) {
         final DiaryEntry dbDiaryEntry = entriesBox.get(widget.diaryEntry.uid);
         return LitScaffold(
           appBar: FixedOnScrollAppbar(

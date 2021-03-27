@@ -55,7 +55,7 @@ class _ConfirmDeleteEntryDialogState extends State<ConfirmDeleteEntryDialog> {
                     SizedBox(
                       width: constraints.maxWidth * 0.6,
                       child: Text(
-                        "Would you want to delete your diary entry?",
+                        "Do you want to delete your diary entry?",
                         textAlign: TextAlign.left,
                         style: LitTextStyles.sansSerif.copyWith(
                           fontSize: 14.0,
@@ -68,51 +68,54 @@ class _ConfirmDeleteEntryDialogState extends State<ConfirmDeleteEntryDialog> {
               },
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(
-              vertical: 16.0,
-            ),
-            child: Row(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                LitRoundedFlatButton(
-                  color: LitColors.lightGrey,
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 8.0,
-                    horizontal: 20.0,
-                  ),
-                  child: Text(
-                    "Cancel",
-                    style: LitTextStyles.sansSerif.copyWith(
-                      color: Colors.white,
-                      fontSize: 16.0,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                  onPressed: _onCancel,
-                ),
-                LitRoundedFlatButton(
-                  color: LitColors.lightPink,
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 8.0,
-                    horizontal: 20.0,
-                  ),
-                  child: Text(
-                    "Delete",
-                    style: LitTextStyles.sansSerif.copyWith(
-                      color: Colors.white,
-                      fontSize: 16.0,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                  onPressed: _onDelete,
-                ),
-              ],
-            ),
-          )
+          // Padding(
+          //   padding: const EdgeInsets.symmetric(
+          //     vertical: 16.0,
+          //   ),
+          //   child: Row(
+          //     mainAxisSize: MainAxisSize.max,
+          //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          //     children: [
+
+          //     ],
+          //   ),
+          // )
         ],
       ),
+      actionButtons: [
+        LitRoundedFlatButton(
+          color: LitColors.mediumGrey,
+          padding: const EdgeInsets.symmetric(
+            vertical: 8.0,
+            horizontal: 20.0,
+          ),
+          child: Text(
+            "Cancel",
+            style: LitTextStyles.sansSerif.copyWith(
+              color: Colors.white,
+              fontSize: 16.0,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+          onPressed: _onCancel,
+        ),
+        LitRoundedFlatButton(
+          color: LitColors.midRed,
+          padding: const EdgeInsets.symmetric(
+            vertical: 8.0,
+            horizontal: 20.0,
+          ),
+          child: Text(
+            "Delete",
+            style: LitTextStyles.sansSerif.copyWith(
+              color: Colors.white,
+              fontSize: 16.0,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+          onPressed: _onDelete,
+        ),
+      ],
     );
   }
 }
