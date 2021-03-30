@@ -27,8 +27,8 @@ class EntryEditingScreen extends StatefulWidget {
   ///
   /// Pass a [DiaryEntry] which should be edited. This property is required.
   const EntryEditingScreen({
-    Key key,
-    @required this.diaryEntry,
+    Key? key,
+    required this.diaryEntry,
   }) : super(key: key);
   @override
   _EntryEditingScreenState createState() => _EntryEditingScreenState();
@@ -37,30 +37,30 @@ class EntryEditingScreen extends StatefulWidget {
 class _EntryEditingScreenState extends State<EntryEditingScreen>
     with TickerProviderStateMixin {
   /// The current mood score value the user has set.
-  double _moodScore;
+  double? _moodScore;
 
   /// The current title text the user is editing.
-  String _title;
+  String? _title;
 
   /// The current content text the user is editing.
-  String _content;
+  String? _content;
 
   /// The [FocusNode] to control the focus on the title's [EditableText].
-  FocusNode _titleEditFocusNode;
+  FocusNode? _titleEditFocusNode;
 
   /// The [FocusNode] to control the focus on the content's [EditableText].
-  FocusNode _contentEditFocusNode;
+  FocusNode? _contentEditFocusNode;
 
   /// The controller to track the user's input on the title text.
-  TextEditingController _titleEditingController;
+  TextEditingController? _titleEditingController;
 
   /// The controller to track the user's input on the content text.
-  TextEditingController _contentEditingController;
+  TextEditingController? _contentEditingController;
 
-  ScrollController _scrollController;
-  AnimationController _fadeInAnimationController;
+  ScrollController? _scrollController;
+  AnimationController? _fadeInAnimationController;
 
-  LitRouteController _routeController;
+  late LitRouteController _routeController;
   //TODO
   /// Current db state and input state will have to be synchronized because the editing
   /// screen may is initialized without a database reference with default values only.
@@ -68,14 +68,14 @@ class _EntryEditingScreenState extends State<EntryEditingScreen>
   /// ===> detect any db changes using the ValueListener
 
   void _syncTextEditingControllerChanges() {
-    _titleEditingController.addListener(() {
+    _titleEditingController!.addListener(() {
       setState(() {
-        _title = _titleEditingController.text;
+        _title = _titleEditingController!.text;
       });
     });
-    _contentEditingController.addListener(() {
+    _contentEditingController!.addListener(() {
       setState(() {
-        _content = _contentEditingController.text;
+        _content = _contentEditingController!.text;
       });
     });
   }
@@ -121,8 +121,8 @@ class _EntryEditingScreenState extends State<EntryEditingScreen>
       date: widget.diaryEntry.date,
       created: widget.diaryEntry.created,
       lastUpdated: DateTime.now().millisecondsSinceEpoch,
-      title: _titleEditingController.text,
-      content: _contentEditingController.text,
+      title: _titleEditingController!.text,
+      content: _contentEditingController!.text,
       moodScore: _moodScore,
       favorite: widget.diaryEntry.favorite,
       backdropPhotoId: widget.diaryEntry.backdropPhotoId,
@@ -204,23 +204,23 @@ class _EntryEditingScreenState extends State<EntryEditingScreen>
 
     _routeController = LitRouteController(context);
     _syncTextEditingControllerChanges();
-    _fadeInAnimationController.forward();
+    _fadeInAnimationController!.forward();
   }
 
   @override
   void dispose() {
-    _fadeInAnimationController.dispose();
+    _fadeInAnimationController!.dispose();
 
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    print("title: ${_titleEditingController.text}");
+    print("title: ${_titleEditingController!.text}");
     return ValueListenableBuilder(
       valueListenable: HiveDBService().getDiaryEntries(),
-      builder: (BuildContext context, Box<DiaryEntry> entriesBox, Widget _) {
-        final DiaryEntry dbDiaryEntry = entriesBox.get(widget.diaryEntry.uid);
+      builder: (BuildContext context, Box<DiaryEntry> entriesBox, Widget? _) {
+        final DiaryEntry dbDiaryEntry = entriesBox.get(widget.diaryEntry.uid)!;
         return LitScaffold(
           appBar: FixedOnScrollAppbar(
             scrollController: _scrollController,
@@ -237,8 +237,8 @@ class _EntryEditingScreenState extends State<EntryEditingScreen>
             child: Stack(
               children: [
                 AnimatedBuilder(
-                  animation: _fadeInAnimationController,
-                  builder: (BuildContext context, Widget _) {
+                  animation: _fadeInAnimationController!,
+                  builder: (BuildContext context, Widget? _) {
                     return Stack(
                       children: [
                         Scrollbar(
@@ -255,7 +255,7 @@ class _EntryEditingScreenState extends State<EntryEditingScreen>
                                 transform: Matrix4.translationValues(
                                     0,
                                     -50 +
-                                        (50 * _fadeInAnimationController.value),
+                                        (50 * _fadeInAnimationController!.value),
                                     0),
                                 child: Column(
                                   children: [
@@ -334,7 +334,7 @@ class _EntryEditingScreenState extends State<EntryEditingScreen>
                                           activeTrackColor: Color.lerp(
                                             LitColors.lightRed,
                                             HexColor('bee5be'),
-                                            _moodScore,
+                                            _moodScore!,
                                           ),
                                           valueTitleText:
                                               MoodTranslationController(
@@ -383,15 +383,15 @@ class _EntryEditingScreenState extends State<EntryEditingScreen>
 }
 
 class _DiaryContentInput extends StatelessWidget {
-  final AnimationController fadeInAnimationController;
-  final TextEditingController contentEditController;
-  final FocusNode contentEditFocusNode;
+  final AnimationController? fadeInAnimationController;
+  final TextEditingController? contentEditController;
+  final FocusNode? contentEditFocusNode;
 
   const _DiaryContentInput({
-    Key key,
-    @required this.fadeInAnimationController,
-    @required this.contentEditController,
-    @required this.contentEditFocusNode,
+    Key? key,
+    required this.fadeInAnimationController,
+    required this.contentEditController,
+    required this.contentEditFocusNode,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -401,7 +401,7 @@ class _DiaryContentInput extends StatelessWidget {
         MediaQuery.of(context).size.width / 3 +
             (-MediaQuery.of(context).size.width /
                 3 *
-                fadeInAnimationController.value),
+                fadeInAnimationController!.value),
         0,
         0,
       ),
@@ -415,8 +415,8 @@ class _DiaryContentInput extends StatelessWidget {
             horizontal: 25.0,
           ),
           child: EditableText(
-            controller: contentEditController,
-            focusNode: contentEditFocusNode,
+            controller: contentEditController!,
+            focusNode: contentEditFocusNode!,
             style: LitTextStyles.sansSerif.copyWith(
               fontSize: 15.5,
               letterSpacing: 0.19,

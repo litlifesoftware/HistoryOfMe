@@ -5,8 +5,8 @@ class SelectedCreateTile extends StatelessWidget {
   final String label;
 
   const SelectedCreateTile({
-    Key key,
-    @required this.label,
+    Key? key,
+    required this.label,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {

@@ -3,12 +3,12 @@ import 'package:history_of_me/model/user_data.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';
 
 class BookmarkTitle extends StatelessWidget {
-  final UserData userData;
+  final UserData? userData;
   final BorderRadiusGeometry borderRadius;
   final Alignment alignment;
   const BookmarkTitle({
-    Key key,
-    @required this.userData,
+    Key? key,
+    required this.userData,
     this.borderRadius = const BorderRadius.only(
       topLeft: Radius.circular(5.0),
       bottomLeft: Radius.circular(5.0),
@@ -76,7 +76,7 @@ class BookmarkTitle extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 8.0),
                           child: ClippedText(
-                            "${userData.name}",
+                            "${userData!.name}",
                             style: LitTextStyles.serif.copyWith(
                               fontSize: 13.0,
                             ),

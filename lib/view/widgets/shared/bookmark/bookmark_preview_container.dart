@@ -8,10 +8,10 @@ class BookmarkPreviewContainer extends StatefulWidget {
   final EdgeInsets padding;
   final BookmarkCover child;
   const BookmarkPreviewContainer({
-    Key key,
-    @required this.transformed,
-    @required this.padding,
-    @required this.child,
+    Key? key,
+    required this.transformed,
+    required this.padding,
+    required this.child,
   }) : super(key: key);
   @override
   _BookmarkPreviewContainerState createState() =>
@@ -20,7 +20,7 @@ class BookmarkPreviewContainer extends StatefulWidget {
 
 class _BookmarkPreviewContainerState extends State<BookmarkPreviewContainer>
     with TickerProviderStateMixin {
-  AnimationController _animationController;
+  late AnimationController _animationController;
 
   @override
   void initState() {

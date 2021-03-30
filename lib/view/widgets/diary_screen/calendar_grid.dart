@@ -5,17 +5,17 @@ import 'calendar_day_item.dart';
 
 class CalendarGrid extends StatelessWidget {
   final CalendarController calendarController;
-  final DateTime selectedDate;
+  final DateTime? selectedDate;
   final void Function(DateTime) setSelectedDateTime;
   final void Function() exclusiveMonthCallback;
   final void Function() futureDateCallback;
   const CalendarGrid({
-    Key key,
-    @required this.calendarController,
-    @required this.selectedDate,
-    @required this.setSelectedDateTime,
-    @required this.exclusiveMonthCallback,
-    @required this.futureDateCallback,
+    Key? key,
+    required this.calendarController,
+    required this.selectedDate,
+    required this.setSelectedDateTime,
+    required this.exclusiveMonthCallback,
+    required this.futureDateCallback,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {

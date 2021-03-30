@@ -19,7 +19,7 @@ class _AppState extends State<App> {
   //   "assets/images/niilo-isotalo--BZc9Ee1qo0-unsplash.jpg",
   //   "assets/images/peiwen-yu-Etpd8Le6b8E-unsplash.jpg"
   // ];
-  List<String> backdropPhotoUrlList = [];
+  List<String?> backdropPhotoUrlList = [];
   final List<String> utilityImagesUrlList = const [
     "assets/images/History_Of_Me_Key_Icon_256px-01.png",
     "assets/images/Key.png",
@@ -69,7 +69,7 @@ class _AppState extends State<App> {
     );
     loadPhotosFromJson().then((value) => ImageCacheController(
           context: context,
-          assetImages: backdropPhotoUrlList,
+          assetImages: backdropPhotoUrlList as List<String>,
         ));
     // ImageCacheController(
     //   context: context,

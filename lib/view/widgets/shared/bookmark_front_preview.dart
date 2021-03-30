@@ -6,10 +6,10 @@ import 'package:history_of_me/view/widgets/shared/bookmark/bookmark_preview_cont
 class BookmarkFrontPreview extends StatelessWidget {
   final EdgeInsets padding;
   final bool transformed;
-  final UserData userData;
+  final UserData? userData;
   const BookmarkFrontPreview({
-    Key key,
-    @required this.userData,
+    Key? key,
+    required this.userData,
     this.padding = const EdgeInsets.only(
       left: 16.0,
       right: 16.0,

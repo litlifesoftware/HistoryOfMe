@@ -9,9 +9,9 @@ class LitPlainLabelButton extends StatefulWidget {
   final double fontSize;
   final TextAlign textAlign;
   const LitPlainLabelButton({
-    Key key,
-    @required this.label,
-    @required this.onPressed,
+    Key? key,
+    required this.label,
+    required this.onPressed,
     this.accentColor = Colors.white,
     this.color = const Color(0xFFb5b5b5),
     this.fontSize = 17.0,
@@ -24,7 +24,7 @@ class LitPlainLabelButton extends StatefulWidget {
 
 class _LitPlainLabelButtonState extends State<LitPlainLabelButton>
     with TickerProviderStateMixin {
-  AnimationController _animationController;
+  late AnimationController _animationController;
 
   void _onPressedDown(TapDownDetails details) {
     _animationController.reverse();

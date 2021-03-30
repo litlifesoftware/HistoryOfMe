@@ -10,21 +10,21 @@ class UpdatedLabelText extends StatelessWidget {
   final double letterSpacing;
   final FontWeight fontWeight;
   final Color textColor;
-  final int lastUpdateTimestamp;
+  final int? lastUpdateTimestamp;
   const UpdatedLabelText({
-    Key key,
+    Key? key,
     this.textAlign = TextAlign.left,
     this.fontSize = 12.4,
     this.letterSpacing = -0.22,
     this.fontWeight = FontWeight.w700,
     this.textColor = const Color(0xFFa5a5a5),
-    @required this.lastUpdateTimestamp,
+    required this.lastUpdateTimestamp,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     final RelativeDateTime relativeDateTime = RelativeDateTime(
       dateTime: DateTime.now(),
-      other: DateTime.fromMillisecondsSinceEpoch(lastUpdateTimestamp),
+      other: DateTime.fromMillisecondsSinceEpoch(lastUpdateTimestamp!),
     );
     final RelativeDateFormat relativeDateFormatter = RelativeDateFormat(
       Localizations.localeOf(context),

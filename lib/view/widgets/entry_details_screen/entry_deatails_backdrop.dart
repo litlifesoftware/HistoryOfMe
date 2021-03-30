@@ -5,18 +5,18 @@ import 'package:history_of_me/model/diary_entry.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';
 
 class EntryDetailsBackdrop extends StatelessWidget {
-  final bool loading;
+  final bool? loading;
   final List<BackdropPhoto> backdropPhotos;
   final DiaryEntry diaryEntry;
   final double relativePortraitPhotoHeight;
   final double relativeLandscapePhotoHeight;
   const EntryDetailsBackdrop({
-    Key key,
-    @required this.loading,
-    @required this.backdropPhotos,
-    @required this.diaryEntry,
-    @required this.relativePortraitPhotoHeight,
-    @required this.relativeLandscapePhotoHeight,
+    Key? key,
+    required this.loading,
+    required this.backdropPhotos,
+    required this.diaryEntry,
+    required this.relativePortraitPhotoHeight,
+    required this.relativeLandscapePhotoHeight,
   }) : super(key: key);
 
   @override
@@ -32,7 +32,7 @@ class EntryDetailsBackdrop extends StatelessWidget {
                   (alternativeHeight(MediaQuery.of(context).size,
                       portraitHeight: relativePortraitPhotoHeight,
                       landscapeHeight: relativeLandscapePhotoHeight)),
-              decoration: loading
+              decoration: loading!
                   ? BoxDecoration(color: LitColors.mediumGrey.withOpacity(0.2))
                   : BoxDecoration(
                       image: DecorationImage(
@@ -40,7 +40,7 @@ class EntryDetailsBackdrop extends StatelessWidget {
                         image: AssetImage(BackdropPhotoFinder(
                           backdropPhotos,
                           diaryEntry,
-                        ).findBackdropPhotoUrl()),
+                        ).findBackdropPhotoUrl()!),
                       ),
                     ),
             ),

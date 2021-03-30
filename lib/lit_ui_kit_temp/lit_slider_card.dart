@@ -4,13 +4,13 @@ import 'package:lit_ui_kit/lit_ui_kit.dart';
 import 'lit_slider.dart';
 
 class LitSliderCard extends StatefulWidget {
-  final double value;
+  final double? value;
   final void Function(double) onChanged;
   final EdgeInsets padding;
   final EdgeInsets margin;
   final bool showValueLabel;
   final String valueTitleText;
-  final Color activeTrackColor;
+  final Color? activeTrackColor;
   final double min;
   final double max;
   final BoxDecoration cardDecoration;
@@ -19,9 +19,9 @@ class LitSliderCard extends StatefulWidget {
   final bool displayRangeBadges;
   final bool displayValue;
   const LitSliderCard({
-    Key key,
-    @required this.value,
-    @required this.onChanged,
+    Key? key,
+    required this.value,
+    required this.onChanged,
     this.padding = const EdgeInsets.all(
       16.0,
     ),
@@ -32,8 +32,8 @@ class LitSliderCard extends StatefulWidget {
     this.showValueLabel = true,
     this.valueTitleText = "",
     this.activeTrackColor = LitColors.mediumGrey,
-    @required this.min,
-    @required this.max,
+    required this.min,
+    required this.max,
     this.cardDecoration = const BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.all(
@@ -61,7 +61,7 @@ class LitSliderCard extends StatefulWidget {
 
 class _LitSliderCardState extends State<LitSliderCard>
     with TickerProviderStateMixin {
-  AnimationController _animationController;
+  AnimationController? _animationController;
   bool _delayInProgress = false;
   void _onChanged(double changedValue) {
     widget.onChanged(changedValue);
@@ -70,8 +70,8 @@ class _LitSliderCardState extends State<LitSliderCard>
   }
 
   void _animate() {
-    if (!_animationController.isAnimating) {
-      _animationController.forward().then(
+    if (!_animationController!.isAnimating) {
+      _animationController!.forward().then(
         (_) {
           if (!_delayInProgress) {
             print("not in progress");
@@ -85,14 +85,14 @@ class _LitSliderCardState extends State<LitSliderCard>
                 setState(
                   () => _delayInProgress = !_delayInProgress,
                 );
-                return _animationController.reverse(from: 1.0);
+                return _animationController!.reverse(from: 1.0);
               },
             );
           }
         },
       );
     } else {
-      _animationController.animateTo(1.0, duration: Duration(milliseconds: 0));
+      _animationController!.animateTo(1.0, duration: Duration(milliseconds: 0));
     }
   }
 
@@ -112,7 +112,7 @@ class _LitSliderCardState extends State<LitSliderCard>
 
   @override
   void dispose() {
-    if (widget.showValueLabel) _animationController.dispose();
+    if (widget.showValueLabel) _animationController!.dispose();
     super.dispose();
   }
 
@@ -151,33 +151,33 @@ class _LitSliderCardState extends State<LitSliderCard>
 }
 
 class _ValueLabel extends StatelessWidget {
-  final AnimationController animationController;
+  final AnimationController? animationController;
   final String valueTitle;
-  final double value;
+  final double? value;
   final Color badgeTextColor;
   final Color badgeBackgroundColor;
   const _ValueLabel({
-    Key key,
-    @required this.animationController,
-    @required this.valueTitle,
-    @required this.value,
-    @required this.badgeTextColor,
-    @required this.badgeBackgroundColor,
+    Key? key,
+    required this.animationController,
+    required this.valueTitle,
+    required this.value,
+    required this.badgeTextColor,
+    required this.badgeBackgroundColor,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
-      animation: animationController,
+      animation: animationController!,
       builder: (context, _) {
         return Align(
           alignment: Alignment.topRight,
           child: AnimatedOpacity(
-            duration: animationController.duration,
-            opacity: animationController.value,
+            duration: animationController!.duration!,
+            opacity: animationController!.value,
             child: Transform(
               transform: Matrix4.translationValues(
                 -16.0,
-                animationController.value * -32.0,
+                animationController!.value * -32.0,
                 0.0,
               ),
               child: Container(
@@ -198,7 +198,7 @@ class _ValueLabel extends StatelessWidget {
                   child: Text(
                     valueTitle != ""
                         ? valueTitle
-                        : "${value.toStringAsFixed(2)}",
+                        : "${value!.toStringAsFixed(2)}",
                     textAlign: TextAlign.right,
                     style: LitTextStyles.sansSerif.copyWith(
                       fontSize: 13.5,

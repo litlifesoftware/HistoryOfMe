@@ -15,10 +15,10 @@ class LitTitledDialog extends StatelessWidget {
   final EdgeInsets margin;
   final List<Widget> actionButtons;
   const LitTitledDialog({
-    Key key,
+    Key? key,
     this.titleBarHeight = 52.0,
     this.borderRadius = 30.0,
-    @required this.child,
+    required this.child,
     this.titleGradient = const LinearGradient(
       begin: Alignment.bottomLeft,
       end: Alignment.topRight,
@@ -31,7 +31,7 @@ class LitTitledDialog extends StatelessWidget {
         Color(0xFFd1cdcd),
       ],
     ),
-    @required this.titleText,
+    required this.titleText,
     this.titleTextColor = const Color(0xFF444444),
     this.elevated = true,
     this.leading = const SizedBox(),
@@ -109,14 +109,14 @@ class _DialogTopBar extends StatelessWidget {
   final Color titleTextColor;
   final Widget leading;
   const _DialogTopBar({
-    Key key,
-    @required this.titleBarHeight,
-    @required this.borderRadius,
-    @required this.titleGradient,
-    @required this.elevated,
-    @required this.titleText,
-    @required this.titleTextColor,
-    @required this.leading,
+    Key? key,
+    required this.titleBarHeight,
+    required this.borderRadius,
+    required this.titleGradient,
+    required this.elevated,
+    required this.titleText,
+    required this.titleTextColor,
+    required this.leading,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -169,10 +169,10 @@ class _DialogBottomBar extends StatelessWidget {
   final double borderRadius;
   final List<Widget> actionButtons;
   const _DialogBottomBar({
-    Key key,
-    @required this.titleBarHeight,
-    @required this.borderRadius,
-    @required this.actionButtons,
+    Key? key,
+    required this.titleBarHeight,
+    required this.borderRadius,
+    required this.actionButtons,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {

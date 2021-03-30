@@ -7,7 +7,7 @@ class HiveQueryController {
   final HiveDBService _service = HiveDBService();
 
   /// The cached [DiaryEntry] results.
-  final List<DiaryEntry> _diaryEntries = List<DiaryEntry>();
+  final List<DiaryEntry> _diaryEntries = [];
 
   static const Pattern _pattern = " ";
 
@@ -38,18 +38,18 @@ class HiveQueryController {
     return (totalWordsWritten / totalDiaryEntries);
   }
 
-  String _getContentExtreme(bool max) {
-    String content = _diaryEntries[0].content;
+  String? _getContentExtreme(bool max) {
+    String? content = _diaryEntries[0].content;
 
     _diaryEntries.forEach((entry) {
-      bool maxCondition = entry.content.length > content.length;
-      bool minCondition = entry.content.length < content.length;
-      bool splitCondition = (entry.content.split(_pattern).length > 0);
+      bool maxCondition = entry.content!.length > content!.length;
+      bool minCondition = entry.content!.length < content!.length;
+      bool splitCondition = (entry.content!.split(_pattern).length > 0);
       if ((max ? maxCondition : minCondition) && splitCondition) {
         content = entry.content;
       }
       if (!max) {
-        print(entry.content.length);
+        print(entry.content!.length);
       }
     });
 
@@ -58,12 +58,12 @@ class HiveQueryController {
 
   /// Returns the total number of words written on the largest diary entry.
   int get mostWordsWrittenAtOnce {
-    return _getContentExtreme(true).split(_pattern).length;
+    return _getContentExtreme(true)!.split(_pattern).length;
   }
 
   /// Returns the total number of words written on the largest diary entry.
   int get leastWordsWrittenAtOnce {
-    return _getContentExtreme(false).length;
+    return _getContentExtreme(false)!.length;
   }
 
   int get entriesThisWeek {
@@ -71,7 +71,7 @@ class HiveQueryController {
     DateTime now = DateTime.now();
 
     _diaryEntries.forEach((entry) {
-      DateTime entryDate = DateTime.parse(entry.date);
+      DateTime entryDate = DateTime.parse(entry.date!);
       if (now.isSameCalendarWeek(entryDate)) {
         entriesThisWeek++;
       }
@@ -86,7 +86,7 @@ class HiveQueryController {
     DateTime now = DateTime.now();
 
     _diaryEntries.forEach((entry) {
-      DateTime entryDate = DateTime.parse(entry.date);
+      DateTime entryDate = DateTime.parse(entry.date!);
 
       if (now.isSameCalendarMonth(entryDate)) {
         entriesThisMonth++;
@@ -96,10 +96,10 @@ class HiveQueryController {
   }
 
   DateTime get latestEntryDate {
-    DateTime latest = DateTime.parse(_diaryEntries[0].date);
+    DateTime latest = DateTime.parse(_diaryEntries[0].date!);
     _diaryEntries.forEach(
       (entry) {
-        DateTime entryDate = DateTime.parse(entry.date);
+        DateTime entryDate = DateTime.parse(entry.date!);
         if (entryDate.isAfter(latest)) {
           latest = entryDate;
         }
@@ -109,10 +109,10 @@ class HiveQueryController {
   }
 
   DateTime get firstEntryDate {
-    DateTime first = DateTime.parse(_diaryEntries[0].date);
+    DateTime first = DateTime.parse(_diaryEntries[0].date!);
     _diaryEntries.forEach(
       (entry) {
-        DateTime entryDate = DateTime.parse(entry.date);
+        DateTime entryDate = DateTime.parse(entry.date!);
         if (entryDate.isBefore(first)) {
           first = entryDate;
         }
@@ -142,7 +142,7 @@ class HiveQueryController {
     return diaryEntriesSorted.indexOf(diaryEntry);
   }
 
-  int getIndexChronologicallyByUID(String diaryEntryUID) {
+  int getIndexChronologicallyByUID(String? diaryEntryUID) {
     dynamic diaryEntry = diaryEntriesSorted
         .where((dynamic element) => element.uid == diaryEntryUID)
         .first;
@@ -153,7 +153,7 @@ class HiveQueryController {
   //   return getIndexChronologically(diaryEntry) > 0;
   // }
 
-  bool previousEntryExistsByUID(String diaryEntryUID) {
+  bool previousEntryExistsByUID(String? diaryEntryUID) {
     return getIndexChronologicallyByUID(diaryEntryUID) > 0;
   }
 
@@ -162,7 +162,7 @@ class HiveQueryController {
   //       (diaryEntriesSorted.length - 1);
   // }
 
-  bool nextEntryExistsByUID(String diaryEntryUID) {
+  bool nextEntryExistsByUID(String? diaryEntryUID) {
     return getIndexChronologicallyByUID(diaryEntryUID) <
         (diaryEntriesSorted.length - 1);
   }

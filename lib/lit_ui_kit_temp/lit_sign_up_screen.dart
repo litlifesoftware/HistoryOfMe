@@ -16,14 +16,14 @@ class LitSignUpScreen extends StatefulWidget {
   final String passwordConfirmLabel;
   final String pinLabel;
   final String onSubmitButtonText;
-  final void Function(String) onUsernameChange;
-  final void Function(String) onPasswordChange;
-  final void Function(String) onPasswordConfirmChange;
-  final void Function(int) onPINChange;
+  final void Function(String)? onUsernameChange;
+  final void Function(String)? onPasswordChange;
+  final void Function(String)? onPasswordConfirmChange;
+  final void Function(int?)? onPINChange;
   const LitSignUpScreen({
-    Key key,
+    Key? key,
     this.title = 'Sign up',
-    @required this.onSubmit,
+    required this.onSubmit,
     this.showUsernameInput = true,
     this.showPasswordInput = true,
     this.showPasswordConfirmInput = true,
@@ -53,7 +53,7 @@ class _LitSignUpScreenState extends State<LitSignUpScreen>
   final FocusNode _passwordFocus = FocusNode();
   final FocusNode _passwordConfirmFocus = FocusNode();
   final FocusNode _pinFocus = FocusNode();
-  AnimationController _animationController;
+  late AnimationController _animationController;
 
   String get _usernameText {
     return _usernameController.value.text;
@@ -67,7 +67,7 @@ class _LitSignUpScreenState extends State<LitSignUpScreen>
     return _passwordConfirmController.value.text;
   }
 
-  int get _pinValue {
+  int? get _pinValue {
     return int.tryParse(_pinController.value.text);
   }
 
@@ -87,22 +87,22 @@ class _LitSignUpScreenState extends State<LitSignUpScreen>
     _animationController.repeat(reverse: true);
     if (widget.onUsernameChange != null) {
       _usernameController.addListener(() {
-        widget.onUsernameChange(_usernameText);
+        widget.onUsernameChange!(_usernameText);
       });
     }
     if (widget.onPasswordChange != null) {
       _passwordController.addListener(() {
-        widget.onPasswordChange(_passwordText);
+        widget.onPasswordChange!(_passwordText);
       });
     }
     if (widget.onPasswordConfirmChange != null) {
       _passwordConfirmController.addListener(() {
-        widget.onPasswordConfirmChange(_passwordConfirmText);
+        widget.onPasswordConfirmChange!(_passwordConfirmText);
       });
     }
     if (widget.onPINChange != null) {
       _pinController.addListener(() {
-        widget.onPINChange(_pinValue);
+        widget.onPINChange!(_pinValue);
       });
     }
   }
@@ -302,10 +302,10 @@ class _InputArea extends StatelessWidget {
   final bool initialObsureTextValue;
   final bool allowObscuredText;
   const _InputArea({
-    Key key,
-    @required this.textEditingController,
-    @required this.focusNode,
-    @required this.label,
+    Key? key,
+    required this.textEditingController,
+    required this.focusNode,
+    required this.label,
     this.initialObsureTextValue = false,
     this.allowObscuredText = false,
   }) : super(key: key);

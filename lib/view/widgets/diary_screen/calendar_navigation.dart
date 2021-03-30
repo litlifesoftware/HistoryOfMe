@@ -10,13 +10,13 @@ class CalendarNavigation extends StatelessWidget {
   final String yearLabel;
   final String monthLabel;
   const CalendarNavigation({
-    Key key,
-    @required this.decreaseByMonth,
-    @required this.increaseByMonth,
-    @required this.onMonthLabelPress,
-    @required this.onYearLabelPress,
-    @required this.yearLabel,
-    @required this.monthLabel,
+    Key? key,
+    required this.decreaseByMonth,
+    required this.increaseByMonth,
+    required this.onMonthLabelPress,
+    required this.onYearLabelPress,
+    required this.yearLabel,
+    required this.monthLabel,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {

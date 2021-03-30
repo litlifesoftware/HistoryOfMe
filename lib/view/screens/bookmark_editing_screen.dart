@@ -18,10 +18,10 @@ import 'package:hive/hive.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';
 
 class BookmarkEditingScreen extends StatefulWidget {
-  final UserData initialUserDataModel;
+  final UserData? initialUserDataModel;
   const BookmarkEditingScreen({
-    Key key,
-    @required this.initialUserDataModel,
+    Key? key,
+    required this.initialUserDataModel,
   }) : super(key: key);
   @override
   _BookmarkEditingScreenState createState() => _BookmarkEditingScreenState();
@@ -35,26 +35,26 @@ class _BookmarkEditingScreenState extends State<BookmarkEditingScreen>
 
   //UserData _userDataModel;
 
-  String _name;
-  int _bookmarkColor;
-  int _stripeCount;
-  int _dotSize;
-  String _quote;
-  bool _animated;
+  String? _name;
+  int? _bookmarkColor;
+  int? _stripeCount;
+  int? _dotSize;
+  String? _quote;
+  bool? _animated;
 
-  int _designPattern;
+  int? _designPattern;
 
-  String _quoteAuthor;
+  String? _quoteAuthor;
 
-  AnimationController _appearAnimation;
+  late AnimationController _appearAnimation;
 
-  LitSnackbarController _snackbarController;
+  LitSnackbarController? _snackbarController;
 
-  List<Color> _colors;
+  List<Color>? _colors;
 
-  ScrollController _scrollController;
+  ScrollController? _scrollController;
 
-  LitRouteController _routeController;
+  late LitRouteController _routeController;
 
   void setDesignPattern(int value) {
     setState(
@@ -161,7 +161,7 @@ class _BookmarkEditingScreenState extends State<BookmarkEditingScreen>
     _quoteAuthor = author;
   }
 
-  UserData _mapUserData(int lastUpdated) {
+  UserData _mapUserData(int? lastUpdated) {
     return UserData(
       name: _name,
       bookmarkColor: _bookmarkColor,
@@ -277,14 +277,14 @@ class _BookmarkEditingScreenState extends State<BookmarkEditingScreen>
         ),
         vsync: this);
     //_userDataModel = widget.initialUserDataModel;
-    _name = widget.initialUserDataModel.name;
-    _animated = widget.initialUserDataModel.animated;
-    _bookmarkColor = widget.initialUserDataModel.bookmarkColor;
-    _stripeCount = widget.initialUserDataModel.stripeCount;
-    _dotSize = widget.initialUserDataModel.dotSize;
-    _quote = widget.initialUserDataModel.quote;
-    _quoteAuthor = widget.initialUserDataModel.quoteAuthor;
-    _designPattern = widget.initialUserDataModel.designPatternIndex;
+    _name = widget.initialUserDataModel!.name;
+    _animated = widget.initialUserDataModel!.animated;
+    _bookmarkColor = widget.initialUserDataModel!.bookmarkColor;
+    _stripeCount = widget.initialUserDataModel!.stripeCount;
+    _dotSize = widget.initialUserDataModel!.dotSize;
+    _quote = widget.initialUserDataModel!.quote;
+    _quoteAuthor = widget.initialUserDataModel!.quoteAuthor;
+    _designPattern = widget.initialUserDataModel!.designPatternIndex;
     _appearAnimation.forward();
   }
 
@@ -292,8 +292,8 @@ class _BookmarkEditingScreenState extends State<BookmarkEditingScreen>
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
       valueListenable: HiveDBService().getUserData(),
-      builder: (BuildContext context, Box<UserData> userDataBox, Widget _) {
-        UserData updatedUserData = userDataBox.getAt(0);
+      builder: (BuildContext context, Box<UserData> userDataBox, Widget? _) {
+        UserData updatedUserData = userDataBox.getAt(0)!;
         return LitScaffold(
           appBar: FixedOnScrollAppbar(
             scrollController: _scrollController,
@@ -366,7 +366,7 @@ class _BookmarkEditingScreenState extends State<BookmarkEditingScreen>
                       ValueListenableBuilder(
                         valueListenable: HiveDBService().getUserCreatedColors(),
                         builder: (BuildContext context,
-                            Box<UserCreatedColor> colorsBox, Widget _) {
+                            Box<UserCreatedColor> colorsBox, Widget? _) {
                           // List<UserCreatedColor> userColors = colorsBox.values
                           //     .toList()
                           //     .cast<UserCreatedColor>();
@@ -403,7 +403,7 @@ class _BookmarkEditingScreenState extends State<BookmarkEditingScreen>
                                   //colors: _colors,
                                   //addColor: _handleAddColor,
                                   onAddColorError: () =>
-                                      _snackbarController.showSnackBar(),
+                                      _snackbarController!.showSnackBar(),
                                 ),
                                 QuoteCard(
                                   initialAuthor: _quoteAuthor,

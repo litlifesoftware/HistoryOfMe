@@ -6,9 +6,9 @@ class PurplePinkButton extends StatelessWidget {
   final void Function() onPressed;
 
   const PurplePinkButton({
-    Key key,
-    @required this.label,
-    @required this.onPressed,
+    Key? key,
+    required this.label,
+    required this.onPressed,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {

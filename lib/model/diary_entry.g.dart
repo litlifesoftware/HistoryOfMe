@@ -17,15 +17,15 @@ class DiaryEntryAdapter extends TypeAdapter<DiaryEntry> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return DiaryEntry(
-      uid: fields[0] as String,
-      date: fields[1] as String,
-      created: fields[2] as int,
-      lastUpdated: fields[3] as int,
-      title: fields[4] as String,
-      content: fields[5] as String,
-      moodScore: fields[6] as double,
-      favorite: fields[7] as bool,
-      backdropPhotoId: fields[8] as int,
+      uid: fields[0] as String?,
+      date: fields[1] as String?,
+      created: fields[2] as int?,
+      lastUpdated: fields[3] as int?,
+      title: fields[4] as String?,
+      content: fields[5] as String?,
+      moodScore: fields[6] as double?,
+      favorite: fields[7] as bool?,
+      backdropPhotoId: fields[8] as int?,
     );
   }
 

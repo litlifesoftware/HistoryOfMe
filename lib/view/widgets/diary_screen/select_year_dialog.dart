@@ -9,7 +9,7 @@ import 'package:lit_ui_kit/lit_ui_kit.dart';
 /// will return the desired year as an integer (e.g. 2021).
 class SelectYearDialog extends StatefulWidget {
   final void Function(int year) setDisplayedYearCallback;
-  final DateTime templateDate;
+  final DateTime? templateDate;
   final int numberOfYears;
 
   /// Creates a [SelectYearDialog].
@@ -17,9 +17,9 @@ class SelectYearDialog extends StatefulWidget {
   /// Pass a [setDisplayedYearCallback] to set the parent's state and a
   /// [templateDate] to set the initially displayed year inside the list.
   const SelectYearDialog({
-    Key key,
-    @required this.setDisplayedYearCallback,
-    @required this.templateDate,
+    Key? key,
+    required this.setDisplayedYearCallback,
+    required this.templateDate,
     this.numberOfYears = 20,
   }) : super(key: key);
 
@@ -28,7 +28,7 @@ class SelectYearDialog extends StatefulWidget {
 }
 
 class _SelectYearDialogState extends State<SelectYearDialog> {
-  PageController _pageController;
+  PageController? _pageController;
 
   final int millisecondsPerYear = 31556926000;
 
@@ -42,7 +42,7 @@ class _SelectYearDialogState extends State<SelectYearDialog> {
     return
         // If the provided template date is as recently as the provided number
         // of years allow (e.g. as recently as 20 years ago).
-        widget.templateDate.year >
+        widget.templateDate!.year >
                 DateTime.now()
                     .subtract(Duration(
                         milliseconds:
@@ -51,7 +51,7 @@ class _SelectYearDialogState extends State<SelectYearDialog> {
             // Set the index to display the provided template year
             ? (DateTime.now().year -
                 (DateTime.fromMillisecondsSinceEpoch(
-                        widget.templateDate.millisecondsSinceEpoch))
+                        widget.templateDate!.millisecondsSinceEpoch))
                     .year)
             // Otherwise select the first year in the page list.
             : 0;
@@ -65,7 +65,7 @@ class _SelectYearDialogState extends State<SelectYearDialog> {
 
   @override
   Widget build(BuildContext context) {
-    print(_pageController.initialPage);
+    print(_pageController!.initialPage);
     return Padding(
       padding: const EdgeInsets.symmetric(
         horizontal: 30.0,

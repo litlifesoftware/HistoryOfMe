@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:history_of_me/data/constants.dart';
 
 class StripedDesignController {
-  final Color color;
-  final List<Color> colors;
-  final int count;
+  final Color? color;
+  final List<Color>? colors;
+  final int? count;
   final double radius;
   const StripedDesignController({
     this.color,
     this.colors,
     this.count,
-    @required this.radius,
+    required this.radius,
   }) : assert(
           /// If colors are provided
           colors != null
@@ -36,7 +36,7 @@ class StripedDesignController {
   /// It will either be the [count] value or
   /// the [colors] list length.
   int get _stripeCount {
-    return count ?? colors.length;
+    return count ?? colors!.length;
   }
 
   /// The bookmark dimensions.
@@ -59,7 +59,7 @@ class StripedDesignController {
   }
 
   List<Widget> get stripes {
-    List<Widget> stripeList = List<Widget>();
+    List<Widget> stripeList = [];
 
     /// If the count is initalized, set its value
     /// to the local counter, otherwise it's not
@@ -171,7 +171,7 @@ class StripedDesignController {
                           /// Otherwise remain the corners
                           /// angular.
                           : null,
-              color: colors[i],
+              color: colors![i],
             ),
           ),
         ));

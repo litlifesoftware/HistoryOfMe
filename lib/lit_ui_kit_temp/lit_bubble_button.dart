@@ -6,14 +6,14 @@ class LitBubbleButton extends StatefulWidget {
   final BorderRadius borderRadius;
   final Widget child;
   const LitBubbleButton({
-    Key key,
-    @required this.onPressed,
+    Key? key,
+    required this.onPressed,
     this.borderRadius = const BorderRadius.all(
       Radius.circular(
         16.0,
       ),
     ),
-    @required this.child,
+    required this.child,
   }) : super(key: key);
   @override
   _LitBubbleButtonState createState() => _LitBubbleButtonState();
@@ -21,7 +21,7 @@ class LitBubbleButton extends StatefulWidget {
 
 class _LitBubbleButtonState extends State<LitBubbleButton>
     with TickerProviderStateMixin {
-  AnimationController _bubbleAnimation;
+  AnimationController? _bubbleAnimation;
 
   @override
   void initState() {
@@ -31,12 +31,12 @@ class _LitBubbleButtonState extends State<LitBubbleButton>
           milliseconds: 8000,
         ),
         vsync: this);
-    _bubbleAnimation.repeat(reverse: true);
+    _bubbleAnimation!.repeat(reverse: true);
   }
 
   @override
   void dispose() {
-    _bubbleAnimation.dispose();
+    _bubbleAnimation!.dispose();
     super.dispose();
   }
 
@@ -45,10 +45,10 @@ class _LitBubbleButtonState extends State<LitBubbleButton>
     return LitPushedButton(
       onPressed: widget.onPressed,
       child: AnimatedBuilder(
-        animation: _bubbleAnimation,
+        animation: _bubbleAnimation!,
         builder: (context, _) {
           return Transform.scale(
-            scale: 0.95 + (_bubbleAnimation.value * 0.15),
+            scale: 0.95 + (_bubbleAnimation!.value * 0.15),
             child: Container(
               decoration: BoxDecoration(
                 borderRadius: widget.borderRadius,
@@ -107,10 +107,10 @@ class _LitBubbleButtonState extends State<LitBubbleButton>
 }
 
 class _BubblePaint extends CustomPainter {
-  final Animation animation;
+  final Animation? animation;
 
   const _BubblePaint({
-    @required this.animation,
+    required this.animation,
   }) : super();
   @override
   void paint(Canvas canvas, Size size) {
@@ -124,8 +124,8 @@ class _BubblePaint extends CustomPainter {
     ];
 
     canvas.translate(
-        (-80 + (170 * animation.value)), -15 + (15 * animation.value));
-    canvas.rotate(0.52 * animation.value);
+        (-80 + (170 * animation!.value as double)), -15 + (15 * animation!.value as double));
+    canvas.rotate(0.52 * animation!.value);
 
     List<RRect> rrects = [
       RRect.fromRectXY(
@@ -160,6 +160,6 @@ class _BubblePaint extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) {
-    return animation.value != this.animation.value;
+    return animation!.value != this.animation!.value;
   }
 }

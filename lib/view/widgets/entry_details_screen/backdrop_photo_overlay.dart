@@ -5,20 +5,20 @@ import 'package:history_of_me/model/diary_entry.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';
 
 class BackdropPhotoOverlay extends StatefulWidget {
-  final ScrollController scrollController;
+  final ScrollController? scrollController;
   final void Function() showChangePhotoDialogCallback;
   final List<BackdropPhoto> backdropPhotos;
-  final bool loading;
+  final bool? loading;
   //final int selectedPhotoIndex;
   final DiaryEntry diaryEntry;
   const BackdropPhotoOverlay({
-    Key key,
-    @required this.scrollController,
-    @required this.showChangePhotoDialogCallback,
-    @required this.backdropPhotos,
-    @required this.loading,
+    Key? key,
+    required this.scrollController,
+    required this.showChangePhotoDialogCallback,
+    required this.backdropPhotos,
+    required this.loading,
     //@required this.selectedPhotoIndex,
-    @required this.diaryEntry,
+    required this.diaryEntry,
   }) : super(key: key);
 
   @override
@@ -27,7 +27,7 @@ class BackdropPhotoOverlay extends StatefulWidget {
 
 class _BackdropPhotoOverlayState extends State<BackdropPhotoOverlay>
     with TickerProviderStateMixin {
-  AnimationOnScrollController _animationOnScrollController;
+  late AnimationOnScrollController _animationOnScrollController;
 
   @override
   void initState() {
@@ -54,7 +54,7 @@ class _BackdropPhotoOverlayState extends State<BackdropPhotoOverlay>
     return SafeArea(
       child: AnimatedBuilder(
         animation: _onScrollAnimation,
-        builder: (BuildContext context, Widget _) {
+        builder: (BuildContext context, Widget? _) {
           return Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
@@ -95,7 +95,7 @@ class _BackdropPhotoOverlayState extends State<BackdropPhotoOverlay>
                                 MediaQuery.of(context).size.width),
                             0,
                             0),
-                        child: widget.loading
+                        child: widget.loading!
                             ? SizedBox()
                             : Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -141,10 +141,10 @@ class _ChangePhotoButton extends StatelessWidget {
   final double dxTransform;
   final void Function() onPressed;
   const _ChangePhotoButton({
-    Key key,
-    @required this.onScrollAnimationController,
+    Key? key,
+    required this.onScrollAnimationController,
     this.dxTransform = 100.0,
-    @required this.onPressed,
+    required this.onPressed,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -191,17 +191,17 @@ class _ChangePhotoButton extends StatelessWidget {
 }
 
 class _IconLabel extends StatelessWidget {
-  final String text;
+  final String? text;
   final IconData iconData;
   final Color color;
   final Color backgroundColor;
   final EdgeInsets padding;
   const _IconLabel({
-    Key key,
-    @required this.text,
-    @required this.iconData,
-    @required this.color,
-    @required this.backgroundColor,
+    Key? key,
+    required this.text,
+    required this.iconData,
+    required this.color,
+    required this.backgroundColor,
     this.padding = const EdgeInsets.symmetric(vertical: 4.0),
   }) : super(key: key);
   @override
@@ -237,7 +237,7 @@ class _IconLabel extends StatelessWidget {
                     horizontal: 4.0,
                   ),
                   child: Text(
-                    text,
+                    text!,
                     style: LitTextStyles.sansSerif.copyWith(
                       color: color,
                       fontSize: 12.0,

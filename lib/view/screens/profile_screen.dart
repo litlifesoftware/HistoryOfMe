@@ -17,10 +17,10 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen>
     with TickerProviderStateMixin {
-  ScreenRouter _screenRouter;
-  ScrollController _scrollController;
+  late ScreenRouter _screenRouter;
+  ScrollController? _scrollController;
 
-  void _onEditBookmark(UserData userData) {
+  void _onEditBookmark(UserData? userData) {
     // Navigator.of(context).push(
     //   MaterialPageRoute(
     //     builder: (context) => BookmarkEditingScreen(
@@ -60,8 +60,8 @@ class _ProfileScreenState extends State<ProfileScreen>
             ValueListenableBuilder(
               valueListenable: HiveDBService().getUserData(),
               builder:
-                  (BuildContext context, Box<UserData> userDataBox, Widget _) {
-                UserData userData = userDataBox.getAt(0);
+                  (BuildContext context, Box<UserData> userDataBox, Widget? _) {
+                UserData? userData = userDataBox.getAt(0);
                 return ScrollableColumn(
                   controller: _scrollController,
                   children: [

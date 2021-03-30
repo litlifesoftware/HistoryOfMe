@@ -9,8 +9,8 @@ class PhotosensitiveDisclaimerScreen extends StatelessWidget {
   final String text;
   final String buttonText;
   const PhotosensitiveDisclaimerScreen({
-    Key key,
-    @required this.onAccept,
+    Key? key,
+    required this.onAccept,
     this.title = "Photosensitive Warning",
     this.text =
         "This app contains animations that might trigger an epileptic seiszure in some circumstances.",
@@ -159,7 +159,7 @@ class _FigureSide extends StatelessWidget {
   final bool mirrored;
   final Color color;
   const _FigureSide({
-    Key key,
+    Key? key,
     this.mirrored = false,
     this.color = const Color(0xFFeaeaea),
   }) : super(key: key);

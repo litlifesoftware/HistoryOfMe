@@ -6,10 +6,10 @@ class LitSliderOverlay extends SliderComponentShape {
   final double thumbRadius;
   final BoxShadow overlayBoxShadow;
   const LitSliderOverlay({
-    @required this.thumbHeight,
-    @required this.thumbWidth,
-    @required this.thumbRadius,
-    @required this.overlayBoxShadow,
+    required this.thumbHeight,
+    required this.thumbWidth,
+    required this.thumbRadius,
+    required this.overlayBoxShadow,
   });
 
   @override
@@ -24,16 +24,16 @@ class LitSliderOverlay extends SliderComponentShape {
   void paint(
     PaintingContext context,
     Offset center, {
-    Animation<double> activationAnimation,
-    Animation<double> enableAnimation,
-    bool isDiscrete,
-    TextPainter labelPainter,
-    RenderBox parentBox,
-    SliderThemeData sliderTheme,
-    TextDirection textDirection,
-    double value,
-    double textScaleFactor,
-    Size sizeWithOverflow,
+    Animation<double>? activationAnimation,
+    Animation<double>? enableAnimation,
+    bool? isDiscrete,
+    TextPainter? labelPainter,
+    RenderBox? parentBox,
+    SliderThemeData? sliderTheme,
+    TextDirection? textDirection,
+    double? value,
+    double? textScaleFactor,
+    Size? sizeWithOverflow,
   }) {
     final Canvas canvas = context.canvas;
     final overlayPaint = Paint()

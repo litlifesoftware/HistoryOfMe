@@ -8,11 +8,11 @@ class EntryDaySelectionTile extends StatelessWidget {
   final void Function() onPress;
   final AnimationController animationController;
   const EntryDaySelectionTile({
-    Key key,
-    @required this.label,
-    @required this.selected,
-    @required this.onPress,
-    @required this.animationController,
+    Key? key,
+    required this.label,
+    required this.selected,
+    required this.onPress,
+    required this.animationController,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,7 @@ class EntryDaySelectionTile extends StatelessWidget {
       child: selected
           ? AnimatedOpacity(
               opacity: animationController.value,
-              duration: animationController.duration,
+              duration: animationController.duration!,
               child: SelectedCreateTile(
                 label: label,
               ),

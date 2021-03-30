@@ -11,7 +11,7 @@ class AnimatedGradientBackground extends StatefulWidget {
 
 class _AnimatedGradientBackgroundState extends State<AnimatedGradientBackground>
     with TickerProviderStateMixin {
-  AnimationController _animationController;
+  late AnimationController _animationController;
 
   @override
   void initState() {

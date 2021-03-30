@@ -7,12 +7,12 @@ import 'package:history_of_me/view/widgets/shared/bookmark/bookmark_cover.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';
 
 class BookmarkBack extends StatefulWidget implements BookmarkCover {
-  final UserData userData;
+  final UserData? userData;
   final double maxWidth;
   final double radius;
   const BookmarkBack({
-    Key key,
-    @required this.userData,
+    Key? key,
+    required this.userData,
     this.maxWidth = 400.0,
     this.radius = 5.0,
   }) : super(key: key);
@@ -57,13 +57,13 @@ class _BookmarkBackState extends State<BookmarkBack> {
                               colors: [
                                 Color.lerp(
                                         Colors.white,
-                                        Color(widget.userData.bookmarkColor),
-                                        0.3)
+                                        Color(widget.userData!.bookmarkColor!),
+                                        0.3)!
                                     .withOpacity(0.4),
                                 Color.lerp(
                                         Colors.white,
-                                        Color(widget.userData.bookmarkColor),
-                                        0.5)
+                                        Color(widget.userData!.bookmarkColor!),
+                                        0.5)!
                                     .withOpacity(0.4),
                               ])),
                       child: Align(
@@ -83,7 +83,7 @@ class _BookmarkBackState extends State<BookmarkBack> {
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 2.0),
                                     child: ClippedText(
-                                      "${widget.userData.quote}",
+                                      "${widget.userData!.quote}",
                                       maxLines: 4,
                                       style: LitTextStyles.sansSerif.copyWith(
                                           height: 1.27,
@@ -112,7 +112,7 @@ class _BookmarkBackState extends State<BookmarkBack> {
                                         ),
                                       ),
                                       ClippedText(
-                                        "${widget.userData.quoteAuthor}",
+                                        "${widget.userData!.quoteAuthor}",
                                         style: LitTextStyles.sansSerif.copyWith(
                                           fontSize: 11.0,
                                           letterSpacing: 0.2,
@@ -190,7 +190,7 @@ class _BookmarkBackDecor extends StatelessWidget {
   final BoxConstraints constraints;
   final double radius;
   const _BookmarkBackDecor(
-      {Key key, @required this.constraints, @required this.radius})
+      {Key? key, required this.constraints, required this.radius})
       : super(key: key);
   @override
   Widget build(BuildContext context) {

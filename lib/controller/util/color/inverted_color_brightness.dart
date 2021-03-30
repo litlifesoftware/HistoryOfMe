@@ -11,7 +11,7 @@ class InvertedColorBrightness extends Color {
           baseColor,
           _isBrightColor(baseColor) ? Colors.black : Colors.white,
           0.5,
-        ).value);
+        )!.value);
 
   /// Determine if the provided [Color] is either bright or
   /// dark by checking if its color channel values are above

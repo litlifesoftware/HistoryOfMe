@@ -113,7 +113,7 @@ class HiveDBService {
   /// Stores the initial [UserData] model to the Hive database on the first app startup.
   ///
   /// The provided username must be obtained by the user.
-  void createUserData(String username) {
+  void createUserData(String? username) {
     final UserData userData = UserData(
       name: username,
       bookmarkColor: BookmarkConstants.initialColor,
@@ -146,7 +146,7 @@ class HiveDBService {
   ///   Hive database in order to only update the username.
   ///
   /// * [updatedName] is the new username that should be stored on the database.
-  void updateUsername(UserData initialUserData, String updatedName) {
+  void updateUsername(UserData initialUserData, String? updatedName) {
     UserData updatedUserData = UserData(
       name: updatedName,
       bookmarkColor: initialUserData.bookmarkColor,
@@ -174,7 +174,7 @@ class HiveDBService {
   /// * [date] is the date of the dairy entry, that should be set as the entry's actual
   ///   date.
   DiaryEntry addDiaryEntry({
-    @required DateTime date,
+    required DateTime date,
   }) {
     final DateTime now = DateTime.now();
     final DiaryEntry diaryEntry = DiaryEntry(
@@ -226,12 +226,12 @@ class HiveDBService {
   /// Deletes an existing [DiaryEntry].
   ///
   /// * [diaryEntryUid] is the [DiaryEntry]'s uid value which will act like an key.
-  void deleteDiaryEntry(String diaryEntryUid) {
+  void deleteDiaryEntry(String? diaryEntryUid) {
     Hive.box<DiaryEntry>(_diaryEntriesKey).delete(diaryEntryUid);
   }
 
   /// States whether a [DiaryEntry] for a specified date already exists.
-  bool entryWithDateDoesExist(DateTime date) {
+  bool entryWithDateDoesExist(DateTime? date) {
     bool doesExist = false;
 
     List<dynamic> list =
@@ -242,7 +242,7 @@ class HiveDBService {
       //   print("found for today");
       // }
       if (elem.date ==
-          DateTime(date.year, date.month, date.day).toIso8601String()) {
+          DateTime(date!.year, date.month, date.day).toIso8601String()) {
         doesExist = true;
       }
     }

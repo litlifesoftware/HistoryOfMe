@@ -6,14 +6,14 @@ part 'app_settings.g.dart';
 @HiveType(typeId: 3)
 class AppSettings {
   @HiveField(0)
-  final bool privacyPolicyAgreed;
+  final bool? privacyPolicyAgreed;
   @HiveField(1)
-  final bool darkMode;
+  final bool? darkMode;
   @HiveField(2)
-  final int tabIndex;
+  final int? tabIndex;
   const AppSettings({
-    @required this.privacyPolicyAgreed,
-    @required this.darkMode,
-    @required this.tabIndex,
+    required this.privacyPolicyAgreed,
+    required this.darkMode,
+    required this.tabIndex,
   });
 }

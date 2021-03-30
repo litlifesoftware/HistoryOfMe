@@ -8,7 +8,7 @@ import 'package:history_of_me/view/widgets/edit_bookmark_screen/selectable_color
 import 'package:lit_ui_kit/lit_ui_kit.dart';
 
 class UserCreatedColorCard extends StatefulWidget {
-  final int selectedColorValue;
+  final int? selectedColorValue;
   final void Function(Color) onSelectColorCallback;
   //final List<Color> colors;
   //final void Function(Color) addColor;
@@ -17,12 +17,12 @@ class UserCreatedColorCard extends StatefulWidget {
   final List<BoxShadow> buttonBoxShadow;
   final List<UserCreatedColor> userCreatedColors;
   const UserCreatedColorCard({
-    Key key,
-    @required this.selectedColorValue,
-    @required this.onSelectColorCallback,
+    Key? key,
+    required this.selectedColorValue,
+    required this.onSelectColorCallback,
     //this.colors = const [],
     //@required this.addColor,
-    @required this.onAddColorError,
+    required this.onAddColorError,
     //@required this.handleColorDuplicate,
     this.buttonBoxShadow = const [
       const BoxShadow(
@@ -32,7 +32,7 @@ class UserCreatedColorCard extends StatefulWidget {
         spreadRadius: 0.5,
       ),
     ],
-    @required this.userCreatedColors,
+    required this.userCreatedColors,
   }) : super(key: key);
 
   @override
@@ -41,31 +41,31 @@ class UserCreatedColorCard extends StatefulWidget {
 
 class _UserCreatedColorCardState extends State<UserCreatedColorCard>
     with TickerProviderStateMixin {
-  AnimationController _additionalColorsAnimationController;
-  AnimationController _colorSliderAnimationController;
-  bool showAllColors;
-  bool enableColorMix;
-  int redChannel;
-  int greenChannel;
-  int blueChannel;
-  int alphaChannel;
+  AnimationController? _additionalColorsAnimationController;
+  AnimationController? _colorSliderAnimationController;
+  bool? showAllColors;
+  late bool enableColorMix;
+  int? redChannel;
+  int? greenChannel;
+  int? blueChannel;
+  int? alphaChannel;
   Future<void> animateMixColorTransition() async {
     return enableColorMix
-        ? _additionalColorsAnimationController.forward(from: 0.0)
-        : _additionalColorsAnimationController.reverse(from: 1.0);
+        ? _additionalColorsAnimationController!.forward(from: 0.0)
+        : _additionalColorsAnimationController!.reverse(from: 1.0);
   }
 
   Future<void> animateAdditionalColorsTransition() async {
-    return showAllColors
-        ? _additionalColorsAnimationController
+    return showAllColors!
+        ? _additionalColorsAnimationController!
             .reverse(from: 1.0)
-            .then((value) => _additionalColorsAnimationController.forward())
-        : _additionalColorsAnimationController.forward(from: 0.0);
+            .then((value) => _additionalColorsAnimationController!.forward())
+        : _additionalColorsAnimationController!.forward(from: 0.0);
   }
 
   void toggleAllColors() {
     animateAdditionalColorsTransition().then((value) => setState(() {
-          showAllColors = !showAllColors;
+          showAllColors = !showAllColors!;
         }));
   }
 
@@ -111,10 +111,10 @@ class _UserCreatedColorCardState extends State<UserCreatedColorCard>
       colorValuesSet
           ? _addColor(
               Color.fromARGB(
-                alphaChannel,
-                redChannel,
-                greenChannel,
-                blueChannel,
+                alphaChannel!,
+                redChannel!,
+                greenChannel!,
+                blueChannel!,
               ),
             )
           : toggleEnableColorMix();
@@ -124,7 +124,7 @@ class _UserCreatedColorCardState extends State<UserCreatedColorCard>
   }
 
   void resetColorChannelValues() {
-    _colorSliderAnimationController
+    _colorSliderAnimationController!
         .reverse(from: 1.0)
         .then((_) => setState(() {
               alphaChannel = 0;
@@ -132,7 +132,7 @@ class _UserCreatedColorCardState extends State<UserCreatedColorCard>
               greenChannel = 0;
               blueChannel = 0;
             }))
-        .then((__) => _colorSliderAnimationController.forward());
+        .then((__) => _colorSliderAnimationController!.forward());
   }
 
   void _addColor(Color color) {
@@ -165,14 +165,14 @@ class _UserCreatedColorCardState extends State<UserCreatedColorCard>
       vsync: this,
     );
 
-    _additionalColorsAnimationController.forward();
-    _colorSliderAnimationController.forward();
+    _additionalColorsAnimationController!.forward();
+    _colorSliderAnimationController!.forward();
   }
 
   @override
   void dispose() {
-    _additionalColorsAnimationController.dispose();
-    _colorSliderAnimationController.dispose();
+    _additionalColorsAnimationController!.dispose();
+    _colorSliderAnimationController!.dispose();
     super.dispose();
   }
 
@@ -232,7 +232,7 @@ class _UserCreatedColorCardState extends State<UserCreatedColorCard>
                         horizontal: 12.0,
                       ),
                       child: Text(
-                        "Show ${showAllColors ? 'less' : 'more'}",
+                        "Show ${showAllColors! ? 'less' : 'more'}",
                         style: LitTextStyles.sansSerif.copyWith(
                           color: Colors.white,
                           fontWeight: FontWeight.w700,
@@ -263,7 +263,7 @@ class _UserCreatedColorCardState extends State<UserCreatedColorCard>
                             )
                           : SizedBox(),
                     ),
-              showAllColors
+              showAllColors!
                   ? Align(
                       alignment: Alignment.centerRight,
                       child: LitRoundedElevatedButton(
@@ -312,20 +312,20 @@ class _UserCreatedColorCardState extends State<UserCreatedColorCard>
 }
 
 class UserCreatedColorGrid extends StatefulWidget {
-  final AnimationController additionalColorsAnimationController;
+  final AnimationController? additionalColorsAnimationController;
   final List<BoxShadow> boxShadow;
-  final bool showAllColors;
+  final bool? showAllColors;
   final List<UserCreatedColor> userColors;
   final void Function(Color) onSelectColorCallback;
-  final int selectedColorValue;
+  final int? selectedColorValue;
   const UserCreatedColorGrid({
-    Key key,
-    @required this.additionalColorsAnimationController,
-    @required this.boxShadow,
-    @required this.showAllColors,
-    @required this.userColors,
-    @required this.onSelectColorCallback,
-    @required this.selectedColorValue,
+    Key? key,
+    required this.additionalColorsAnimationController,
+    required this.boxShadow,
+    required this.showAllColors,
+    required this.userColors,
+    required this.onSelectColorCallback,
+    required this.selectedColorValue,
   }) : super(key: key);
   @override
   _UserCreatedColorGridState createState() => _UserCreatedColorGridState();
@@ -333,20 +333,20 @@ class UserCreatedColorGrid extends StatefulWidget {
 
 class _UserCreatedColorGridState extends State<UserCreatedColorGrid>
     with TickerProviderStateMixin {
-  bool _deletionEnabled;
+  bool? _deletionEnabled;
 
-  AnimationController _animationController;
+  AnimationController? _animationController;
 
   void _toggleDeletionEnabled() {
     setState(() {
-      _deletionEnabled = !_deletionEnabled;
+      _deletionEnabled = !_deletionEnabled!;
     });
-    if (_deletionEnabled) {
-      _animationController.repeat(reverse: true);
+    if (_deletionEnabled!) {
+      _animationController!.repeat(reverse: true);
     } else {
-      if (_animationController.isAnimating) {
-        _animationController.stop();
-        _animationController.animateTo(1.0);
+      if (_animationController!.isAnimating) {
+        _animationController!.stop();
+        _animationController!.animateTo(1.0);
       }
     }
     print("toggled deletion with new state $_deletionEnabled");
@@ -360,12 +360,12 @@ class _UserCreatedColorGridState extends State<UserCreatedColorGrid>
       vsync: this,
       duration: Duration(milliseconds: 1000),
     );
-    _animationController.forward();
+    _animationController!.forward();
   }
 
   @override
   void dispose() {
-    _animationController.dispose();
+    _animationController!.dispose();
     super.dispose();
   }
 
@@ -374,13 +374,13 @@ class _UserCreatedColorGridState extends State<UserCreatedColorGrid>
     return LayoutBuilder(
       builder: (context, constraints) {
         return AnimatedBuilder(
-          animation: widget.additionalColorsAnimationController,
+          animation: widget.additionalColorsAnimationController!,
           builder: (context, _) {
             List<Widget> columnChildren = [];
             const int columns = 5;
             int colorIndex = 0;
             for (int i = 0;
-                widget.showAllColors
+                widget.showAllColors!
                     ? (i < (widget.userColors.length / columns).ceil())
                     : (i < (1));
                 i++) {
@@ -391,8 +391,8 @@ class _UserCreatedColorGridState extends State<UserCreatedColorGrid>
                   colorRow.add(
                     AnimatedOpacity(
                       duration:
-                          widget.additionalColorsAnimationController.duration,
-                      opacity: widget.additionalColorsAnimationController.value,
+                          widget.additionalColorsAnimationController!.duration!,
+                      opacity: widget.additionalColorsAnimationController!.value,
                       child: _DeletableColorGridItem(
                         animation: _animationController,
                         boxShadow: widget.boxShadow,
@@ -425,28 +425,28 @@ class _UserCreatedColorGridState extends State<UserCreatedColorGrid>
 }
 
 class _DeletableColorGridItem extends StatefulWidget {
-  final bool deletionEnabled;
-  final Animation animation;
+  final bool? deletionEnabled;
+  final Animation? animation;
   final List<BoxShadow> boxShadow;
   final int index;
   final List<dynamic> userColors;
-  final int selectedColorValue;
+  final int? selectedColorValue;
   final void Function(Color) onSelectColorCallback;
   final BoxConstraints constraints;
   final int columns;
   final void Function() toggleDeletionEnabled;
   const _DeletableColorGridItem({
-    Key key,
-    @required this.deletionEnabled,
-    @required this.animation,
-    @required this.boxShadow,
-    @required this.index,
-    @required this.userColors,
-    @required this.selectedColorValue,
-    @required this.onSelectColorCallback,
-    @required this.constraints,
-    @required this.columns,
-    @required this.toggleDeletionEnabled,
+    Key? key,
+    required this.deletionEnabled,
+    required this.animation,
+    required this.boxShadow,
+    required this.index,
+    required this.userColors,
+    required this.selectedColorValue,
+    required this.onSelectColorCallback,
+    required this.constraints,
+    required this.columns,
+    required this.toggleDeletionEnabled,
   }) : super(key: key);
   @override
   _DeletableColorGridItemState createState() => _DeletableColorGridItemState();
@@ -454,10 +454,10 @@ class _DeletableColorGridItem extends StatefulWidget {
 
 class _DeletableColorGridItemState extends State<_DeletableColorGridItem> {
   Color _mapColor(UserCreatedColor userColor) {
-    int red = userColor.red;
-    int green = userColor.green;
-    int blue = userColor.blue;
-    int alpha = userColor.alpha;
+    int red = userColor.red!;
+    int green = userColor.green!;
+    int blue = userColor.blue!;
+    int alpha = userColor.alpha!;
     return Color.fromARGB(alpha, red, green, blue);
   }
 

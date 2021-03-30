@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';
 
 class LitSliderThumb extends SliderComponentShape {
-  final Color color;
+  final Color? color;
   final double height;
   final double width;
   final double radius;
@@ -11,20 +11,20 @@ class LitSliderThumb extends SliderComponentShape {
   final BoxShadow boxShadow;
   final double fontSize;
   final FontWeight fontWeight;
-  final Color textColor;
+  final Color? textColor;
   final bool displayValue;
   const LitSliderThumb({
-    @required this.color,
-    @required this.height,
-    @required this.width,
-    @required this.radius,
-    @required this.min,
-    @required this.max,
-    @required this.boxShadow,
-    @required this.fontSize,
-    @required this.fontWeight,
-    @required this.textColor,
-    @required this.displayValue,
+    required this.color,
+    required this.height,
+    required this.width,
+    required this.radius,
+    required this.min,
+    required this.max,
+    required this.boxShadow,
+    required this.fontSize,
+    required this.fontWeight,
+    required this.textColor,
+    required this.displayValue,
   });
 
   @override
@@ -36,21 +36,21 @@ class LitSliderThumb extends SliderComponentShape {
   void paint(
     PaintingContext context,
     Offset center, {
-    Animation<double> activationAnimation,
-    Animation<double> enableAnimation,
-    bool isDiscrete,
-    TextPainter labelPainter,
-    RenderBox parentBox,
-    SliderThemeData sliderTheme,
-    TextDirection textDirection,
-    double value,
-    double textScaleFactor,
-    Size sizeWithOverflow,
+    Animation<double>? activationAnimation,
+    Animation<double>? enableAnimation,
+    bool? isDiscrete,
+    TextPainter? labelPainter,
+    RenderBox? parentBox,
+    SliderThemeData? sliderTheme,
+    TextDirection? textDirection,
+    required double value,
+    double? textScaleFactor,
+    Size? sizeWithOverflow,
   }) {
     final Canvas canvas = context.canvas;
 
     final Paint thumbPaint = Paint()
-      ..color = color
+      ..color = color!
       ..style = PaintingStyle.fill;
 
     final Paint shadowPaint = Paint()

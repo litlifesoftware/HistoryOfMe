@@ -18,8 +18,8 @@ class DatabaseStateScreenBuilder extends StatefulWidget {
   final String localizationsAssetURL;
 
   const DatabaseStateScreenBuilder({
-    Key key,
-    @required this.localizationsAssetURL,
+    Key? key,
+    required this.localizationsAssetURL,
   }) : super(key: key);
   @override
   _DatabaseStateScreenBuilderState createState() =>
@@ -29,7 +29,7 @@ class DatabaseStateScreenBuilder extends StatefulWidget {
 class _DatabaseStateScreenBuilderState
     extends State<DatabaseStateScreenBuilder> {
   /// The currently inputed username.
-  String _username;
+  String? _username;
 
   /// Create a [HiveDBService] instance to access the database methods.
   HiveDBService _dbService = HiveDBService();
@@ -71,7 +71,7 @@ class _DatabaseStateScreenBuilderState
         builder: (context) => LitSignUpScreen(
           title: "What shall we call you?",
           usernameLabel:
-              LitLocalizations.of(context).getLocalizedValue("your_name"),
+              LitLocalizations.of(context)!.getLocalizedValue("your_name"),
           onSubmitButtonText: "THATS ME",
           showPasswordConfirmInput: false,
           showPasswordInput: false,

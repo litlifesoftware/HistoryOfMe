@@ -4,17 +4,17 @@ import 'package:lit_ui_kit/lit_ui_kit.dart';
 
 class SelectableBackdropPhotoCard extends StatelessWidget {
   final BackdropPhoto backdropPhoto;
-  final void Function(int) setSelectedImage;
+  final void Function(int?) setSelectedImage;
   final bool selected;
   final double borderRadius;
-  final AnimationController animationController;
+  final AnimationController? animationController;
   const SelectableBackdropPhotoCard({
-    Key key,
-    @required this.backdropPhoto,
-    @required this.setSelectedImage,
-    @required this.selected,
+    Key? key,
+    required this.backdropPhoto,
+    required this.setSelectedImage,
+    required this.selected,
     this.borderRadius = 16.0,
-    @required this.animationController,
+    required this.animationController,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -54,7 +54,7 @@ class SelectableBackdropPhotoCard extends StatelessWidget {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(8.0),
                     child: Image.asset(
-                      backdropPhoto.assetUrl,
+                      backdropPhoto.assetUrl!,
                       height: 150.0,
                       fit: BoxFit.fitHeight,
                     ),
@@ -63,11 +63,11 @@ class SelectableBackdropPhotoCard extends StatelessWidget {
               ),
               selected
                   ? AnimatedBuilder(
-                      animation: animationController,
+                      animation: animationController!,
                       builder: (context, child) {
                         return AnimatedOpacity(
-                          duration: animationController.duration,
-                          opacity: animationController.value,
+                          duration: animationController!.duration!,
+                          opacity: animationController!.value,
                           child: Stack(
                             children: [
                               AspectRatio(

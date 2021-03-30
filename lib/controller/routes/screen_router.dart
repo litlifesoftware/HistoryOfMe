@@ -22,14 +22,14 @@ class ScreenRouter {
   }
 
   /// The [LitRouteController] will handle the navigation logic.
-  LitRouteController _routeController;
+  late LitRouteController _routeController;
 
   /// Navigates the user to the [EntryDetailScreen].
   ///
   /// Provide the arguments that should be passed to the screen widget.
   void toDiaryEntryDetailScreen({
-    @required int listIndex,
-    @required String diaryEntryUid,
+    required int listIndex,
+    required String? diaryEntryUid,
   }) {
     final pushedWidget = EntryDetailScreen(
       listIndex: listIndex,
@@ -42,7 +42,7 @@ class ScreenRouter {
   ///
   /// Provide the arguments that should be passed to the screen widget.
   void toEntryEditingScreen({
-    @required DiaryEntry diaryEntry,
+    required DiaryEntry diaryEntry,
   }) {
     Widget pushedWidget = EntryEditingScreen(
       diaryEntry: diaryEntry,
@@ -54,7 +54,7 @@ class ScreenRouter {
   ///
   /// Provide the arguments that should be passed to the screen widget.
   void toBookmarkEditingScreen({
-    @required UserData userData,
+    required UserData? userData,
   }) {
     final pushedWidget = BookmarkEditingScreen(
       initialUserDataModel: userData,

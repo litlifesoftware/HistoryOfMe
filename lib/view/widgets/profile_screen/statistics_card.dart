@@ -11,7 +11,7 @@ class StatisticsCard extends StatefulWidget {
 }
 
 class _StatisticsCardState extends State<StatisticsCard> {
-  HiveQueryController queryController;
+  HiveQueryController? queryController;
 
   @override
   void initState() {
@@ -21,7 +21,7 @@ class _StatisticsCardState extends State<StatisticsCard> {
 
   @override
   Widget build(BuildContext context) {
-    bool isAvailable = queryController.totalDiaryEntries > 0;
+    bool isAvailable = queryController!.totalDiaryEntries > 0;
     return LitGradientCard(
       margin: EdgeInsets.symmetric(
         horizontal: isAvailable ? 18.0 : 24.0,
@@ -144,11 +144,11 @@ class _NoDataAvailableInfo extends StatelessWidget {
 }
 
 class _StatisticDataList extends StatelessWidget {
-  final HiveQueryController queryController;
+  final HiveQueryController? queryController;
 
   const _StatisticDataList({
-    Key key,
-    @required this.queryController,
+    Key? key,
+    required this.queryController,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -156,43 +156,43 @@ class _StatisticDataList extends StatelessWidget {
       children: [
         _EntryStatisticText(
           label: "Diary entries",
-          value: "${queryController.totalDiaryEntries}",
+          value: "${queryController!.totalDiaryEntries}",
         ),
         _EntryStatisticText(
           label: "Words written",
-          value: "${queryController.totalWordsWritten}",
+          value: "${queryController!.totalWordsWritten}",
         ),
         _EntryStatisticText(
           label: "Words per entry",
-          value: "${queryController.avgWordWritten.toStringAsFixed(2)}",
+          value: "${queryController!.avgWordWritten.toStringAsFixed(2)}",
         ),
         _EntryStatisticText(
           label: "Most words at once",
-          value: "${queryController.mostWordsWrittenAtOnce}",
+          value: "${queryController!.mostWordsWrittenAtOnce}",
         ),
         _EntryStatisticText(
           label: "Fewest words at once",
-          value: "${queryController.leastWordsWrittenAtOnce}",
+          value: "${queryController!.leastWordsWrittenAtOnce}",
         ),
         _EntryStatisticRichText(
           label: "Entries this week",
-          value: "${queryController.entriesThisWeek}",
+          value: "${queryController!.entriesThisWeek}",
           maxValue: "7",
         ),
         _EntryStatisticRichText(
           label: "Entries this month",
-          value: "${queryController.entriesThisMonth}",
+          value: "${queryController!.entriesThisMonth}",
           maxValue: "${DateTime.now().lastDayOfMonth()}",
         ),
         _EntryStatisticText(
           label: "Latest entry",
           value:
-              "${DateFormat.yMMMMd((Localizations.localeOf(context).languageCode)).format(queryController.latestEntryDate)}",
+              "${DateFormat.yMMMMd((Localizations.localeOf(context).languageCode)).format(queryController!.latestEntryDate)}",
         ),
         _EntryStatisticText(
           label: "First entry",
           value:
-              "${DateFormat.yMMMMd((Localizations.localeOf(context).languageCode)).format(queryController.firstEntryDate)}",
+              "${DateFormat.yMMMMd((Localizations.localeOf(context).languageCode)).format(queryController!.firstEntryDate)}",
         ),
       ],
     );
@@ -204,9 +204,9 @@ class _EntryStatistic extends StatelessWidget {
   final Widget value;
 
   const _EntryStatistic({
-    Key key,
-    @required this.label,
-    @required this.value,
+    Key? key,
+    required this.label,
+    required this.value,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -237,9 +237,9 @@ class _EntryStatisticText extends StatelessWidget {
   final String value;
 
   const _EntryStatisticText({
-    Key key,
-    @required this.label,
-    @required this.value,
+    Key? key,
+    required this.label,
+    required this.value,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -262,10 +262,10 @@ class _EntryStatisticRichText extends StatelessWidget {
   final String value;
   final String maxValue;
   const _EntryStatisticRichText({
-    Key key,
-    @required this.label,
-    @required this.value,
-    @required this.maxValue,
+    Key? key,
+    required this.label,
+    required this.value,
+    required this.maxValue,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {

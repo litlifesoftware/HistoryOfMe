@@ -9,12 +9,12 @@ import 'package:history_of_me/view/widgets/shared/bookmark/bookmark_cover.dart';
 import 'bookmark_title.dart';
 
 class BookmarkFront extends StatelessWidget implements BookmarkCover {
-  final UserData userData;
+  final UserData? userData;
   final double maxWidth;
   final double radius;
   const BookmarkFront({
-    Key key,
-    @required this.userData,
+    Key? key,
+    required this.userData,
     this.maxWidth = 400.0,
     this.radius = 5.0,
   }) : super(key: key);
@@ -36,12 +36,12 @@ class BookmarkFront extends StatelessWidget implements BookmarkCover {
 }
 
 class _BookmarkFrontArt extends StatefulWidget {
-  final UserData userData;
+  final UserData? userData;
   final double radius;
   const _BookmarkFrontArt({
-    Key key,
-    @required this.userData,
-    @required this.radius,
+    Key? key,
+    required this.userData,
+    required this.radius,
   }) : super(key: key);
 
   @override
@@ -50,7 +50,7 @@ class _BookmarkFrontArt extends StatefulWidget {
 
 class __BookmarkFrontArtState extends State<_BookmarkFrontArt>
     with TickerProviderStateMixin {
-  AnimationController _patternAnimationController;
+  AnimationController? _patternAnimationController;
 
   @override
   void initState() {
@@ -59,19 +59,19 @@ class __BookmarkFrontArtState extends State<_BookmarkFrontArt>
       vsync: this,
       duration: Duration(milliseconds: 4000),
     );
-    _patternAnimationController.forward();
-    _patternAnimationController.addStatusListener((status) {
+    _patternAnimationController!.forward();
+    _patternAnimationController!.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
-        _patternAnimationController.reverse();
+        _patternAnimationController!.reverse();
       } else if (status == AnimationStatus.dismissed) {
-        _patternAnimationController.forward();
+        _patternAnimationController!.forward();
       }
     });
   }
 
   @override
   void dispose() {
-    _patternAnimationController.dispose();
+    _patternAnimationController!.dispose();
     super.dispose();
   }
 
@@ -85,7 +85,7 @@ class __BookmarkFrontArtState extends State<_BookmarkFrontArt>
             widget.radius,
           ))),
         ),
-        DesignType.values[widget.userData.designPatternIndex] ==
+        DesignType.values[widget.userData!.designPatternIndex!] ==
                 DesignType.stiped
             ? StripedDesign(
                 radius: widget.radius,

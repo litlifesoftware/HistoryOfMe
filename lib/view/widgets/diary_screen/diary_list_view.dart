@@ -11,20 +11,20 @@ import 'diary_list_tile.dart';
 import 'diary_filter_header.dart';
 
 class DiaryListView extends StatelessWidget {
-  final ScrollController scrollController;
-  final AnimationController animationController;
-  final UserData userData;
+  final ScrollController? scrollController;
+  final AnimationController? animationController;
+  final UserData? userData;
   final List<dynamic> diaryEntriesListSorted;
-  final bool showFavoriteEntriesOnly;
+  final bool? showFavoriteEntriesOnly;
   final void Function() toggleShowFavoritesOnly;
   const DiaryListView({
-    Key key,
-    @required this.scrollController,
-    @required this.animationController,
-    @required this.userData,
-    @required this.diaryEntriesListSorted,
-    @required this.showFavoriteEntriesOnly,
-    @required this.toggleShowFavoritesOnly,
+    Key? key,
+    required this.scrollController,
+    required this.animationController,
+    required this.userData,
+    required this.diaryEntriesListSorted,
+    required this.showFavoriteEntriesOnly,
+    required this.toggleShowFavoritesOnly,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -48,7 +48,7 @@ class DiaryListView extends StatelessWidget {
                     userData: userData,
                   ),
                   DiaryFilterHeader(
-                    filteredLength: showFavoriteEntriesOnly
+                    filteredLength: showFavoriteEntriesOnly!
                         ? diaryEntriesListSorted
                             .where((entry) {
                               return entry.favorite;
@@ -84,14 +84,14 @@ class DiaryListView extends StatelessWidget {
 }
 
 class _NestedScrollViewBody extends StatefulWidget {
-  final AnimationController animationController;
+  final AnimationController? animationController;
   final List<dynamic> diaryEntriesListSorted;
-  final bool showFavoritesOnly;
+  final bool? showFavoritesOnly;
   const _NestedScrollViewBody({
-    Key key,
-    @required this.animationController,
-    @required this.diaryEntriesListSorted,
-    @required this.showFavoritesOnly,
+    Key? key,
+    required this.animationController,
+    required this.diaryEntriesListSorted,
+    required this.showFavoritesOnly,
   }) : super(key: key);
 
   @override
@@ -105,12 +105,12 @@ class __NestedScrollViewBodyState extends State<_NestedScrollViewBody> {
         .isEmpty;
   }
 
-  bool get showFavoritesOnly {
+  bool? get showFavoritesOnly {
     return widget.showFavoritesOnly;
   }
 
   bool get showInfoMessage {
-    return noFavoritesAvailable && showFavoritesOnly;
+    return noFavoritesAvailable && showFavoritesOnly!;
   }
 
   @override
@@ -132,8 +132,8 @@ class __NestedScrollViewBodyState extends State<_NestedScrollViewBody> {
                   itemBuilder: (BuildContext context, int listIndex) {
                     final DiaryEntry diaryEntry =
                         widget.diaryEntriesListSorted[listIndex];
-                    return showFavoritesOnly
-                        ? diaryEntry.favorite
+                    return showFavoritesOnly!
+                        ? diaryEntry.favorite!
                             ? DiaryListTile(
                                 animationController: widget.animationController,
                                 listIndex: listIndex,
@@ -152,25 +152,25 @@ class __NestedScrollViewBodyState extends State<_NestedScrollViewBody> {
 }
 
 class _NoFavoriteEntries extends StatelessWidget {
-  final AnimationController animationController;
+  final AnimationController? animationController;
 
   const _NoFavoriteEntries({
-    Key key,
-    @required this.animationController,
+    Key? key,
+    required this.animationController,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
-      animation: animationController,
+      animation: animationController!,
       builder: (context, _) {
         return Transform(
           transform: Matrix4.translationValues(
-            -30 + (30 * animationController.value),
+            -30 + (30 * animationController!.value),
             0,
             0,
           ),
           child: FadeTransition(
-            opacity: animationController,
+            opacity: animationController!,
             child: Padding(
               padding: const EdgeInsets.symmetric(
                 vertical: 32.0,

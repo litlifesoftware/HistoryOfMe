@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';
 
 class UnselectedCreateTile extends StatelessWidget {
-  final String label;
+  final String? label;
 
-  const UnselectedCreateTile({Key key, this.label}) : super(key: key);
+  const UnselectedCreateTile({Key? key, this.label}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Padding(

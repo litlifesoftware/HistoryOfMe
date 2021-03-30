@@ -5,9 +5,9 @@ class BookmarkFittedBox extends StatelessWidget {
   final double maxWidth;
   final Widget child;
   const BookmarkFittedBox({
-    Key key,
-    @required this.maxWidth,
-    @required this.child,
+    Key? key,
+    required this.maxWidth,
+    required this.child,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {

@@ -3,17 +3,17 @@ import 'package:lit_ui_kit/lit_ui_kit.dart';
 
 class QuoteCard extends StatefulWidget {
   //final UserData userDataModel;
-  final String initialQuote;
-  final String initialAuthor;
+  final String? initialQuote;
+  final String? initialAuthor;
   final void Function(String) onQuoteChanged;
   final void Function(String) onAuthorChanged;
   const QuoteCard({
-    Key key,
+    Key? key,
     //@required this.userDataModel,
-    @required this.initialQuote,
-    @required this.initialAuthor,
-    @required this.onAuthorChanged,
-    @required this.onQuoteChanged,
+    required this.initialQuote,
+    required this.initialAuthor,
+    required this.onAuthorChanged,
+    required this.onQuoteChanged,
   }) : super(key: key);
 
   @override
@@ -23,8 +23,8 @@ class QuoteCard extends StatefulWidget {
 class _QuoteCardState extends State<QuoteCard> {
   final FocusNode _quoteFocus = FocusNode();
   final FocusNode _authorFocus = FocusNode();
-  TextEditingController _quoteEditingController;
-  TextEditingController _authorEditingController;
+  late TextEditingController _quoteEditingController;
+  late TextEditingController _authorEditingController;
 
   @override
   void initState() {

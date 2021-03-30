@@ -5,13 +5,13 @@ import 'package:lit_ui_kit/lit_ui_kit.dart';
 import 'animated_updated_label.dart';
 
 class EditableItemMetaInfo extends StatefulWidget {
-  final int lastUpdateTimestamp;
+  final int? lastUpdateTimestamp;
   final bool showUnsavedBadge;
 
   const EditableItemMetaInfo({
-    Key key,
-    @required this.lastUpdateTimestamp,
-    @required this.showUnsavedBadge,
+    Key? key,
+    required this.lastUpdateTimestamp,
+    required this.showUnsavedBadge,
   }) : super(key: key);
 
   @override
@@ -20,7 +20,7 @@ class EditableItemMetaInfo extends StatefulWidget {
 
 class _EditableItemMetaInfoState extends State<EditableItemMetaInfo>
     with TickerProviderStateMixin {
-  AnimationController _animationController;
+  AnimationController? _animationController;
 
   @override
   void initState() {
@@ -30,13 +30,13 @@ class _EditableItemMetaInfoState extends State<EditableItemMetaInfo>
       ),
       vsync: this,
     );
-    _animationController.repeat(reverse: true);
+    _animationController!.repeat(reverse: true);
     super.initState();
   }
 
   @override
   void dispose() {
-    _animationController.dispose();
+    _animationController!.dispose();
     super.dispose();
   }
 
@@ -60,23 +60,23 @@ class _EditableItemMetaInfoState extends State<EditableItemMetaInfo>
 }
 
 class _AnimatedUnchangedBadge extends StatelessWidget {
-  final Animation animation;
+  final Animation? animation;
 
   const _AnimatedUnchangedBadge({
-    Key key,
-    @required this.animation,
+    Key? key,
+    required this.animation,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
-      animation: animation,
+      animation: animation!,
       builder: (context, _) {
         return LitTextBadge(
           backgroundColor: Color.lerp(
-              LitColors.mediumGrey, Colors.white, ((0.8 * animation.value))),
+              LitColors.mediumGrey, Colors.white, 0.8 * animation!.value),
           label: "Unsaved",
           textColor: Color.lerp(Colors.white, LitColors.mediumGrey,
-              0.1 + (animation.value * 0.9)),
+              0.1 + (animation!.value * 0.9)),
         );
       },
     );

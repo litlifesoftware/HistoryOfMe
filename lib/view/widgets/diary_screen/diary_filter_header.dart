@@ -7,16 +7,16 @@ class DiaryFilterHeader extends StatefulWidget {
   final int filteredLength;
   final TextStyle textStyle;
   final TextStyle accentTextStyle;
-  final bool showFavoritesOnly;
+  final bool? showFavoritesOnly;
   final void Function() toggleShowFavoritesOnly;
   final double landscapeWidthFactor;
   const DiaryFilterHeader({
-    Key key,
-    @required this.filteredLength,
-    @required this.textStyle,
-    @required this.accentTextStyle,
-    @required this.showFavoritesOnly,
-    @required this.toggleShowFavoritesOnly,
+    Key? key,
+    required this.filteredLength,
+    required this.textStyle,
+    required this.accentTextStyle,
+    required this.showFavoritesOnly,
+    required this.toggleShowFavoritesOnly,
     this.landscapeWidthFactor = 0.75,
   }) : super(key: key);
 
@@ -26,7 +26,7 @@ class DiaryFilterHeader extends StatefulWidget {
 
 class _DiaryFilterHeaderState extends State<DiaryFilterHeader>
     with TickerProviderStateMixin {
-  AnimationController _animationController;
+  late AnimationController _animationController;
 
   double get portraitWidth {
     return MediaQuery.of(context).size.width * 0.75;
@@ -86,7 +86,7 @@ class _DiaryFilterHeaderState extends State<DiaryFilterHeader>
                     animation: _animationController,
                     builder: (context, _) {
                       return AnimatedOpacity(
-                        duration: _animationController.duration,
+                        duration: _animationController.duration!,
                         opacity: _animationController.value,
                         child: Padding(
                           padding: EdgeInsets.symmetric(
@@ -100,7 +100,7 @@ class _DiaryFilterHeaderState extends State<DiaryFilterHeader>
                                 style: widget.textStyle,
                                 children: [
                                   TextSpan(text: "${widget.filteredLength} "),
-                                  widget.showFavoritesOnly
+                                  widget.showFavoritesOnly!
                                       ? TextSpan(
                                           text: " favorite ",
                                           style: widget.accentTextStyle)
@@ -126,14 +126,14 @@ class _DiaryFilterHeaderState extends State<DiaryFilterHeader>
                       enabledTitle: Icon(
                         LitIcons.heart_solid,
                         size: 16.0,
-                        color: widget.showFavoritesOnly
+                        color: widget.showFavoritesOnly!
                             ? widget.accentTextStyle.color
                             : widget.textStyle.color,
                       ),
                       disabledTitle: Text(
                         "all",
                         style: widget.textStyle.copyWith(
-                          color: widget.showFavoritesOnly
+                          color: widget.showFavoritesOnly!
                               ? widget.textStyle.color
                               : widget.accentTextStyle.color,
                         ),

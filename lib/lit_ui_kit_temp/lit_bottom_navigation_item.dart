@@ -7,24 +7,24 @@ class LitBottomNavigationItem extends StatelessWidget {
   final IconData iconSelected;
   final bool selected;
   final void Function(int) setSelectedTab;
-  final AnimationController animationController;
+  final AnimationController? animationController;
   const LitBottomNavigationItem({
-    Key key,
-    @required this.index,
-    @required this.icon,
-    @required this.iconSelected,
-    @required this.selected,
-    @required this.setSelectedTab,
-    @required this.animationController,
+    Key? key,
+    required this.index,
+    required this.icon,
+    required this.iconSelected,
+    required this.selected,
+    required this.setSelectedTab,
+    required this.animationController,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
-      animation: animationController,
+      animation: animationController!,
       builder: (context, _) {
         return AnimatedOpacity(
-          opacity: animationController.value,
-          duration: animationController.duration,
+          opacity: animationController!.value,
+          duration: animationController!.duration!,
           child: InkWell(
               onTap: selected
                   ? () {}
@@ -60,7 +60,7 @@ class LitBottomNavigationItem extends StatelessWidget {
                       ),
                     ),
                   ),
-                  selected && animationController.isAnimating
+                  selected && animationController!.isAnimating
                       ? Align(
                           alignment: Alignment.center,
                           child: Padding(
@@ -69,13 +69,13 @@ class LitBottomNavigationItem extends StatelessWidget {
                               horizontal: 8.0,
                             ),
                             child: AnimatedOpacity(
-                              duration: animationController.duration,
+                              duration: animationController!.duration!,
                               opacity:
-                                  0.125 + (animationController.value * 0.875),
+                                  0.125 + (animationController!.value * 0.875),
                               child: Transform(
                                 transform: Matrix4.translationValues(
                                   0,
-                                  10.0 - (10.0 * (animationController.value)),
+                                  10.0 - (10.0 * (animationController!.value)),
                                   0,
                                 ),
                                 child: Container(
@@ -95,7 +95,7 @@ class LitBottomNavigationItem extends StatelessWidget {
                           ),
                         )
                       : SizedBox(),
-                  selected && animationController.isCompleted
+                  selected && animationController!.isCompleted
                       ? Padding(
                           padding: const EdgeInsets.symmetric(
                             vertical: 8.0,

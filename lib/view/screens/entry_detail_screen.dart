@@ -21,13 +21,13 @@ class EntryDetailScreen extends StatefulWidget {
   //final int index;
   //final DiaryEntry diaryEntry;
   final int listIndex;
-  final String diaryEntryUid;
+  final String? diaryEntryUid;
   final double portraitPhotoHeight;
   final double landscapePhotoHeight;
   const EntryDetailScreen({
-    Key key,
-    @required this.listIndex,
-    @required this.diaryEntryUid,
+    Key? key,
+    required this.listIndex,
+    required this.diaryEntryUid,
     //@required this.index,
     //@required this.diaryEntry,
     this.portraitPhotoHeight = 2.9,
@@ -40,12 +40,12 @@ class EntryDetailScreen extends StatefulWidget {
 
 class _EntryDetailScreenState extends State<EntryDetailScreen>
     with TickerProviderStateMixin {
-  bool backdropPhotosLoading;
+  bool? backdropPhotosLoading;
   List<BackdropPhoto> backdropPhotos = [];
-  ScrollController _scrollController;
-  SettingsPanelController _settingsPanelController;
-  HiveQueryController _hiveQueryController;
-  ScreenRouter _screenRouter;
+  ScrollController? _scrollController;
+  late SettingsPanelController _settingsPanelController;
+  HiveQueryController? _hiveQueryController;
+  late ScreenRouter _screenRouter;
 
   // final List<String> imageNames = [
   //   "assets/images/niilo-isotalo--BZc9Ee1qo0-unsplash.jpg",
@@ -93,11 +93,11 @@ class _EntryDetailScreenState extends State<EntryDetailScreen>
   }
 
   bool _shouldShowNextButton(DiaryEntry diaryEntry) {
-    return _hiveQueryController.nextEntryExistsByUID(diaryEntry.uid);
+    return _hiveQueryController!.nextEntryExistsByUID(diaryEntry.uid);
   }
 
   bool _shouldShowPreviousButton(DiaryEntry diaryEntry) {
-    return _hiveQueryController.previousEntryExistsByUID(diaryEntry.uid);
+    return _hiveQueryController!.previousEntryExistsByUID(diaryEntry.uid);
   }
 
   void _onEdit(DiaryEntry diaryEntry) {
@@ -123,7 +123,7 @@ class _EntryDetailScreenState extends State<EntryDetailScreen>
         // Decrease the index by one to artificially lower the total entries count
         // and therefore increase the entries number on the label text.
         listIndex: widget.listIndex,
-        diaryEntryUid: _hiveQueryController.getNextDiaryEntry(diaryEntry).uid,
+        diaryEntryUid: _hiveQueryController!.getNextDiaryEntry(diaryEntry).uid,
       ),
     );
   }
@@ -135,7 +135,7 @@ class _EntryDetailScreenState extends State<EntryDetailScreen>
         // and therefore lower the entries number on the label text.
         listIndex: widget.listIndex,
         diaryEntryUid:
-            _hiveQueryController.getPreviousDiaryEntry(diaryEntry).uid,
+            _hiveQueryController!.getPreviousDiaryEntry(diaryEntry).uid,
       ),
     );
   }
@@ -154,7 +154,7 @@ class _EntryDetailScreenState extends State<EntryDetailScreen>
 
   @override
   void dispose() {
-    _scrollController.dispose();
+    _scrollController!.dispose();
     super.dispose();
   }
 
@@ -184,10 +184,10 @@ class _EntryDetailScreenState extends State<EntryDetailScreen>
       ),
       body: ValueListenableBuilder(
         valueListenable: HiveDBService().getDiaryEntries(),
-        builder: (BuildContext context, Box<DiaryEntry> entriesBox, Widget _) {
+        builder: (BuildContext context, Box<DiaryEntry> entriesBox, Widget? _) {
           /// Ensure the entry has not been deleted yet (if it's the latest one available).
 
-          final DiaryEntry diaryEntry = entriesBox.get(widget.diaryEntryUid);
+          final DiaryEntry? diaryEntry = entriesBox.get(widget.diaryEntryUid);
 
           if (diaryEntry != null) {
             // final List<dynamic> diaryEntriesSorted =
@@ -195,9 +195,9 @@ class _EntryDetailScreenState extends State<EntryDetailScreen>
 
             final int lastIndex = (entriesBox.length - 1);
 
-            final bool _isFirst = entriesBox.getAt(0).uid == diaryEntry.uid;
+            final bool _isFirst = entriesBox.getAt(0)!.uid == diaryEntry.uid;
             final bool _isLast =
-                entriesBox.getAt(lastIndex).uid == diaryEntry.uid;
+                entriesBox.getAt(lastIndex)!.uid == diaryEntry.uid;
 
             // final int _indexChronologically =
             //     _hiveQueryController.getIndexChronologically(diaryEntry);
@@ -301,12 +301,12 @@ class _EntryDetailFooter extends StatelessWidget {
   final void Function() onNextPressed;
   final List<BoxShadow> buttonBoxShadow;
   const _EntryDetailFooter({
-    Key key,
-    @required this.moreOptionsPressed,
-    @required this.showPreviousButton,
-    @required this.showNextButton,
-    @required this.onPreviousPressed,
-    @required this.onNextPressed,
+    Key? key,
+    required this.moreOptionsPressed,
+    required this.showPreviousButton,
+    required this.showNextButton,
+    required this.onPreviousPressed,
+    required this.onNextPressed,
     this.buttonBoxShadow = const [
       const BoxShadow(
         blurRadius: 6.0,
@@ -384,7 +384,7 @@ class _EntryDetailFooter extends StatelessWidget {
                               )
                             ],
                           ),
-                          accentColor: Colors.grey[200],
+                          accentColor: Colors.grey[200]!,
                           onPressed: onPreviousPressed,
                         ),
                       )
@@ -419,7 +419,7 @@ class _EntryDetailFooter extends StatelessWidget {
                               ),
                             ],
                           ),
-                          accentColor: Colors.grey[200],
+                          accentColor: Colors.grey[200]!,
                           onPressed: onNextPressed,
                         ),
                       )
@@ -461,7 +461,7 @@ class EllipsisIcon extends StatefulWidget {
   final List<BoxShadow> boxShadow;
 
   const EllipsisIcon(
-      {Key key,
+      {Key? key,
       this.animated = true,
       this.axis = Axis.horizontal,
       this.dotHeight = 8.0,
@@ -486,7 +486,7 @@ class EllipsisIcon extends StatefulWidget {
 
 class _EllipsisIconState extends State<EllipsisIcon>
     with TickerProviderStateMixin {
-  AnimationController _animationController;
+  AnimationController? _animationController;
 
   @override
   void initState() {
@@ -498,20 +498,20 @@ class _EllipsisIconState extends State<EllipsisIcon>
       vsync: this,
     );
     if (widget.animated) {
-      _animationController.forward();
+      _animationController!.forward();
     }
   }
 
   @override
   void dispose() {
-    _animationController.dispose();
+    _animationController!.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
-      animation: _animationController,
+      animation: _animationController!,
       builder: (context, _) {
         final List<Widget> children = [];
         for (int i = 0; i < 3; i++) {
@@ -542,7 +542,7 @@ class _EllipsisIconState extends State<EllipsisIcon>
 }
 
 class _Dot extends StatelessWidget {
-  final AnimationController animationController;
+  final AnimationController? animationController;
   final bool animated;
   final double height;
   final double width;
@@ -550,21 +550,21 @@ class _Dot extends StatelessWidget {
   final List<BoxShadow> boxShadow;
   final Axis axis;
   const _Dot({
-    Key key,
-    @required this.animationController,
-    @required this.animated,
-    @required this.height,
-    @required this.width,
-    @required this.color,
-    @required this.boxShadow,
-    @required this.axis,
+    Key? key,
+    required this.animationController,
+    required this.animated,
+    required this.height,
+    required this.width,
+    required this.color,
+    required this.boxShadow,
+    required this.axis,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Transform(
       transform: animated
           ? Matrix4.translationValues(
-              -8.0 + 8.0 * (animationController.value),
+              -8.0 + 8.0 * (animationController!.value),
               0,
               0,
             )

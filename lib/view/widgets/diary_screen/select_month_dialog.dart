@@ -8,9 +8,9 @@ class SelectMonthDialog extends StatefulWidget {
   final void Function(int) setDisplayedMonthCallback;
   final List<String> months;
   const SelectMonthDialog({
-    Key key,
-    @required this.setDisplayedMonthCallback,
-    @required this.months,
+    Key? key,
+    required this.setDisplayedMonthCallback,
+    required this.months,
   }) : super(key: key);
 
   @override

@@ -84,7 +84,7 @@ class LitRouteController {
   /// This can be done to avoid multiple screens stacking up and to avoid the need of
   /// tapping the back button multiple times to e.g. go back to the home screen.
   void replaceCurrentWidget({
-    @required Widget newWidget,
+    required Widget newWidget,
   }) {
     resetFocus();
     // Check if replacing the current [Widget] is even possible by checking if the widget

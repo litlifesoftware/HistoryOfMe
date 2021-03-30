@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';
 
 class EditableTitleHeader extends StatelessWidget {
-  final TextEditingController textEditingController;
-  final FocusNode focusNode;
+  final TextEditingController? textEditingController;
+  final FocusNode? focusNode;
   final EdgeInsets padding;
   const EditableTitleHeader({
-    Key key,
-    @required this.textEditingController,
-    @required this.focusNode,
+    Key? key,
+    required this.textEditingController,
+    required this.focusNode,
     this.padding = const EdgeInsets.symmetric(
       horizontal: 25.0,
       vertical: 4.0,
@@ -19,8 +19,8 @@ class EditableTitleHeader extends StatelessWidget {
     return Padding(
       padding: padding,
       child: EditableText(
-        controller: textEditingController,
-        focusNode: focusNode,
+        controller: textEditingController!,
+        focusNode: focusNode!,
         style: LitTextStyles.sansSerif.copyWith(
           fontSize: 17.4,
           letterSpacing: 0.22,

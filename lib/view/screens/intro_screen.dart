@@ -7,8 +7,8 @@ class IntroScreen extends StatefulWidget {
   final void Function() onStartCallback;
 
   const IntroScreen({
-    Key key,
-    @required this.onStartCallback,
+    Key? key,
+    required this.onStartCallback,
   }) : super(key: key);
   @override
   _IntroScreenState createState() => _IntroScreenState();

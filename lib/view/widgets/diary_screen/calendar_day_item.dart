@@ -4,20 +4,20 @@ import 'package:lit_ui_kit/lit_ui_kit.dart';
 class CalendarDayItem extends StatefulWidget {
   final BoxConstraints constraints;
   final DateTime displayedDate;
-  final DateTime templateDate;
-  final DateTime selectedDate;
+  final DateTime? templateDate;
+  final DateTime? selectedDate;
   final void Function(DateTime date) selectDateCallback;
   final void Function() exclusiveMonthCallback;
   final void Function() futureDateCallback;
   const CalendarDayItem({
-    Key key,
-    @required this.constraints,
-    @required this.displayedDate,
-    @required this.templateDate,
-    @required this.selectDateCallback,
-    @required this.selectedDate,
-    @required this.exclusiveMonthCallback,
-    @required this.futureDateCallback,
+    Key? key,
+    required this.constraints,
+    required this.displayedDate,
+    required this.templateDate,
+    required this.selectDateCallback,
+    required this.selectedDate,
+    required this.exclusiveMonthCallback,
+    required this.futureDateCallback,
   }) : super(key: key);
 
   @override
@@ -26,7 +26,7 @@ class CalendarDayItem extends StatefulWidget {
 
 class _CalendarDayItemState extends State<CalendarDayItem> {
   void _onSelect() {
-    if (widget.displayedDate.month == widget.templateDate.month) {
+    if (widget.displayedDate.month == widget.templateDate!.month) {
       if (widget.displayedDate.isBefore(DateTime.now())) {
         widget.selectDateCallback(widget.displayedDate);
       } else {
@@ -81,7 +81,7 @@ class _CalendarDayItemState extends State<CalendarDayItem> {
                 style: LitTextStyles.sansSerif.copyWith(
                     fontSize: 16.0,
                     color:
-                        widget.displayedDate.month == widget.templateDate.month
+                        widget.displayedDate.month == widget.templateDate!.month
                             ? widget.selectedDate == widget.displayedDate
                                 ? Colors.white
                                 : HexColor('#7a7a7a')

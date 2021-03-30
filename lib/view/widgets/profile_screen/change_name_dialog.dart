@@ -7,11 +7,11 @@ import 'package:history_of_me/model/user_data.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';
 
 class ChangeNameDialog extends StatefulWidget {
-  final UserData userData;
+  final UserData? userData;
 
   const ChangeNameDialog({
-    Key key,
-    @required this.userData,
+    Key? key,
+    required this.userData,
   }) : super(key: key);
 
   @override
@@ -19,16 +19,16 @@ class ChangeNameDialog extends StatefulWidget {
 }
 
 class _ChangeNameDialogState extends State<ChangeNameDialog> {
-  TextEditingController _nameController;
-  FocusNode _focusNode;
-  String _updatedName;
+  late TextEditingController _nameController;
+  late FocusNode _focusNode;
+  String? _updatedName;
 
   void _onCancel() {
     LitRouteController(context).closeDialog();
   }
 
   bool get _isChanged {
-    return _nameController.text != widget.userData.name;
+    return _nameController.text != widget.userData!.name;
   }
 
   void _defocus() {
@@ -44,7 +44,7 @@ class _ChangeNameDialogState extends State<ChangeNameDialog> {
 
   void _onSubmit() {
     print("${_nameController.text} was submitted");
-    HiveDBService().updateUsername(widget.userData, _updatedName);
+    HiveDBService().updateUsername(widget.userData!, _updatedName);
     LitRouteController(context).closeDialog();
   }
 
@@ -53,10 +53,10 @@ class _ChangeNameDialogState extends State<ChangeNameDialog> {
     super.initState();
 
     _nameController = TextEditingController(
-      text: widget.userData.name,
+      text: widget.userData!.name,
     )..addListener(_onChange);
 
-    _updatedName = widget.userData.name;
+    _updatedName = widget.userData!.name;
     _focusNode = FocusNode();
   }
 

@@ -5,8 +5,8 @@ class LitDraggable extends StatefulWidget {
   final Widget child;
   final Offset initialDragOffset;
   const LitDraggable({
-    Key key,
-    @required this.child,
+    Key? key,
+    required this.child,
     this.initialDragOffset = const Offset(0.0, 0.0),
   }) : super(key: key);
   @override
@@ -15,11 +15,11 @@ class LitDraggable extends StatefulWidget {
 
 class _LitDraggableState extends State<LitDraggable>
     with TickerProviderStateMixin {
-  AnimationController _dragAnimationController;
+  late AnimationController _dragAnimationController;
 
   //Offset draggedOffset = Offset(0, 0);
-  double draggedDx;
-  double draggedDy;
+  double? draggedDx;
+  double? draggedDy;
 
   void _setDraggedOffset(double dx, double dy) {
     _dragAnimationController
@@ -40,9 +40,9 @@ class _LitDraggableState extends State<LitDraggable>
 
   void _onDragEnd(Offset dragEndOffset) {
     final double adjustedHeight =
-        MediaQuery.of(context).size.height - oldSize.height - 30;
+        MediaQuery.of(context).size.height - oldSize!.height - 30;
     final double adjustedWidth =
-        MediaQuery.of(context).size.width - oldSize.width;
+        MediaQuery.of(context).size.width - oldSize!.width;
     print("Dragged dx:${dragEndOffset.dx} dy:${dragEndOffset.dy}");
     print("Size dx: $adjustedWidth dy:$adjustedHeight");
     // If dragged inside viewable screen area
@@ -92,13 +92,13 @@ class _LitDraggableState extends State<LitDraggable>
   }
 
   GlobalKey<State<StatefulWidget>> widgetKey = GlobalKey();
-  Size oldSize = Size(0.0, 0.0);
+  Size? oldSize = Size(0.0, 0.0);
 
   void postFrameCallback(_) {
-    BuildContext context = widgetKey.currentContext;
+    BuildContext? context = widgetKey.currentContext;
     if (context == null) return;
 
-    Size newSize = context.size;
+    Size? newSize = context.size;
     if (oldSize == newSize) return;
 
     oldSize = newSize;
@@ -123,7 +123,7 @@ class _LitDraggableState extends State<LitDraggable>
 
   @override
   Widget build(BuildContext context) {
-    SchedulerBinding.instance.addPostFrameCallback(postFrameCallback);
+    SchedulerBinding.instance!.addPostFrameCallback(postFrameCallback);
     return Container(
       key: widgetKey,
       child: AnimatedBuilder(
@@ -158,15 +158,15 @@ class _LitDraggableState extends State<LitDraggable>
 class _Feedback extends StatefulWidget {
   final Widget child;
   const _Feedback({
-    Key key,
-    @required this.child,
+    Key? key,
+    required this.child,
   }) : super(key: key);
   @override
   __FeedbackState createState() => __FeedbackState();
 }
 
 class __FeedbackState extends State<_Feedback> with TickerProviderStateMixin {
-  AnimationController _animationController;
+  late AnimationController _animationController;
 
   @override
   void initState() {

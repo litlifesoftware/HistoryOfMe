@@ -7,9 +7,9 @@ class LitSettingsFooter extends StatelessWidget {
   final Widget child;
 
   const LitSettingsFooter({
-    Key key,
+    Key? key,
     this.title = "Settings",
-    @required this.child,
+    required this.child,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {

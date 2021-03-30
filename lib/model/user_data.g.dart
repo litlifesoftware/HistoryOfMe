@@ -17,15 +17,15 @@ class UserDataAdapter extends TypeAdapter<UserData> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return UserData(
-      name: fields[0] as String,
-      bookmarkColor: fields[1] as int,
-      stripeCount: fields[2] as int,
-      dotSize: fields[3] as int,
-      animated: fields[4] as bool,
-      quote: fields[5] as String,
-      designPatternIndex: fields[6] as int,
-      quoteAuthor: fields[7] as String,
-      lastUpdated: fields[8] as int,
+      name: fields[0] as String?,
+      bookmarkColor: fields[1] as int?,
+      stripeCount: fields[2] as int?,
+      dotSize: fields[3] as int?,
+      animated: fields[4] as bool?,
+      quote: fields[5] as String?,
+      designPatternIndex: fields[6] as int?,
+      quoteAuthor: fields[7] as String?,
+      lastUpdated: fields[8] as int?,
     );
   }
 

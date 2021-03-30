@@ -2,26 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:history_of_me/lit_ui_kit_temp/lit_slider.dart';
 
 class ColorMixer extends StatelessWidget {
-  final int alphaChannel;
-  final int redChannel;
-  final int greenChanne;
-  final int blueChannel;
+  final int? alphaChannel;
+  final int? redChannel;
+  final int? greenChanne;
+  final int? blueChannel;
   final void Function(double) onAlphaChannelChange;
   final void Function(double) onRedColorChannelChange;
   final void Function(double) onGreenColorChannelChange;
   final void Function(double) onBlueColorChannelChange;
   final List<BoxShadow> colorTileBoxShadow;
-  final AnimationController animationController;
+  final AnimationController? animationController;
   const ColorMixer({
-    Key key,
-    @required this.alphaChannel,
-    @required this.redChannel,
-    @required this.greenChanne,
-    @required this.blueChannel,
-    @required this.onAlphaChannelChange,
-    @required this.onRedColorChannelChange,
-    @required this.onGreenColorChannelChange,
-    @required this.onBlueColorChannelChange,
+    Key? key,
+    required this.alphaChannel,
+    required this.redChannel,
+    required this.greenChanne,
+    required this.blueChannel,
+    required this.onAlphaChannelChange,
+    required this.onRedColorChannelChange,
+    required this.onGreenColorChannelChange,
+    required this.onBlueColorChannelChange,
     this.colorTileBoxShadow = const [
       const BoxShadow(
         blurRadius: 12.0,
@@ -30,13 +30,13 @@ class ColorMixer extends StatelessWidget {
         spreadRadius: 1.0,
       )
     ],
-    @required this.animationController,
+    required this.animationController,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
-        animation: animationController,
+        animation: animationController!,
         builder: (context, _) {
           return Padding(
               padding: const EdgeInsets.symmetric(vertical: 12.0),
@@ -53,28 +53,28 @@ class ColorMixer extends StatelessWidget {
                     _ChannelSlider(
                       color: Colors.grey[400],
                       colorChannelValue:
-                          (animationController.value * alphaChannel).round(),
+                          (animationController!.value * alphaChannel!).round(),
                       onColorChannelValueChange: onAlphaChannelChange,
                       boxShadow: colorTileBoxShadow,
                     ),
                     _ChannelSlider(
                       color: Colors.red,
                       colorChannelValue:
-                          (animationController.value * redChannel).round(),
+                          (animationController!.value * redChannel!).round(),
                       onColorChannelValueChange: onRedColorChannelChange,
                       boxShadow: colorTileBoxShadow,
                     ),
                     _ChannelSlider(
                       color: Colors.green,
                       colorChannelValue:
-                          (animationController.value * greenChanne).round(),
+                          (animationController!.value * greenChanne!).round(),
                       onColorChannelValueChange: onGreenColorChannelChange,
                       boxShadow: colorTileBoxShadow,
                     ),
                     _ChannelSlider(
                       color: Colors.blue,
                       colorChannelValue:
-                          (animationController.value * blueChannel).round(),
+                          (animationController!.value * blueChannel!).round(),
                       onColorChannelValueChange: onBlueColorChannelChange,
                       boxShadow: colorTileBoxShadow,
                     ),
@@ -86,17 +86,17 @@ class ColorMixer extends StatelessWidget {
 }
 
 class _ChannelIndicator extends StatelessWidget {
-  final int alphaChannelValue;
-  final int redChannelValue;
-  final int greenChannelValue;
-  final int blueChannelValue;
+  final int? alphaChannelValue;
+  final int? redChannelValue;
+  final int? greenChannelValue;
+  final int? blueChannelValue;
 
   const _ChannelIndicator({
-    Key key,
-    @required this.alphaChannelValue,
-    @required this.redChannelValue,
-    @required this.greenChannelValue,
-    @required this.blueChannelValue,
+    Key? key,
+    required this.alphaChannelValue,
+    required this.redChannelValue,
+    required this.greenChannelValue,
+    required this.blueChannelValue,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -118,10 +118,10 @@ class _ChannelIndicator extends StatelessWidget {
               16.0,
             )),
             color: Color.fromARGB(
-              alphaChannelValue,
-              redChannelValue,
-              greenChannelValue,
-              blueChannelValue,
+              alphaChannelValue!,
+              redChannelValue!,
+              greenChannelValue!,
+              blueChannelValue!,
             ),
           ),
         ),
@@ -131,17 +131,17 @@ class _ChannelIndicator extends StatelessWidget {
 }
 
 class _ChannelSlider extends StatelessWidget {
-  final Color color;
+  final Color? color;
   final int colorChannelValue;
   final void Function(double) onColorChannelValueChange;
   final List<BoxShadow> boxShadow;
   final EdgeInsets margin;
   const _ChannelSlider({
-    Key key,
-    @required this.color,
-    @required this.colorChannelValue,
-    @required this.onColorChannelValueChange,
-    @required this.boxShadow,
+    Key? key,
+    required this.color,
+    required this.colorChannelValue,
+    required this.onColorChannelValueChange,
+    required this.boxShadow,
     this.margin = const EdgeInsets.symmetric(
       vertical: 4.0,
     ),

@@ -21,7 +21,7 @@ class DiaryScreen extends StatefulWidget {
   /// to change how the action button's color are generated using the [UserData]'s
   /// bookmark color.
   const DiaryScreen({
-    Key key,
+    Key? key,
   }) : super(key: key);
   @override
   _DiaryScreenState createState() => _DiaryScreenState();
@@ -29,13 +29,13 @@ class DiaryScreen extends StatefulWidget {
 
 class _DiaryScreenState extends State<DiaryScreen>
     with TickerProviderStateMixin {
-  LitRouteController _routeController;
-  ScrollController _scrollController;
-  bool _showFavoriteEntriesOnly;
+  late LitRouteController _routeController;
+  ScrollController? _scrollController;
+  bool? _showFavoriteEntriesOnly;
 
-  AnimationController _listViewAnimation;
+  AnimationController? _listViewAnimation;
 
-  AnimationController _animateLabelOnScroll;
+  late AnimationController _animateLabelOnScroll;
 
   void _showCreateEntryDialog() {
     _routeController.showDialogWidget(CreateEntryDialog());
@@ -46,20 +46,20 @@ class _DiaryScreenState extends State<DiaryScreen>
   /// to animate the list view tiles again.
   void toggleShowFavoritesOnly() {
     setState(() {
-      _showFavoriteEntriesOnly = !_showFavoriteEntriesOnly;
+      _showFavoriteEntriesOnly = !_showFavoriteEntriesOnly!;
     });
     //_animationController.reverse().then((_) => _animationController.forward());
   }
 
   List<DiaryEntry> _getDiaryEntriesSorted(Box entriesBox) {
-    return entriesBox.values.toList()
+    return entriesBox.values.toList() as List<DiaryEntry>
       ..sort(HiveQueryController().sortEntriesByDateAscending);
   }
 
   void _animateButtonOnScroll() {
     const double threshold = 125.0;
-    if (_scrollController.offset > 0.0) {
-      if (_scrollController.offset < threshold) {
+    if (_scrollController!.offset > 0.0) {
+      if (_scrollController!.offset < threshold) {
         if (!_animateLabelOnScroll.isAnimating) {
           _animateLabelOnScroll.reverse();
         }
@@ -86,7 +86,7 @@ class _DiaryScreenState extends State<DiaryScreen>
 
   @override
   void dispose() {
-    _listViewAnimation.dispose();
+    _listViewAnimation!.dispose();
     _animateLabelOnScroll.dispose();
     super.dispose();
   }
@@ -98,17 +98,17 @@ class _DiaryScreenState extends State<DiaryScreen>
       body: SafeArea(
         child: ValueListenableBuilder(
           valueListenable: HiveDBService().getUserData(),
-          builder: (BuildContext context, Box<UserData> userDataBox, Widget _) {
+          builder: (BuildContext context, Box<UserData> userDataBox, Widget? _) {
             print("user data box length: ${userDataBox.length}");
             // Hive-retrieved user data object.
             //
             // Initialize using fallback constant object if there isn't an entry
             // in the database.
-            final UserData userData = userDataBox.getAt(0);
+            final UserData? userData = userDataBox.getAt(0);
             return ValueListenableBuilder(
               valueListenable: HiveDBService().getDiaryEntries(),
               builder:
-                  (BuildContext context, Box<DiaryEntry> entriesBox, Widget _) {
+                  (BuildContext context, Box<DiaryEntry> entriesBox, Widget? _) {
                 // Diary entries sorted ascending.
                 List<DiaryEntry> diaryEntriesListSorted =
                     _getDiaryEntriesSorted(entriesBox);
@@ -145,19 +145,19 @@ class _DiaryScreenState extends State<DiaryScreen>
 }
 
 class _ComposeActionButton extends StatefulWidget {
-  final UserData userData;
+  final UserData? userData;
   final void Function() onPressed;
   //final AnimationController labelAnimation;
-  final ScrollController scrollController;
+  final ScrollController? scrollController;
 
   /// The mixer [Color] used to generate the action button's accent color.
   final Color actionButtonAccentColorMixer;
   const _ComposeActionButton({
-    Key key,
-    @required this.userData,
-    @required this.onPressed,
+    Key? key,
+    required this.userData,
+    required this.onPressed,
     //@required this.labelAnimation,
-    @required this.scrollController,
+    required this.scrollController,
     this.actionButtonAccentColorMixer = Colors.grey,
   }) : super(key: key);
 
@@ -167,19 +167,19 @@ class _ComposeActionButton extends StatefulWidget {
 
 class __ComposeActionButtonState extends State<_ComposeActionButton>
     with TickerProviderStateMixin {
-  AnimationController _actionButtonAnimation;
-  AnimationOnScrollController _animationOnScrollController;
-  Color get buttonAccentColor {
-    final Color bookmarkColor = Color(widget.userData.bookmarkColor);
+  late AnimationController _actionButtonAnimation;
+  late AnimationOnScrollController _animationOnScrollController;
+  Color? get buttonAccentColor {
+    final Color bookmarkColor = Color(widget.userData!.bookmarkColor!);
     final int contrastingColorValue = (0xFFFFFFFF - bookmarkColor.value);
-    final Color contrastingColor =
+    final Color? contrastingColor =
         Color.lerp(Color(contrastingColorValue), bookmarkColor, 0.75);
     return Color.lerp(
         bookmarkColor, contrastingColor, _actionButtonAnimation.value);
   }
 
-  Color get buttonMainColor {
-    final Color bookmarkColor = Color(widget.userData.bookmarkColor);
+  Color? get buttonMainColor {
+    final Color bookmarkColor = Color(widget.userData!.bookmarkColor!);
     return Color.lerp(bookmarkColor, widget.actionButtonAccentColorMixer,
         _actionButtonAnimation.value);
   }
@@ -223,8 +223,8 @@ class __ComposeActionButtonState extends State<_ComposeActionButton>
                 vertical: 8.0,
                 horizontal: 22.0,
               ),
-              accentColor: buttonMainColor,
-              color: buttonAccentColor,
+              accentColor: buttonMainColor!,
+              color: buttonAccentColor!,
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -238,7 +238,7 @@ class __ComposeActionButtonState extends State<_ComposeActionButton>
                             right: (1.0 - _scrollAnimation.value) * 6.0,
                           ),
                           child: Text(
-                            LitLocalizations.of(context)
+                            LitLocalizations.of(context)!
                                 .getLocalizedValue('compose')
                                 .toUpperCase(),
                             style: LitTextStyles.sansSerif.copyWith(
@@ -268,12 +268,12 @@ class __ComposeActionButtonState extends State<_ComposeActionButton>
 }
 
 class _NoEntriesCallToAction extends StatelessWidget {
-  final UserData userData;
+  final UserData? userData;
   final void Function() showCreateEntryDialog;
   const _NoEntriesCallToAction({
-    Key key,
-    @required this.userData,
-    @required this.showCreateEntryDialog,
+    Key? key,
+    required this.userData,
+    required this.showCreateEntryDialog,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {

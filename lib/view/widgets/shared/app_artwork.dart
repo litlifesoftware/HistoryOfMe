@@ -4,7 +4,7 @@ class AppArtwork extends StatefulWidget {
   final double width;
 
   const AppArtwork({
-    Key key,
+    Key? key,
     this.width = 280.0,
   }) : super(key: key);
 
@@ -13,7 +13,7 @@ class AppArtwork extends StatefulWidget {
 }
 
 class _AppArtworkState extends State<AppArtwork> with TickerProviderStateMixin {
-  AnimationController _animationController;
+  late AnimationController _animationController;
 
   @override
   void initState() {

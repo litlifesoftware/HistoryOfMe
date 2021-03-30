@@ -5,13 +5,13 @@ class LitSliderToggleButton extends StatefulWidget {
   final Widget enabledTitle;
   final Widget disabledTitle;
   final void Function() onPressed;
-  final bool enabled;
+  final bool? enabled;
   const LitSliderToggleButton({
-    Key key,
-    @required this.enabledTitle,
-    @required this.disabledTitle,
-    @required this.onPressed,
-    @required this.enabled,
+    Key? key,
+    required this.enabledTitle,
+    required this.disabledTitle,
+    required this.onPressed,
+    required this.enabled,
   }) : super(key: key);
   @override
   _LitSliderToggleButtonState createState() => _LitSliderToggleButtonState();
@@ -19,10 +19,10 @@ class LitSliderToggleButton extends StatefulWidget {
 
 class _LitSliderToggleButtonState extends State<LitSliderToggleButton>
     with TickerProviderStateMixin {
-  AnimationController _animationController;
+  late AnimationController _animationController;
 
   void _onPressed() {
-    if (widget.enabled) {
+    if (widget.enabled!) {
       _animationController.reverse(from: 1.0);
     } else {
       _animationController.forward();
@@ -41,7 +41,7 @@ class _LitSliderToggleButtonState extends State<LitSliderToggleButton>
       vsync: this,
     );
 
-    if (widget.enabled) _animationController.forward();
+    if (widget.enabled!) _animationController.forward();
   }
 
   @override
@@ -87,7 +87,7 @@ class _LitSliderToggleButtonState extends State<LitSliderToggleButton>
                                     horizontal: 4.0,
                                   ),
                                   child: AnimatedOpacity(
-                                    duration: _animationController.duration,
+                                    duration: _animationController.duration!,
                                     opacity: _animationController.isAnimating
                                         ? 0.35 +
                                             (0.65 * _animationController.value)
@@ -102,7 +102,7 @@ class _LitSliderToggleButtonState extends State<LitSliderToggleButton>
                                                           .value)
                                               : 0,
                                           0),
-                                      child: widget.enabled
+                                      child: widget.enabled!
                                           ? widget.disabledTitle
                                           : widget.enabledTitle,
                                     ),
@@ -142,7 +142,7 @@ class _LitSliderToggleButtonState extends State<LitSliderToggleButton>
                           horizontal: 4.0,
                         ),
                         child: AnimatedOpacity(
-                          duration: _animationController.duration,
+                          duration: _animationController.duration!,
                           opacity: _animationController.isAnimating
                               ? 0.35 + (0.65 * _animationController.value)
                               : 1.0,
@@ -153,7 +153,7 @@ class _LitSliderToggleButtonState extends State<LitSliderToggleButton>
                                     ? 10 + (-10 * _animationController.value)
                                     : 0,
                                 0),
-                            child: widget.enabled
+                            child: widget.enabled!
                                 ? widget.enabledTitle
                                 : widget.disabledTitle,
                           ),

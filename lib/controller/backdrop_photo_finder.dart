@@ -43,7 +43,7 @@ class BackdropPhotoFinder {
   ///
   /// If the provided id does not match with any of the available backdrop photos
   /// the first backdrop photo in the list is returned.
-  String findBackdropPhotoUrl() {
+  String? findBackdropPhotoUrl() {
     return findBackdropPhoto().assetUrl;
   }
 
@@ -51,7 +51,7 @@ class BackdropPhotoFinder {
   ///
   /// If the provided id does not match with any of the available backdrop photos
   /// the first backdrop photo in the list is returned.
-  String findBackdropPhotoLocation() {
+  String? findBackdropPhotoLocation() {
     return findBackdropPhoto().location;
   }
 
@@ -59,7 +59,7 @@ class BackdropPhotoFinder {
   ///
   /// If the provided id does not match with any of the available backdrop photos
   /// the first backdrop photo in the list is returned.
-  String findBackdropPhotoPhotographer() {
+  String? findBackdropPhotoPhotographer() {
     return findBackdropPhoto().photographer;
   }
 }

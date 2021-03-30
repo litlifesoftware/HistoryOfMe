@@ -7,10 +7,10 @@ import 'package:lit_ui_kit/lit_ui_kit.dart';
 
 class ConfirmDeleteEntryDialog extends StatefulWidget {
   // final int index;
-  final String diaryEntryUid;
+  final String? diaryEntryUid;
   const ConfirmDeleteEntryDialog({
-    Key key,
-    @required this.diaryEntryUid,
+    Key? key,
+    required this.diaryEntryUid,
     // @required this.index,
   }) : super(key: key);
   @override

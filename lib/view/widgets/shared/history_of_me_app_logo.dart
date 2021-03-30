@@ -7,7 +7,7 @@ class HistoryOfMeAppLogo extends StatelessWidget {
   final bool showKeyImage;
   final Color color;
   const HistoryOfMeAppLogo(
-      {Key key,
+      {Key? key,
       this.width = 100.0,
       this.height = 120.0,
       this.showKeyImage = false,

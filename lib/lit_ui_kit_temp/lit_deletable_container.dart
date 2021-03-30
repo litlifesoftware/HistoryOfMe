@@ -6,18 +6,18 @@ import 'package:lit_ui_kit/lit_ui_kit.dart';
 class LitDeletableContainer extends StatefulWidget {
   final Widget child;
   final void Function() toggleDeletionEnabled;
-  final bool deletionEnabled;
-  final Animation animation;
+  final bool? deletionEnabled;
+  final Animation? animation;
   final int colorIndex;
   final void Function() onDelete;
   const LitDeletableContainer({
-    Key key,
-    @required this.deletionEnabled,
-    @required this.animation,
-    @required this.child,
-    @required this.toggleDeletionEnabled,
-    @required this.colorIndex,
-    @required this.onDelete,
+    Key? key,
+    required this.deletionEnabled,
+    required this.animation,
+    required this.child,
+    required this.toggleDeletionEnabled,
+    required this.colorIndex,
+    required this.onDelete,
   }) : super(key: key);
 
   @override
@@ -26,7 +26,7 @@ class LitDeletableContainer extends StatefulWidget {
 
 class _LitDeletableContainerState extends State<LitDeletableContainer>
     with TickerProviderStateMixin {
-  AnimationController _deletedAnimation;
+  late AnimationController _deletedAnimation;
 
   void _onDelete() {
     _deletedAnimation
@@ -48,8 +48,8 @@ class _LitDeletableContainerState extends State<LitDeletableContainer>
   }
 
   bool get isAnimating {
-    return widget.animation.status == AnimationStatus.forward ||
-        widget.animation.status == AnimationStatus.reverse;
+    return widget.animation!.status == AnimationStatus.forward ||
+        widget.animation!.status == AnimationStatus.reverse;
   }
 
   Matrix4 get translation {
@@ -57,7 +57,7 @@ class _LitDeletableContainerState extends State<LitDeletableContainer>
     double rand2 = Random().nextDouble();
     double start = 1.0;
     double end = -(start);
-    double animation = widget.animation.value;
+    double animation = widget.animation!.value;
     return Matrix4.translationValues(
       (start * rand1) + (((end * rand2 * 0.25)) * (animation * 0.75)),
       (start * rand1) + (((end * rand2 * 0.25)) * (animation * 0.75)),
@@ -66,7 +66,7 @@ class _LitDeletableContainerState extends State<LitDeletableContainer>
   }
 
   double get rotationRad {
-    return (-2.5 * degree) + (5 * degree * (widget.animation.value));
+    return (-2.5 * degree) + (5 * degree * (widget.animation!.value));
   }
 
   @override
@@ -89,7 +89,7 @@ class _LitDeletableContainerState extends State<LitDeletableContainer>
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
-      animation: widget.animation,
+      animation: widget.animation!,
       builder: (context, _) {
         return InkWell(
           onLongPress: _onToggleDeletionEnabled,
@@ -110,7 +110,7 @@ class _LitDeletableContainerState extends State<LitDeletableContainer>
                         child: widget.child,
                       ),
                       //widget.child,
-                      widget.deletionEnabled
+                      widget.deletionEnabled!
                           ? Transform.scale(
                               scale: 1.0 - _deletedAnimation.value,
                               child: Padding(

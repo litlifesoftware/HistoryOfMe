@@ -7,7 +7,7 @@ class ExclamationRectangle extends StatelessWidget {
   final double height;
   final double width;
   const ExclamationRectangle({
-    Key key,
+    Key? key,
     this.height = 64.0,
     this.width = 64.0,
   }) : super(key: key);

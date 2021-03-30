@@ -9,11 +9,11 @@ class LitGlowingButton extends StatelessWidget {
   final EdgeInsets padding;
   final BorderRadius borderRadius;
   const LitGlowingButton({
-    Key key,
-    @required this.onPressed,
+    Key? key,
+    required this.onPressed,
     this.baseColor = const Color(0xFFef93a1),
     this.accentColor = const Color(0xFFb2b2b2),
-    @required this.child,
+    required this.child,
     this.padding = const EdgeInsets.symmetric(
       vertical: 6.0,
       horizontal: 22.0,
@@ -30,13 +30,13 @@ class LitGlowingButton extends StatelessWidget {
             BoxShadow(
               blurRadius: 8.0,
               offset: Offset(-2, -2),
-              color: Color.lerp(baseColor, accentColor, 0.7).withOpacity(0.4),
+              color: Color.lerp(baseColor, accentColor, 0.7)!.withOpacity(0.4),
               spreadRadius: 1.0,
             ),
             BoxShadow(
               blurRadius: 8.0,
               offset: Offset(2, 2),
-              color: Color.lerp(baseColor, accentColor, 0.4).withOpacity(0.4),
+              color: Color.lerp(baseColor, accentColor, 0.4)!.withOpacity(0.4),
               spreadRadius: 1.0,
             ),
           ],

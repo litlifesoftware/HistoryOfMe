@@ -13,14 +13,14 @@ class ConfirmDiscardDraftDialog extends StatefulWidget {
   final String discardDraftText;
   final void Function() onDiscardCallback;
   const ConfirmDiscardDraftDialog({
-    Key key,
+    Key? key,
     this.titleText = "Unsaved changes",
     this.discardButtonLabel = "Discard",
     this.cancelButtonLabel = "Cancel",
     this.unsavedChangesDetectedText =
         "There have been unsaved changes detected.",
     this.discardDraftText = "Do you want to discard your changes?",
-    @required this.onDiscardCallback,
+    required this.onDiscardCallback,
   }) : super(key: key);
   @override
   _ConfirmDiscardDraftDialogState createState() =>
@@ -29,7 +29,7 @@ class ConfirmDiscardDraftDialog extends StatefulWidget {
 
 class _ConfirmDiscardDraftDialogState extends State<ConfirmDiscardDraftDialog>
     with TickerProviderStateMixin {
-  AnimationController _appearAnimationController;
+  late AnimationController _appearAnimationController;
 
   /// Closes the dialog.
   void _onCancel() {
@@ -57,7 +57,7 @@ class _ConfirmDiscardDraftDialogState extends State<ConfirmDiscardDraftDialog>
             LitColors.mediumGrey,
             LitColors.lightGrey,
             0.34,
-          ),
+          )!,
           accentColor: LitColors.mediumGrey,
           child: Text(
             widget.discardButtonLabel,
@@ -78,7 +78,7 @@ class _ConfirmDiscardDraftDialogState extends State<ConfirmDiscardDraftDialog>
       ],
       child: AnimatedBuilder(
         animation: _appearAnimationController,
-        builder: (BuildContext context, Widget _) {
+        builder: (BuildContext context, Widget? _) {
           return Column(
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,

@@ -8,9 +8,9 @@ class LitBottomNavigation extends StatefulWidget {
   final double landscapeWidthFactor;
   final Axis axis;
   const LitBottomNavigation({
-    Key key,
-    @required this.currentTabIndex,
-    @required this.onPressed,
+    Key? key,
+    required this.currentTabIndex,
+    required this.onPressed,
     this.landscapeWidthFactor = 0.65,
     this.axis = Axis.horizontal,
   }) : super(key: key);
@@ -20,13 +20,13 @@ class LitBottomNavigation extends StatefulWidget {
 
 class _LitBottomNavigationState extends State<LitBottomNavigation>
     with TickerProviderStateMixin {
-  AnimationController _animationController;
+  AnimationController? _animationController;
 
   void switchTab(int value) {
     widget.onPressed(value);
-    if (_animationController.isCompleted) {
-      _animationController.reverse().then(
-            (value) => _animationController.forward(),
+    if (_animationController!.isCompleted) {
+      _animationController!.reverse().then(
+            (value) => _animationController!.forward(),
           );
     }
   }
@@ -44,24 +44,24 @@ class _LitBottomNavigationState extends State<LitBottomNavigation>
       ),
       vsync: this,
     );
-    _animationController.forward(from: 0.0);
+    _animationController!.forward(from: 0.0);
   }
 
   @override
   void dispose() {
-    _animationController.dispose();
+    _animationController!.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
-        animation: _animationController,
+        animation: _animationController!,
         builder: (context, _) {
           return Transform(
             transform: Matrix4.translationValues(
               0,
-              100 - (100 * _animationController.value),
+              100 - (100 * _animationController!.value),
               0,
             ),
             child: LayoutBuilder(builder: (context, constraints) {

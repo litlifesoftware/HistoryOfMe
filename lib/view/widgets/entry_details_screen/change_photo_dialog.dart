@@ -189,11 +189,11 @@ class ChangePhotoDialog extends StatefulWidget {
   final DiaryEntry diaryEntry;
   final double minHeight;
   const ChangePhotoDialog({
-    Key key,
+    Key? key,
     //@required this.imageNames,
     this.borderRadius = 16.0,
-    @required this.backdropPhotos,
-    @required this.diaryEntry,
+    required this.backdropPhotos,
+    required this.diaryEntry,
     this.minHeight = 384.0,
   }) : super(key: key);
 
@@ -203,8 +203,8 @@ class ChangePhotoDialog extends StatefulWidget {
 
 class _ChangePhotoDialogState extends State<ChangePhotoDialog>
     with TickerProviderStateMixin {
-  AnimationController _appearAnimationController;
-  int _selectedImage;
+  AnimationController? _appearAnimationController;
+  int? _selectedImage;
 
   // List<BackdropPhoto> parseBackdropPhotos(String assetData) {
   //   final parsed = jsonDecode(assetData).cast<Map<String, dynamic>>();
@@ -220,18 +220,18 @@ class _ChangePhotoDialogState extends State<ChangePhotoDialog>
   //   return parseBackdropPhotos(data);
   // }
 
-  bool _isSelected(int value) {
+  bool _isSelected(int? value) {
     return _selectedImage == value;
   }
 
-  void setSelectedImage(int value) {
+  void setSelectedImage(int? value) {
     if (!_isSelected(value)) {
       setState(() {
         if (debug) print("Selected backdrop id: $value");
-        HiveDBService().updateDiaryEntryBackdrop(widget.diaryEntry, value);
+        HiveDBService().updateDiaryEntryBackdrop(widget.diaryEntry, value!);
         _selectedImage = value;
       });
-      _appearAnimationController.forward(from: 0.0);
+      _appearAnimationController!.forward(from: 0.0);
       print(value);
     } else {
       if (debug) print("Already Selected");
@@ -246,7 +246,7 @@ class _ChangePhotoDialogState extends State<ChangePhotoDialog>
       duration: Duration(milliseconds: 130),
       vsync: this,
     );
-    _appearAnimationController.forward();
+    _appearAnimationController!.forward();
   }
 
   @override
@@ -258,7 +258,7 @@ class _ChangePhotoDialogState extends State<ChangePhotoDialog>
         builder: (
           BuildContext context,
         ) {
-          List<Widget> children = List<Widget>();
+          List<Widget> children = [];
           for (int i = 0; i < widget.backdropPhotos.length; i++) {
             children.add(
               SelectableBackdropPhotoCard(

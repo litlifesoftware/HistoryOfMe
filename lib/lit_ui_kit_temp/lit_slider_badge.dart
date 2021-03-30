@@ -4,13 +4,13 @@ import 'package:lit_ui_kit/lit_ui_kit.dart';
 
 class LitTextBadge extends StatelessWidget {
   final String label;
-  final Color backgroundColor;
-  final Color textColor;
+  final Color? backgroundColor;
+  final Color? textColor;
   final FontWeight fontWeight;
   final double fontSize;
   const LitTextBadge({
-    Key key,
-    @required this.label,
+    Key? key,
+    required this.label,
     this.backgroundColor = LitColors.mediumGrey,
     this.textColor = Colors.white,
     this.fontWeight = FontWeight.w700,

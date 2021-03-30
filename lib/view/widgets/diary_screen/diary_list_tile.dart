@@ -8,15 +8,15 @@ import 'package:lit_ui_kit/lit_ui_kit.dart';
 import 'package:lit_relative_date_time/lit_relative_date_time.dart';
 
 class DiaryListTile extends StatefulWidget {
-  final AnimationController animationController;
+  final AnimationController? animationController;
   final int listIndex;
   final DiaryEntry diaryEntry;
   final double landscapeWidthFactor;
   const DiaryListTile({
-    Key key,
-    @required this.animationController,
-    @required this.listIndex,
-    @required this.diaryEntry,
+    Key? key,
+    required this.animationController,
+    required this.listIndex,
+    required this.diaryEntry,
     this.landscapeWidthFactor = 0.75,
   }) : super(key: key);
 
@@ -25,7 +25,7 @@ class DiaryListTile extends StatefulWidget {
 }
 
 class _DiaryListTileState extends State<DiaryListTile> {
-  ScreenRouter _screenRouter;
+  late ScreenRouter _screenRouter;
 
   void _onTilePressed() {
     _screenRouter.toDiaryEntryDetailScreen(
@@ -48,13 +48,13 @@ class _DiaryListTileState extends State<DiaryListTile> {
     monthLabels = CalendarLocalizationService.getLocalizedCalendarMonths(
         Localizations.localeOf(context));
     return AnimatedBuilder(
-      animation: widget.animationController,
+      animation: widget.animationController!,
       builder: (context, _) {
-        widget.animationController.forward();
+        widget.animationController!.forward();
 
         final Animation<double> animation = Tween<double>(begin: 0.0, end: 1.0)
             .animate(CurvedAnimation(
-                parent: widget.animationController,
+                parent: widget.animationController!,
                 curve: Interval((1 / 50) * widget.listIndex, 1.0,
                     curve: Curves.easeInOut)));
         return FadeTransition(
@@ -84,7 +84,7 @@ class _DiaryListTileState extends State<DiaryListTile> {
                       boxShadowOffset: Offset(-2, 4),
                       quaterTurns: 3,
                       text: monthLabels[
-                          DateTime.parse(widget.diaryEntry.date).month - 1],
+                          DateTime.parse(widget.diaryEntry.date!).month - 1],
                       landscapeWidthFactor: widget.landscapeWidthFactor,
                     ),
                     _EntryCard(
@@ -96,7 +96,7 @@ class _DiaryListTileState extends State<DiaryListTile> {
                     _EntryDateLabel(
                       boxShadowOffset: Offset(4, -2),
                       quaterTurns: 1,
-                      text: DateTime.parse(widget.diaryEntry.date)
+                      text: DateTime.parse(widget.diaryEntry.date!)
                           .year
                           .toString(),
                       landscapeWidthFactor: widget.landscapeWidthFactor,
@@ -118,11 +118,11 @@ class _EntryDateLabel extends StatelessWidget {
   final Offset boxShadowOffset;
   final double landscapeWidthFactor;
   const _EntryDateLabel({
-    Key key,
-    @required this.quaterTurns,
-    @required this.text,
-    @required this.boxShadowOffset,
-    @required this.landscapeWidthFactor,
+    Key? key,
+    required this.quaterTurns,
+    required this.text,
+    required this.boxShadowOffset,
+    required this.landscapeWidthFactor,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -181,11 +181,11 @@ class _EntryCard extends StatelessWidget {
   final double landscapeWidthFactor;
   final void Function() onPressed;
   const _EntryCard({
-    Key key,
-    @required this.listIndex,
-    @required this.diaryEntry,
-    @required this.landscapeWidthFactor,
-    @required this.onPressed,
+    Key? key,
+    required this.listIndex,
+    required this.diaryEntry,
+    required this.landscapeWidthFactor,
+    required this.onPressed,
   }) : super(key: key);
 
   @override
@@ -198,7 +198,7 @@ class _EntryCard extends StatelessWidget {
         final RelativeDateTime relativeDateTime = RelativeDateTime(
           dateTime: DateTime.now(),
           other: DateTime.fromMillisecondsSinceEpoch(
-            diaryEntry.lastUpdated,
+            diaryEntry.lastUpdated!,
           ),
         );
         final RelativeDateFormat relativeDateFormatter = RelativeDateFormat(
@@ -266,7 +266,7 @@ class _EntryCard extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                "${DateFormat.yMMMMd(Intl.getCurrentLocale()).format(DateTime.parse(diaryEntry.date))}",
+                                "${DateFormat.yMMMMd(Intl.getCurrentLocale()).format(DateTime.parse(diaryEntry.date!))}",
                                 style: LitTextStyles.sansSerif.copyWith(
                                   fontSize: 12.0,
                                   letterSpacing: -0.02,
@@ -302,7 +302,7 @@ class _EntryCard extends StatelessWidget {
                           color: Color.lerp(
                             LitColors.lightRed,
                             HexColor('bee5be'),
-                            diaryEntry.moodScore,
+                            diaryEntry.moodScore!,
                           ),
                           borderRadius: BorderRadius.circular(
                             5.95,

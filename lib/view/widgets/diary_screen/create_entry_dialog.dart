@@ -16,9 +16,9 @@ class CreateEntryDialog extends StatefulWidget {
 
 class _CreateEntryDialogState extends State<CreateEntryDialog>
     with TickerProviderStateMixin {
-  ScreenRouter _screenRouter;
-  AnimationController _appearAnimationController;
-  LitSnackbarController _duplicateSnackBarController;
+  late ScreenRouter _screenRouter;
+  late AnimationController _appearAnimationController;
+  LitSnackbarController? _duplicateSnackBarController;
   //TODO: CreateEntryType enum
   int createEntryType = 1;
   int selectedtDialogType = 1;
@@ -62,7 +62,7 @@ class _CreateEntryDialogState extends State<CreateEntryDialog>
       _screenRouter.toEntryEditingScreen(diaryEntry: createdEntry);
     } else {
       print("already created for today");
-      _duplicateSnackBarController.showSnackBar();
+      _duplicateSnackBarController!.showSnackBar();
     }
   }
 
@@ -91,7 +91,7 @@ class _CreateEntryDialogState extends State<CreateEntryDialog>
 
   @override
   void dispose() {
-    _duplicateSnackBarController.dispose();
+    _duplicateSnackBarController!.dispose();
 
     super.dispose();
   }
@@ -115,7 +115,7 @@ class _CreateEntryDialogState extends State<CreateEntryDialog>
                   titleText: "Add a diary entry",
                   child: AnimatedBuilder(
                     animation: _appearAnimationController,
-                    builder: (BuildContext context, Widget _) {
+                    builder: (BuildContext context, Widget? _) {
                       return Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
@@ -137,7 +137,7 @@ class _CreateEntryDialogState extends State<CreateEntryDialog>
                             ),
                           ),
                           AnimatedOpacity(
-                            duration: _appearAnimationController.duration,
+                            duration: _appearAnimationController.duration!,
                             opacity: _appearAnimationController.value,
                             child: Padding(
                               padding:

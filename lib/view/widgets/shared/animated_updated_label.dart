@@ -5,12 +5,12 @@ import 'package:history_of_me/view/widgets/shared/updated_label_text.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';
 
 class AnimatedUpdatedLabel extends StatefulWidget {
-  final int lastUpdateTimestamp;
+  final int? lastUpdateTimestamp;
   final EdgeInsets padding;
 
   const AnimatedUpdatedLabel({
-    Key key,
-    @required this.lastUpdateTimestamp,
+    Key? key,
+    required this.lastUpdateTimestamp,
     this.padding = const EdgeInsets.symmetric(
       vertical: 8.0,
       horizontal: 16.0,
@@ -23,7 +23,7 @@ class AnimatedUpdatedLabel extends StatefulWidget {
 
 class _AnimatedUpdatedLabelState extends State<AnimatedUpdatedLabel>
     with TickerProviderStateMixin {
-  AnimationController _animationController;
+  late AnimationController _animationController;
 
   @override
   void initState() {
@@ -45,14 +45,14 @@ class _AnimatedUpdatedLabelState extends State<AnimatedUpdatedLabel>
   Widget build(BuildContext context) {
     return AnimatedBuilder(
       animation: _animationController,
-      builder: (BuildContext context, Widget _) {
+      builder: (BuildContext context, Widget? _) {
         return Padding(
           padding: widget.padding,
           child: Align(
             alignment: Alignment.centerLeft,
             child: AnimatedOpacity(
               opacity: 0.35 + (0.65 * _animationController.value),
-              duration: _animationController.duration,
+              duration: _animationController.duration!,
               child: UpdatedLabelText(
                 lastUpdateTimestamp: widget.lastUpdateTimestamp,
               ),

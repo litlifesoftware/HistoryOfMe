@@ -5,9 +5,9 @@ class CalendarWeekdayLabel extends StatelessWidget {
   final BoxConstraints constraints;
   final String label;
   const CalendarWeekdayLabel({
-    Key key,
-    @required this.constraints,
-    @required this.label,
+    Key? key,
+    required this.constraints,
+    required this.label,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {

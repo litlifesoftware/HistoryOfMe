@@ -23,17 +23,17 @@ class EntryDetailsCard extends StatefulWidget {
   final BoxDecoration backgroundDecoration;
   final bool isFirst;
   final bool isLast;
-  final HiveQueryController queryController;
+  final HiveQueryController? queryController;
   const EntryDetailsCard({
-    Key key,
+    Key? key,
     //  @required this.index,
     //@required this.boxLength,
-    @required this.listIndex,
-    @required this.boxLength,
-    @required this.diaryEntry,
-    @required this.onEditCallback,
-    @required this.relativeLandscapePhotoHeight,
-    @required this.relativePortraitPhotoHeight,
+    required this.listIndex,
+    required this.boxLength,
+    required this.diaryEntry,
+    required this.onEditCallback,
+    required this.relativeLandscapePhotoHeight,
+    required this.relativePortraitPhotoHeight,
     this.backgroundDecoration = const BoxDecoration(
       gradient: LinearGradient(
           begin: Alignment.bottomLeft,
@@ -51,9 +51,9 @@ class EntryDetailsCard extends StatefulWidget {
         topRight: Radius.circular(30),
       ),
     ),
-    @required this.isFirst,
-    @required this.isLast,
-    @required this.queryController,
+    required this.isFirst,
+    required this.isLast,
+    required this.queryController,
   }) : super(key: key);
 
   @override
@@ -71,7 +71,7 @@ class _EntryDetailsCardState extends State<EntryDetailsCard> {
 
   String get _diaryNumberLabel {
     //return "${widget.boxLength - widget.listIndex}";
-    return "${widget.queryController.getIndexChronologicallyByUID(widget.diaryEntry.uid) + 1}";
+    return "${widget.queryController!.getIndexChronologicallyByUID(widget.diaryEntry.uid) + 1}";
   }
 
   void _onToggleFavorite() {
@@ -83,7 +83,7 @@ class _EntryDetailsCardState extends State<EntryDetailsCard> {
       title: widget.diaryEntry.title,
       content: widget.diaryEntry.content,
       moodScore: widget.diaryEntry.moodScore,
-      favorite: !widget.diaryEntry.favorite,
+      favorite: !widget.diaryEntry.favorite!,
       backdropPhotoId: widget.diaryEntry.backdropPhotoId,
     );
     HiveDBService().updateDiaryEntry(
@@ -145,14 +145,14 @@ class _Header extends StatelessWidget {
   final void Function() onToggleFavorite;
   final void Function() onEditCallback;
   const _Header({
-    Key key,
-    @required this.diaryEntry,
-    @required this.boxDecoration,
-    @required this.diaryNumberLabel,
-    @required this.isFirst,
-    @required this.isLast,
-    @required this.onToggleFavorite,
-    @required this.onEditCallback,
+    Key? key,
+    required this.diaryEntry,
+    required this.boxDecoration,
+    required this.diaryNumberLabel,
+    required this.isFirst,
+    required this.isLast,
+    required this.onToggleFavorite,
+    required this.onEditCallback,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -329,11 +329,11 @@ class _Header extends StatelessWidget {
 
 class _FavoriteButton extends StatefulWidget {
   final void Function() onPressed;
-  final bool favorite;
+  final bool? favorite;
   const _FavoriteButton({
-    Key key,
-    @required this.onPressed,
-    @required this.favorite,
+    Key? key,
+    required this.onPressed,
+    required this.favorite,
   }) : super(key: key);
 
   @override
@@ -342,7 +342,7 @@ class _FavoriteButton extends StatefulWidget {
 
 class __FavoriteButtonState extends State<_FavoriteButton>
     with TickerProviderStateMixin {
-  AnimationController _animationController;
+  late AnimationController _animationController;
 
   void _onTap() {
     _animationController
@@ -375,17 +375,17 @@ class __FavoriteButtonState extends State<_FavoriteButton>
         animation: _animationController,
         builder: (context, _) {
           return AnimatedOpacity(
-            duration: _animationController.duration,
+            duration: _animationController.duration!,
             opacity: 0.5 + 0.5 * _animationController.value,
             child: Transform(
               transform: Matrix4.translationValues(
                   0,
-                  ((widget.favorite ? -8.0 : 8.0) +
-                      (widget.favorite ? 8.0 : -8.0) *
+                  ((widget.favorite! ? -8.0 : 8.0) +
+                      (widget.favorite! ? 8.0 : -8.0) *
                           _animationController.value),
                   0),
               child: Icon(
-                widget.favorite ? LitIcons.heart_solid : LitIcons.heart,
+                widget.favorite! ? LitIcons.heart_solid : LitIcons.heart,
                 size: 26.0,
                 color: HexColor(
                   "#b2b2b2",
@@ -402,7 +402,7 @@ class __FavoriteButtonState extends State<_FavoriteButton>
 class _TextPreview extends StatelessWidget {
   final DiaryEntry diaryEntry;
 
-  const _TextPreview({Key key, @required this.diaryEntry}) : super(key: key);
+  const _TextPreview({Key? key, required this.diaryEntry}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -420,7 +420,7 @@ class _TextPreview extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 8.0),
               child: Text(
-                "${DateFormat.yMMMMEEEEd(Intl.getCurrentLocale()).format(DateTime.parse(diaryEntry.date))}",
+                "${DateFormat.yMMMMEEEEd(Intl.getCurrentLocale()).format(DateTime.parse(diaryEntry.date!))}",
                 style: LitTextStyles.sansSerif.copyWith(
                   fontSize: 15.4,
                   letterSpacing: 0.15,
@@ -434,7 +434,7 @@ class _TextPreview extends StatelessWidget {
                 top: 8.0,
                 bottom: 16.0,
               ),
-              child: diaryEntry.content.isNotEmpty
+              child: diaryEntry.content!.isNotEmpty
                   ? Text(
                       "${diaryEntry.content}",
                       style: LitTextStyles.sansSerif.copyWith(
@@ -498,11 +498,11 @@ class _TextPreview extends StatelessWidget {
 }
 
 class _MoodScoreIndicator extends StatefulWidget {
-  final double moodScore;
+  final double? moodScore;
 
   const _MoodScoreIndicator({
-    Key key,
-    @required this.moodScore,
+    Key? key,
+    required this.moodScore,
   }) : super(key: key);
 
   @override
@@ -511,7 +511,7 @@ class _MoodScoreIndicator extends StatefulWidget {
 
 class __MoodScoreIndicatorState extends State<_MoodScoreIndicator>
     with TickerProviderStateMixin {
-  AnimationController _animationController;
+  late AnimationController _animationController;
 
   String get _moodTranslationString {
     return MoodTranslationController(
@@ -567,13 +567,13 @@ class __MoodScoreIndicatorState extends State<_MoodScoreIndicator>
                   Color.lerp(
                     LitColors.lightRed,
                     HexColor('bee5be'),
-                    widget.moodScore,
-                  ),
+                    widget.moodScore!,
+                  )!,
                   Color.lerp(
                     Colors.white,
                     Colors.grey,
                     _animationController.value,
-                  ),
+                  )!,
                 ],
               ),
             ),

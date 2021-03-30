@@ -3,11 +3,11 @@ import 'package:history_of_me/model/user_data.dart';
 import 'package:history_of_me/view/widgets/shared/bookmark_front_preview.dart';
 
 class DiaryBookmarkHeader extends StatelessWidget {
-  final UserData userData;
+  final UserData? userData;
 
   const DiaryBookmarkHeader({
-    Key key,
-    @required this.userData,
+    Key? key,
+    required this.userData,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {

@@ -7,10 +7,10 @@ import 'package:lit_ui_kit/lit_ui_kit.dart';
 class LitSlider extends StatelessWidget {
   final double min;
   final double max;
-  final double value;
-  final Color activeTrackColor;
+  final double? value;
+  final Color? activeTrackColor;
   final Color inactiveTrackColor;
-  final Color thumbColor;
+  final Color? thumbColor;
   final void Function(double) onChanged;
 
   final double thumbHeight;
@@ -24,10 +24,10 @@ class LitSlider extends StatelessWidget {
   final bool displayValue;
   final bool displayRangeBadges;
   const LitSlider({
-    @required this.max,
-    @required this.min,
-    @required this.onChanged,
-    @required this.value,
+    required this.max,
+    required this.min,
+    required this.onChanged,
+    required this.value,
     this.activeTrackColor = const Color(0xFFb5a0a0),
     this.inactiveTrackColor = const Color(0xFFf9dcdc),
     this.thumbColor = Colors.white,
@@ -77,7 +77,7 @@ class LitSlider extends StatelessWidget {
                     0.5,
                   ),
                   thumbTextColor,
-                  value / max),
+                  value! / max),
               displayValue: displayValue,
               fontWeight: FontWeight.w700,
             ),
@@ -90,7 +90,7 @@ class LitSlider extends StatelessWidget {
             //trackShape: LitSliderTrack(),
             //valueIndicatorColor: Colors.white,
           ),
-          child: Slider(max: max, min: min, value: value, onChanged: onChanged),
+          child: Slider(max: max, min: min, value: value!, onChanged: onChanged),
         ),
         displayRangeBadges
             ? Padding(

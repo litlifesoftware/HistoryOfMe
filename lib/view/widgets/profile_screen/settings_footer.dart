@@ -8,18 +8,18 @@ import 'package:history_of_me/view/widgets/profile_screen/change_name_dialog.dar
 import 'package:lit_ui_kit/lit_ui_kit.dart';
 
 class SettingsFooter extends StatefulWidget {
-  final UserData userData;
+  final UserData? userData;
 
   const SettingsFooter({
-    Key key,
-    @required this.userData,
+    Key? key,
+    required this.userData,
   }) : super(key: key);
   @override
   _SettingsFooterState createState() => _SettingsFooterState();
 }
 
 class _SettingsFooterState extends State<SettingsFooter> {
-  LitRouteController _routeController;
+  late LitRouteController _routeController;
   void _showAboutThisAppDialog() {}
 
   void _openPrivacyPolicy() {}

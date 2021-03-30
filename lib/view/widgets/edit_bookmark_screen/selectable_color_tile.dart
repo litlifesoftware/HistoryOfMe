@@ -10,13 +10,13 @@ class SelectableColorTile extends StatefulWidget {
   final void Function(Color) onSelectCallback;
 
   const SelectableColorTile({
-    Key key,
-    @required this.color,
+    Key? key,
+    required this.color,
     this.boxShadow = const [],
-    @required this.height,
-    @required this.width,
-    @required this.selected,
-    @required this.onSelectCallback,
+    required this.height,
+    required this.width,
+    required this.selected,
+    required this.onSelectCallback,
   }) : super(key: key);
 
   @override
@@ -25,7 +25,7 @@ class SelectableColorTile extends StatefulWidget {
 
 class _SelectableColorTileState extends State<SelectableColorTile>
     with TickerProviderStateMixin {
-  AnimationController _animationController;
+  late AnimationController _animationController;
 
   void _onSelect() {
     _animationController.reverse(from: 1.0).then(
