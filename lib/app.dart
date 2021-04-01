@@ -69,7 +69,7 @@ class _AppState extends State<App> {
     );
     loadPhotosFromJson().then((value) => ImageCacheController(
           context: context,
-          assetImages: backdropPhotoUrlList as List<String>,
+          assetImages: backdropPhotoUrlList,
         ));
     // ImageCacheController(
     //   context: context,

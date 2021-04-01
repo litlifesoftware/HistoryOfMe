@@ -212,13 +212,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  font_awesome_flutter:
-    dependency: "direct main"
-    description:
-      name: font_awesome_flutter
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "9.0.0"
   glob:
     dependency: transitive
     description:
@@ -306,16 +299,16 @@ packages:
   lit_localization_service:
     dependency: "direct main"
     description:
-      path: "../lit_localization_service"
-      relative: true
-    source: path
+      name: lit_localization_service
+      url: "https://pub.dartlang.org"
+    source: hosted
     version: "0.0.2"
   lit_relative_date_time:
     dependency: "direct main"
     description:
-      path: "../lit_relative_date_time"
-      relative: true
-    source: path
+      name: lit_relative_date_time
+      url: "https://pub.dartlang.org"
+    source: hosted
     version: "0.0.2"
   lit_ui_kit:
     dependency: "direct main"
