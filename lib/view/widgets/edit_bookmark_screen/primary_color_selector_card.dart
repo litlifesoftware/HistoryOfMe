@@ -10,7 +10,7 @@ import 'package:lit_ui_kit/lit_ui_kit.dart';
 class PrimaryColorSelectorCard extends StatefulWidget {
   final String cardTitle;
   final int? selectedColorValue;
-  final void Function(Color) onSelectColorCallback;
+  final void Function(Color) onSelectPrimaryColor;
   //final List<Color> colors;
   //final void Function(Color) addColor;
   final void Function() onAddColorError;
@@ -21,7 +21,7 @@ class PrimaryColorSelectorCard extends StatefulWidget {
     Key? key,
     this.cardTitle = "Design Color",
     required this.selectedColorValue,
-    required this.onSelectColorCallback,
+    required this.onSelectPrimaryColor,
     //this.colors = const [],
     //@required this.addColor,
     required this.onAddColorError,
@@ -201,7 +201,7 @@ class _PrimaryColorSelectorCardState extends State<PrimaryColorSelectorCard>
                         additionalColorsAnimationController:
                             _additionalColorsAnimationController,
                         boxShadow: widget.buttonBoxShadow,
-                        onSelectColorCallback: widget.onSelectColorCallback,
+                        onSelectColorCallback: widget.onSelectPrimaryColor,
                         selectedColorValue: widget.selectedColorValue,
                         showAllColors: showAllColors,
                         userColors: widget.userCreatedColors,

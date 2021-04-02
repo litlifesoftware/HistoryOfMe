@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:history_of_me/model/user_created_color.dart';
+import 'package:history_of_me/model/user_data.dart';
 import 'package:history_of_me/view/widgets/edit_bookmark_screen/selectable_color_tile.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';
 
-class SecondaryColorSelectorCard extends StatelessWidget {
+class SecondaryColorSelectorCard extends StatefulWidget {
   final String cardTitle;
   final List<BoxShadow> buttonBoxShadow;
   final List<UserCreatedColor> userCreatedColors;
-
+  //final UserData? userData;
+  final int selectedSecondaryColorValue;
+  final void Function(Color color) onSelectSecondaryColor;
   const SecondaryColorSelectorCard({
     Key? key,
     this.cardTitle = "Secondary Color",
@@ -20,15 +23,38 @@ class SecondaryColorSelectorCard extends StatelessWidget {
       ),
     ],
     required this.userCreatedColors,
+    required this.selectedSecondaryColorValue,
+    required this.onSelectSecondaryColor,
   }) : super(key: key);
+
+  @override
+  _SecondaryColorSelectorCardState createState() =>
+      _SecondaryColorSelectorCardState();
+}
+
+class _SecondaryColorSelectorCardState
+    extends State<SecondaryColorSelectorCard> {
   @override
   Widget build(BuildContext context) {
+    bool _colorIsSelected(Color color) {
+      return color == Color(widget.selectedSecondaryColorValue);
+    }
+
+    Color _mapSelectedColor(int index) {
+      return Color.fromARGB(
+        widget.userCreatedColors[index].alpha,
+        widget.userCreatedColors[index].red,
+        widget.userCreatedColors[index].green,
+        widget.userCreatedColors[index].blue,
+      );
+    }
+
     return LitElevatedCard(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            cardTitle,
+            widget.cardTitle,
             style: LitTextStyles.sansSerif.copyWith(
               color: HexColor('#878787'),
               fontSize: 22.0,
@@ -41,18 +67,12 @@ class SecondaryColorSelectorCard extends StatelessWidget {
               child: ListView.builder(
                 physics: BouncingScrollPhysics(),
                 scrollDirection: Axis.horizontal,
-                itemCount: userCreatedColors.length,
+                itemCount: widget.userCreatedColors.length,
                 itemBuilder: (BuildContext context, int index) {
                   return SelectableColorTile(
-                    onSelectCallback: (color) =>
-                        {print("selected color $color")},
-                    color: Color.fromARGB(
-                      userCreatedColors[index].alpha,
-                      userCreatedColors[index].red,
-                      userCreatedColors[index].green,
-                      userCreatedColors[index].blue,
-                    ),
-                    selected: false,
+                    onSelectCallback: widget.onSelectSecondaryColor,
+                    color: _mapSelectedColor(index),
+                    selected: _colorIsSelected(_mapSelectedColor(index)),
                   );
                 },
               ),

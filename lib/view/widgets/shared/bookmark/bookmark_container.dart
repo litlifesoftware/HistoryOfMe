@@ -14,7 +14,7 @@ class BookmarkFittedBox extends StatelessWidget {
     return SizedBox(
       width: maxWidth,
       child: AspectRatio(
-        aspectRatio: BookmarkConstants.bookmarkDimensions.aspectRatio,
+        aspectRatio: bookmarkDimensions.aspectRatio,
         child: Container(
           decoration: BoxDecoration(
             boxShadow: [

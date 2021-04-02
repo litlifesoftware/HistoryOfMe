@@ -28,7 +28,7 @@ class DottedDesign extends StatelessWidget implements BookmarkDesign {
         builder: (context, child) {
           return Stack(children: [
             AspectRatio(
-              aspectRatio: BookmarkConstants.bookmarkDimensions.aspectRatio,
+              aspectRatio: bookmarkDimensions.aspectRatio,
               child: Container(
                 decoration: BoxDecoration(
                   /// Increase the provided color's brightness and set it

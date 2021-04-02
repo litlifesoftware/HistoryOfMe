@@ -85,7 +85,8 @@ class _BookmarkBackState extends State<BookmarkBack> {
                                       maxLines: 4,
                                       style: LitTextStyles.sansSerif.copyWith(
                                           height: 1.27,
-                                          backgroundColor: HexColor('#fff2b0'),
+                                          backgroundColor: Color(
+                                              widget.userData!.secondaryColor),
                                           fontSize: 12.0,
                                           color: HexColor('#444444'),
                                           letterSpacing: -0.3),

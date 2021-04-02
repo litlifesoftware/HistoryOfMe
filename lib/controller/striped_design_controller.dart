@@ -11,26 +11,7 @@ class StripedDesignController {
     this.colors,
     this.count,
     required this.radius,
-  }) : assert(
-          /// If colors are provided
-          colors != null
-              ?
-
-              /// The color and count must
-              /// be not provided
-              color == null && count == null
-
-                  /// Otherwise
-                  ||
-
-                  /// The colors must be not
-                  /// provided
-                  colors == null
-
-              /// Set to default (true)
-
-              : true,
-        );
+  });
 
   /// The total amount of required stripes.
   /// It will either be the [count] value or
@@ -41,7 +22,7 @@ class StripedDesignController {
 
   /// The bookmark dimensions.
   Size get _bookmarkDimensions {
-    return BookmarkConstants.bookmarkDimensions;
+    return bookmarkDimensions;
   }
 
   /// The bookmark height.

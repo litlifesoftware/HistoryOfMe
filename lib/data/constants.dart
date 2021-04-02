@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
 
-class BookmarkConstants {
-  static const Size bookmarkDimensions = const Size(8.5, 2.5);
-  static const int minStripeCount = 1;
-  static const int maxStripeCount = 32;
-  static const int minDotSize = 12;
-  static const int maxDotSize = 32;
-  static const String initialQuote =
-      "The way to get started is to quit talking and begin doing.";
-  static const String initialQuoteAuthor = "Walt Disney";
-  static const int initialDesignPatternIndex = 0;
-  static const int initialPrimaryColor = 0xFF757575;
-  static const int initialSecondayColor = 0xFFfff2b0;
-}
+const Size bookmarkDimensions = const Size(8.5, 2.5);
+const int minStripeCount = 1;
+const int maxStripeCount = 32;
+const int minDotSize = 12;
+const int maxDotSize = 32;
+const String initialQuote =
+    "The way to get started is to quit talking and begin doing.";
+const String initialQuoteAuthor = "Walt Disney";
+const int initialDesignPatternIndex = 0;
+const int initialPrimaryColor = 0xFF757575;
+const int initialSecondayColor = 0xFFfff2b0;
 
 const List<Color> initialColors = [
   const Color(0xFFFAFAFA),
@@ -27,6 +25,7 @@ const List<Color> initialColors = [
   const Color(0xFF424242),
   const Color(0xFF303030),
   const Color(0xFF212121),
+  const Color(0xFFfff2b0),
 ];
 
 const String initialDiaryEntryTitle = "";

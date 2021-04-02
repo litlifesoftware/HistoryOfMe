@@ -114,7 +114,7 @@ class _BookmarkEditingScreenState extends State<BookmarkEditingScreen>
     print("stripe slider $value");
   }
 
-  void setBookmarkColor(Color color) {
+  void _setPrimaryColor(Color color) {
     setState(() {
       // _userDataModel = UserData(
       //   name: _userDataModel.name,
@@ -128,6 +128,12 @@ class _BookmarkEditingScreenState extends State<BookmarkEditingScreen>
       //   quoteAuthor: _userDataModel.quoteAuthor,
       // );
       _primaryColor = color.value;
+    });
+  }
+
+  void _setSecondaryColor(Color color) {
+    setState(() {
+      _secondaryColor = color.value;
     });
   }
 
@@ -186,6 +192,11 @@ class _BookmarkEditingScreenState extends State<BookmarkEditingScreen>
       print("changed bookmark color");
       return true;
     }
+
+    if (_secondaryColor != other.secondaryColor) {
+      return true;
+    }
+
     if (_designPattern != other.designPatternIndex) {
       print("changed design pattern");
       return true;
@@ -315,7 +326,6 @@ class _BookmarkEditingScreenState extends State<BookmarkEditingScreen>
     _name = widget.initialUserDataModel!.name;
     _animated = widget.initialUserDataModel!.animated;
     _primaryColor = widget.initialUserDataModel!.primaryColor;
-    // TODO Fetch from
     _secondaryColor = widget.initialUserDataModel!.secondaryColor;
     _stripeCount = widget.initialUserDataModel!.stripeCount;
     _dotSize = widget.initialUserDataModel!.dotSize;
@@ -362,7 +372,7 @@ class _BookmarkEditingScreenState extends State<BookmarkEditingScreen>
                         child: Column(
                           children: [
                             IndexedPageView(
-                              height: 150.0,
+                              height: 148.0,
                               indicatorSpacingTop: 0.0,
                               indicatorColor: LitColors.mediumGrey,
                               children: [
@@ -412,14 +422,13 @@ class _BookmarkEditingScreenState extends State<BookmarkEditingScreen>
                           print(userColors);
                           return ConstrainedBox(
                             constraints: BoxConstraints(
-                                minHeight:
-                                    MediaQuery.of(context).size.height - 64.0),
+                                minHeight: MediaQuery.of(context).size.height),
                             child: Column(
                               children: [
                                 _configCard,
                                 PrimaryColorSelectorCard(
                                   selectedColorValue: _primaryColor,
-                                  onSelectColorCallback: setBookmarkColor,
+                                  onSelectPrimaryColor: _setPrimaryColor,
                                   userCreatedColors: userColors,
                                   cardTitle: "Main Color",
                                   //colors: _colors,
@@ -435,7 +444,10 @@ class _BookmarkEditingScreenState extends State<BookmarkEditingScreen>
                                 ),
                                 SecondaryColorSelectorCard(
                                   userCreatedColors: userColors,
+                                  selectedSecondaryColorValue: _secondaryColor,
+                                  onSelectSecondaryColor: _setSecondaryColor,
                                 ),
+                                SizedBox(height: 32.0),
                               ],
                             ),
                           );

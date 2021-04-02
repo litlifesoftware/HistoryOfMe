@@ -116,14 +116,14 @@ class HiveDBService {
   void createUserData(String username) {
     final UserData userData = UserData(
       name: username,
-      primaryColor: BookmarkConstants.initialPrimaryColor,
-      secondaryColor: BookmarkConstants.initialSecondayColor,
-      stripeCount: BookmarkConstants.minStripeCount,
-      dotSize: BookmarkConstants.minDotSize,
+      primaryColor: initialPrimaryColor,
+      secondaryColor: initialSecondayColor,
+      stripeCount: minStripeCount,
+      dotSize: minDotSize,
       animated: true,
-      quote: BookmarkConstants.initialQuote,
-      designPatternIndex: BookmarkConstants.initialDesignPatternIndex,
-      quoteAuthor: BookmarkConstants.initialQuoteAuthor,
+      quote: initialQuote,
+      designPatternIndex: initialDesignPatternIndex,
+      quoteAuthor: initialQuoteAuthor,
       lastUpdated: DateTime.now().millisecondsSinceEpoch,
     );
     if (Hive.box<UserData>(_userDataKey).isEmpty) {
