@@ -21,7 +21,7 @@ class ChangeNameDialog extends StatefulWidget {
 class _ChangeNameDialogState extends State<ChangeNameDialog> {
   late TextEditingController _nameController;
   late FocusNode _focusNode;
-  String? _updatedName;
+  late String _updatedName;
 
   void _onCancel() {
     LitRouteController(context).closeDialog();

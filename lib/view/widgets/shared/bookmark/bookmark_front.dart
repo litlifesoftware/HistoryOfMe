@@ -85,7 +85,7 @@ class __BookmarkFrontArtState extends State<_BookmarkFrontArt>
             widget.radius,
           ))),
         ),
-        DesignType.values[widget.userData!.designPatternIndex!] ==
+        DesignType.values[widget.userData!.designPatternIndex] ==
                 DesignType.stiped
             ? StripedDesign(
                 radius: widget.radius,

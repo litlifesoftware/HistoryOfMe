@@ -37,13 +37,13 @@ class EntryEditingScreen extends StatefulWidget {
 class _EntryEditingScreenState extends State<EntryEditingScreen>
     with TickerProviderStateMixin {
   /// The current mood score value the user has set.
-  double? _moodScore;
+  late double _moodScore;
 
   /// The current title text the user is editing.
-  String? _title;
+  late String _title;
 
   /// The current content text the user is editing.
-  String? _content;
+  late String _content;
 
   /// The [FocusNode] to control the focus on the title's [EditableText].
   FocusNode? _titleEditFocusNode;
@@ -255,7 +255,8 @@ class _EntryEditingScreenState extends State<EntryEditingScreen>
                                 transform: Matrix4.translationValues(
                                     0,
                                     -50 +
-                                        (50 * _fadeInAnimationController!.value),
+                                        (50 *
+                                            _fadeInAnimationController!.value),
                                     0),
                                 child: Column(
                                   children: [
@@ -334,7 +335,7 @@ class _EntryEditingScreenState extends State<EntryEditingScreen>
                                           activeTrackColor: Color.lerp(
                                             LitColors.lightRed,
                                             HexColor('bee5be'),
-                                            _moodScore!,
+                                            _moodScore,
                                           ),
                                           valueTitleText:
                                               MoodTranslationController(

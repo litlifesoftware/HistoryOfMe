@@ -133,7 +133,7 @@ class __NestedScrollViewBodyState extends State<_NestedScrollViewBody> {
                     final DiaryEntry diaryEntry =
                         widget.diaryEntriesListSorted[listIndex];
                     return showFavoritesOnly!
-                        ? diaryEntry.favorite!
+                        ? diaryEntry.favorite
                             ? DiaryListTile(
                                 animationController: widget.animationController,
                                 listIndex: listIndex,

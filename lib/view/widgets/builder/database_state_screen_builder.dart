@@ -29,7 +29,7 @@ class DatabaseStateScreenBuilder extends StatefulWidget {
 class _DatabaseStateScreenBuilderState
     extends State<DatabaseStateScreenBuilder> {
   /// The currently inputed username.
-  String? _username;
+  String _username = "";
 
   /// Create a [HiveDBService] instance to access the database methods.
   HiveDBService _dbService = HiveDBService();

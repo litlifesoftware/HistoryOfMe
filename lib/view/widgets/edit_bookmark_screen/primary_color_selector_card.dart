@@ -7,7 +7,8 @@ import 'package:history_of_me/view/widgets/edit_bookmark_screen/color_mixer.dart
 import 'package:history_of_me/view/widgets/edit_bookmark_screen/selectable_color_tile.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';
 
-class UserCreatedColorCard extends StatefulWidget {
+class PrimaryColorSelectorCard extends StatefulWidget {
+  final String cardTitle;
   final int? selectedColorValue;
   final void Function(Color) onSelectColorCallback;
   //final List<Color> colors;
@@ -16,8 +17,9 @@ class UserCreatedColorCard extends StatefulWidget {
   //final void Function() handleColorDuplicate;
   final List<BoxShadow> buttonBoxShadow;
   final List<UserCreatedColor> userCreatedColors;
-  const UserCreatedColorCard({
+  const PrimaryColorSelectorCard({
     Key? key,
+    this.cardTitle = "Design Color",
     required this.selectedColorValue,
     required this.onSelectColorCallback,
     //this.colors = const [],
@@ -36,19 +38,20 @@ class UserCreatedColorCard extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _UserCreatedColorCardState createState() => _UserCreatedColorCardState();
+  _PrimaryColorSelectorCardState createState() =>
+      _PrimaryColorSelectorCardState();
 }
 
-class _UserCreatedColorCardState extends State<UserCreatedColorCard>
+class _PrimaryColorSelectorCardState extends State<PrimaryColorSelectorCard>
     with TickerProviderStateMixin {
   AnimationController? _additionalColorsAnimationController;
   AnimationController? _colorSliderAnimationController;
-  bool? showAllColors;
-  late bool enableColorMix;
-  int? redChannel;
-  int? greenChannel;
-  int? blueChannel;
-  int? alphaChannel;
+  bool showAllColors = false;
+  bool enableColorMix = false;
+  int redChannel = 0;
+  int greenChannel = 0;
+  int blueChannel = 0;
+  int alphaChannel = 0;
   Future<void> animateMixColorTransition() async {
     return enableColorMix
         ? _additionalColorsAnimationController!.forward(from: 0.0)
@@ -56,7 +59,7 @@ class _UserCreatedColorCardState extends State<UserCreatedColorCard>
   }
 
   Future<void> animateAdditionalColorsTransition() async {
-    return showAllColors!
+    return showAllColors
         ? _additionalColorsAnimationController!
             .reverse(from: 1.0)
             .then((value) => _additionalColorsAnimationController!.forward())
@@ -65,7 +68,7 @@ class _UserCreatedColorCardState extends State<UserCreatedColorCard>
 
   void toggleAllColors() {
     animateAdditionalColorsTransition().then((value) => setState(() {
-          showAllColors = !showAllColors!;
+          showAllColors = !showAllColors;
         }));
   }
 
@@ -100,10 +103,13 @@ class _UserCreatedColorCardState extends State<UserCreatedColorCard>
   }
 
   bool get colorValuesSet {
-    return alphaChannel != 0 ||
-        redChannel != 0 ||
-        greenChannel != 0 ||
-        blueChannel != 0;
+    return Color.fromARGB(
+            alphaChannel, redChannel, greenChannel, blueChannel) !=
+        Color.fromARGB(0, 0, 0, 0);
+    // return alphaChannel != 0 ||
+    //     redChannel != 0 ||
+    //     greenChannel != 0 ||
+    //     blueChannel != 0;
   }
 
   void handleColorMixerPress() {
@@ -111,10 +117,10 @@ class _UserCreatedColorCardState extends State<UserCreatedColorCard>
       colorValuesSet
           ? _addColor(
               Color.fromARGB(
-                alphaChannel!,
-                redChannel!,
-                greenChannel!,
-                blueChannel!,
+                alphaChannel,
+                redChannel,
+                greenChannel,
+                blueChannel,
               ),
             )
           : toggleEnableColorMix();
@@ -150,12 +156,6 @@ class _UserCreatedColorCardState extends State<UserCreatedColorCard>
   void initState() {
     super.initState();
 
-    showAllColors = false;
-    enableColorMix = false;
-    alphaChannel = 0;
-    redChannel = 0;
-    greenChannel = 0;
-    blueChannel = 0;
     _additionalColorsAnimationController = AnimationController(
       duration: Duration(milliseconds: 250),
       vsync: this,
@@ -183,7 +183,7 @@ class _UserCreatedColorCardState extends State<UserCreatedColorCard>
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Design Color",
+            widget.cardTitle,
             style: LitTextStyles.sansSerif.copyWith(
               color: HexColor('#878787'),
               fontSize: 22.0,
@@ -232,7 +232,7 @@ class _UserCreatedColorCardState extends State<UserCreatedColorCard>
                         horizontal: 12.0,
                       ),
                       child: Text(
-                        "Show ${showAllColors! ? 'less' : 'more'}",
+                        "Show ${showAllColors ? 'less' : 'more'}",
                         style: LitTextStyles.sansSerif.copyWith(
                           color: Colors.white,
                           fontWeight: FontWeight.w700,
@@ -263,7 +263,7 @@ class _UserCreatedColorCardState extends State<UserCreatedColorCard>
                             )
                           : SizedBox(),
                     ),
-              showAllColors!
+              showAllColors
                   ? Align(
                       alignment: Alignment.centerRight,
                       child: LitRoundedElevatedButton(
@@ -392,7 +392,8 @@ class _UserCreatedColorGridState extends State<UserCreatedColorGrid>
                     AnimatedOpacity(
                       duration:
                           widget.additionalColorsAnimationController!.duration!,
-                      opacity: widget.additionalColorsAnimationController!.value,
+                      opacity:
+                          widget.additionalColorsAnimationController!.value,
                       child: _DeletableColorGridItem(
                         animation: _animationController,
                         boxShadow: widget.boxShadow,
@@ -454,10 +455,10 @@ class _DeletableColorGridItem extends StatefulWidget {
 
 class _DeletableColorGridItemState extends State<_DeletableColorGridItem> {
   Color _mapColor(UserCreatedColor userColor) {
-    int red = userColor.red!;
-    int green = userColor.green!;
-    int blue = userColor.blue!;
-    int alpha = userColor.alpha!;
+    int red = userColor.red;
+    int green = userColor.green;
+    int blue = userColor.blue;
+    int alpha = userColor.alpha;
     return Color.fromARGB(alpha, red, green, blue);
   }
 

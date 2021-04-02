@@ -12,9 +12,16 @@ class SelectableColorTile extends StatefulWidget {
   const SelectableColorTile({
     Key? key,
     required this.color,
-    this.boxShadow = const [],
-    required this.height,
-    required this.width,
+    this.boxShadow = const [
+      const BoxShadow(
+        blurRadius: 2.0,
+        color: Colors.black12,
+        offset: Offset(2, 1),
+        spreadRadius: 0.5,
+      ),
+    ],
+    this.height = 64.0,
+    this.width = 64.0,
     required this.selected,
     required this.onSelectCallback,
   }) : super(key: key);

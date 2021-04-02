@@ -83,7 +83,7 @@ class _EntryDetailsCardState extends State<EntryDetailsCard> {
       title: widget.diaryEntry.title,
       content: widget.diaryEntry.content,
       moodScore: widget.diaryEntry.moodScore,
-      favorite: !widget.diaryEntry.favorite!,
+      favorite: !widget.diaryEntry.favorite,
       backdropPhotoId: widget.diaryEntry.backdropPhotoId,
     );
     HiveDBService().updateDiaryEntry(
@@ -420,7 +420,7 @@ class _TextPreview extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 8.0),
               child: Text(
-                "${DateFormat.yMMMMEEEEd(Intl.getCurrentLocale()).format(DateTime.parse(diaryEntry.date!))}",
+                "${DateFormat.yMMMMEEEEd(Intl.getCurrentLocale()).format(DateTime.parse(diaryEntry.date))}",
                 style: LitTextStyles.sansSerif.copyWith(
                   fontSize: 15.4,
                   letterSpacing: 0.15,
@@ -434,7 +434,7 @@ class _TextPreview extends StatelessWidget {
                 top: 8.0,
                 bottom: 16.0,
               ),
-              child: diaryEntry.content!.isNotEmpty
+              child: diaryEntry.content.isNotEmpty
                   ? Text(
                       "${diaryEntry.content}",
                       style: LitTextStyles.sansSerif.copyWith(

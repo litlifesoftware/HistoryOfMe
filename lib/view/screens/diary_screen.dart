@@ -98,7 +98,8 @@ class _DiaryScreenState extends State<DiaryScreen>
       body: SafeArea(
         child: ValueListenableBuilder(
           valueListenable: HiveDBService().getUserData(),
-          builder: (BuildContext context, Box<UserData> userDataBox, Widget? _) {
+          builder:
+              (BuildContext context, Box<UserData> userDataBox, Widget? _) {
             print("user data box length: ${userDataBox.length}");
             // Hive-retrieved user data object.
             //
@@ -107,8 +108,8 @@ class _DiaryScreenState extends State<DiaryScreen>
             final UserData? userData = userDataBox.getAt(0);
             return ValueListenableBuilder(
               valueListenable: HiveDBService().getDiaryEntries(),
-              builder:
-                  (BuildContext context, Box<DiaryEntry> entriesBox, Widget? _) {
+              builder: (BuildContext context, Box<DiaryEntry> entriesBox,
+                  Widget? _) {
                 // Diary entries sorted ascending.
                 List<DiaryEntry> diaryEntriesListSorted =
                     _getDiaryEntriesSorted(entriesBox);
@@ -170,7 +171,7 @@ class __ComposeActionButtonState extends State<_ComposeActionButton>
   late AnimationController _actionButtonAnimation;
   late AnimationOnScrollController _animationOnScrollController;
   Color? get buttonAccentColor {
-    final Color bookmarkColor = Color(widget.userData!.bookmarkColor!);
+    final Color bookmarkColor = Color(widget.userData!.primaryColor);
     final int contrastingColorValue = (0xFFFFFFFF - bookmarkColor.value);
     final Color? contrastingColor =
         Color.lerp(Color(contrastingColorValue), bookmarkColor, 0.75);
@@ -179,7 +180,7 @@ class __ComposeActionButtonState extends State<_ComposeActionButton>
   }
 
   Color? get buttonMainColor {
-    final Color bookmarkColor = Color(widget.userData!.bookmarkColor!);
+    final Color bookmarkColor = Color(widget.userData!.primaryColor);
     return Color.lerp(bookmarkColor, widget.actionButtonAccentColorMixer,
         _actionButtonAnimation.value);
   }

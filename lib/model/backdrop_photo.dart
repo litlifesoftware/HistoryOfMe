@@ -1,5 +1,3 @@
-import 'package:flutter/foundation.dart';
-
 class BackdropPhoto {
   final int? id;
   final String? assetUrl;

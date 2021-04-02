@@ -34,7 +34,7 @@ class DottedDesign extends StatelessWidget implements BookmarkDesign {
                   /// Increase the provided color's brightness and set it
                   /// to be the background color of the design.
                   color: Color.lerp(
-                      Color(userData!.bookmarkColor!), Colors.white, 0.6),
+                      Color(userData!.primaryColor), Colors.white, 0.6),
                   borderRadius: BorderRadius.circular(radius),
                 ),
               ),
@@ -70,56 +70,57 @@ class DottedDesignPainter extends CustomPainter {
   void paint(ui.Canvas canvas, ui.Size size) {
     /// The inital vertical offset value relative
     /// to the widgets, which will be painted on.
-    final double initalHorizontalOffset = (size.height / this.userData!.dotSize!);
+    final double initalHorizontalOffset =
+        (size.height / this.userData!.dotSize);
 
     /// Get the vertical offset, which will be depended
     /// on the dot size and the current grid's column
     /// count (provided by the iterator [i]'s value).
     double getHorizontalOffset(int i) {
-      return initalHorizontalOffset + (i * (this.userData!.dotSize! * 1.7));
+      return initalHorizontalOffset + (i * (this.userData!.dotSize * 1.7));
     }
 
     /// The inital horizontal offset value relative
     /// to the widgets, which will be painted on.
-    final double initalVerticalOffset = (size.height / this.userData!.dotSize!);
+    final double initalVerticalOffset = (size.height / this.userData!.dotSize);
 
     /// Get the horizontal offset, which will be depended
     /// on the dot size and the current grid's row
     /// count (provided by the iterator [j]'s value).
     double getVerticalOffset(int j) {
-      return initalVerticalOffset + (this.userData!.dotSize! * j);
+      return initalVerticalOffset + (this.userData!.dotSize * j);
     }
 
     /// Get the doz size. It will either be mutated by the
     /// current [Animation] value or fixed, if the animation
     /// is disabled.
     double getDotSize() {
-      return this.userData!.dotSize! *
-          (this.userData!.animated! ? this.animation.value : 0.4) as double;
+      return this.userData!.dotSize *
+          (this.userData!.animated ? this.animation.value : 0.4) as double;
     }
 
-    final int getRowCount = size.width ~/ this.userData!.dotSize!;
+    final int getRowCount = size.width ~/ this.userData!.dotSize;
 
-    final int getColumnCount = (size.height ~/ this.userData!.dotSize!) +
-        (this.userData!.dotSize! ~/ initalVerticalOffset);
+    final int getColumnCount = (size.height ~/ this.userData!.dotSize) +
+        (this.userData!.dotSize ~/ initalVerticalOffset);
 
     /// The list of [Paint] objects will vary in their [Color].
     List<Paint> paints = [
       Paint()
         // The provided color.
-        ..color = Color(this.userData!.bookmarkColor!)
+        ..color = Color(this.userData!.primaryColor)
         ..strokeWidth = 4.0
         ..style = PaintingStyle.fill,
       Paint()
         // Brightened provided color.
         ..color =
-            Color.lerp(Color(this.userData!.bookmarkColor!), Colors.white, 0.3)!
+            Color.lerp(Color(this.userData!.primaryColor), Colors.white, 0.3)!
         ..strokeWidth = 4.0
         ..style = PaintingStyle.fill,
       Paint()
         // Brightened provided color.
         ..color =
-            Color.lerp(Color(this.userData!.bookmarkColor!), Colors.white, 0.5)!
+            Color.lerp(Color(this.userData!.primaryColor), Colors.white, 0.5)!
         ..strokeWidth = 4.0
         ..style = PaintingStyle.fill,
     ];

@@ -17,39 +17,42 @@ class UserDataAdapter extends TypeAdapter<UserData> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return UserData(
-      name: fields[0] as String?,
-      bookmarkColor: fields[1] as int?,
-      stripeCount: fields[2] as int?,
-      dotSize: fields[3] as int?,
-      animated: fields[4] as bool?,
-      quote: fields[5] as String?,
-      designPatternIndex: fields[6] as int?,
-      quoteAuthor: fields[7] as String?,
-      lastUpdated: fields[8] as int?,
+      name: fields[0] as String,
+      primaryColor: fields[1] as int,
+      secondaryColor: fields[2] as int,
+      stripeCount: fields[3] as int,
+      dotSize: fields[4] as int,
+      animated: fields[5] as bool,
+      quote: fields[6] as String,
+      designPatternIndex: fields[7] as int,
+      quoteAuthor: fields[8] as String,
+      lastUpdated: fields[9] as int,
     );
   }
 
   @override
   void write(BinaryWriter writer, UserData obj) {
     writer
-      ..writeByte(9)
+      ..writeByte(10)
       ..writeByte(0)
       ..write(obj.name)
       ..writeByte(1)
-      ..write(obj.bookmarkColor)
+      ..write(obj.primaryColor)
       ..writeByte(2)
-      ..write(obj.stripeCount)
+      ..write(obj.secondaryColor)
       ..writeByte(3)
-      ..write(obj.dotSize)
+      ..write(obj.stripeCount)
       ..writeByte(4)
-      ..write(obj.animated)
+      ..write(obj.dotSize)
       ..writeByte(5)
-      ..write(obj.quote)
+      ..write(obj.animated)
       ..writeByte(6)
-      ..write(obj.designPatternIndex)
+      ..write(obj.quote)
       ..writeByte(7)
-      ..write(obj.quoteAuthor)
+      ..write(obj.designPatternIndex)
       ..writeByte(8)
+      ..write(obj.quoteAuthor)
+      ..writeByte(9)
       ..write(obj.lastUpdated);
   }
 

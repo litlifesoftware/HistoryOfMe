@@ -10,7 +10,8 @@ class BookmarkConstants {
       "The way to get started is to quit talking and begin doing.";
   static const String initialQuoteAuthor = "Walt Disney";
   static const int initialDesignPatternIndex = 0;
-  static const int initialColor = 0xFF757575;
+  static const int initialPrimaryColor = 0xFF757575;
+  static const int initialSecondayColor = 0xFFfff2b0;
 }
 
 const List<Color> initialColors = [

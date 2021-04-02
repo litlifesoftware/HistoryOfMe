@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:history_of_me/model/user_data.dart';
 import 'package:history_of_me/view/widgets/shared/bookmark/bookmark_container.dart';
@@ -57,12 +55,12 @@ class _BookmarkBackState extends State<BookmarkBack> {
                               colors: [
                                 Color.lerp(
                                         Colors.white,
-                                        Color(widget.userData!.bookmarkColor!),
+                                        Color(widget.userData!.primaryColor),
                                         0.3)!
                                     .withOpacity(0.4),
                                 Color.lerp(
                                         Colors.white,
-                                        Color(widget.userData!.bookmarkColor!),
+                                        Color(widget.userData!.primaryColor),
                                         0.5)!
                                     .withOpacity(0.4),
                               ])),

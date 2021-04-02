@@ -113,10 +113,11 @@ class HiveDBService {
   /// Stores the initial [UserData] model to the Hive database on the first app startup.
   ///
   /// The provided username must be obtained by the user.
-  void createUserData(String? username) {
+  void createUserData(String username) {
     final UserData userData = UserData(
       name: username,
-      bookmarkColor: BookmarkConstants.initialColor,
+      primaryColor: BookmarkConstants.initialPrimaryColor,
+      secondaryColor: BookmarkConstants.initialSecondayColor,
       stripeCount: BookmarkConstants.minStripeCount,
       dotSize: BookmarkConstants.minDotSize,
       animated: true,
@@ -146,10 +147,11 @@ class HiveDBService {
   ///   Hive database in order to only update the username.
   ///
   /// * [updatedName] is the new username that should be stored on the database.
-  void updateUsername(UserData initialUserData, String? updatedName) {
+  void updateUsername(UserData initialUserData, String updatedName) {
     UserData updatedUserData = UserData(
       name: updatedName,
-      bookmarkColor: initialUserData.bookmarkColor,
+      primaryColor: initialUserData.primaryColor,
+      secondaryColor: initialUserData.secondaryColor,
       stripeCount: initialUserData.stripeCount,
       dotSize: initialUserData.dotSize,
       animated: initialUserData.animated,

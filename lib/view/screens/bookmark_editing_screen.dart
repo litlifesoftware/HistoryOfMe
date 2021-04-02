@@ -6,10 +6,11 @@ import 'package:history_of_me/lit_route_controller/focus/route_controller.dart';
 import 'package:history_of_me/lit_ui_kit_temp/lit_draggable.dart';
 import 'package:history_of_me/model/user_created_color.dart';
 import 'package:history_of_me/model/user_data.dart';
+import 'package:history_of_me/view/widgets/edit_bookmark_screen/secondary_color_selector_card.dart';
 import 'package:history_of_me/view/widgets/shared/bookmark_back_preview.dart';
 import 'package:history_of_me/view/widgets/shared/bookmark_front_preview.dart';
 import 'package:history_of_me/lit_ui_kit_temp/lit_toggle_button_group.dart';
-import 'package:history_of_me/view/widgets/edit_bookmark_screen/user_created_color_card.dart';
+import 'package:history_of_me/view/widgets/edit_bookmark_screen/primary_color_selector_card.dart';
 import 'package:history_of_me/view/widgets/edit_bookmark_screen/pattern_config_card.dart';
 import 'package:history_of_me/view/widgets/edit_bookmark_screen/quote_card.dart';
 import 'package:history_of_me/view/widgets/shared/confirm_discard_draft_dialog.dart';
@@ -35,22 +36,21 @@ class _BookmarkEditingScreenState extends State<BookmarkEditingScreen>
 
   //UserData _userDataModel;
 
-  String? _name;
-  int? _bookmarkColor;
-  int? _stripeCount;
-  int? _dotSize;
-  String? _quote;
-  bool? _animated;
+  late String _name;
+  late int _primaryColor;
+  late int _secondaryColor;
+  late int _stripeCount;
+  late int _dotSize;
+  late String _quote;
+  late bool _animated;
 
-  int? _designPattern;
+  late int _designPattern;
 
-  String? _quoteAuthor;
+  late String _quoteAuthor;
 
   late AnimationController _appearAnimation;
 
   LitSnackbarController? _snackbarController;
-
-  List<Color>? _colors;
 
   ScrollController? _scrollController;
 
@@ -127,7 +127,7 @@ class _BookmarkEditingScreenState extends State<BookmarkEditingScreen>
       //   animated: _userDataModel.animated,
       //   quoteAuthor: _userDataModel.quoteAuthor,
       // );
-      _bookmarkColor = color.value;
+      _primaryColor = color.value;
     });
   }
 
@@ -161,10 +161,11 @@ class _BookmarkEditingScreenState extends State<BookmarkEditingScreen>
     _quoteAuthor = author;
   }
 
-  UserData _mapUserData(int? lastUpdated) {
+  UserData _mapUserData(int lastUpdated) {
     return UserData(
       name: _name,
-      bookmarkColor: _bookmarkColor,
+      primaryColor: _primaryColor,
+      secondaryColor: _secondaryColor,
       stripeCount: _stripeCount,
       dotSize: _dotSize,
       animated: _animated,
@@ -181,7 +182,7 @@ class _BookmarkEditingScreenState extends State<BookmarkEditingScreen>
     //     !listEquals(_colors, widget.initialColors
     //     );
 
-    if (_bookmarkColor != other.bookmarkColor) {
+    if (_primaryColor != other.primaryColor) {
       print("changed bookmark color");
       return true;
     }
@@ -259,6 +260,40 @@ class _BookmarkEditingScreenState extends State<BookmarkEditingScreen>
     );
   }
 
+  Widget get _configCard {
+    Widget _card;
+    switch (_designPattern) {
+      case 0:
+        _card = PatternConfigCard(
+          patternLabel: "Stripes",
+          patternValue: _stripeCount,
+          onPatternSliderChange: onStripeSliderChange,
+          min: 1,
+          max: 32,
+        );
+        break;
+      case 1:
+        _card = PatternConfigCard(
+          patternLabel: "Dotes",
+          patternValue: _dotSize,
+          onPatternSliderChange: onDotsSliderChange,
+          min: 12,
+          max: 32,
+        );
+        break;
+      default:
+        _card = PatternConfigCard(
+          patternLabel: "Stripes",
+          patternValue: _stripeCount,
+          onPatternSliderChange: onStripeSliderChange,
+          min: 1,
+          max: 32,
+        );
+    }
+
+    return _card;
+  }
+
   @override
   void initState() {
     super.initState();
@@ -279,7 +314,9 @@ class _BookmarkEditingScreenState extends State<BookmarkEditingScreen>
     //_userDataModel = widget.initialUserDataModel;
     _name = widget.initialUserDataModel!.name;
     _animated = widget.initialUserDataModel!.animated;
-    _bookmarkColor = widget.initialUserDataModel!.bookmarkColor;
+    _primaryColor = widget.initialUserDataModel!.primaryColor;
+    // TODO Fetch from
+    _secondaryColor = widget.initialUserDataModel!.secondaryColor;
     _stripeCount = widget.initialUserDataModel!.stripeCount;
     _dotSize = widget.initialUserDataModel!.dotSize;
     _quote = widget.initialUserDataModel!.quote;
@@ -379,27 +416,12 @@ class _BookmarkEditingScreenState extends State<BookmarkEditingScreen>
                                     MediaQuery.of(context).size.height - 64.0),
                             child: Column(
                               children: [
-                                _designPattern == 0
-                                    ? PatternConfigCard(
-                                        patternLabel: "Stripes",
-                                        patternValue: _stripeCount,
-                                        onPatternSliderChange:
-                                            onStripeSliderChange,
-                                        min: 1,
-                                        max: 32,
-                                      )
-                                    : PatternConfigCard(
-                                        patternLabel: "Dotes",
-                                        patternValue: _dotSize,
-                                        onPatternSliderChange:
-                                            onDotsSliderChange,
-                                        min: 12,
-                                        max: 32,
-                                      ),
-                                UserCreatedColorCard(
-                                  selectedColorValue: _bookmarkColor,
+                                _configCard,
+                                PrimaryColorSelectorCard(
+                                  selectedColorValue: _primaryColor,
                                   onSelectColorCallback: setBookmarkColor,
                                   userCreatedColors: userColors,
+                                  cardTitle: "Main Color",
                                   //colors: _colors,
                                   //addColor: _handleAddColor,
                                   onAddColorError: () =>
@@ -410,6 +432,9 @@ class _BookmarkEditingScreenState extends State<BookmarkEditingScreen>
                                   initialQuote: _quote,
                                   onAuthorChanged: setQuoteAuthor,
                                   onQuoteChanged: setQuote,
+                                ),
+                                SecondaryColorSelectorCard(
+                                  userCreatedColors: userColors,
                                 ),
                               ],
                             ),

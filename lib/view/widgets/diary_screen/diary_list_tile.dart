@@ -84,7 +84,7 @@ class _DiaryListTileState extends State<DiaryListTile> {
                       boxShadowOffset: Offset(-2, 4),
                       quaterTurns: 3,
                       text: monthLabels[
-                          DateTime.parse(widget.diaryEntry.date!).month - 1],
+                          DateTime.parse(widget.diaryEntry.date).month - 1],
                       landscapeWidthFactor: widget.landscapeWidthFactor,
                     ),
                     _EntryCard(
@@ -96,7 +96,7 @@ class _DiaryListTileState extends State<DiaryListTile> {
                     _EntryDateLabel(
                       boxShadowOffset: Offset(4, -2),
                       quaterTurns: 1,
-                      text: DateTime.parse(widget.diaryEntry.date!)
+                      text: DateTime.parse(widget.diaryEntry.date)
                           .year
                           .toString(),
                       landscapeWidthFactor: widget.landscapeWidthFactor,
@@ -198,7 +198,7 @@ class _EntryCard extends StatelessWidget {
         final RelativeDateTime relativeDateTime = RelativeDateTime(
           dateTime: DateTime.now(),
           other: DateTime.fromMillisecondsSinceEpoch(
-            diaryEntry.lastUpdated!,
+            diaryEntry.lastUpdated,
           ),
         );
         final RelativeDateFormat relativeDateFormatter = RelativeDateFormat(
@@ -266,7 +266,7 @@ class _EntryCard extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                "${DateFormat.yMMMMd(Intl.getCurrentLocale()).format(DateTime.parse(diaryEntry.date!))}",
+                                "${DateFormat.yMMMMd(Intl.getCurrentLocale()).format(DateTime.parse(diaryEntry.date))}",
                                 style: LitTextStyles.sansSerif.copyWith(
                                   fontSize: 12.0,
                                   letterSpacing: -0.02,
@@ -302,7 +302,7 @@ class _EntryCard extends StatelessWidget {
                           color: Color.lerp(
                             LitColors.lightRed,
                             HexColor('bee5be'),
-                            diaryEntry.moodScore!,
+                            diaryEntry.moodScore,
                           ),
                           borderRadius: BorderRadius.circular(
                             5.95,

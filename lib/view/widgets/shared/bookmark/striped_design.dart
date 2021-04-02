@@ -21,7 +21,7 @@ class StripedDesign extends StatelessWidget implements BookmarkDesign {
           Column(
             children: StripedDesignController(
               radius: radius,
-              color: Color(userData!.bookmarkColor!),
+              color: Color(userData!.primaryColor),
               count: userData!.stripeCount,
             ).stripes,
           ),

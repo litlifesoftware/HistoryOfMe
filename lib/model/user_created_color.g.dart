@@ -17,11 +17,11 @@ class UserCreatedColorAdapter extends TypeAdapter<UserCreatedColor> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return UserCreatedColor(
-      uid: fields[0] as String?,
-      alpha: fields[1] as int?,
-      red: fields[2] as int?,
-      green: fields[3] as int?,
-      blue: fields[4] as int?,
+      uid: fields[0] as String,
+      alpha: fields[1] as int,
+      red: fields[2] as int,
+      green: fields[3] as int,
+      blue: fields[4] as int,
     );
   }
 

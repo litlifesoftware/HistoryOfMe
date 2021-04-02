@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 class MoodTranslationController {
   final double? moodScore;
   final String badMoodTranslation;

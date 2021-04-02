@@ -42,14 +42,14 @@ class HiveQueryController {
     String? content = _diaryEntries[0].content;
 
     _diaryEntries.forEach((entry) {
-      bool maxCondition = entry.content!.length > content!.length;
-      bool minCondition = entry.content!.length < content!.length;
-      bool splitCondition = (entry.content!.split(_pattern).length > 0);
+      bool maxCondition = entry.content.length > content!.length;
+      bool minCondition = entry.content.length < content!.length;
+      bool splitCondition = (entry.content.split(_pattern).length > 0);
       if ((max ? maxCondition : minCondition) && splitCondition) {
         content = entry.content;
       }
       if (!max) {
-        print(entry.content!.length);
+        print(entry.content.length);
       }
     });
 
@@ -71,7 +71,7 @@ class HiveQueryController {
     DateTime now = DateTime.now();
 
     _diaryEntries.forEach((entry) {
-      DateTime entryDate = DateTime.parse(entry.date!);
+      DateTime entryDate = DateTime.parse(entry.date);
       if (now.isSameCalendarWeek(entryDate)) {
         entriesThisWeek++;
       }
@@ -86,7 +86,7 @@ class HiveQueryController {
     DateTime now = DateTime.now();
 
     _diaryEntries.forEach((entry) {
-      DateTime entryDate = DateTime.parse(entry.date!);
+      DateTime entryDate = DateTime.parse(entry.date);
 
       if (now.isSameCalendarMonth(entryDate)) {
         entriesThisMonth++;
@@ -96,10 +96,10 @@ class HiveQueryController {
   }
 
   DateTime get latestEntryDate {
-    DateTime latest = DateTime.parse(_diaryEntries[0].date!);
+    DateTime latest = DateTime.parse(_diaryEntries[0].date);
     _diaryEntries.forEach(
       (entry) {
-        DateTime entryDate = DateTime.parse(entry.date!);
+        DateTime entryDate = DateTime.parse(entry.date);
         if (entryDate.isAfter(latest)) {
           latest = entryDate;
         }
@@ -109,10 +109,10 @@ class HiveQueryController {
   }
 
   DateTime get firstEntryDate {
-    DateTime first = DateTime.parse(_diaryEntries[0].date!);
+    DateTime first = DateTime.parse(_diaryEntries[0].date);
     _diaryEntries.forEach(
       (entry) {
-        DateTime entryDate = DateTime.parse(entry.date!);
+        DateTime entryDate = DateTime.parse(entry.date);
         if (entryDate.isBefore(first)) {
           first = entryDate;
         }
