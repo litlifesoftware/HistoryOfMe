@@ -19,7 +19,7 @@ class SettingsFooter extends StatefulWidget {
 }
 
 class _SettingsFooterState extends State<SettingsFooter> {
-  late LitRouteController _routeController;
+  //late LitRouteController _routeController;
   void _showAboutThisAppDialog() {}
 
   void _openPrivacyPolicy() {}
@@ -29,23 +29,20 @@ class _SettingsFooterState extends State<SettingsFooter> {
   void _showDeleteDataDialog() {}
 
   void _showChangeNameDialog() {
-    _routeController.showDialogWidget(ChangeNameDialog(
+    LitRouteController(context).showDialogWidget(ChangeNameDialog(
       userData: widget.userData,
     ));
   }
 
   void _takeTour() {
     LitRouteController(context).pushMaterialWidget(
-      IntroScreen(
-        onStartCallback: LitRouteController(context).navigateBack,
-      ),
+      IntroScreen(),
     );
   }
 
   @override
   void initState() {
     super.initState();
-    _routeController = LitRouteController(context);
   }
 
   @override
