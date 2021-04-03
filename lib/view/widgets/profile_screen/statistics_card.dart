@@ -66,8 +66,8 @@ class _StatisticsCardState extends State<StatisticsCard> {
               style: LitTextStyles.sansSerif.copyWith(
                 fontSize: 22.0,
                 color: HexColor('#878787'),
-                fontWeight: isAvailable ? FontWeight.w600 : FontWeight.w700,
-                letterSpacing: isAvailable ? 0.35 : 0.75,
+                fontWeight: FontWeight.w700,
+                letterSpacing: 0.35,
               ),
             ),
             Padding(

@@ -27,7 +27,7 @@ class _IntroScreenState extends State<IntroScreen> {
   Widget build(BuildContext context) {
     return LitOnboardingScreen(
       title: "Introducation",
-      artwork: SizedBox(
+      art: SizedBox(
         width: MediaQuery.of(context).size.width * 0.55,
         child: LayoutBuilder(
           builder: (context, constraints) {
