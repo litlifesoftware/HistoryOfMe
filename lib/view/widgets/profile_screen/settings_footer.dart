@@ -4,6 +4,7 @@ import 'package:history_of_me/lit_ui_kit_temp/lit_plain_label_button.dart';
 import 'package:history_of_me/lit_ui_kit_temp/lit_settings_footer.dart';
 import 'package:history_of_me/model/user_data.dart';
 import 'package:history_of_me/view/screens/intro_screen.dart';
+import 'package:history_of_me/view/widgets/art/history_of_me_launcher_icon_art.dart';
 import 'package:history_of_me/view/widgets/profile_screen/change_name_dialog.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';
 
@@ -20,9 +21,32 @@ class SettingsFooter extends StatefulWidget {
 
 class _SettingsFooterState extends State<SettingsFooter> {
   //late LitRouteController _routeController;
-  void _showAboutThisAppDialog() {}
+  void _showAboutThisAppDialog() {
+    LitRouteController(context).showDialogWidget(
+      AboutAppDialog(
+        appName: "History of Me",
+        art: HistoryOfMeLauncherIconArt(),
+        infoDescription: "Your own personal diary.",
+      ),
+    );
+  }
 
-  void _openPrivacyPolicy() {}
+  void _openPrivacyPolicy() {
+    LitRouteController(context).pushCupertinoWidget(LitPrivacyPolicyScreen(
+      onAgreeCallback: () => LitRouteController(context).pop(),
+      privacyText:
+          "History of Me's goal is to provide the most private experience available on mobile devices. Your data will always remain on your device. The creator of the app nor any third party will be able to view your content. There is no connection to the internet, all required data to use the app will be stored locally.",
+      agreeLabel: "Okay",
+      art: HistoryOfMeLauncherIconArt(),
+      privacyTags: [
+        PrivacyTag(text: "Private", isConform: true),
+        PrivacyTag(
+          text: "Offline",
+          isConform: true,
+        ),
+      ],
+    ));
+  }
 
   void _openDeveloperProfile() {}
 

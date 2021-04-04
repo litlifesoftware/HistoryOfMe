@@ -20,6 +20,20 @@ class BookmarkBack extends StatefulWidget implements BookmarkCover {
 }
 
 class _BookmarkBackState extends State<BookmarkBack> {
+  double _calculateLuminance(Color c) {
+    return (0.299 * c.red + 0.587 * c.green + 0.114 * c.blue) / 255;
+  }
+
+  Color get _quoteTextColor {
+    int _secColorVal = widget.userData!.secondaryColor;
+    Color _secColor = Color(_secColorVal);
+
+    double luminance = _calculateLuminance(_secColor);
+
+    return Color.lerp(LitColors.lightGrey, LitColors.mediumGrey, luminance) ??
+        HexColor("#b5b5b5");
+  }
+
   @override
   Widget build(BuildContext context) {
     return BookmarkFittedBox(
@@ -88,7 +102,7 @@ class _BookmarkBackState extends State<BookmarkBack> {
                                           backgroundColor: Color(
                                               widget.userData!.secondaryColor),
                                           fontSize: 12.0,
-                                          color: HexColor('#444444'),
+                                          color: _quoteTextColor,
                                           letterSpacing: -0.3),
                                       textAlign: TextAlign.center,
                                     ),

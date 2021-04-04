@@ -153,29 +153,8 @@ class _SelectPreviousDayDialogState extends State<SelectPreviousDayDialog>
               children: [
                 LitTitledDialog(
                   titleText: "Previous day",
-                  leading: InkWell(
-                    splashColor: Colors.transparent,
-                    focusColor: Colors.transparent,
-                    highlightColor: Colors.transparent,
-                    hoverColor: Colors.transparent,
-                    onTap: widget.onBackCallback,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 4.0, horizontal: 16.0),
-                      child: SizedBox(
-                        height: 50.0,
-                        width: 100.0,
-                        child: LitTooltipContainer(
-                            backgroundColor: HexColor('#d1cdcd'),
-                            text:
-                                "${MaterialLocalizations.of(context).backButtonTooltip}",
-                            child: Icon(
-                              LitIcons.arrow_left_solid,
-                              size: 18.0,
-                              color: HexColor('#f4f4f7'),
-                            )),
-                      ),
-                    ),
+                  leading: DialogBackButton(
+                    onPressed: widget.onBackCallback,
                   ),
                   margin: const EdgeInsets.symmetric(
                     horizontal: 8.0,
