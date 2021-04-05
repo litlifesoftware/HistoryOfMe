@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:history_of_me/lit_route_controller/focus/route_controller.dart';
-import 'package:history_of_me/lit_ui_kit_temp/exclamation_rectangle.dart';
+import 'package:history_of_me/view/widgets/art/exclamation_rectangle.dart';
 import 'package:history_of_me/model/diary_entry.dart';
 import 'package:history_of_me/model/user_data.dart';
 import 'package:history_of_me/view/widgets/diary_screen/diary_bookmark_header.dart';

@@ -8,6 +8,7 @@ class LitGlowingButton extends StatelessWidget {
   final Widget child;
   final EdgeInsets padding;
   final BorderRadius borderRadius;
+  final Offset offset;
   const LitGlowingButton({
     Key? key,
     required this.onPressed,
@@ -19,6 +20,7 @@ class LitGlowingButton extends StatelessWidget {
       horizontal: 22.0,
     ),
     this.borderRadius = const BorderRadius.all(Radius.circular(16.0)),
+    this.offset = const Offset(2, 2),
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -29,13 +31,13 @@ class LitGlowingButton extends StatelessWidget {
           boxShadow: [
             BoxShadow(
               blurRadius: 8.0,
-              offset: Offset(-2, -2),
+              offset: Offset(-offset.dx, -offset.dy),
               color: Color.lerp(baseColor, accentColor, 0.7)!.withOpacity(0.4),
               spreadRadius: 1.0,
             ),
             BoxShadow(
               blurRadius: 8.0,
-              offset: Offset(2, 2),
+              offset: offset,
               color: Color.lerp(baseColor, accentColor, 0.4)!.withOpacity(0.4),
               spreadRadius: 1.0,
             ),

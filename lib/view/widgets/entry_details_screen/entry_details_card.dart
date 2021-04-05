@@ -3,7 +3,7 @@ import 'package:history_of_me/controller/database/hive_db_service.dart';
 import 'package:history_of_me/controller/database/hive_query_controller.dart';
 import 'package:history_of_me/controller/mood_translation_controller.dart';
 import 'package:history_of_me/data/constants.dart';
-import 'package:history_of_me/lit_ui_kit_temp/exclamation_rectangle.dart';
+import 'package:history_of_me/view/widgets/art/exclamation_rectangle.dart';
 import 'package:history_of_me/model/diary_entry.dart';
 import 'package:history_of_me/lit_ui_kit_temp/lit_glowing_button.dart';
 import 'package:history_of_me/view/styles/app_text_styles.dart';
@@ -215,38 +215,8 @@ class _Header extends StatelessWidget {
                             ),
                           ),
                         ),
-                        isLast || isFirst
-                            ? Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 4.0),
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    border: Border.all(
-                                      color: HexColor('#B2B2B2'),
-                                      width: 2.0,
-                                    ),
-                                    borderRadius: BorderRadius.circular(
-                                      15.0,
-                                    ),
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                      vertical: 2.0,
-                                      horizontal: 12.0,
-                                    ),
-                                    child: Text(
-                                      isLast ? "latest" : "first",
-                                      style: LitTextStyles.sansSerif.copyWith(
-                                        fontSize: 12.0,
-                                        letterSpacing: -0.05,
-                                        fontWeight: FontWeight.w600,
-                                        color: HexColor('#B2B2B2'),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              )
-                            : SizedBox(),
+                        isLast ? _MetaLabel(title: "latest") : SizedBox(),
+                        isFirst ? _MetaLabel(title: "first") : SizedBox(),
                       ],
                     ),
                     Padding(
@@ -322,6 +292,47 @@ class _Header extends StatelessWidget {
                 )),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class _MetaLabel extends StatelessWidget {
+  final String title;
+
+  const _MetaLabel({
+    Key? key,
+    required this.title,
+  }) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 4.0),
+      child: Container(
+        decoration: BoxDecoration(
+          border: Border.all(
+            color: HexColor('#B2B2B2'),
+            width: 2.0,
+          ),
+          borderRadius: BorderRadius.circular(
+            15.0,
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+            vertical: 2.0,
+            horizontal: 12.0,
+          ),
+          child: Text(
+            title,
+            style: LitTextStyles.sansSerif.copyWith(
+              fontSize: 12.0,
+              letterSpacing: -0.05,
+              fontWeight: FontWeight.w600,
+              color: HexColor('#B2B2B2'),
+            ),
+          ),
+        ),
       ),
     );
   }

@@ -20,15 +20,11 @@ class BookmarkBack extends StatefulWidget implements BookmarkCover {
 }
 
 class _BookmarkBackState extends State<BookmarkBack> {
-  double _calculateLuminance(Color c) {
-    return (0.299 * c.red + 0.587 * c.green + 0.114 * c.blue) / 255;
-  }
-
   Color get _quoteTextColor {
     int _secColorVal = widget.userData!.secondaryColor;
     Color _secColor = Color(_secColorVal);
 
-    double luminance = _calculateLuminance(_secColor);
+    double luminance = _secColor.computeLuminance();
 
     return Color.lerp(LitColors.lightGrey, LitColors.mediumGrey, luminance) ??
         HexColor("#b5b5b5");

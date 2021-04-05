@@ -3,7 +3,7 @@ import 'package:history_of_me/lit_route_controller/focus/route_controller.dart';
 import 'package:history_of_me/lit_ui_kit_temp/lit_titled_dialog.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';
 
-import '../../../lit_ui_kit_temp/exclamation_rectangle.dart';
+import '../art/exclamation_rectangle.dart';
 
 class ConfirmDiscardDraftDialog extends StatefulWidget {
   final String titleText;

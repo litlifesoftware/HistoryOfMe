@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:history_of_me/lit_ui_kit_temp/animated_gradient_background.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';
 
 class LitSignUpScreen extends StatefulWidget {
@@ -124,7 +123,7 @@ class _LitSignUpScreenState extends State<LitSignUpScreen>
               focusColor: Colors.transparent,
               splashColor: Colors.transparent,
               onTap: _unfocus,
-              child: AnimatedGradientBackground(),
+              child: LitAnimatedGradientBackground(),
             ),
             Align(
               alignment: Alignment.topLeft,
