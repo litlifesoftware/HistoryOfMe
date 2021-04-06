@@ -106,7 +106,7 @@ class _DiaryFilterHeaderState extends State<DiaryFilterHeader>
                                           style: widget.accentTextStyle)
                                       : TextSpan(),
                                   TextSpan(
-                                      text: "Entries",
+                                      text: "entries",
                                       style: widget.accentTextStyle),
                                 ],
                               ),

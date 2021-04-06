@@ -120,7 +120,7 @@ class __NestedScrollViewBodyState extends State<_NestedScrollViewBody> {
       child: Builder(
         builder: (context) {
           return showInfoMessage
-              ? _NoFavoriteEntries(
+              ? _NoFavoriteEntriesCard(
                   animationController: widget.animationController,
                 )
               : ListView.builder(
@@ -151,10 +151,10 @@ class __NestedScrollViewBodyState extends State<_NestedScrollViewBody> {
   }
 }
 
-class _NoFavoriteEntries extends StatelessWidget {
+class _NoFavoriteEntriesCard extends StatelessWidget {
   final AnimationController? animationController;
 
-  const _NoFavoriteEntries({
+  const _NoFavoriteEntriesCard({
     Key? key,
     required this.animationController,
   }) : super(key: key);
@@ -188,41 +188,51 @@ class _NoFavoriteEntries extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 16.0,
-                    ),
-                    child: ExclamationRectangle(),
-                  ),
-                  LitConstrainedSizedBox(
-                    landscapeWidthFactor: 0.45,
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                            vertical: 8.0,
-                          ),
-                          child: Text(
-                            "Add an entry to your favorites by tapping the heart icon on the read view.",
-                            textAlign: TextAlign.center,
-                            style: LitTextStyles.sansSerif.copyWith(
-                              color: HexColor('#8A8A8A'),
-                              fontSize: 13.0,
-                              fontWeight: FontWeight.w600,
-                              letterSpacing: 0.0,
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                            vertical: 8.0,
-                          ),
-                          child: Icon(
-                            LitIcons.heart_solid,
-                            color: LitColors.lightGrey,
-                            size: 24.0,
-                          ),
-                        ),
-                      ],
+                    padding: const EdgeInsets.symmetric(vertical: 16.0),
+                    child: LitConstrainedSizedBox(
+                      landscapeWidthFactor: 0.45,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                        child: LayoutBuilder(builder: (context, constraints) {
+                          return Row(
+                            children: [
+                              Align(
+                                alignment: Alignment.center,
+                                child: SizedBox(
+                                  width: constraints.maxWidth * 0.35,
+                                  child: Center(child: ExclamationRectangle()),
+                                ),
+                              ),
+                              SizedBox(
+                                width: constraints.maxWidth * 0.65,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "Add an entry to your favorites by tapping the heart icon on the read view.",
+                                      style: LitTextStyles.sansSerif.copyWith(
+                                        color: HexColor('#8A8A8A'),
+                                        fontSize: 13.0,
+                                        fontWeight: FontWeight.w600,
+                                        letterSpacing: 0.0,
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 8.0),
+                                      child: Icon(
+                                        LitIcons.heart_solid,
+                                        color: LitColors.lightGrey,
+                                        size: 24.0,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          );
+                        }),
+                      ),
                     ),
                   ),
                 ],
