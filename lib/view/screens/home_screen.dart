@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:history_of_me/view/screens/diary_screen.dart';
 import 'package:history_of_me/view/screens/profile_screen.dart';
-import 'package:history_of_me/lit_ui_kit_temp/lit_bottom_navigation.dart';
+import 'package:lit_ui_kit/lit_ui_kit.dart';
 
 /// A navigatable screen [Widget].
 ///
@@ -13,10 +13,24 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
-  /// All available tab [Widget] objects that can be navigated.
-  final List<Widget> tabs = [
+  /// All available tab screen [Widget] objects that can be navigated.
+  final List<Widget> _tabs = [
     DiaryScreen(),
     ProfileScreen(),
+  ];
+
+  /// All tab data objects providing the meta data for the navigatable tabs.
+  final List<LitBottomNavigationTabData> _tabData = [
+    LitBottomNavigationTabData(
+      index: 0,
+      icon: LitIcons.home,
+      iconSelected: LitIcons.home_alt,
+    ),
+    LitBottomNavigationTabData(
+      index: 1,
+      icon: LitIcons.person,
+      iconSelected: LitIcons.person_solid,
+    ),
   ];
 
   /// The currently user selected tab stated as its index value.
@@ -36,11 +50,12 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         builder: (context) {
           return Stack(
             children: [
-              tabs[tabIndex],
+              _tabs[tabIndex],
               LitBottomNavigation(
                 axis: Axis.vertical,
-                currentTabIndex: tabIndex,
-                onPressed: _setTabIndex,
+                selectedTabIndex: tabIndex,
+                onTabSelect: _setTabIndex,
+                tabs: _tabData,
               )
             ],
           );

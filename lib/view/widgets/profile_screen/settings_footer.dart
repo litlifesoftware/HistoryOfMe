@@ -52,6 +52,37 @@ class _SettingsFooterState extends State<SettingsFooter> {
 
   void _showDeleteDataDialog() {}
 
+  void _openCredits() {
+    LitRouteController(context).showDialogWidget(LitCreditsScreen(
+      art: HistoryOfMeLauncherIconArt(),
+      appTitle: "History Of Me",
+      subTitle: "Your own personal diary.",
+      screenTitle: "Credits",
+      credits: [
+        CreditData(
+          role: "UX Design",
+          names: [
+            "Michael Grigorenko",
+          ],
+        ),
+        CreditData(
+          role: "Development",
+          names: [
+            "Michael Grigorenko",
+          ],
+        ),
+        CreditData(
+          role: "Photography",
+          names: [
+            "Niilo Isotalo",
+            "Peiwen Yu",
+            "Greg Rakozy",
+          ],
+        ),
+      ],
+    ));
+  }
+
   void _showChangeNameDialog() {
     LitRouteController(context).showDialogWidget(ChangeNameDialog(
       userData: widget.userData,
@@ -115,6 +146,11 @@ class _SettingsFooterState extends State<SettingsFooter> {
           LitPlainLabelButton(
             label: "View Privacy",
             onPressed: _openPrivacyPolicy,
+            textAlign: TextAlign.center,
+          ),
+          LitPlainLabelButton(
+            label: "Credits",
+            onPressed: _openCredits,
             textAlign: TextAlign.center,
           ),
           LitPlainLabelButton(
