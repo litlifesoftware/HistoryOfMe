@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:history_of_me/lit_route_controller/focus/route_controller.dart';
 import 'package:history_of_me/view/widgets/art/exclamation_rectangle.dart';
 import 'package:history_of_me/model/diary_entry.dart';
 import 'package:history_of_me/model/user_data.dart';
@@ -11,8 +10,8 @@ import 'diary_list_tile.dart';
 import 'diary_filter_header.dart';
 
 class DiaryListView extends StatelessWidget {
-  final ScrollController? scrollController;
-  final AnimationController? animationController;
+  final ScrollController scrollController;
+  final AnimationController animationController;
   final UserData? userData;
   final List<dynamic> diaryEntriesListSorted;
   final bool? showFavoriteEntriesOnly;
@@ -28,11 +27,7 @@ class DiaryListView extends StatelessWidget {
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      splashColor: Colors.transparent,
-      focusColor: Colors.transparent,
-      highlightColor: Colors.transparent,
-      hoverColor: Colors.transparent,
+    return CleanInkWell(
       onTap: LitRouteController(context).closeDialog,
       child: Column(
         children: <Widget>[

@@ -108,28 +108,22 @@ class _EntryDetailsCardState extends State<EntryDetailsCard> {
                       portraitHeight: widget.relativePortraitPhotoHeight,
                       landscapeHeight: widget.relativeLandscapePhotoHeight))),
         ),
-        child: widget.diaryEntry != null
-            ? Column(
-                children: [
-                  _Header(
-                    boxDecoration: widget.backgroundDecoration,
-                    diaryEntry: widget.diaryEntry,
-                    diaryNumberLabel: _diaryNumberLabel,
-                    isFirst: widget.isFirst,
-                    isLast: widget.isLast,
-                    onToggleFavorite: _onToggleFavorite,
-                    onEditCallback: widget.onEditCallback,
-                  ),
-                  _TextPreview(
-                    diaryEntry: widget.diaryEntry,
-                  ),
-                ],
-              )
-            : JugglingLoadingIndicator(
-                indicatorColor: Colors.black,
-                backgroundColor: Colors.white,
-                shadowOpacity: 0.4,
-              ),
+        child: Column(
+          children: [
+            _Header(
+              boxDecoration: widget.backgroundDecoration,
+              diaryEntry: widget.diaryEntry,
+              diaryNumberLabel: _diaryNumberLabel,
+              isFirst: widget.isFirst,
+              isLast: widget.isLast,
+              onToggleFavorite: _onToggleFavorite,
+              onEditCallback: widget.onEditCallback,
+            ),
+            _TextPreview(
+              diaryEntry: widget.diaryEntry,
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -376,10 +370,7 @@ class __FavoriteButtonState extends State<_FavoriteButton>
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      focusColor: Colors.transparent,
-      highlightColor: Colors.transparent,
-      splashColor: Colors.transparent,
+    return CleanInkWell(
       onTap: _onTap,
       child: AnimatedBuilder(
         animation: _animationController,

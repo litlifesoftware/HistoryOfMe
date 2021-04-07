@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:history_of_me/controller/database/hive_db_service.dart';
-import 'package:history_of_me/lit_route_controller/focus/focus_controller.dart';
-import 'package:history_of_me/lit_route_controller/focus/route_controller.dart';
 import 'package:history_of_me/model/user_data.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';
 
@@ -31,7 +29,7 @@ class _ChangeNameDialogState extends State<ChangeNameDialog> {
   }
 
   void _defocus() {
-    FocusController(context).defocus();
+    LitFocusController(context).defocus();
     _onChange();
   }
 
@@ -68,11 +66,7 @@ class _ChangeNameDialogState extends State<ChangeNameDialog> {
       margin: const EdgeInsets.all(0.0),
       minHeight: 220.0,
       titleText: "Change your name",
-      child: InkWell(
-        focusColor: Colors.transparent,
-        hoverColor: Colors.transparent,
-        splashColor: Colors.transparent,
-        highlightColor: Colors.transparent,
+      child: CleanInkWell(
         onTap: _defocus,
         child: Center(
           child: Column(

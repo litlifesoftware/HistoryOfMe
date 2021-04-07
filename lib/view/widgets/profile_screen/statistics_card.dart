@@ -3,7 +3,6 @@ import 'package:history_of_me/controller/database/hive_query_controller.dart';
 import 'package:history_of_me/view/widgets/art/exclamation_rectangle.dart';
 import 'package:intl/intl.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';
-import 'package:history_of_me/lit_ui_kit_temp/util/datetime_validation.dart';
 
 class StatisticsCard extends StatefulWidget {
   @override

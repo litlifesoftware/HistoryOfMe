@@ -1,25 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:history_of_me/lit_route_controller/focus/route_controller.dart';
 import 'package:history_of_me/view/widgets/shared/app_artwork.dart';
 import 'package:history_of_me/view/widgets/shared/history_of_me_app_logo.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';
 
-class IntroScreen extends StatefulWidget {
-  const IntroScreen({
+class HistoryOfMeIntroScreen extends StatefulWidget {
+  const HistoryOfMeIntroScreen({
     Key? key,
   }) : super(key: key);
   @override
-  _IntroScreenState createState() => _IntroScreenState();
+  _HistoryOfMeIntroScreenState createState() => _HistoryOfMeIntroScreenState();
 }
 
-class _IntroScreenState extends State<IntroScreen> {
-  TextStyle get _descriptionTextStyle {
-    return LitTextStyles.sansSerif.copyWith(
-      color: Colors.white,
-      fontSize: 15.0,
-    );
-  }
-
+class _HistoryOfMeIntroScreenState extends State<HistoryOfMeIntroScreen> {
   @override
   Widget build(BuildContext context) {
     return LitOnboardingScreen(

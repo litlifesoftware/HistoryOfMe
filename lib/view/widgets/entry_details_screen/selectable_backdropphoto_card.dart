@@ -18,14 +18,10 @@ class SelectableBackdropPhotoCard extends StatelessWidget {
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      focusColor: Colors.transparent,
-      hoverColor: Colors.transparent,
-      highlightColor: Colors.transparent,
+    return CleanInkWell(
       onTap: () {
         setSelectedImage(backdropPhoto.id);
       },
-      splashColor: Colors.transparent,
       child: Padding(
         padding: const EdgeInsets.symmetric(
           vertical: 16.0,

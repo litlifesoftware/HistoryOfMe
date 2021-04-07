@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-
-import 'package:intl/intl.dart';
-import 'package:lit_relative_date_time/lit_relative_date_time.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';
+import 'package:lit_relative_date_time/lit_relative_date_time.dart';
 
 class UpdatedLabelText extends StatelessWidget {
   final TextAlign textAlign;

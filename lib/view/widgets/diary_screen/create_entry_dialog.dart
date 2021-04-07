@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:history_of_me/controller/database/hive_db_service.dart';
 import 'package:history_of_me/controller/routes/screen_router.dart';
-import 'package:history_of_me/lit_route_controller/focus/route_controller.dart';
-import 'package:history_of_me/lit_ui_kit_temp/lit_toggle_button_group.dart';
+import 'package:history_of_me/view/widgets/shared/lit_toggle_button_group.dart';
 import 'package:history_of_me/model/diary_entry.dart';
 import 'package:history_of_me/view/widgets/diary_screen/select_previous_day_dialog.dart';
 import 'package:intl/intl.dart';

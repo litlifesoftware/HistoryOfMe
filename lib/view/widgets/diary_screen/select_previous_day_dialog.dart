@@ -24,11 +24,11 @@ class SelectPreviousDayDialog extends StatefulWidget {
 
 class _SelectPreviousDayDialogState extends State<SelectPreviousDayDialog>
     with TickerProviderStateMixin {
-  AnimationController? _appearAnimationController;
+  late AnimationController _appearAnimationController;
   late AnimationController _selectAnimationController;
   CalendarController _calendarController = CalendarController();
-  LitSnackbarController? _exclusiveDateSnackBarController;
-  LitSnackbarController? _futureDateSnackbarController;
+  late LitSnackbarController _exclusiveDateSnackBarController;
+  late LitSnackbarController _futureDateSnackbarController;
   late ScreenRouter _screenRouter;
   DateTime? _selectedDate;
   String? weekdayLabels;
@@ -67,11 +67,11 @@ class _SelectPreviousDayDialogState extends State<SelectPreviousDayDialog>
   }
 
   void _onExclusiveMonth() {
-    _exclusiveDateSnackBarController!.showSnackBar();
+    _exclusiveDateSnackBarController.showSnackBar();
   }
 
   void _onFutureDate() {
-    _futureDateSnackbarController!.showSnackBar();
+    _futureDateSnackbarController.showSnackBar();
   }
 
   void _onMonthLabelPress() {
@@ -122,7 +122,7 @@ class _SelectPreviousDayDialogState extends State<SelectPreviousDayDialog>
         AnimationController(duration: Duration(milliseconds: 140), vsync: this);
     _selectAnimationController =
         AnimationController(duration: Duration(milliseconds: 140), vsync: this);
-    _appearAnimationController!.forward();
+    _appearAnimationController.forward();
     _exclusiveDateSnackBarController = LitSnackbarController()..init(this);
     _futureDateSnackbarController = LitSnackbarController()..init(this);
     _screenRouter = ScreenRouter(context);
@@ -130,14 +130,14 @@ class _SelectPreviousDayDialogState extends State<SelectPreviousDayDialog>
 
   @override
   void dispose() {
-    _exclusiveDateSnackBarController!.dispose();
-    _futureDateSnackbarController!.dispose();
+    _exclusiveDateSnackBarController.dispose();
+    _futureDateSnackbarController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    print(_exclusiveDateSnackBarController!.animationController.value);
+    print(_exclusiveDateSnackBarController.animationController.value);
 
     print(DateTime.fromMillisecondsSinceEpoch(345600));
     return AnimatedBuilder(
@@ -160,14 +160,14 @@ class _SelectPreviousDayDialogState extends State<SelectPreviousDayDialog>
                     vertical: 4.0,
                   ),
                   child: AnimatedBuilder(
-                    animation: _appearAnimationController!,
+                    animation: _appearAnimationController,
                     builder: (BuildContext context, Widget? _) {
                       return Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           FadeInTransformContainer(
                             transform: Matrix4.translationValues(
-                                -20 + (20 * _appearAnimationController!.value),
+                                -20 + (20 * _appearAnimationController.value),
                                 0,
                                 0),
                             animationController: _appearAnimationController,
@@ -213,7 +213,7 @@ class _SelectPreviousDayDialogState extends State<SelectPreviousDayDialog>
                             ),
                             transform: Matrix4.translationValues(
                                 0,
-                                -20 + (20 * _appearAnimationController!.value),
+                                -20 + (20 * _appearAnimationController.value),
                                 0),
                           )
                         ],

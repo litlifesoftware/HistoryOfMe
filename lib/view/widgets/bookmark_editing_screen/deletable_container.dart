@@ -3,14 +3,14 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';
 
-class LitDeletableContainer extends StatefulWidget {
+class DeletableContainer extends StatefulWidget {
   final Widget child;
   final void Function() toggleDeletionEnabled;
   final bool? deletionEnabled;
   final Animation? animation;
   final int colorIndex;
   final void Function() onDelete;
-  const LitDeletableContainer({
+  const DeletableContainer({
     Key? key,
     required this.deletionEnabled,
     required this.animation,
@@ -21,10 +21,10 @@ class LitDeletableContainer extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _LitDeletableContainerState createState() => _LitDeletableContainerState();
+  _DeletableContainerState createState() => _DeletableContainerState();
 }
 
-class _LitDeletableContainerState extends State<LitDeletableContainer>
+class _DeletableContainerState extends State<DeletableContainer>
     with TickerProviderStateMixin {
   late AnimationController _deletedAnimation;
 

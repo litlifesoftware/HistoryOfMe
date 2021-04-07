@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:history_of_me/lit_route_controller/focus/route_controller.dart';
-import 'package:history_of_me/lit_ui_kit_temp/lit_settings_footer.dart';
 import 'package:history_of_me/model/user_data.dart';
 import 'package:history_of_me/view/screens/intro_screen.dart';
 import 'package:history_of_me/view/widgets/art/history_of_me_launcher_icon_art.dart';
@@ -90,7 +88,7 @@ class _SettingsFooterState extends State<SettingsFooter> {
 
   void _takeTour() {
     LitRouteController(context).pushMaterialWidget(
-      IntroScreen(),
+      HistoryOfMeIntroScreen(),
     );
   }
 

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:history_of_me/model/user_created_color.dart';
-import 'package:history_of_me/model/user_data.dart';
-import 'package:history_of_me/view/widgets/edit_bookmark_screen/selectable_color_tile.dart';
+import 'package:history_of_me/view/widgets/bookmark_editing_screen/selectable_color_tile.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';
 
 class SecondaryColorSelectorCard extends StatefulWidget {

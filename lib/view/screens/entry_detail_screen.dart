@@ -5,7 +5,6 @@ import 'package:flutter/services.dart';
 import 'package:history_of_me/controller/database/hive_db_service.dart';
 import 'package:history_of_me/controller/database/hive_query_controller.dart';
 import 'package:history_of_me/controller/routes/screen_router.dart';
-import 'package:history_of_me/lit_route_controller/focus/route_controller.dart';
 import 'package:history_of_me/model/backdrop_photo.dart';
 import 'package:history_of_me/model/diary_entry.dart';
 import 'package:history_of_me/view/styles/app_text_styles.dart';

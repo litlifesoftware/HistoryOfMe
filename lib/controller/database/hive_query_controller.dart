@@ -1,6 +1,6 @@
+import 'package:lit_ui_kit/lit_ui_kit.dart';
 import 'package:history_of_me/controller/database/hive_db_service.dart';
 import 'package:history_of_me/model/diary_entry.dart';
-import 'package:history_of_me/lit_ui_kit_temp/util/datetime_validation.dart';
 
 class HiveQueryController {
   /// The [HiveDBService] instance to query the database.

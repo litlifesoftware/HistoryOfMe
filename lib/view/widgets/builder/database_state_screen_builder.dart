@@ -4,7 +4,6 @@ import 'package:history_of_me/model/user_data.dart';
 import 'package:history_of_me/view/screens/home_screen.dart';
 import 'package:history_of_me/view/screens/splash_screen.dart';
 import 'package:hive/hive.dart';
-import 'package:history_of_me/lit_ui_kit_temp/lit_sign_up_screen.dart';
 import 'package:lit_localization_service/lit_localization_service.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';
 
