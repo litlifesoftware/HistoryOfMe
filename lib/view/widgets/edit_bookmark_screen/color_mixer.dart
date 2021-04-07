@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:history_of_me/lit_ui_kit_temp/lit_slider.dart';
+import 'package:lit_ui_kit/lit_ui_kit.dart';
 
 class ColorMixer extends StatelessWidget {
   final int? alphaChannel;

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:history_of_me/lit_ui_kit_temp/lit_slider_toggle_button.dart';
 import 'package:history_of_me/view/widgets/diary_screen/diary_filter_header_delegate.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';
 

@@ -52,7 +52,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             children: [
               _tabs[tabIndex],
               LitBottomNavigation(
-                axis: Axis.vertical,
                 selectedTabIndex: tabIndex,
                 onTabSelect: _setTabIndex,
                 tabs: _tabData,
