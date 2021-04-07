@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:history_of_me/controller/database/hive_db_service.dart';
 import 'package:history_of_me/controller/routes/screen_router.dart';
-import 'package:history_of_me/lit_ui_kit_temp/lit_titled_dialog.dart';
 import 'package:history_of_me/model/diary_entry.dart';
 import 'package:history_of_me/view/widgets/diary_screen/calendar_grid.dart';
 import 'package:history_of_me/view/widgets/diary_screen/calendar_navigation.dart';

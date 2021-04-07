@@ -4,7 +4,6 @@ import 'package:history_of_me/controller/mood_translation_controller.dart';
 import 'package:history_of_me/data/constants.dart';
 import 'package:history_of_me/lit_route_controller/focus/route_controller.dart';
 import 'package:history_of_me/lit_ui_kit_temp/lit_draggable.dart';
-import 'package:history_of_me/lit_ui_kit_temp/lit_slider_card.dart';
 import 'package:history_of_me/model/diary_entry.dart';
 import 'package:history_of_me/view/widgets/shared/animated_updated_label.dart';
 import 'package:history_of_me/view/widgets/entry_editing_screen/editable_title_header.dart';

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:history_of_me/lit_route_controller/focus/route_controller.dart';
-import 'package:history_of_me/lit_ui_kit_temp/lit_plain_label_button.dart';
 import 'package:history_of_me/lit_ui_kit_temp/lit_settings_footer.dart';
 import 'package:history_of_me/model/user_data.dart';
 import 'package:history_of_me/view/screens/intro_screen.dart';

@@ -13,7 +13,7 @@ class PhotosensitiveDisclaimerScreen extends StatelessWidget {
     required this.onAccept,
     this.title = "Photosensitive Warning",
     this.text =
-        "This app contains animations that might trigger an epileptic seiszure in some circumstances.",
+        "This app contains animations that might trigger an epileptic seizure in some circumstances.",
     this.buttonText = "Okay",
   }) : super(key: key);
   @override
