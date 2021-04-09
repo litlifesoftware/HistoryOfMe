@@ -139,6 +139,10 @@ class _EntryDetailScreenState extends State<EntryDetailScreen>
     );
   }
 
+  Size get _deviceSize {
+    return MediaQuery.of(context).size;
+  }
+
   @override
   void initState() {
     super.initState();
@@ -265,9 +269,8 @@ class _EntryDetailScreenState extends State<EntryDetailScreen>
                           onPreviousPressed: () =>
                               _onPreviousPressed(diaryEntry),
                           onNextPressed: () => _onNextPressed(diaryEntry),
-                          moreOptionsPressed: () {
-                            _settingsPanelController.showSettingsPanel();
-                          },
+                          moreOptionsPressed:
+                              _settingsPanelController.showSettingsPanel,
                         ),
                       ],
                     ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:history_of_me/view/screens/backdrop_photo_detail_screen.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';
 import 'package:history_of_me/model/diary_entry.dart';
 import 'package:history_of_me/model/user_data.dart';
@@ -31,7 +32,7 @@ class ScreenRouter {
     required int listIndex,
     required String? diaryEntryUid,
   }) {
-    final pushedWidget = EntryDetailScreen(
+    final Widget pushedWidget = EntryDetailScreen(
       listIndex: listIndex,
       diaryEntryUid: diaryEntryUid,
     );
@@ -44,7 +45,7 @@ class ScreenRouter {
   void toEntryEditingScreen({
     required DiaryEntry diaryEntry,
   }) {
-    Widget pushedWidget = EntryEditingScreen(
+    final Widget pushedWidget = EntryEditingScreen(
       diaryEntry: diaryEntry,
     );
     _routeController.pushCupertinoWidget(pushedWidget);
@@ -59,6 +60,11 @@ class ScreenRouter {
     final pushedWidget = BookmarkEditingScreen(
       initialUserDataModel: userData,
     );
+    _routeController.pushMaterialWidget(pushedWidget);
+  }
+
+  void toBackdropPhotoDetailScreen() {
+    final Widget pushedWidget = BackdropPhotoDetailScreen();
     _routeController.pushMaterialWidget(pushedWidget);
   }
 }

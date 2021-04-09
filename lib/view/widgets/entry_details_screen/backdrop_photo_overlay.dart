@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:history_of_me/controller/backdrop_photo_finder.dart';
+import 'package:history_of_me/controller/backdrop_photo_controller.dart';
+import 'package:history_of_me/controller/routes/screen_router.dart';
 import 'package:history_of_me/model/backdrop_photo.dart';
 import 'package:history_of_me/model/diary_entry.dart';
+import 'package:history_of_me/view/screens/backdrop_photo_detail_screen.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';
 
 class BackdropPhotoOverlay extends StatefulWidget {
@@ -28,6 +30,10 @@ class BackdropPhotoOverlay extends StatefulWidget {
 class _BackdropPhotoOverlayState extends State<BackdropPhotoOverlay>
     with TickerProviderStateMixin {
   late AnimationOnScrollController _animationOnScrollController;
+
+  void _navigateDetailScreen() {
+    ScreenRouter(context).toBackdropPhotoDetailScreen();
+  }
 
   @override
   void initState() {
@@ -73,11 +79,8 @@ class _BackdropPhotoOverlayState extends State<BackdropPhotoOverlay>
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(
-                  top: 80.0,
-                  left: 30.0,
-                  right: 30.0,
-                ),
+                padding:
+                    const EdgeInsets.only(top: 80.0, left: 30.0, right: 30.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -86,45 +89,65 @@ class _BackdropPhotoOverlayState extends State<BackdropPhotoOverlay>
                           _animationOnScrollController.animationController,
                       onPressed: widget.showChangePhotoDialogCallback,
                     ),
-                    Align(
-                      alignment: Alignment.bottomRight,
-                      child: Transform(
-                        transform: Matrix4.translationValues(
-                            (_animationOnScrollController
-                                    .animationController.value *
-                                MediaQuery.of(context).size.width),
-                            0,
-                            0),
-                        child: widget.loading!
-                            ? SizedBox()
-                            : Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  _IconLabel(
-                                    text: BackdropPhotoFinder(
-                                      widget.backdropPhotos,
-                                      widget.diaryEntry,
-                                    ).findBackdropPhotoLocation(),
-                                    iconData: LitIcons.map_marker,
-                                    color: Colors.white,
-                                    backgroundColor:
-                                        HexColor('#d1cdcd').withOpacity(0.33),
-                                  ),
-                                  _IconLabel(
-                                    text: BackdropPhotoFinder(
-                                      widget.backdropPhotos,
-                                      widget.diaryEntry,
-                                    ).findBackdropPhotoPhotographer(),
-                                    iconData: LitIcons.person_solid,
-                                    color: Colors.white,
-                                    backgroundColor:
-                                        HexColor('#d1cdcd').withOpacity(0.33),
-                                  )
-                                ],
+                    widget.loading!
+                        ? SizedBox()
+                        : Align(
+                            alignment: Alignment.bottomRight,
+                            child: Transform(
+                              transform: Matrix4.translationValues(
+                                (_animationOnScrollController
+                                        .animationController.value *
+                                    MediaQuery.of(context).size.width),
+                                0,
+                                0,
                               ),
-                      ),
-                    ),
+                              child: CleanInkWell(
+                                onTap: _navigateDetailScreen,
+                                child: BluredBackgroundContainer(
+                                  blurRadius: 8.0,
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(16.0),
+                                  ),
+                                  child: Container(
+                                    padding: const EdgeInsets.symmetric(
+                                      vertical: 3.0,
+                                      horizontal: 6.0,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      color: Colors.white12,
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(16.0),
+                                      ),
+                                    ),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        _IconLabel(
+                                          text: BackdropPhotoController(
+                                            widget.backdropPhotos,
+                                            widget.diaryEntry,
+                                          ).findBackdropPhotoLocation(),
+                                          iconData: LitIcons.map_marker,
+                                          color: Colors.white,
+                                        ),
+                                        _IconLabel(
+                                          text: BackdropPhotoController(
+                                            widget.backdropPhotos,
+                                            widget.diaryEntry,
+                                          ).findBackdropPhotoPhotographer(),
+                                          iconData: LitIcons.person_solid,
+                                          color: Colors.white,
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
                   ],
                 ),
               )
@@ -152,7 +175,10 @@ class _ChangePhotoButton extends StatelessWidget {
       alignment: Alignment.bottomLeft,
       child: Transform(
         transform: Matrix4.translationValues(
-            -(onScrollAnimationController.value * dxTransform), 0, 0),
+          -(onScrollAnimationController.value * dxTransform),
+          0,
+          0,
+        ),
         child: LitPushedButton(
           onPressed: onPressed,
           child: BluredBackgroundContainer(
@@ -194,59 +220,49 @@ class _IconLabel extends StatelessWidget {
   final String? text;
   final IconData iconData;
   final Color color;
-  final Color backgroundColor;
   final EdgeInsets padding;
   const _IconLabel({
     Key? key,
     required this.text,
     required this.iconData,
     required this.color,
-    required this.backgroundColor,
     this.padding = const EdgeInsets.symmetric(vertical: 4.0),
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: padding,
-      child: Container(
-        decoration: BoxDecoration(
-          color: backgroundColor,
-          borderRadius: BorderRadius.circular(15.0),
-        ),
-        child: Padding(
+      padding: const EdgeInsets.symmetric(
+        vertical: 4.0,
+        horizontal: 8.0,
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          Padding(
             padding: const EdgeInsets.symmetric(
-              vertical: 4.0,
-              horizontal: 8.0,
+              horizontal: 4.0,
             ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 4.0,
-                  ),
-                  child: Icon(
-                    iconData,
-                    color: color,
-                    size: 13.0,
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 4.0,
-                  ),
-                  child: Text(
-                    text!,
-                    style: LitTextStyles.sansSerif.copyWith(
-                      color: color,
-                      fontSize: 12.0,
-                      letterSpacing: 0.40,
-                    ),
-                  ),
-                ),
-              ],
-            )),
+            child: Icon(
+              iconData,
+              color: color,
+              size: 12.0,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 4.0,
+            ),
+            child: Text(
+              text!,
+              style: LitTextStyles.sansSerif.copyWith(
+                color: color,
+                fontSize: 11.0,
+                letterSpacing: 0.40,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

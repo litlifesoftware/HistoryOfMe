@@ -4,23 +4,23 @@ import 'package:history_of_me/model/diary_entry.dart';
 /// Controller class to find the requested backdrop photo based on its id passed
 /// on using the [DiaryEntry].
 ///
-/// The [BackdropPhotoFinder] must not be initialized on state of a stateful widget.
+/// The [BackdropPhotoController] must not be initialized on state of a stateful widget.
 /// Its corresponding methods to find the desired information should be called on
 /// separate objects initialized on the build method itself to ensure the backdrop
 /// photo will be updated on the view, once the database information is updated.
 ///
 /// Updating the [DiaryEntry] will result in an updated BackdropPhoto, therefore the
 /// object will have to be found again on 'build'.
-class BackdropPhotoFinder {
+class BackdropPhotoController {
   final List<BackdropPhoto> backdropPhotos;
   final DiaryEntry diaryEntry;
 
-  /// Creates a [BackdropPhotoFinder].
+  /// Creates a [BackdropPhotoController].
   ///
   /// * [backdropPhotos] is the list of available photos.
   ///
   /// * [diaryEntry] is the diary entry that contains the backdrop id.
-  const BackdropPhotoFinder(this.backdropPhotos, this.diaryEntry);
+  const BackdropPhotoController(this.backdropPhotos, this.diaryEntry);
 
   /// Finds and returns the [BackdropPhoto] based on its id.
   ///
