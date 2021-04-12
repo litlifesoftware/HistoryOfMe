@@ -9,7 +9,7 @@ import 'package:history_of_me/model/backdrop_photo.dart';
 import 'package:history_of_me/model/diary_entry.dart';
 import 'package:history_of_me/view/styles/app_text_styles.dart';
 import 'package:history_of_me/view/widgets/entry_details_screen/confirm_delete_entry_dialog.dart';
-import 'package:history_of_me/view/widgets/entry_details_screen/entry_deatails_backdrop.dart';
+import 'package:history_of_me/view/widgets/entry_details_screen/entry_details_backdrop.dart';
 import 'package:history_of_me/view/widgets/entry_details_screen/backdrop_photo_overlay.dart';
 import 'package:history_of_me/view/widgets/entry_details_screen/change_photo_dialog.dart';
 import 'package:history_of_me/view/widgets/entry_details_screen/entry_details_card.dart';

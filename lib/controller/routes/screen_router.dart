@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:history_of_me/model/backdrop_photo.dart';
 import 'package:history_of_me/view/screens/backdrop_photo_detail_screen.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';
 import 'package:history_of_me/model/diary_entry.dart';
@@ -63,8 +64,9 @@ class ScreenRouter {
     _routeController.pushMaterialWidget(pushedWidget);
   }
 
-  void toBackdropPhotoDetailScreen() {
-    final Widget pushedWidget = BackdropPhotoDetailScreen();
+  void toBackdropPhotoDetailScreen({required BackdropPhoto backdropPhoto}) {
+    final Widget pushedWidget =
+        BackdropPhotoDetailScreen(backdropPhoto: backdropPhoto);
     _routeController.pushMaterialWidget(pushedWidget);
   }
 }

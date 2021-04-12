@@ -32,7 +32,12 @@ class _BackdropPhotoOverlayState extends State<BackdropPhotoOverlay>
   late AnimationOnScrollController _animationOnScrollController;
 
   void _navigateDetailScreen() {
-    ScreenRouter(context).toBackdropPhotoDetailScreen();
+    BackdropPhoto backdropPhoto = BackdropPhotoController(
+      widget.backdropPhotos,
+      widget.diaryEntry,
+    ).findBackdropPhoto();
+    ScreenRouter(context)
+        .toBackdropPhotoDetailScreen(backdropPhoto: backdropPhoto);
   }
 
   @override
