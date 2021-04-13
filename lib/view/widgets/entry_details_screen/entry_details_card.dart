@@ -421,7 +421,7 @@ class _TextPreview extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 8.0),
               child: Text(
-                "${DateFormat.yMMMMEEEEd(Intl.getCurrentLocale()).format(DateTime.parse(diaryEntry.date))}",
+                "${DateTime.parse(diaryEntry.date).formatAsLocalizedDateWithWeekday()}",
                 style: LitTextStyles.sansSerif.copyWith(
                   fontSize: 15.4,
                   letterSpacing: 0.15,
