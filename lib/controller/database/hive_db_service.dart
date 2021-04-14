@@ -114,6 +114,7 @@ class HiveDBService {
   ///
   /// The provided username must be obtained by the user.
   void createUserData(String username) {
+    final int timeStampNow = DateTime.now().millisecondsSinceEpoch;
     final UserData userData = UserData(
       name: username,
       primaryColor: initialPrimaryColor,
@@ -124,7 +125,8 @@ class HiveDBService {
       quote: initialQuote,
       designPatternIndex: initialDesignPatternIndex,
       quoteAuthor: initialQuoteAuthor,
-      lastUpdated: DateTime.now().millisecondsSinceEpoch,
+      lastUpdated: timeStampNow,
+      created: timeStampNow,
     );
     if (Hive.box<UserData>(_userDataKey).isEmpty) {
       Hive.box<UserData>(_userDataKey).add(userData);
@@ -143,22 +145,23 @@ class HiveDBService {
 
   /// Updates the [UserData]'s username property value on the Hive database.
   ///
-  /// * [initialUserData] is required in order to retain the existing values on the
+  /// * [userData] is required in order to retain the existing values on the
   ///   Hive database in order to only update the username.
   ///
   /// * [updatedName] is the new username that should be stored on the database.
-  void updateUsername(UserData initialUserData, String updatedName) {
+  void updateUsername(UserData userData, String updatedName) {
     UserData updatedUserData = UserData(
       name: updatedName,
-      primaryColor: initialUserData.primaryColor,
-      secondaryColor: initialUserData.secondaryColor,
-      stripeCount: initialUserData.stripeCount,
-      dotSize: initialUserData.dotSize,
-      animated: initialUserData.animated,
-      quote: initialUserData.quote,
-      designPatternIndex: initialUserData.designPatternIndex,
-      quoteAuthor: initialUserData.quoteAuthor,
+      primaryColor: userData.primaryColor,
+      secondaryColor: userData.secondaryColor,
+      stripeCount: userData.stripeCount,
+      dotSize: userData.dotSize,
+      animated: userData.animated,
+      quote: userData.quote,
+      designPatternIndex: userData.designPatternIndex,
+      quoteAuthor: userData.quoteAuthor,
       lastUpdated: DateTime.now().millisecondsSinceEpoch,
+      created: userData.created,
     );
     updateUserData(updatedUserData);
   }

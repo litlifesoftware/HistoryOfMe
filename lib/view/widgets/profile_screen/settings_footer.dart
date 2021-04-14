@@ -50,40 +50,36 @@ class _SettingsFooterState extends State<SettingsFooter> {
   void _showDeleteDataDialog() {}
 
   void _openCredits() {
-    LitRouteController(context).showDialogWidget(LitCreditsScreen(
-      art: HistoryOfMeLauncherIconArt(),
-      appTitle: "History Of Me",
-      subTitle: "Your own personal diary.",
-      screenTitle: "Credits",
-      credits: [
-        CreditData(
-          role: "UX Design",
-          names: [
-            "Michael Grigorenko",
-          ],
-        ),
-        CreditData(
-          role: "Development",
-          names: [
-            "Michael Grigorenko",
-          ],
-        ),
-        CreditData(
-          role: "Photography",
-          names: [
-            "Niilo Isotalo",
-            "Peiwen Yu",
-            "Greg Rakozy",
-          ],
-        ),
-      ],
-    ));
-  }
-
-  void _showChangeNameDialog() {
-    LitRouteController(context).showDialogWidget(ChangeNameDialog(
-      userData: widget.userData,
-    ));
+    LitRouteController(context).pushMaterialWidget(
+      LitCreditsScreen(
+        art: HistoryOfMeLauncherIconArt(),
+        appTitle: "History Of Me",
+        subTitle: "Your own personal diary.",
+        screenTitle: "Credits",
+        credits: [
+          CreditData(
+            role: "UX Design",
+            names: [
+              "Michael Grigorenko",
+            ],
+          ),
+          CreditData(
+            role: "Development",
+            names: [
+              "Michael Grigorenko",
+            ],
+          ),
+          CreditData(
+            role: "Photography",
+            names: [
+              "Niilo Isotalo",
+              "Peiwen Yu",
+              "Greg Rakozy",
+            ],
+          ),
+        ],
+      ),
+    );
   }
 
   void _takeTour() {
@@ -102,34 +98,6 @@ class _SettingsFooterState extends State<SettingsFooter> {
     return LitSettingsFooter(
       child: Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(
-              vertical: 8.0,
-            ),
-            child: LitRoundedElevatedButton(
-              padding: const EdgeInsets.symmetric(
-                vertical: 6.0,
-                horizontal: 16.0,
-              ),
-              boxShadow: [
-                BoxShadow(
-                  blurRadius: 13.0,
-                  color: Colors.black12,
-                  offset: Offset(-1, 1),
-                  spreadRadius: 1.0,
-                )
-              ],
-              color: LitColors.mintGreen,
-              child: Text(
-                "Change name",
-                style: LitTextStyles.sansSerif.copyWith(
-                  fontSize: 15,
-                  color: Colors.white,
-                ),
-              ),
-              onPressed: _showChangeNameDialog,
-            ),
-          ),
           LitPlainLabelButton(
             label: "Take the tour",
             onPressed: _takeTour,

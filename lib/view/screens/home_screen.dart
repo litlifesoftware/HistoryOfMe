@@ -13,11 +13,10 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
+  late AnimationController _bookmarkAnimation;
+
   /// All available tab screen [Widget] objects that can be navigated.
-  final List<Widget> _tabs = [
-    DiaryScreen(),
-    ProfileScreen(),
-  ];
+  List<Widget> _tabs = [];
 
   /// All tab data objects providing the meta data for the navigatable tabs.
   final List<LitBottomNavigationTabData> _tabData = [
@@ -41,6 +40,30 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     setState(() {
       tabIndex = value;
     });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _bookmarkAnimation = AnimationController(
+      duration: Duration(milliseconds: 5000),
+      vsync: this,
+    );
+    _tabs = [
+      DiaryScreen(
+        bookmarkAnimation: _bookmarkAnimation,
+      ),
+      ProfileScreen(
+        bookmarkAnimation: _bookmarkAnimation,
+      ),
+    ];
+    _bookmarkAnimation.repeat(reverse: true);
+  }
+
+  @override
+  void dispose() {
+    _bookmarkAnimation.dispose();
+    super.dispose();
   }
 
   @override

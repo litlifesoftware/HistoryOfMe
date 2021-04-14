@@ -177,6 +177,7 @@ class _BookmarkEditingScreenState extends State<BookmarkEditingScreen>
       designPatternIndex: _designPattern,
       quoteAuthor: _quoteAuthor,
       lastUpdated: lastUpdated,
+      created: widget.initialUserDataModel!.created,
     );
   }
 

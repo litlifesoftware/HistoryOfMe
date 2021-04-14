@@ -4,10 +4,11 @@ import 'package:history_of_me/view/widgets/shared/bookmark_front_preview.dart';
 
 class DiaryBookmarkHeader extends StatelessWidget {
   final UserData? userData;
-
+  final AnimationController bookmarkAnimation;
   const DiaryBookmarkHeader({
     Key? key,
     required this.userData,
+    required this.bookmarkAnimation,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -29,6 +30,7 @@ class DiaryBookmarkHeader extends StatelessWidget {
                           top: 4.0,
                         ),
                         child: BookmarkFrontPreview(
+                          animationController: bookmarkAnimation,
                           userData: userData,
                         ),
                       ),

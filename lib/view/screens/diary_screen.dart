@@ -18,6 +18,12 @@ import 'package:lit_ui_kit/lit_ui_kit.dart';
 /// The diary will list all available diary entries and interactive widgets to create additional
 /// entires.
 class DiaryScreen extends StatefulWidget {
+  final AnimationController bookmarkAnimation;
+
+  const DiaryScreen({
+    Key? key,
+    required this.bookmarkAnimation,
+  }) : super(key: key);
   @override
   _DiaryScreenState createState() => _DiaryScreenState();
 }
@@ -90,6 +96,7 @@ class _DiaryScreenState extends State<DiaryScreen>
                 return entriesBox.isNotEmpty
                     ? DiaryListView(
                         animationController: _listViewAnimation,
+                        bookmarkAnimation: widget.bookmarkAnimation,
                         diaryEntriesListSorted:
                             _getDiaryEntriesSorted(entriesBox),
                         scrollController: _scrollController,
@@ -97,8 +104,10 @@ class _DiaryScreenState extends State<DiaryScreen>
                         toggleShowFavoritesOnly: toggleShowFavoritesOnly,
                         userData: userData)
                     : _CreateEntryCallToActionCard(
+                        bookmarkAnimation: widget.bookmarkAnimation,
                         userData: userData,
-                        showCreateEntryDialog: _showCreateEntryDialog);
+                        showCreateEntryDialog: _showCreateEntryDialog,
+                      );
               },
             ),
           ),
@@ -110,10 +119,12 @@ class _DiaryScreenState extends State<DiaryScreen>
 
 /// A card containing informations how to create the first diary entry.
 class _CreateEntryCallToActionCard extends StatelessWidget {
+  final AnimationController bookmarkAnimation;
   final UserData? userData;
   final void Function() showCreateEntryDialog;
   const _CreateEntryCallToActionCard({
     Key? key,
+    required this.bookmarkAnimation,
     required this.userData,
     required this.showCreateEntryDialog,
   }) : super(key: key);
@@ -130,6 +141,7 @@ class _CreateEntryCallToActionCard extends StatelessWidget {
             padding: const EdgeInsets.only(
                 left: 16.0, right: 16.0, top: 32.0, bottom: 16.0),
             userData: userData,
+            animationController: bookmarkAnimation,
           ),
           Padding(
             padding: const EdgeInsets.symmetric(

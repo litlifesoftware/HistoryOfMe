@@ -27,13 +27,14 @@ class UserDataAdapter extends TypeAdapter<UserData> {
       designPatternIndex: fields[7] as int,
       quoteAuthor: fields[8] as String,
       lastUpdated: fields[9] as int,
+      created: fields[10] as int,
     );
   }
 
   @override
   void write(BinaryWriter writer, UserData obj) {
     writer
-      ..writeByte(10)
+      ..writeByte(11)
       ..writeByte(0)
       ..write(obj.name)
       ..writeByte(1)
@@ -53,7 +54,9 @@ class UserDataAdapter extends TypeAdapter<UserData> {
       ..writeByte(8)
       ..write(obj.quoteAuthor)
       ..writeByte(9)
-      ..write(obj.lastUpdated);
+      ..write(obj.lastUpdated)
+      ..writeByte(10)
+      ..write(obj.created);
   }
 
   @override

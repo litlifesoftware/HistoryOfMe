@@ -63,7 +63,7 @@ class HiveQueryController {
 
   /// Returns the total number of words written on the largest diary entry.
   int get leastWordsWrittenAtOnce {
-    return _getContentExtreme(false)!.length;
+    return _getContentExtreme(false)!.split(_pattern).length;
   }
 
   int get entriesThisWeek {

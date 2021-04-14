@@ -12,6 +12,7 @@ import 'diary_filter_header.dart';
 class DiaryListView extends StatelessWidget {
   final ScrollController scrollController;
   final AnimationController animationController;
+  final AnimationController bookmarkAnimation;
   final UserData? userData;
   final List<dynamic> diaryEntriesListSorted;
   final bool? showFavoriteEntriesOnly;
@@ -19,6 +20,7 @@ class DiaryListView extends StatelessWidget {
   const DiaryListView({
     Key? key,
     required this.scrollController,
+    required this.bookmarkAnimation,
     required this.animationController,
     required this.userData,
     required this.diaryEntriesListSorted,
@@ -41,6 +43,7 @@ class DiaryListView extends StatelessWidget {
                 return <Widget>[
                   DiaryBookmarkHeader(
                     userData: userData,
+                    bookmarkAnimation: bookmarkAnimation,
                   ),
                   DiaryFilterHeader(
                     filteredLength: showFavoriteEntriesOnly!

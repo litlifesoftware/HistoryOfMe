@@ -24,6 +24,8 @@ class UserData {
   final String quoteAuthor;
   @HiveField(9)
   final int lastUpdated;
+  @HiveField(10)
+  final int created;
   const UserData({
     required this.name,
     required this.primaryColor,
@@ -35,5 +37,6 @@ class UserData {
     required this.designPatternIndex,
     required this.quoteAuthor,
     required this.lastUpdated,
+    required this.created,
   });
 }
