@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';
 
-import '../art/exclamation_rectangle.dart';
-
 class ConfirmDiscardDraftDialog extends StatefulWidget {
   final String titleText;
   final String discardButtonLabel;

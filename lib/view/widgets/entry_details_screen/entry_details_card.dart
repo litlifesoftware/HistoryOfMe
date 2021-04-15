@@ -3,11 +3,9 @@ import 'package:history_of_me/controller/database/hive_db_service.dart';
 import 'package:history_of_me/controller/database/hive_query_controller.dart';
 import 'package:history_of_me/controller/mood_translation_controller.dart';
 import 'package:history_of_me/data/constants.dart';
-import 'package:history_of_me/view/widgets/art/exclamation_rectangle.dart';
 import 'package:history_of_me/model/diary_entry.dart';
 import 'package:history_of_me/view/styles/app_text_styles.dart';
 import 'package:history_of_me/view/widgets/shared/updated_label_text.dart';
-import 'package:intl/intl.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';
 
 class EntryDetailsCard extends StatefulWidget {

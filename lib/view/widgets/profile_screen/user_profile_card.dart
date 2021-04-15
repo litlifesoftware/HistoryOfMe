@@ -23,7 +23,12 @@ class _UserProfileCardState extends State<UserProfileCard> {
   }
 
   Color get _userColor {
-    return Color(widget.userData.primaryColor);
+    Color uColor = Color(widget.userData.primaryColor);
+    int alpha = uColor.alpha;
+    int red = (uColor.red * 0.8).floor();
+    int green = (uColor.green * 0.8).floor();
+    int blue = (uColor.blue * 0.8).floor();
+    return Color.fromARGB(alpha, red, green, blue);
   }
 
   String get _usernameInitials {
@@ -59,19 +64,19 @@ class _UserProfileCardState extends State<UserProfileCard> {
                 decoration: BoxDecoration(
                     boxShadow: [
                       BoxShadow(
-                        blurRadius: 8.0,
+                        blurRadius: 4.0,
                         color: Colors.black26,
                         offset: Offset(
                           -3.5,
                           2.5,
                         ),
-                        spreadRadius: -1.0,
+                        spreadRadius: -3.0,
                       )
                     ],
                     gradient: LinearGradient(
                         begin: Alignment.topRight,
                         end: Alignment.bottomLeft,
-                        colors: [_userColor.withAlpha(127), Color(0xFFDDDDDD)]),
+                        colors: [_userColor, Color(0xFFDDDDDD)]),
                     borderRadius: BorderRadius.all(Radius.circular(38.0))),
                 child: Center(
                   child: Padding(

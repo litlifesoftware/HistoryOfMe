@@ -1,8 +1,13 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:history_of_me/model/backdrop_photo.dart';
 import 'package:history_of_me/model/user_data.dart';
 import 'package:history_of_me/view/screens/intro_screen.dart';
 import 'package:history_of_me/view/widgets/art/history_of_me_launcher_icon_art.dart';
 import 'package:history_of_me/view/widgets/profile_screen/change_name_dialog.dart';
+import 'package:history_of_me/view/widgets/profile_screen/delete_data_dialog.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';
 
 class SettingsFooter extends StatefulWidget {
@@ -17,6 +22,8 @@ class SettingsFooter extends StatefulWidget {
 }
 
 class _SettingsFooterState extends State<SettingsFooter> {
+  bool loading = false;
+
   //late LitRouteController _routeController;
   void _showAboutThisAppDialog() {
     LitRouteController(context).showDialogWidget(
@@ -47,39 +54,54 @@ class _SettingsFooterState extends State<SettingsFooter> {
 
   void _openDeveloperProfile() {}
 
-  void _showDeleteDataDialog() {}
-
-  void _openCredits() {
-    LitRouteController(context).pushMaterialWidget(
-      LitCreditsScreen(
-        art: HistoryOfMeLauncherIconArt(),
-        appTitle: "History Of Me",
-        subTitle: "Your own personal diary.",
-        screenTitle: "Credits",
-        credits: [
-          CreditData(
-            role: "UX Design",
-            names: [
-              "Michael Grigorenko",
-            ],
-          ),
-          CreditData(
-            role: "Development",
-            names: [
-              "Michael Grigorenko",
-            ],
-          ),
-          CreditData(
-            role: "Photography",
-            names: [
-              "Niilo Isotalo",
-              "Peiwen Yu",
-              "Greg Rakozy",
-            ],
-          ),
-        ],
-      ),
+  void _showDeleteDataDialog() {
+    LitRouteController(context).showDialogWidget(
+      DeleteDataDialog(),
     );
+  }
+
+  void _openCredits() async {
+    dynamic parsed;
+    List<String> backdropPhotoPhotographers = [];
+    await rootBundle
+        .loadString('assets/json/image_collection_data.json')
+        .then(
+          (value) => parsed = jsonDecode(value).cast<Map<String, dynamic>>(),
+        )
+        .then(
+          (_) => parsed.forEach(
+            (json) => backdropPhotoPhotographers
+                .add(BackdropPhoto.fromJson(json).photographer!),
+          ),
+        )
+        .then(
+          (value) => LitRouteController(context).pushMaterialWidget(
+            LitCreditsScreen(
+              art: HistoryOfMeLauncherIconArt(),
+              appTitle: "History Of Me",
+              subTitle: "Your own personal diary.",
+              screenTitle: "Credits",
+              credits: [
+                CreditData(
+                  role: "UX Design",
+                  names: [
+                    "Michael Grigorenko",
+                  ],
+                ),
+                CreditData(
+                  role: "Development",
+                  names: [
+                    "Michael Grigorenko",
+                  ],
+                ),
+                CreditData(
+                  role: "Photography",
+                  names: backdropPhotoPhotographers,
+                ),
+              ],
+            ),
+          ),
+        );
   }
 
   void _takeTour() {
@@ -114,13 +136,13 @@ class _SettingsFooterState extends State<SettingsFooter> {
             textAlign: TextAlign.center,
           ),
           LitPlainLabelButton(
-            label: "Credits",
-            onPressed: _openCredits,
+            label: "Delete all data",
+            onPressed: _showDeleteDataDialog,
             textAlign: TextAlign.center,
           ),
           LitPlainLabelButton(
-            label: "Delete all data",
-            onPressed: _showDeleteDataDialog,
+            label: "Credits",
+            onPressed: _openCredits,
             textAlign: TextAlign.center,
           ),
         ],

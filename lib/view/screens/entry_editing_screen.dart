@@ -12,10 +12,10 @@ import 'package:lit_ui_kit/lit_ui_kit.dart';
 
 /// A screen [Widget] to edit a [DiaryEntry].
 ///
-/// The mutated [DiaryEntry] will kept in state as long as the user has not saved all changes.
-/// While the draft has not been saved yet, the user will be promted to save his changes if he
-/// decides to navigate back. Once saved, the user will then be able to navigate back without
-/// any dialogs being shown.
+/// The mutated [DiaryEntry] will kept in state as long as the user has not
+/// saved all changes. While the draft has not been saved yet, the user will be
+/// promted to save his changes if he decides to navigate back. Once saved, the
+/// user will then be able to navigate back without any dialogs being shown.
 class EntryEditingScreen extends StatefulWidget {
   /// The [DiaryEntry] that should be edited.
   final DiaryEntry diaryEntry;
