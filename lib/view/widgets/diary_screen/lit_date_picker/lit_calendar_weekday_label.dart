@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';
 
-class CalendarWeekdayLabel extends StatelessWidget {
+class LitCalendarWeekdayLabel extends StatelessWidget {
   final BoxConstraints constraints;
   final String label;
-  const CalendarWeekdayLabel({
+  const LitCalendarWeekdayLabel({
     Key? key,
     required this.constraints,
     required this.label,

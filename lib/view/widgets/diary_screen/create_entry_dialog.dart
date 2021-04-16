@@ -3,7 +3,7 @@ import 'package:history_of_me/controller/database/hive_db_service.dart';
 import 'package:history_of_me/controller/routes/screen_router.dart';
 import 'package:history_of_me/view/widgets/shared/lit_toggle_button_group.dart';
 import 'package:history_of_me/model/diary_entry.dart';
-import 'package:history_of_me/view/widgets/diary_screen/select_previous_day_dialog.dart';
+import 'package:history_of_me/view/widgets/diary_screen/lit_date_picker/lit_date_picker_dialog.dart';
 import 'package:intl/intl.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';
 
@@ -16,7 +16,9 @@ class _CreateEntryDialogState extends State<CreateEntryDialog>
     with TickerProviderStateMixin {
   late ScreenRouter _screenRouter;
   late AnimationController _appearAnimationController;
-  LitSnackbarController? _duplicateSnackBarController;
+  late LitSnackbarController _duplicateSnackBarController;
+
+  DateTime? _selectedDate;
   //TODO: CreateEntryType enum
   int createEntryType = 1;
   int selectedtDialogType = 1;
@@ -60,7 +62,7 @@ class _CreateEntryDialogState extends State<CreateEntryDialog>
       _screenRouter.toEntryEditingScreen(diaryEntry: createdEntry);
     } else {
       print("already created for today");
-      _duplicateSnackBarController!.showSnackBar();
+      _duplicateSnackBarController.showSnackBar();
     }
   }
 
@@ -77,6 +79,21 @@ class _CreateEntryDialogState extends State<CreateEntryDialog>
     }
   }
 
+  void _onSubmit() {
+    HiveDBService service = HiveDBService();
+
+    if (!service.entryWithDateDoesExist(_selectedDate)) {
+      DiaryEntry createdEntry = service.addDiaryEntry(date: _selectedDate!);
+      _closeDialog();
+      // Widget widget = EntryEditingScreen(
+      //   diaryEntry: createdEntry,
+      // );
+      _screenRouter.toEntryEditingScreen(diaryEntry: createdEntry);
+    } else {
+      _duplicateSnackBarController.showSnackBar();
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -89,27 +106,27 @@ class _CreateEntryDialogState extends State<CreateEntryDialog>
 
   @override
   void dispose() {
-    _duplicateSnackBarController!.dispose();
+    _duplicateSnackBarController.dispose();
 
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return selectedtDialogType == 1
-        ? Material(
-            color: Colors.transparent,
-            child: Stack(
-              children: [
-                InkWell(
-                  splashColor: Colors.transparent,
-                  onTap: _closeDialog,
-                  child: Container(
-                    height: MediaQuery.of(context).size.height,
-                    width: MediaQuery.of(context).size.width,
-                  ),
-                ),
-                LitTitledDialog(
+    return Material(
+      color: Colors.transparent,
+      child: Stack(
+        children: [
+          InkWell(
+            splashColor: Colors.transparent,
+            onTap: _closeDialog,
+            child: Container(
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
+            ),
+          ),
+          selectedtDialogType == 1
+              ? LitTitledDialog(
                   titleText: "Add a diary entry",
                   child: AnimatedBuilder(
                     animation: _appearAnimationController,
@@ -160,23 +177,29 @@ class _CreateEntryDialogState extends State<CreateEntryDialog>
                       );
                     },
                   ),
+                )
+              : LitDatePickerDialog(
+                  onBackCallback: () => setSelectedDialogType(1),
+                  selectedDate: _selectedDate,
+                  selectDate: (date) => setState(
+                    () => {_selectedDate = date},
+                  ),
+                  onSubmit: _onSubmit,
+                  allowFutureDates: false,
                 ),
-                IconSnackbar(
-                  iconData: LitIcons.info,
-                  text:
-                      "There already is a entry for ${createEntryType == 1 ? 'today' : 'this day'}.",
-                  textStyle: LitTextStyles.sansSerif
-                      .copyWith(color: Colors.white, fontSize: 13.0),
-                  litSnackBarController: _duplicateSnackBarController,
-                  alignment: Alignment.topRight,
-                  padding: const EdgeInsets.symmetric(
-                      vertical: 8.0, horizontal: 16.0),
-                ),
-              ],
-            ),
-          )
-        : SelectPreviousDayDialog(
-            onBackCallback: () => setSelectedDialogType(1),
-          );
+          IconSnackbar(
+            iconData: LitIcons.info,
+            text:
+                "There already is a entry for ${createEntryType == 1 ? 'today' : 'this day'}.",
+            textStyle: LitTextStyles.sansSerif
+                .copyWith(color: Colors.white, fontSize: 13.0),
+            litSnackBarController: _duplicateSnackBarController,
+            alignment: Alignment.topRight,
+            padding:
+                const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+          ),
+        ],
+      ),
+    );
   }
 }

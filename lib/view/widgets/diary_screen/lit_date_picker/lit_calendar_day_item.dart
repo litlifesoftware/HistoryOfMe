@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';
 
-class CalendarDayItem extends StatefulWidget {
+class LitCalendarDayItem extends StatefulWidget {
   final BoxConstraints constraints;
   final DateTime displayedDate;
   final DateTime? templateDate;
@@ -9,7 +9,8 @@ class CalendarDayItem extends StatefulWidget {
   final void Function(DateTime date) selectDateCallback;
   final void Function() exclusiveMonthCallback;
   final void Function() futureDateCallback;
-  const CalendarDayItem({
+  final bool allowFutureDates;
+  const LitCalendarDayItem({
     Key? key,
     required this.constraints,
     required this.displayedDate,
@@ -18,16 +19,24 @@ class CalendarDayItem extends StatefulWidget {
     required this.selectedDate,
     required this.exclusiveMonthCallback,
     required this.futureDateCallback,
+    required this.allowFutureDates,
   }) : super(key: key);
 
   @override
-  _CalendarDayItemState createState() => _CalendarDayItemState();
+  _LitCalendarDayItemState createState() => _LitCalendarDayItemState();
 }
 
-class _CalendarDayItemState extends State<CalendarDayItem> {
+class _LitCalendarDayItemState extends State<LitCalendarDayItem> {
+  bool get _isPast {
+    return widget.displayedDate.isBefore(DateTime.now()) &&
+        !widget.allowFutureDates;
+  }
+
   void _onSelect() {
     if (widget.displayedDate.month == widget.templateDate!.month) {
-      if (widget.displayedDate.isBefore(DateTime.now())) {
+      // allowFutureDates has a higher hierarchy - if it's true, the futureDate
+      // callback will never be called.
+      if (_isPast || widget.allowFutureDates) {
         widget.selectDateCallback(widget.displayedDate);
       } else {
         widget.futureDateCallback();
@@ -79,13 +88,14 @@ class _CalendarDayItemState extends State<CalendarDayItem> {
               child: ScaledDownText(
                 "${widget.displayedDate.day}",
                 style: LitTextStyles.sansSerif.copyWith(
-                    fontSize: 16.0,
-                    color:
-                        widget.displayedDate.month == widget.templateDate!.month
-                            ? widget.selectedDate == widget.displayedDate
-                                ? Colors.white
-                                : HexColor('#7a7a7a')
-                            : HexColor('#7a7a7a').withOpacity(0.65)),
+                  fontSize: 16.0,
+                  color:
+                      widget.displayedDate.month == widget.templateDate!.month
+                          ? widget.selectedDate == widget.displayedDate
+                              ? Colors.white
+                              : HexColor('#7a7a7a')
+                          : HexColor('#7a7a7a').withOpacity(0.65),
+                ),
               ),
             ),
           ),

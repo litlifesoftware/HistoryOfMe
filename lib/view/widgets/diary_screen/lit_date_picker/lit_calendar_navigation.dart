@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';
 
-class CalendarNavigation extends StatelessWidget {
+class LitCalendarNavigation extends StatelessWidget {
   final void Function() decreaseByMonth;
   final void Function() increaseByMonth;
   final void Function() onMonthLabelPress;
   final void Function() onYearLabelPress;
   final String yearLabel;
   final String monthLabel;
-  const CalendarNavigation({
+  const LitCalendarNavigation({
     Key? key,
     required this.decreaseByMonth,
     required this.increaseByMonth,
@@ -23,6 +23,7 @@ class CalendarNavigation extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 4.0),
       child: LayoutBuilder(builder: (context, constraints) {
         return Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SizedBox(
               width: constraints.maxWidth / 4,
@@ -43,17 +44,21 @@ class CalendarNavigation extends StatelessWidget {
               ),
             ),
             SizedBox(
-                width: constraints.maxWidth / 4,
-                child: LitPlainLabelButton(
-                    fontSize: 18.0,
-                    onPressed: onMonthLabelPress,
-                    label: monthLabel)),
+              width: constraints.maxWidth / 4,
+              child: LitPlainLabelButton(
+                fontSize: 18.0,
+                onPressed: onMonthLabelPress,
+                label: monthLabel,
+              ),
+            ),
             SizedBox(
-                width: constraints.maxWidth / 4,
-                child: LitPlainLabelButton(
-                    fontSize: 18.0,
-                    onPressed: onYearLabelPress,
-                    label: yearLabel)),
+              width: constraints.maxWidth / 4,
+              child: LitPlainLabelButton(
+                fontSize: 18.0,
+                onPressed: onYearLabelPress,
+                label: yearLabel,
+              ),
+            ),
             SizedBox(
               width: constraints.maxWidth / 4,
               //decreaseByMonth

@@ -1,21 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';
 
-import 'calendar_day_item.dart';
+import 'lit_calendar_day_item.dart';
 
-class CalendarGrid extends StatelessWidget {
+class LitCalendarGrid extends StatelessWidget {
   final CalendarController calendarController;
   final DateTime? selectedDate;
   final void Function(DateTime) setSelectedDateTime;
   final void Function() exclusiveMonthCallback;
   final void Function() futureDateCallback;
-  const CalendarGrid({
+  final bool allowFutureDates;
+  const LitCalendarGrid({
     Key? key,
     required this.calendarController,
     required this.selectedDate,
     required this.setSelectedDateTime,
     required this.exclusiveMonthCallback,
     required this.futureDateCallback,
+    required this.allowFutureDates,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -32,7 +34,7 @@ class CalendarGrid extends StatelessWidget {
             final DateTime iteratedDate =
                 calendarController.derivateDates[count];
             dayList.add(
-              CalendarDayItem(
+              LitCalendarDayItem(
                 constraints: constraints,
                 displayedDate: iteratedDate,
                 templateDate: calendarController.templateDate,
@@ -40,6 +42,7 @@ class CalendarGrid extends StatelessWidget {
                 selectedDate: selectedDate,
                 exclusiveMonthCallback: exclusiveMonthCallback,
                 futureDateCallback: futureDateCallback,
+                allowFutureDates: allowFutureDates,
               ),
             );
             if (count < (calendarController.derivateDates.length - 1)) {
