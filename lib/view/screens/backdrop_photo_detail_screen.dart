@@ -106,22 +106,23 @@ class _DetailsCard extends StatelessWidget {
               backdropPhoto.description != null
                   ? Padding(
                       padding: const EdgeInsets.symmetric(
-                        vertical: 4.0,
+                        vertical: 8.0,
                       ),
-                      child: RichText(
-                        text: TextSpan(
-                          children: [
-                            TextSpan(
-                              text:
-                                  "${backdropPhoto.photographer} is telling us about this image:\n",
-                              style: LitTextStyles.sansSerifSmallHeader,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(
+                              bottom: 8.0,
                             ),
-                            TextSpan(
-                              text: "${backdropPhoto.description}",
-                              style: LitTextStyles.sansSerifBody,
-                            )
-                          ],
-                        ),
+                            child: Text(
+                                "${backdropPhoto.photographer} is telling us about this image:",
+                                style: LitTextStyles.sansSerifSmallHeader),
+                          ),
+                          Text("${backdropPhoto.description}",
+                              style: LitTextStyles.sansSerifBody),
+                        ],
                       ),
                     )
                   : SizedBox(),
@@ -146,38 +147,81 @@ class _Background extends StatefulWidget {
   __BackgroundState createState() => __BackgroundState();
 }
 
-class __BackgroundState extends State<_Background> {
+class __BackgroundState extends State<_Background>
+    with TickerProviderStateMixin {
+  late AnimationController _transformAnimation;
   Size get _deviceSize {
     return MediaQuery.of(context).size;
+  }
+
+  /// The background layer's transformation.
+  ///
+  /// It's values are set using the current animation value.
+  Matrix4 get _transform {
+    double scaling = 1.2 - (0.10 * _transformAnimation.value);
+    double xTranslate = -20 + (20 * _transformAnimation.value);
+    return Matrix4.identity()
+      ..scale(
+        scaling,
+        scaling,
+      )
+      ..multiply(
+        Matrix4.translationValues(
+          xTranslate,
+          0,
+          0,
+        ),
+      );
+  }
+
+  @override
+  void initState() {
+    _transformAnimation = AnimationController(
+      vsync: this,
+      duration: Duration(
+        milliseconds: 6000,
+      ),
+    );
+    _transformAnimation.repeat(reverse: true);
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        Container(
-          height: _deviceSize.height,
-          width: _deviceSize.width,
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              fit: alternativeBoxFit(
-                _deviceSize,
-                portraitBoxFit: BoxFit.fitHeight,
-                landscapeBoxFit: BoxFit.fitWidth,
-              ),
-              image: AssetImage(
-                "${widget.backdropPhoto.assetUrl}",
-              ),
-            ),
-          ),
-        ),
+        AnimatedBuilder(
+            animation: _transformAnimation,
+            builder: (context, _) {
+              return Container(
+                height: _deviceSize.height,
+                width: _deviceSize.width,
+                child: Transform(
+                  transform: _transform,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        fit: alternativeBoxFit(
+                          _deviceSize,
+                          portraitBoxFit: BoxFit.fitHeight,
+                          landscapeBoxFit: BoxFit.fitWidth,
+                        ),
+                        image: AssetImage(
+                          widget.backdropPhoto.assetUrl!,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              );
+            }),
         BluredBackgroundContainer(
           child: Container(
             color: Colors.white10,
             height: _deviceSize.height,
             width: _deviceSize.width,
           ),
-          blurRadius: 8.0,
+          blurRadius: 5.0,
         ),
         Container(
           height: _deviceSize.height,
@@ -188,7 +232,7 @@ class __BackgroundState extends State<_Background> {
               end: Alignment.bottomLeft,
               colors: [
                 Colors.white24,
-                Colors.black26,
+                Colors.white10,
               ],
             ),
           ),
@@ -234,7 +278,7 @@ class _BackdropCardDetailItem extends StatelessWidget {
           SizedBox(
             width: constraints.maxWidth * 0.35,
             child: Padding(
-              padding: const EdgeInsets.only(left: 4.0),
+              padding: EdgeInsets.only(left: icon != null ? 4.0 : 0),
               child: ClippedText(
                 "$detailLabel",
                 maxLines: 1,
