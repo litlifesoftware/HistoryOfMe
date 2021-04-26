@@ -18,7 +18,7 @@ class _CreateEntryDialogState extends State<CreateEntryDialog>
   late AnimationController _appearAnimationController;
   late LitSnackbarController _duplicateSnackBarController;
 
-  DateTime? _selectedDate;
+  //DateTime? _selectedDate;
   //TODO: CreateEntryType enum
   int createEntryType = 1;
   int selectedtDialogType = 1;
@@ -79,11 +79,11 @@ class _CreateEntryDialogState extends State<CreateEntryDialog>
     }
   }
 
-  void _onSubmit() {
+  void _onSubmit(DateTime date) {
     HiveDBService service = HiveDBService();
 
-    if (!service.entryWithDateDoesExist(_selectedDate)) {
-      DiaryEntry createdEntry = service.addDiaryEntry(date: _selectedDate!);
+    if (!service.entryWithDateDoesExist(date)) {
+      DiaryEntry createdEntry = service.addDiaryEntry(date: date);
       _closeDialog();
       // Widget widget = EntryEditingScreen(
       //   diaryEntry: createdEntry,
@@ -180,10 +180,10 @@ class _CreateEntryDialogState extends State<CreateEntryDialog>
                 )
               : LitDatePickerDialog(
                   onBackCallback: () => setSelectedDialogType(1),
-                  selectedDate: _selectedDate,
-                  selectDate: (date) => setState(
-                    () => {_selectedDate = date},
-                  ),
+                  //selectedDate: _selectedDate,
+                  // selectDate: (date) => setState(
+                  //   () => {_selectedDate = date},
+                  // ),
                   onSubmit: _onSubmit,
                   allowFutureDates: false,
                 ),
