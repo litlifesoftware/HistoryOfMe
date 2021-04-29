@@ -117,7 +117,7 @@ class _EntryDetailScreenState extends State<EntryDetailScreen>
   }
 
   void _onNextPressed(DiaryEntry diaryEntry) {
-    LitRouteController(context).replaceCurrentWidget(
+    LitRouteController(context).replaceCurrentCupertinoWidget(
       newWidget: EntryDetailScreen(
         // Decrease the index by one to artificially lower the total entries count
         // and therefore increase the entries number on the label text.
@@ -128,7 +128,7 @@ class _EntryDetailScreenState extends State<EntryDetailScreen>
   }
 
   void _onPreviousPressed(DiaryEntry diaryEntry) {
-    LitRouteController(context).replaceCurrentWidget(
+    LitRouteController(context).replaceCurrentCupertinoWidget(
       newWidget: EntryDetailScreen(
         // Increase the index by one to artificially higher the total entries count
         // and therefore lower the entries number on the label text.

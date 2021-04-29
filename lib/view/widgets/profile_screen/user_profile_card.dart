@@ -24,11 +24,13 @@ class _UserProfileCardState extends State<UserProfileCard> {
 
   Color get _userColor {
     Color uColor = Color(widget.userData.primaryColor);
+    Color contrastColor = Color(0xFFDDDDDD);
     int alpha = uColor.alpha;
     int red = (uColor.red * 0.8).floor();
     int green = (uColor.green * 0.8).floor();
     int blue = (uColor.blue * 0.8).floor();
-    return Color.fromARGB(alpha, red, green, blue);
+    Color desatColor = Color.fromARGB(alpha, red, green, blue);
+    return Color.lerp(contrastColor, desatColor, 0.3)!;
   }
 
   String get _usernameInitials {
@@ -62,22 +64,23 @@ class _UserProfileCardState extends State<UserProfileCard> {
                 height: 96.0,
                 width: 96.0,
                 decoration: BoxDecoration(
-                    boxShadow: [
-                      BoxShadow(
-                        blurRadius: 4.0,
-                        color: Colors.black26,
-                        offset: Offset(
-                          -3.5,
-                          2.5,
-                        ),
-                        spreadRadius: -3.0,
-                      )
-                    ],
-                    gradient: LinearGradient(
-                        begin: Alignment.topRight,
-                        end: Alignment.bottomLeft,
-                        colors: [_userColor, Color(0xFFDDDDDD)]),
-                    borderRadius: BorderRadius.all(Radius.circular(38.0))),
+                  boxShadow: [
+                    BoxShadow(
+                      blurRadius: 4.0,
+                      color: Colors.black26,
+                      offset: Offset(
+                        -3.5,
+                        2.5,
+                      ),
+                      spreadRadius: -3.0,
+                    )
+                  ],
+                  gradient: LinearGradient(
+                      begin: Alignment.topRight,
+                      end: Alignment.bottomLeft,
+                      colors: [Colors.white, _userColor]),
+                  borderRadius: BorderRadius.all(Radius.circular(38.0)),
+                ),
                 child: Center(
                   child: Padding(
                     padding: const EdgeInsets.symmetric(

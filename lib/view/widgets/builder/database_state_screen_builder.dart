@@ -46,38 +46,42 @@ class _DatabaseStateScreenBuilderState
     _username = input;
   }
 
-  /// Creates the [UserData] object on the Hive database and pops the
-  /// [LitSignUpScreen] from the navigation stack.
-  ///
-  /// Without popping the screen, it will still be kept inside the
-  /// navigation stack because it has been pushed into it.
+  /// Creates the [UserData] object on the Hive database and pops all currently
+  /// visible screen widgets to avoid leaking memory issues.
   void _handleUserCreation() {
     _dbService.createUserData(_username);
-    Navigator.pop(context);
+    LitRouteController(context).clearNavigationStack();
   }
 
   /// Handles the privacy confirmation.
   ///
-  /// Pushes the [LitSignUpScreen] into the navigation stack to enable
-  /// the user to input his username.
+  /// Pushes the [ConfirmAgeScreen] into the navigation stack to enable the
+  /// user to input his age.
   ///
-  /// Note that the [LitSignUpScreen] should be popped again after the
-  /// sign up process has been completed.
+  /// Ensure to always push a new Instance of the [ConfirmAgeScreen] to avoid
+  /// previous state objects to be unmounted while the widget is still being
+  /// displayed.
   void _onPrivacyConfirmed() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => LitSignUpScreen(
-          title: "What shall we call you?",
-          usernameLabel:
-              LitLocalizations.of(context)!.getLocalizedValue("your_name"),
-          onSubmitButtonText: "THATS ME",
-          showPasswordConfirmInput: false,
-          showPasswordInput: false,
-          showPinInput: false,
-          onSubmit: _handleUserCreation,
-          onUsernameChange: _setUsername,
-        ),
+    LitRouteController(context).pushCupertinoWidget(
+      ConfirmAgeScreen(onSubmit: _onSubmitAge),
+    );
+  }
+
+  /// Handles the actions once the user confirmes his age. To create the actual
+  /// user data entry, the user has to provide his name using the
+  /// [LitSignUpScreen].
+  void _onSubmitAge() {
+    LitRouteController(context).replaceCurrentMaterialWidget(
+      newWidget: LitSignUpScreen(
+        title: "What shall we call you?",
+        usernameLabel:
+            LitLocalizations.of(context)!.getLocalizedValue("your_name"),
+        onSubmitButtonText: "THATS ME",
+        showPasswordConfirmInput: false,
+        showPasswordInput: false,
+        showPinInput: false,
+        onSubmit: _handleUserCreation,
+        onUsernameChange: _setUsername,
       ),
     );
   }
@@ -109,6 +113,9 @@ class _DatabaseStateScreenBuilderState
               valueListenable: _dbService.getUserData(),
               builder: (BuildContext context, Box<UserData> userData, _) {
                 if (userData.isEmpty) {
+                  // return LitOfflineAppDisclaimerScreen(
+                  //   onConfirm: _onPrivacyConfirmed,
+                  // );
                   return LitOfflineAppDisclaimerScreen(
                     onConfirm: _onPrivacyConfirmed,
                   );
