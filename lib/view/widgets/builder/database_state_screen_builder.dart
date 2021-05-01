@@ -27,6 +27,9 @@ class DatabaseStateScreenBuilder extends StatefulWidget {
 
 class _DatabaseStateScreenBuilderState
     extends State<DatabaseStateScreenBuilder> {
+  final _startupAnimationDuration = const Duration(milliseconds: 6000);
+  bool _shouldShowStartupScreen = false;
+
   /// The currently inputed username.
   String _username = "";
 
@@ -92,6 +95,27 @@ class _DatabaseStateScreenBuilderState
     return await _dbService.openBoxes();
   }
 
+  void _toggleShouldShowStartupScreen() {
+    setState(() {
+      _shouldShowStartupScreen = !_shouldShowStartupScreen;
+    });
+  }
+
+  void _showStartupScreen() {
+    _toggleShouldShowStartupScreen();
+    Future.delayed(
+      _startupAnimationDuration,
+    ).then((_) {
+      _toggleShouldShowStartupScreen();
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _showStartupScreen();
+  }
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -107,18 +131,22 @@ class _DatabaseStateScreenBuilderState
               // but do nothing if there alredy are entires.
               _createInitialEntries();
             }
-            // Ensure the user data has been set on the database, otherwise return
-            // the privacy screen and sign up screen.
+            // Ensure the user data has been set on the database, otherwise
+            // return the privacy screen and sign up screen.
             return ValueListenableBuilder(
               valueListenable: _dbService.getUserData(),
               builder: (BuildContext context, Box<UserData> userData, _) {
                 if (userData.isEmpty) {
-                  // return LitOfflineAppDisclaimerScreen(
-                  //   onConfirm: _onPrivacyConfirmed,
-                  // );
-                  return LitOfflineAppDisclaimerScreen(
-                    onConfirm: _onPrivacyConfirmed,
-                  );
+                  // Show the startup screen only on the first app start.
+                  if (_shouldShowStartupScreen) {
+                    return LitStartupScreen(
+                      animationDuration: _startupAnimationDuration,
+                    );
+                  } else {
+                    return LitOfflineAppDisclaimerScreen(
+                      onConfirm: _onPrivacyConfirmed,
+                    );
+                  }
                 } else {
                   return HomeScreen();
                 }
