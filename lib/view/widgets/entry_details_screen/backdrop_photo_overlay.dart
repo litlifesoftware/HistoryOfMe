@@ -3,7 +3,6 @@ import 'package:history_of_me/controller/backdrop_photo_controller.dart';
 import 'package:history_of_me/controller/routes/screen_router.dart';
 import 'package:history_of_me/model/backdrop_photo.dart';
 import 'package:history_of_me/model/diary_entry.dart';
-import 'package:history_of_me/view/screens/backdrop_photo_detail_screen.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';
 
 class BackdropPhotoOverlay extends StatefulWidget {

@@ -6,7 +6,6 @@ import 'package:history_of_me/model/backdrop_photo.dart';
 import 'package:history_of_me/model/user_data.dart';
 import 'package:history_of_me/view/screens/intro_screen.dart';
 import 'package:history_of_me/view/widgets/art/history_of_me_launcher_icon_art.dart';
-import 'package:history_of_me/view/widgets/profile_screen/change_name_dialog.dart';
 import 'package:history_of_me/view/widgets/profile_screen/delete_data_dialog.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';
 
@@ -51,8 +50,6 @@ class _SettingsFooterState extends State<SettingsFooter> {
       ],
     ));
   }
-
-  void _openDeveloperProfile() {}
 
   void _showDeleteDataDialog() {
     LitRouteController(context).showDialogWidget(
@@ -117,33 +114,34 @@ class _SettingsFooterState extends State<SettingsFooter> {
 
   @override
   Widget build(BuildContext context) {
-    return LitSettingsFooter(
+    return LitFooter(
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           LitPlainLabelButton(
             label: "Take the tour",
             onPressed: _takeTour,
-            textAlign: TextAlign.center,
+            textAlign: TextAlign.right,
           ),
           LitPlainLabelButton(
             label: "About this app",
             onPressed: _showAboutThisAppDialog,
-            textAlign: TextAlign.center,
+            textAlign: TextAlign.right,
           ),
           LitPlainLabelButton(
             label: "View Privacy",
             onPressed: _openPrivacyPolicy,
-            textAlign: TextAlign.center,
+            textAlign: TextAlign.right,
           ),
           LitPlainLabelButton(
             label: "Delete all data",
             onPressed: _showDeleteDataDialog,
-            textAlign: TextAlign.center,
+            textAlign: TextAlign.right,
           ),
           LitPlainLabelButton(
             label: "Credits",
             onPressed: _openCredits,
-            textAlign: TextAlign.center,
+            textAlign: TextAlign.right,
           ),
         ],
       ),

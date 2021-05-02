@@ -139,10 +139,6 @@ class _EntryDetailScreenState extends State<EntryDetailScreen>
     );
   }
 
-  Size get _deviceSize {
-    return MediaQuery.of(context).size;
-  }
-
   @override
   void initState() {
     super.initState();

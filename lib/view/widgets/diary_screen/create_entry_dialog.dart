@@ -3,7 +3,6 @@ import 'package:history_of_me/controller/database/hive_db_service.dart';
 import 'package:history_of_me/controller/routes/screen_router.dart';
 import 'package:history_of_me/view/widgets/shared/lit_toggle_button_group.dart';
 import 'package:history_of_me/model/diary_entry.dart';
-import 'package:history_of_me/view/widgets/diary_screen/lit_date_picker/lit_date_picker_dialog.dart';
 import 'package:intl/intl.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';
 
