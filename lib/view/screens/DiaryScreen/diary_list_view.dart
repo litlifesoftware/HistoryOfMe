@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:history_of_me/model/diary_entry.dart';
 import 'package:history_of_me/model/user_data.dart';
-import 'package:history_of_me/view/widgets/diary_screen/diary_bookmark_header.dart';
-import 'package:history_of_me/view/widgets/diary_screen/greetings_bar.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';
 
+import 'diary_bookmark_header.dart';
 import 'diary_list_tile.dart';
 import 'diary_filter_header.dart';
+import 'greetings_bar.dart';
 
 class DiaryListView extends StatelessWidget {
   final ScrollController scrollController;

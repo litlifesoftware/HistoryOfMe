@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:history_of_me/view/widgets/diary_screen/diary_filter_header_delegate.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';
+
+import 'diary_filter_header_delegate.dart';
 
 class DiaryFilterHeader extends StatefulWidget {
   final int filteredLength;
