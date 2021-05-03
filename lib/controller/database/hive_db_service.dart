@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:history_of_me/model/app_settings.dart';
@@ -302,6 +304,10 @@ class HiveDBService {
   }
 
   String _createUniqueID() {
-    return DateTime.now().millisecondsSinceEpoch.toRadixString(16);
+    int timestamp = DateTime.now().millisecondsSinceEpoch;
+    int salt = Random().nextInt(1024);
+    String timestampHash = timestamp.toRadixString(16);
+    String saltHash = salt.toRadixString(16);
+    return "$timestampHash$saltHash";
   }
 }
