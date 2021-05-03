@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:history_of_me/controller/database/hive_db_service.dart';
 import 'package:history_of_me/data/constants.dart';
-import 'package:history_of_me/view/screens/BookmarkEditingScreen/deletable_container.dart';
 import 'package:history_of_me/model/user_created_color.dart';
-import 'package:history_of_me/view/screens/BookmarkEditingScreen/color_mixer.dart';
-import 'package:history_of_me/view/screens/BookmarkEditingScreen/selectable_color_tile.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';
+
+import 'color_mixer.dart';
+import 'deletable_container.dart';
+import 'selectable_color_tile.dart';
 
 class PrimaryColorSelectorCard extends StatefulWidget {
   final String cardTitle;

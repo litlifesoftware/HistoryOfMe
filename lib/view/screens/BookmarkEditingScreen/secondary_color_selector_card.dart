@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:history_of_me/model/user_created_color.dart';
-import 'package:history_of_me/view/screens/BookmarkEditingScreen/selectable_color_tile.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';
+
+import 'selectable_color_tile.dart';
 
 class SecondaryColorSelectorCard extends StatefulWidget {
   final String cardTitle;

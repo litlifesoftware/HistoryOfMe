@@ -1,15 +1,11 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:history_of_me/view/shared/shared.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';
 import 'package:history_of_me/controller/database/hive_db_service.dart';
 import 'package:history_of_me/data/constants.dart';
 import 'package:history_of_me/model/user_created_color.dart';
 import 'package:history_of_me/model/user_data.dart';
-import 'package:history_of_me/view/shared/bookmark/bookmark_back_preview.dart';
-import 'package:history_of_me/view/shared/bookmark/bookmark_front_preview.dart';
-import 'package:history_of_me/view/shared/lit_toggle_button_group.dart';
-import 'package:history_of_me/view/shared/confirm_discard_draft_dialog.dart';
-import 'package:history_of_me/view/shared/editable_item_meta_info.dart';
 import 'package:hive/hive.dart';
 
 import 'pattern_config_card.dart';
