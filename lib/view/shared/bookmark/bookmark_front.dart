@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:history_of_me/model/user_data.dart';
-import 'package:history_of_me/view/widgets/shared/bookmark/bookmark_design.dart';
-import 'package:history_of_me/view/widgets/shared/bookmark/dotted_design.dart';
-import 'package:history_of_me/view/widgets/shared/bookmark/striped_design.dart';
-import 'package:history_of_me/view/widgets/shared/bookmark/bookmark_container.dart';
-import 'package:history_of_me/view/widgets/shared/bookmark/bookmark_cover.dart';
 
+import 'bookmark_container.dart';
+import 'bookmark_cover.dart';
+import 'bookmark_design.dart';
 import 'bookmark_title.dart';
+import 'dotted_design.dart';
+import 'striped_design.dart';
 
 class BookmarkFront extends StatelessWidget implements BookmarkCover {
   final UserData? userData;

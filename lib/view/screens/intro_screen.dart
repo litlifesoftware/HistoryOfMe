@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:history_of_me/view/widgets/shared/app_artwork.dart';
-import 'package:history_of_me/view/widgets/shared/history_of_me_app_logo.dart';
+import 'package:history_of_me/view/shared/app_artwork.dart';
+import 'package:history_of_me/view/shared/art/history_of_me_app_logo.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';
 
 class HistoryOfMeIntroScreen extends StatefulWidget {

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:history_of_me/model/user_data.dart';
-import 'package:history_of_me/view/widgets/shared/bookmark/bookmark_front.dart';
-import 'package:history_of_me/view/widgets/shared/bookmark/bookmark_preview_container.dart';
+
+import 'bookmark_front.dart';
+import 'bookmark_preview_container.dart';
 
 class BookmarkFrontPreview extends StatelessWidget {
   final EdgeInsets padding;

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:history_of_me/view/widgets/shared/updated_label_text.dart';
+import 'package:history_of_me/view/shared/updated_label_text.dart';
 
 class AnimatedUpdatedLabel extends StatefulWidget {
   final int? lastUpdateTimestamp;

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:history_of_me/model/user_data.dart';
-import 'package:history_of_me/view/widgets/shared/bookmark/bookmark_container.dart';
-import 'package:history_of_me/view/widgets/shared/bookmark/bookmark_cover.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';
+
+import 'bookmark_container.dart';
+import 'bookmark_cover.dart';
 
 class BookmarkBack extends StatefulWidget implements BookmarkCover {
   final UserData? userData;

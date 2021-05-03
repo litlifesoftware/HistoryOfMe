@@ -3,10 +3,10 @@ import 'package:history_of_me/controller/database/hive_db_service.dart';
 import 'package:history_of_me/controller/mood_translation_controller.dart';
 import 'package:history_of_me/data/constants.dart';
 import 'package:history_of_me/model/diary_entry.dart';
-import 'package:history_of_me/view/widgets/shared/animated_updated_label.dart';
+import 'package:history_of_me/view/shared/animated_updated_label.dart';
 import 'package:history_of_me/view/widgets/entry_editing_screen/editable_title_header.dart';
-import 'package:history_of_me/view/widgets/shared/confirm_discard_draft_dialog.dart';
-import 'package:history_of_me/view/widgets/shared/editable_item_meta_info.dart';
+import 'package:history_of_me/view/shared/confirm_discard_draft_dialog.dart';
+import 'package:history_of_me/view/shared/editable_item_meta_info.dart';
 import 'package:hive/hive.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';
 

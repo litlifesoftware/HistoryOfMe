@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:history_of_me/model/user_data.dart';
-import 'package:history_of_me/view/widgets/shared/bookmark_front_preview.dart';
+import 'package:history_of_me/view/shared/bookmark/bookmark_front_preview.dart';
 
 class DiaryBookmarkHeader extends StatelessWidget {
   final UserData? userData;
