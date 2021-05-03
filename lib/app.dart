@@ -15,11 +15,10 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
-  // List<String> backdropPhotoUrlList = [
-  //   "assets/images/niilo-isotalo--BZc9Ee1qo0-unsplash.jpg",
-  //   "assets/images/peiwen-yu-Etpd8Le6b8E-unsplash.jpg"
-  // ];
+  /// The background photos fetched from local storage.
   List<String?> backdropPhotoUrlList = [];
+
+  /// The list of images required to load from local storage.
   final List<String> utilityImagesUrlList = const [
     "assets/images/History_Of_Me_Key_Icon_256px-01.png",
     "assets/images/Key.png",
@@ -30,20 +29,7 @@ class _AppState extends State<App> {
     "assets/images/History_Of_Me_Window_Artwork_Small.png"
   ];
 
-  // List<BackdropPhoto> parseBackdropPhotos(String assetData) {
-  //   final parsed = jsonDecode(assetData).cast<Map<String, dynamic>>();
-
-  //   return parsed
-  //       .map<BackdropPhoto>((json) => BackdropPhoto.fromJson(json))
-  //       .toList();
-  // }
-
-  // Future<List<BackdropPhoto>> loadPhotosFromJson() async {
-  //   String data =
-  //       await rootBundle.loadString('assets/json/image_collection_data.json');
-  //   return parseBackdropPhotos(data);
-  // }
-
+  /// Parses the
   void parseBackdropPhotos(String assetData) {
     final parsed = jsonDecode(assetData).cast<Map<String, dynamic>>();
     parsed.forEach((json) => setState(
@@ -67,14 +53,12 @@ class _AppState extends State<App> {
       context: context,
       assetImages: utilityImagesUrlList,
     );
-    loadPhotosFromJson().then((value) => ImageCacheController(
-          context: context,
-          assetImages: backdropPhotoUrlList,
-        ));
-    // ImageCacheController(
-    //   context: context,
-    //   assetImages: backdropPhotoUrlList,
-    // );
+    loadPhotosFromJson().then(
+      (value) => ImageCacheController(
+        context: context,
+        assetImages: backdropPhotoUrlList,
+      ),
+    );
   }
 
   @override
@@ -116,35 +100,6 @@ class _AppState extends State<App> {
       home: DatabaseStateScreenBuilder(
         localizationsAssetURL: 'assets/json/localized_strings.json',
       ),
-      //_Test(),
     );
   }
 }
-
-// class _Test extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return LitLocalizations.of(context).loading
-//         ? Scaffold(
-//             body: Center(
-//               child: Container(
-//                 height: 200,
-//                 width: 200,
-//                 color: Colors.grey,
-//                 child: Center(
-//                   child: Text(
-//                       "Localizations are loading from disk. Please stand by..."),
-//                 ),
-//               ),
-//             ),
-//           )
-//         : Scaffold(
-//             body: Container(
-//               child: Center(
-//                 child: Text(
-//                     "${LitLocalizations.of(context).getLocalizedValue('your_name')}"),
-//               ),
-//             ),
-//           );
-//   }
-// }

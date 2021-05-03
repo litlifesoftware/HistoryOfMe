@@ -187,6 +187,12 @@ class __BackgroundState extends State<_Background>
   }
 
   @override
+  void dispose() {
+    _transformAnimation.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
