@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:history_of_me/model/backdrop_photo.dart';
 import 'package:history_of_me/model/user_data.dart';
-import 'package:history_of_me/view/screens/intro_screen.dart';
+import 'package:history_of_me/view/screens/HistoryOfMeIntroScreen/history_of_me_intro_screen.dart';
 import 'package:history_of_me/view/shared/art/history_of_me_launcher_icon_art.dart';
 import 'package:history_of_me/view/widgets/profile_screen/delete_data_dialog.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';

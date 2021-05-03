@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:history_of_me/view/screens/diary_screen.dart';
-import 'package:history_of_me/view/screens/profile_screen.dart';
+import 'package:history_of_me/view/screens/DiaryScreen/diary_screen.dart';
+import 'package:history_of_me/view/screens/ProfileScreen/profile_screen.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';
 
 /// A navigatable screen [Widget].
