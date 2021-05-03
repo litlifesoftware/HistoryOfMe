@@ -4,13 +4,13 @@ import 'package:history_of_me/model/backdrop_photo.dart';
 import 'package:history_of_me/model/diary_entry.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';
 
-class EntryDetailsBackdrop extends StatelessWidget {
+class EntryDetailBackdrop extends StatelessWidget {
   final bool? loading;
   final List<BackdropPhoto> backdropPhotos;
   final DiaryEntry diaryEntry;
   final double relativePortraitPhotoHeight;
   final double relativeLandscapePhotoHeight;
-  const EntryDetailsBackdrop({
+  const EntryDetailBackdrop({
     Key? key,
     required this.loading,
     required this.backdropPhotos,

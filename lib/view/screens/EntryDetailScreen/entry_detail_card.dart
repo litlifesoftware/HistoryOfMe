@@ -8,7 +8,7 @@ import 'package:history_of_me/view/styles/app_text_styles.dart';
 import 'package:history_of_me/view/shared/updated_label_text.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';
 
-class EntryDetailsCard extends StatefulWidget {
+class EntryDetailCard extends StatefulWidget {
   // final int index;
   //final int boxLength;
   final int listIndex;
@@ -21,7 +21,7 @@ class EntryDetailsCard extends StatefulWidget {
   final bool isFirst;
   final bool isLast;
   final HiveQueryController? queryController;
-  const EntryDetailsCard({
+  const EntryDetailCard({
     Key? key,
     //  @required this.index,
     //@required this.boxLength,
@@ -54,10 +54,10 @@ class EntryDetailsCard extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _EntryDetailsCardState createState() => _EntryDetailsCardState();
+  _EntryDetailCardState createState() => _EntryDetailCardState();
 }
 
-class _EntryDetailsCardState extends State<EntryDetailsCard> {
+class _EntryDetailCardState extends State<EntryDetailCard> {
   // bool get isLatest {
   //   return (widget.boxLength - 1) == widget.listIndex;
   // }

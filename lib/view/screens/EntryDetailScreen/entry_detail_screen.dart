@@ -8,13 +8,14 @@ import 'package:history_of_me/controller/routes/screen_router.dart';
 import 'package:history_of_me/model/backdrop_photo.dart';
 import 'package:history_of_me/model/diary_entry.dart';
 import 'package:history_of_me/view/styles/app_text_styles.dart';
-import 'package:history_of_me/view/widgets/entry_details_screen/confirm_delete_entry_dialog.dart';
-import 'package:history_of_me/view/widgets/entry_details_screen/entry_details_backdrop.dart';
-import 'package:history_of_me/view/widgets/entry_details_screen/backdrop_photo_overlay.dart';
-import 'package:history_of_me/view/widgets/entry_details_screen/change_photo_dialog.dart';
-import 'package:history_of_me/view/widgets/entry_details_screen/entry_details_card.dart';
 import 'package:hive/hive.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';
+
+import 'backdrop_photo_overlay.dart';
+import 'change_photo_dialog.dart';
+import 'confirm_delete_entry_dialog.dart';
+import 'entry_detail_backdrop.dart';
+import 'entry_detail_card.dart';
 
 class EntryDetailScreen extends StatefulWidget {
   //final int index;
@@ -226,7 +227,7 @@ class _EntryDetailScreenState extends State<EntryDetailScreen>
               return Container(
                 child: Stack(
                   children: [
-                    EntryDetailsBackdrop(
+                    EntryDetailBackdrop(
                       backdropPhotos: backdropPhotos,
                       loading: backdropPhotosLoading,
                       diaryEntry: diaryEntry,
@@ -244,7 +245,7 @@ class _EntryDetailScreenState extends State<EntryDetailScreen>
                             30,
                       ),
                       children: [
-                        EntryDetailsCard(
+                        EntryDetailCard(
                           relativeLandscapePhotoHeight:
                               widget.landscapePhotoHeight,
                           relativePortraitPhotoHeight:
