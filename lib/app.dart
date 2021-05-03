@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:history_of_me/model/backdrop_photo.dart';
-import 'package:history_of_me/view/widgets/builder/database_state_screen_builder.dart';
+import 'package:history_of_me/view/builder/database_state_screen_builder.dart';
 import 'package:lit_localization_service/delegate/lit_localization_service_delegate.dart';
 import 'package:lit_localization_service/lit_localization_service.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';
