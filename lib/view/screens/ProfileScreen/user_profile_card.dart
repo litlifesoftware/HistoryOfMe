@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:history_of_me/model/user_data.dart';
-import 'package:history_of_me/view/widgets/profile_screen/change_name_dialog.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';
+
+import 'change_name_dialog.dart';
 
 class UserProfileCard extends StatefulWidget {
   final UserData userData;
