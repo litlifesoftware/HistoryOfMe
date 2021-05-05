@@ -358,98 +358,103 @@ class _BookmarkEditingScreenState extends State<BookmarkEditingScreen>
             builder: (context, constraints) {
               return Stack(
                 children: [
-                  ScrollableColumn(
-                    controller: _scrollController,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(
-                          bottom: 16.0,
-                        ),
-                        child: Column(
-                          children: [
-                            IndexedPageView(
-                              height: 148.0,
-                              indicatorSpacingTop: 0.0,
-                              indicatorColor: LitColors.mediumGrey,
-                              children: [
-                                BookmarkFrontPreview(
-                                  transformed: false,
-                                  userData:
-                                      _mapUserData(updatedUserData.lastUpdated),
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 16.0,
-                                    vertical: 4.0,
+                  LitScrollbar(
+                    child: ScrollableColumn(
+                      controller: _scrollController,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(
+                            bottom: 16.0,
+                          ),
+                          child: Column(
+                            children: [
+                              IndexedPageView(
+                                height: 148.0,
+                                indicatorSpacingTop: 0.0,
+                                indicatorColor: LitColors.mediumGrey,
+                                children: [
+                                  BookmarkFrontPreview(
+                                    transformed: false,
+                                    userData: _mapUserData(
+                                        updatedUserData.lastUpdated),
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 16.0,
+                                      vertical: 4.0,
+                                    ),
                                   ),
-                                ),
-                                BookmarkBackPreview(
-                                  transformed: false,
-                                  userData:
-                                      _mapUserData(updatedUserData.lastUpdated),
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 16.0,
-                                    vertical: 4.0,
-                                  ),
-                                )
-                              ],
-                            ),
-                            LitToggleButtonGroup(
-                              selectedValue: _designPattern,
-                              onSelectCallback: setDesignPattern,
-                              items: [
-                                LitToggleButtonGroupItemData(
-                                    label: "Striped", value: 0),
-                                LitToggleButtonGroupItemData(
-                                    label: "Dotted", value: 1),
-                              ],
-                            ),
-                          ],
+                                  BookmarkBackPreview(
+                                    transformed: false,
+                                    userData: _mapUserData(
+                                        updatedUserData.lastUpdated),
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 16.0,
+                                      vertical: 4.0,
+                                    ),
+                                  )
+                                ],
+                              ),
+                              LitToggleButtonGroup(
+                                selectedValue: _designPattern,
+                                onSelectCallback: setDesignPattern,
+                                items: [
+                                  LitToggleButtonGroupItemData(
+                                      label: "Striped", value: 0),
+                                  LitToggleButtonGroupItemData(
+                                      label: "Dotted", value: 1),
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                      //Text("stripe count $stripeCount"),
-                      ValueListenableBuilder(
-                        valueListenable: HiveDBService().getUserCreatedColors(),
-                        builder: (BuildContext context,
-                            Box<UserCreatedColor> colorsBox, Widget? _) {
-                          // List<UserCreatedColor> userColors = colorsBox.values
-                          //     .toList()
-                          //     .cast<UserCreatedColor>();
-                          List<UserCreatedColor> userColors =
-                              colorsBox.values.toList();
-                          print(userColors);
-                          return ConstrainedBox(
-                            constraints: BoxConstraints(
-                                minHeight: MediaQuery.of(context).size.height),
-                            child: Column(
-                              children: [
-                                _configCard,
-                                PrimaryColorSelectorCard(
-                                  selectedColorValue: _primaryColor,
-                                  onSelectPrimaryColor: _setPrimaryColor,
-                                  userCreatedColors: userColors,
-                                  cardTitle: "Main Color",
-                                  //colors: _colors,
-                                  //addColor: _handleAddColor,
-                                  onAddColorError: () =>
-                                      _snackbarController!.showSnackBar(),
-                                ),
-                                QuoteCard(
-                                  initialAuthor: _quoteAuthor,
-                                  initialQuote: _quote,
-                                  onAuthorChanged: setQuoteAuthor,
-                                  onQuoteChanged: setQuote,
-                                ),
-                                SecondaryColorSelectorCard(
-                                  userCreatedColors: userColors,
-                                  selectedSecondaryColorValue: _secondaryColor,
-                                  onSelectSecondaryColor: _setSecondaryColor,
-                                ),
-                                SizedBox(height: 32.0),
-                              ],
-                            ),
-                          );
-                        },
-                      )
-                    ],
+                        //Text("stripe count $stripeCount"),
+                        ValueListenableBuilder(
+                          valueListenable:
+                              HiveDBService().getUserCreatedColors(),
+                          builder: (BuildContext context,
+                              Box<UserCreatedColor> colorsBox, Widget? _) {
+                            // List<UserCreatedColor> userColors = colorsBox.values
+                            //     .toList()
+                            //     .cast<UserCreatedColor>();
+                            List<UserCreatedColor> userColors =
+                                colorsBox.values.toList();
+                            print(userColors);
+                            return ConstrainedBox(
+                              constraints: BoxConstraints(
+                                  minHeight:
+                                      MediaQuery.of(context).size.height),
+                              child: Column(
+                                children: [
+                                  _configCard,
+                                  PrimaryColorSelectorCard(
+                                    selectedColorValue: _primaryColor,
+                                    onSelectPrimaryColor: _setPrimaryColor,
+                                    userCreatedColors: userColors,
+                                    cardTitle: "Main Color",
+                                    //colors: _colors,
+                                    //addColor: _handleAddColor,
+                                    onAddColorError: () =>
+                                        _snackbarController!.showSnackBar(),
+                                  ),
+                                  QuoteCard(
+                                    initialAuthor: _quoteAuthor,
+                                    initialQuote: _quote,
+                                    onAuthorChanged: setQuoteAuthor,
+                                    onQuoteChanged: setQuote,
+                                  ),
+                                  SecondaryColorSelectorCard(
+                                    userCreatedColors: userColors,
+                                    selectedSecondaryColorValue:
+                                        _secondaryColor,
+                                    onSelectSecondaryColor: _setSecondaryColor,
+                                  ),
+                                  SizedBox(height: 32.0),
+                                ],
+                              ),
+                            );
+                          },
+                        )
+                      ],
+                    ),
                   ),
                   _userDataChanged(updatedUserData)
                       ? LitDraggable(

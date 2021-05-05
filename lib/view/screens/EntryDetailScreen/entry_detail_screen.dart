@@ -43,7 +43,7 @@ class _EntryDetailScreenState extends State<EntryDetailScreen>
   bool? backdropPhotosLoading;
   List<BackdropPhoto> backdropPhotos = [];
   ScrollController? _scrollController;
-  late SettingsPanelController _settingsPanelController;
+  late LitSettingsPanelController _settingsPanelController;
   HiveQueryController? _hiveQueryController;
   late ScreenRouter _screenRouter;
 
@@ -147,7 +147,7 @@ class _EntryDetailScreenState extends State<EntryDetailScreen>
     loadPhotosFromJson();
 
     _scrollController = ScrollController();
-    _settingsPanelController = SettingsPanelController();
+    _settingsPanelController = LitSettingsPanelController();
     _hiveQueryController = HiveQueryController();
     _screenRouter = ScreenRouter(context);
   }
@@ -163,7 +163,7 @@ class _EntryDetailScreenState extends State<EntryDetailScreen>
     print(backdropPhotosLoading);
     return LitScaffold(
       wrapInSafeArea: false,
-      settingsPanel: SettingsPanel(
+      settingsPanel: LitSettingsPanel(
         height: 128.0,
         controller: _settingsPanelController,
         title: "Options",
@@ -234,42 +234,44 @@ class _EntryDetailScreenState extends State<EntryDetailScreen>
                       relativeLandscapePhotoHeight: widget.landscapePhotoHeight,
                       relativePortraitPhotoHeight: widget.portraitPhotoHeight,
                     ),
-                    ScrollableColumn(
-                      controller: _scrollController,
-                      verticalCut: 172.0,
-                      padding: EdgeInsets.only(
-                        top: MediaQuery.of(context).size.height /
-                                (constraints.maxHeight > constraints.maxWidth
-                                    ? widget.portraitPhotoHeight
-                                    : widget.landscapePhotoHeight) -
-                            30,
+                    LitScrollbar(
+                      child: ScrollableColumn(
+                        controller: _scrollController,
+                        verticalCut: 172.0,
+                        padding: EdgeInsets.only(
+                          top: MediaQuery.of(context).size.height /
+                                  (constraints.maxHeight > constraints.maxWidth
+                                      ? widget.portraitPhotoHeight
+                                      : widget.landscapePhotoHeight) -
+                              30,
+                        ),
+                        children: [
+                          EntryDetailCard(
+                            relativeLandscapePhotoHeight:
+                                widget.landscapePhotoHeight,
+                            relativePortraitPhotoHeight:
+                                widget.portraitPhotoHeight,
+                            //index: widget.index,
+                            boxLength: entriesBox.length,
+                            listIndex: widget.listIndex,
+                            isFirst: _isFirst,
+                            isLast: _isLast,
+                            diaryEntry: diaryEntry,
+                            onEditCallback: () => _onEdit(diaryEntry),
+                            queryController: _hiveQueryController,
+                          ),
+                          _EntryDetailFooter(
+                            showNextButton: _shouldShowNextButton(diaryEntry),
+                            showPreviousButton:
+                                _shouldShowPreviousButton(diaryEntry),
+                            onPreviousPressed: () =>
+                                _onPreviousPressed(diaryEntry),
+                            onNextPressed: () => _onNextPressed(diaryEntry),
+                            moreOptionsPressed:
+                                _settingsPanelController.showSettingsPanel,
+                          ),
+                        ],
                       ),
-                      children: [
-                        EntryDetailCard(
-                          relativeLandscapePhotoHeight:
-                              widget.landscapePhotoHeight,
-                          relativePortraitPhotoHeight:
-                              widget.portraitPhotoHeight,
-                          //index: widget.index,
-                          boxLength: entriesBox.length,
-                          listIndex: widget.listIndex,
-                          isFirst: _isFirst,
-                          isLast: _isLast,
-                          diaryEntry: diaryEntry,
-                          onEditCallback: () => _onEdit(diaryEntry),
-                          queryController: _hiveQueryController,
-                        ),
-                        _EntryDetailFooter(
-                          showNextButton: _shouldShowNextButton(diaryEntry),
-                          showPreviousButton:
-                              _shouldShowPreviousButton(diaryEntry),
-                          onPreviousPressed: () =>
-                              _onPreviousPressed(diaryEntry),
-                          onNextPressed: () => _onNextPressed(diaryEntry),
-                          moreOptionsPressed:
-                              _settingsPanelController.showSettingsPanel,
-                        ),
-                      ],
                     ),
                     BackdropPhotoOverlay(
                       scrollController: _scrollController,

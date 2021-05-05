@@ -239,10 +239,8 @@ class _EntryEditingScreenState extends State<EntryEditingScreen>
                   builder: (BuildContext context, Widget? _) {
                     return Stack(
                       children: [
-                        Scrollbar(
-                          controller: _scrollController,
-                          radius: Radius.circular(8.0),
-                          thickness: 8.0,
+                        LitScrollbar(
+                          scrollController: _scrollController,
                           child: ScrollableColumn(
                             controller: _scrollController,
                             crossAxisAlignment: CrossAxisAlignment.start,

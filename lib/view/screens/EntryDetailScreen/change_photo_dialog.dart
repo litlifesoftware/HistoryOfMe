@@ -82,8 +82,10 @@ class _ChangePhotoDialogState extends State<ChangePhotoDialog>
           }
           return SizedBox(
             height: widget.minHeight,
-            child: ScrollableColumn(
-              children: children,
+            child: LitScrollbar(
+              child: ScrollableColumn(
+                children: children,
+              ),
             ),
           );
         },

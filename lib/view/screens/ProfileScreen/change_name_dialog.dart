@@ -66,6 +66,47 @@ class _ChangeNameDialogState extends State<ChangeNameDialog> {
       margin: const EdgeInsets.all(0.0),
       minHeight: 220.0,
       titleText: "Change your name",
+      actionButtons: [
+        Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: 16.0,
+          ),
+          child: LitPushedThroughButton(
+            borderRadius: 32.0,
+            onPressed: _onCancel,
+            accentColor: LitColors.lightGrey,
+            backgroundColor: LitColors.mediumGrey,
+            child: Text(
+              "Cancel",
+              style: LitTextStyles.sansSerif.copyWith(
+                color: Colors.white,
+                fontSize: 15.0,
+              ),
+            ),
+          ),
+        ),
+        //TODO implement button's disabled property value.
+        _isChanged
+            ? Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16.0,
+                ),
+                child: LitPushedThroughButton(
+                  borderRadius: 32.0,
+                  onPressed: _onSubmit,
+                  accentColor: Color(0xFFEDDEC0),
+                  backgroundColor: Color(0xFFEAEACA),
+                  child: Text(
+                    "Apply",
+                    style: LitTextStyles.sansSerif.copyWith(
+                      color: LitColors.mediumGrey,
+                      fontSize: 15.0,
+                    ),
+                  ),
+                ),
+              )
+            : SizedBox(),
+      ],
       child: CleanInkWell(
         onTap: _defocus,
         child: Center(
@@ -133,53 +174,14 @@ class _ChangeNameDialogState extends State<ChangeNameDialog> {
                   ),
                 ),
               ),
-              Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8.0),
-                  child: Row(
-                    mainAxisAlignment: _isChanged
-                        ? MainAxisAlignment.spaceEvenly
-                        : MainAxisAlignment.center,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 16.0,
-                        ),
-                        child: LitPushedThroughButton(
-                          borderRadius: 32.0,
-                          onPressed: _onCancel,
-                          accentColor: LitColors.lightGrey,
-                          backgroundColor: LitColors.mediumGrey,
-                          child: Text(
-                            "Cancel",
-                            style: LitTextStyles.sansSerif.copyWith(
-                              color: Colors.white,
-                              fontSize: 15.0,
-                            ),
-                          ),
-                        ),
-                      ),
-                      _isChanged
-                          ? Padding(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 16.0,
-                              ),
-                              child: LitPushedThroughButton(
-                                borderRadius: 32.0,
-                                onPressed: _onSubmit,
-                                accentColor: Color(0xFFEDDEC0),
-                                backgroundColor: Color(0xFFEAEACA),
-                                child: Text(
-                                  "Apply",
-                                  style: LitTextStyles.sansSerif.copyWith(
-                                    color: LitColors.mediumGrey,
-                                    fontSize: 15.0,
-                                  ),
-                                ),
-                              ),
-                            )
-                          : SizedBox(),
-                    ],
-                  )),
+              // Padding(
+              //     padding: const EdgeInsets.symmetric(vertical: 8.0),
+              //     child: Row(
+              //       mainAxisAlignment: _isChanged
+              //           ? MainAxisAlignment.spaceEvenly
+              //           : MainAxisAlignment.center,
+              //       children:
+              //     )),
             ],
           ),
         ),

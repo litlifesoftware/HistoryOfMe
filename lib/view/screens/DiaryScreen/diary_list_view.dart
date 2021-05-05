@@ -30,51 +30,53 @@ class DiaryListView extends StatelessWidget {
   Widget build(BuildContext context) {
     return CleanInkWell(
       onTap: LitRouteController(context).closeDialog,
-      child: Column(
-        children: <Widget>[
-          GreetingsBar(),
-          Expanded(
-            child: NestedScrollView(
-              //physics: AlwaysScrollableScrollPhysics(),
-              controller: scrollController,
-              headerSliverBuilder:
-                  (BuildContext context, bool innerBoxIsScrolled) {
-                return <Widget>[
-                  DiaryBookmarkHeader(
-                    userData: userData,
-                    bookmarkAnimation: bookmarkAnimation,
-                  ),
-                  DiaryFilterHeader(
-                    filteredLength: showFavoriteEntriesOnly!
-                        ? diaryEntriesListSorted
-                            .where((entry) {
-                              return entry.favorite;
-                            })
-                            .toList()
-                            .length
-                        : diaryEntriesListSorted.length,
-                    showFavoritesOnly: showFavoriteEntriesOnly,
-                    toggleShowFavoritesOnly: toggleShowFavoritesOnly,
-                    accentTextStyle: LitTextStyles.sansSerif.copyWith(
-                      fontWeight: FontWeight.w700,
-                      fontSize: 15.0,
-                      color: HexColor('#999999'),
+      child: LitScrollbar(
+        child: Column(
+          children: <Widget>[
+            GreetingsBar(),
+            Expanded(
+              child: NestedScrollView(
+                //physics: AlwaysScrollableScrollPhysics(),
+                controller: scrollController,
+                headerSliverBuilder:
+                    (BuildContext context, bool innerBoxIsScrolled) {
+                  return <Widget>[
+                    DiaryBookmarkHeader(
+                      userData: userData,
+                      bookmarkAnimation: bookmarkAnimation,
                     ),
-                    textStyle: LitTextStyles.sansSerif.copyWith(
-                      fontSize: 15.0,
-                      fontWeight: FontWeight.w700,
+                    DiaryFilterHeader(
+                      filteredLength: showFavoriteEntriesOnly!
+                          ? diaryEntriesListSorted
+                              .where((entry) {
+                                return entry.favorite;
+                              })
+                              .toList()
+                              .length
+                          : diaryEntriesListSorted.length,
+                      showFavoritesOnly: showFavoriteEntriesOnly,
+                      toggleShowFavoritesOnly: toggleShowFavoritesOnly,
+                      accentTextStyle: LitTextStyles.sansSerif.copyWith(
+                        fontWeight: FontWeight.w700,
+                        fontSize: 15.0,
+                        color: HexColor('#999999'),
+                      ),
+                      textStyle: LitTextStyles.sansSerif.copyWith(
+                        fontSize: 15.0,
+                        fontWeight: FontWeight.w700,
+                      ),
                     ),
-                  ),
-                ];
-              },
-              body: _NestedScrollViewBody(
-                diaryEntriesListSorted: diaryEntriesListSorted,
-                showFavoritesOnly: showFavoriteEntriesOnly,
-                animationController: animationController,
+                  ];
+                },
+                body: _NestedScrollViewBody(
+                  diaryEntriesListSorted: diaryEntriesListSorted,
+                  showFavoritesOnly: showFavoriteEntriesOnly,
+                  animationController: animationController,
+                ),
               ),
-            ),
-          )
-        ],
+            )
+          ],
+        ),
       ),
     );
   }

@@ -73,87 +73,91 @@ class _ProfileScreenState extends State<ProfileScreen>
             iconData: LitIcons.diary,
           ),
           body: SafeArea(
-            child: ScrollableColumn(
-              controller: _scrollController,
-              children: [
-                Column(
-                  children: [
-                    Stack(
-                      children: [
-                        IndexedPageView(
-                          height: 180.0,
-                          indicatorSpacingTop: 0.0,
-                          children: [
-                            BookmarkFrontPreview(
-                              userData: userData,
-                              animationController: widget.bookmarkAnimation,
-                              padding: const EdgeInsets.only(
-                                top: 16.0,
-                                left: 16.0,
-                                right: 32.0,
+            child: LitScrollbar(
+              child: ScrollableColumn(
+                controller: _scrollController,
+                children: [
+                  Column(
+                    children: [
+                      Stack(
+                        children: [
+                          IndexedPageView(
+                            height: 180.0,
+                            indicatorSpacingTop: 0.0,
+                            children: [
+                              BookmarkFrontPreview(
+                                userData: userData,
+                                animationController: widget.bookmarkAnimation,
+                                padding: const EdgeInsets.only(
+                                  top: 16.0,
+                                  left: 16.0,
+                                  right: 32.0,
+                                ),
                               ),
-                            ),
-                            BookmarkBackPreview(
-                              userData: userData,
-                              animationController: widget.bookmarkAnimation,
-                              padding: const EdgeInsets.only(
-                                top: 32.0,
-                                left: 32.0,
-                                right: 32.0,
+                              BookmarkBackPreview(
+                                userData: userData,
+                                animationController: widget.bookmarkAnimation,
+                                padding: const EdgeInsets.only(
+                                  top: 32.0,
+                                  left: 32.0,
+                                  right: 32.0,
+                                ),
                               ),
-                            ),
-                          ],
-                          indicatorColor: LitColors.mediumGrey,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(
-                            top: 160.0,
+                            ],
+                            indicatorColor: LitColors.mediumGrey,
                           ),
-                          child: Align(
-                            alignment: Alignment.topRight,
-                            child: Container(
-                              width: isPortraitMode(MediaQuery.of(context).size)
-                                  ? MediaQuery.of(context).size.width
-                                  : MediaQuery.of(context).size.width / 2,
-                              child: Align(
-                                alignment:
+                          Padding(
+                            padding: const EdgeInsets.only(
+                              top: 160.0,
+                            ),
+                            child: Align(
+                              alignment: Alignment.topRight,
+                              child: Container(
+                                width:
                                     isPortraitMode(MediaQuery.of(context).size)
-                                        ? Alignment.centerRight
-                                        : Alignment.center,
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 16.0,
-                                  ),
-                                  child: LitBubbleButton(
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 4.0, horizontal: 12.0),
-                                      child: Icon(
-                                        LitIcons.pencil,
-                                        color: Colors.white,
-                                        size: 20.0,
-                                      ),
+                                        ? MediaQuery.of(context).size.width
+                                        : MediaQuery.of(context).size.width / 2,
+                                child: Align(
+                                  alignment: isPortraitMode(
+                                          MediaQuery.of(context).size)
+                                      ? Alignment.centerRight
+                                      : Alignment.center,
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 16.0,
                                     ),
-                                    onPressed: () => _onEditBookmark(userData),
+                                    child: LitBubbleButton(
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 4.0, horizontal: 12.0),
+                                        child: Icon(
+                                          LitIcons.pencil,
+                                          color: Colors.white,
+                                          size: 20.0,
+                                        ),
+                                      ),
+                                      onPressed: () =>
+                                          _onEditBookmark(userData),
+                                    ),
                                   ),
                                 ),
                               ),
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-                UserProfileCard(
-                  userData: userData,
-                  onPressedUserIcon: () => _snackbarController.showSnackBar(),
-                ),
-                StatisticsCard(),
-                SettingsFooter(
-                  userData: userData,
-                ),
-              ],
+                        ],
+                      ),
+                    ],
+                  ),
+                  UserProfileCard(
+                    userData: userData,
+                    onPressedUserIcon: () => _snackbarController.showSnackBar(),
+                  ),
+                  StatisticsCard(),
+                  SettingsFooter(
+                    userData: userData,
+                  ),
+                ],
+              ),
             ),
           ),
         );
