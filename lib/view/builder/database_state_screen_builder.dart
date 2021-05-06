@@ -6,12 +6,12 @@ import 'package:hive/hive.dart';
 import 'package:lit_localization_service/lit_localization_service.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';
 
-/// A builder widget to return the appropriate screen considering the current database
-/// state.
+/// A builder widget to return the appropriate screen considering the current
+/// database state.
 ///
-/// E.g. if the database is empty, the user should first be prompted to enter his data
-/// in order to create a user data entry. This should be done with the related screen
-/// allowing the user to enter his details.
+/// E.g. if the database is empty, the user should first be prompted to enter
+/// his data in order to create a user data entry. This should be done with the
+/// related screen allowing the user to enter his details.
 class DatabaseStateScreenBuilder extends StatefulWidget {
   final String localizationsAssetURL;
 
@@ -35,7 +35,8 @@ class _DatabaseStateScreenBuilderState
   /// Create a [HiveDBService] instance to access the database methods.
   HiveDBService _dbService = HiveDBService();
 
-  /// Creates the initial entires on the database required for certain features on the app.
+  /// Creates the initial entires on the database required for certain features
+  /// on the app.
   void _createInitialEntries() {
     _dbService.addInitialColors();
   }

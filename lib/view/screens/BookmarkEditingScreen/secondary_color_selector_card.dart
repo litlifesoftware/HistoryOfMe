@@ -50,21 +50,35 @@ class _SecondaryColorSelectorCardState
     }
 
     return LitElevatedCard(
+      margin: const EdgeInsets.all(0.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            widget.cardTitle,
-            style: LitTextStyles.sansSerif.copyWith(
-              color: HexColor('#878787'),
-              fontSize: 22.0,
+          Padding(
+            padding: const EdgeInsets.only(
+              top: 12.0,
+              bottom: 0.0,
+              left: 18.0,
+              right: 18.0,
+            ),
+            child: Text(
+              widget.cardTitle,
+              style: LitTextStyles.sansSerif.copyWith(
+                color: HexColor('#878787'),
+                fontSize: 22.0,
+              ),
             ),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8.0),
+            padding: const EdgeInsets.symmetric(
+              vertical: 12.0,
+            ),
             child: SizedBox(
               height: 64.0,
               child: ListView.builder(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 8.0,
+                ),
                 physics: BouncingScrollPhysics(),
                 scrollDirection: Axis.horizontal,
                 itemCount: widget.userCreatedColors.length,
