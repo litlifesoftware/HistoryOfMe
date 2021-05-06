@@ -1,12 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:history_of_me/model/backdrop_photo.dart';
-import 'package:history_of_me/view/screens/BackdropPhotoDetailScreen/backdrop_photo_detail_screen.dart';
+import 'package:history_of_me/model/models.dart';
+import 'package:history_of_me/view/screens/screens.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';
-import 'package:history_of_me/model/diary_entry.dart';
-import 'package:history_of_me/model/user_data.dart';
-import 'package:history_of_me/view/screens/BookmarkEditingScreen/bookmark_editing_screen.dart';
-import 'package:history_of_me/view/screens/EntryDetailScreen/entry_detail_screen.dart';
-import 'package:history_of_me/view/screens/EntryEditingScreen/entry_editing_screen.dart';
 
 /// A controller class enabling to navigate through screens by its corresponding
 /// member method.
