@@ -38,9 +38,6 @@ class _AppState extends State<App> {
     final parsed = jsonDecode(assetData).cast<Map<String, dynamic>>();
     parsed.forEach((json) => setState(
         () => backdropPhotoUrlList.add(BackdropPhoto.fromJson(json).assetUrl)));
-    print(backdropPhotoUrlList.length);
-    // return parsed
-    //     .map<void>((json) => backdropPhotos.add(BackdropPhoto.fromJson(json)));
   }
 
   /// Loads the `JSON` file content and initiates the parsing process.

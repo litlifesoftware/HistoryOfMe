@@ -75,20 +75,22 @@ class _SecondaryColorSelectorCardState
             ),
             child: SizedBox(
               height: 64.0,
-              child: ListView.builder(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 8.0,
+              child: LitScrollbar(
+                child: ListView.builder(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 8.0,
+                  ),
+                  physics: BouncingScrollPhysics(),
+                  scrollDirection: Axis.horizontal,
+                  itemCount: widget.userCreatedColors.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return SelectableColorTile(
+                      onSelectCallback: widget.onSelectSecondaryColor,
+                      color: _mapSelectedColor(index),
+                      selected: _colorIsSelected(_mapSelectedColor(index)),
+                    );
+                  },
                 ),
-                physics: BouncingScrollPhysics(),
-                scrollDirection: Axis.horizontal,
-                itemCount: widget.userCreatedColors.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return SelectableColorTile(
-                    onSelectCallback: widget.onSelectSecondaryColor,
-                    color: _mapSelectedColor(index),
-                    selected: _colorIsSelected(_mapSelectedColor(index)),
-                  );
-                },
               ),
             ),
           ),
