@@ -28,6 +28,7 @@ class _DatabaseStateScreenBuilderState
     extends State<DatabaseStateScreenBuilder> {
   final _startupAnimationDuration = const Duration(milliseconds: 6000);
   bool _shouldShowStartupScreen = false;
+  bool _initalStartup = false;
 
   /// The currently inputed username.
   String _username = "";
@@ -106,7 +107,9 @@ class _DatabaseStateScreenBuilderState
     Future.delayed(
       _startupAnimationDuration,
     ).then((_) {
-      _toggleShouldShowStartupScreen();
+      if (_initalStartup) {
+        _toggleShouldShowStartupScreen();
+      }
     });
   }
 
@@ -137,6 +140,7 @@ class _DatabaseStateScreenBuilderState
               valueListenable: _dbService.getUserData(),
               builder: (BuildContext context, Box<UserData> userData, _) {
                 if (userData.isEmpty) {
+                  _initalStartup = true;
                   // Show the startup screen only on the first app start.
                   if (_shouldShowStartupScreen) {
                     return LitStartupScreen(
