@@ -78,14 +78,15 @@ class _DatabaseStateScreenBuilderState
     LitRouteController(context).replaceCurrentMaterialWidget(
       newWidget: LitSignUpScreen(
         title: "What shall we call you?",
-        usernameLabel:
-            LitLocalizations.of(context)!.getLocalizedValue("your_name"),
         onSubmitButtonText: "THATS ME",
-        showPasswordConfirmInput: false,
-        showPasswordInput: false,
-        showPinInput: false,
         onSubmit: _handleUserCreation,
-        onUsernameChange: _setUsername,
+        inputFields: [
+          LitTextField(
+            label: LitLocalizations.of(context)!.getLocalizedValue("your_name"),
+            onChange: _setUsername,
+            icon: LitIcons.person,
+          ),
+        ],
       ),
     );
   }

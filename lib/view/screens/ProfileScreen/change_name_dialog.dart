@@ -86,26 +86,25 @@ class _ChangeNameDialogState extends State<ChangeNameDialog> {
           ),
         ),
         //TODO implement button's disabled property value.
-        _isChanged
-            ? Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16.0,
-                ),
-                child: LitPushedThroughButton(
-                  borderRadius: 32.0,
-                  onPressed: _onSubmit,
-                  accentColor: Color(0xFFEDDEC0),
-                  backgroundColor: Color(0xFFEAEACA),
-                  child: Text(
-                    "Apply",
-                    style: LitTextStyles.sansSerif.copyWith(
-                      color: LitColors.mediumGrey,
-                      fontSize: 15.0,
-                    ),
-                  ),
-                ),
-              )
-            : SizedBox(),
+        Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: 16.0,
+          ),
+          child: LitPushedThroughButton(
+            borderRadius: 32.0,
+            onPressed: _onSubmit,
+            accentColor: Color(0xFFEDDEC0),
+            backgroundColor: Color(0xFFEAEACA),
+            disabled: !_isChanged,
+            child: Text(
+              "Apply",
+              style: LitTextStyles.sansSerif.copyWith(
+                color: LitColors.mediumGrey,
+                fontSize: 15.0,
+              ),
+            ),
+          ),
+        )
       ],
       child: CleanInkWell(
         onTap: _defocus,
