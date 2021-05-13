@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.litlifesoftware.history_of_me">
+    package="com.litlifesoftware.historyofme">
    <application
         android:label="History of Me"
         android:icon="@mipmap/ic_launcher">

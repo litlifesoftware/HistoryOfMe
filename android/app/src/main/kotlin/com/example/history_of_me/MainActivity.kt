@@ -1,4 +1,4 @@
-package com.litlifesoftware.history_of_me
+package com.litlifesoftware.historyofme
 
 import io.flutter.embedding.android.FlutterActivity
 
