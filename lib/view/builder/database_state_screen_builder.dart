@@ -50,11 +50,17 @@ class _DatabaseStateScreenBuilderState
     _username = input;
   }
 
-  /// Creates the [UserData] object on the Hive database and pops all currently
-  /// visible screen widgets to avoid leaking memory issues.
+  /// Creates the [UserData] object on the Hive database and pops all recently
+  /// added screen widgets required for signing in the first time.
+  ///
+  /// Clearing the navigation stack will be done using a setState method to
+  /// ensure the UI will be rebuild which required to mount the new widget tree
+  /// correctly.
   void _handleUserCreation() {
     _dbService.createUserData(_username);
-    LitRouteController(context).clearNavigationStack();
+    setState(() {
+      LitRouteController(context).clearNavigationStack();
+    });
   }
 
   /// Handles the privacy confirmation.

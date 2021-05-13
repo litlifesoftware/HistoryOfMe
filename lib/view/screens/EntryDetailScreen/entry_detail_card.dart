@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:history_of_me/controller/database/hive_db_service.dart';
 import 'package:history_of_me/controller/database/hive_query_controller.dart';
@@ -15,8 +17,9 @@ class EntryDetailCard extends StatefulWidget {
   final int boxLength;
   final DiaryEntry diaryEntry;
   final void Function() onEditCallback;
-  final double relativePortraitPhotoHeight;
-  final double relativeLandscapePhotoHeight;
+  // final double relativePortraitPhotoHeight;
+  // final double relativeLandscapePhotoHeight;
+  final double backdropPhotoHeight;
   final BoxDecoration backgroundDecoration;
   final bool isFirst;
   final bool isLast;
@@ -29,8 +32,9 @@ class EntryDetailCard extends StatefulWidget {
     required this.boxLength,
     required this.diaryEntry,
     required this.onEditCallback,
-    required this.relativeLandscapePhotoHeight,
-    required this.relativePortraitPhotoHeight,
+    // required this.relativeLandscapePhotoHeight,
+    // required this.relativePortraitPhotoHeight,
+    required this.backdropPhotoHeight,
     this.backgroundDecoration = const BoxDecoration(
       gradient: LinearGradient(
           begin: Alignment.bottomLeft,
@@ -100,11 +104,7 @@ class _EntryDetailCardState extends State<EntryDetailCard> {
       ),
       child: ConstrainedBox(
         constraints: BoxConstraints(
-          minHeight: MediaQuery.of(context).size.height -
-              (MediaQuery.of(context).size.height /
-                  (alternativeHeight(MediaQuery.of(context).size,
-                      portraitHeight: widget.relativePortraitPhotoHeight,
-                      landscapeHeight: widget.relativeLandscapePhotoHeight))),
+          minHeight: 574.0,
         ),
         child: Column(
           children: [

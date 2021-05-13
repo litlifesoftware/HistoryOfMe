@@ -157,19 +157,20 @@ class _CreateEntryDialogState extends State<CreateEntryDialog>
                               padding:
                                   const EdgeInsets.only(top: 4.0, bottom: 16.0),
                               child: LitRoundedElevatedButton(
-                                  color: HexColor("#8e8e8e"),
-                                  padding: const EdgeInsets.symmetric(
-                                    vertical: 8.0,
-                                    horizontal: 32.0,
-                                  ),
-                                  child: Text(
-                                    "Create for ${createEntryType == 1 ? 'today' : 'previous day'}",
-                                    style: LitTextStyles.sansSerif.copyWith(
-                                        fontSize: 16.0,
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.w700),
-                                  ),
-                                  onPressed: _onCreate),
+                                color: HexColor("#8e8e8e"),
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 8.0,
+                                  horizontal: 32.0,
+                                ),
+                                child: Text(
+                                  "Create for ${createEntryType == 1 ? 'today' : 'previous day'}",
+                                  style: LitTextStyles.sansSerif.copyWith(
+                                      fontSize: 15.0,
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w700),
+                                ),
+                                onPressed: _onCreate,
+                              ),
                             ),
                           )
                         ],

@@ -17,7 +17,7 @@ class ChangePhotoDialog extends StatefulWidget {
     this.borderRadius = 16.0,
     required this.backdropPhotos,
     required this.diaryEntry,
-    this.minHeight = 384.0,
+    this.minHeight = 512.0,
   }) : super(key: key);
 
   @override
@@ -61,6 +61,10 @@ class _ChangePhotoDialogState extends State<ChangePhotoDialog>
   @override
   Widget build(BuildContext context) {
     return LitTitledDialog(
+      borderRadius: const BorderRadius.only(
+        topLeft: const Radius.circular(24.0),
+        topRight: const Radius.circular(24.0),
+      ),
       titleText: "Choose a photo",
       minHeight: widget.minHeight,
       leading:
@@ -83,7 +87,8 @@ class _ChangePhotoDialogState extends State<ChangePhotoDialog>
           return SizedBox(
             height: widget.minHeight,
             child: LitScrollbar(
-              child: ScrollableColumn(
+              child: ListView(
+                physics: BouncingScrollPhysics(),
                 children: children,
               ),
             ),
@@ -179,21 +184,22 @@ class _BackdropPhotoSelectableItem extends StatelessWidget {
                                 child: Align(
                                   alignment: Alignment.centerLeft,
                                   child: Container(
-                                    width: 24.0,
                                     child: RotatedBox(
                                       quarterTurns: 3,
                                       child: Padding(
                                         padding: const EdgeInsets.symmetric(
-                                          vertical: 4.0,
+                                          vertical: 8.0,
                                         ),
-                                        child: Text(
-                                          "Selected",
-                                          style:
-                                              LitTextStyles.sansSerif.copyWith(
-                                            fontSize: 16.5,
-                                            letterSpacing: -0.22,
-                                            fontWeight: FontWeight.w600,
-                                            color: Colors.white,
+                                        child: LitBadge(
+                                          child: ScaledDownText(
+                                            "Selected",
+                                            style: LitTextStyles.sansSerif
+                                                .copyWith(
+                                              fontSize: 15,
+                                              letterSpacing: -0.22,
+                                              fontWeight: FontWeight.w600,
+                                              color: Colors.white,
+                                            ),
                                           ),
                                         ),
                                       ),

@@ -22,16 +22,18 @@ class EntryDetailScreen extends StatefulWidget {
   //final DiaryEntry diaryEntry;
   final int listIndex;
   final String? diaryEntryUid;
-  final double portraitPhotoHeight;
-  final double landscapePhotoHeight;
+  // final double portraitPhotoHeight;
+  // final double landscapePhotoHeight;
+  final double backdropPhotoHeight;
   const EntryDetailScreen({
     Key? key,
     required this.listIndex,
     required this.diaryEntryUid,
+    this.backdropPhotoHeight = 256.0,
     //@required this.index,
     //@required this.diaryEntry,
-    this.portraitPhotoHeight = 2.9,
-    this.landscapePhotoHeight = 1.5,
+    // this.portraitPhotoHeight = 2.9,
+    // this.landscapePhotoHeight = 1.5,
   }) : super(key: key);
 
   @override
@@ -231,26 +233,22 @@ class _EntryDetailScreenState extends State<EntryDetailScreen>
                       backdropPhotos: backdropPhotos,
                       loading: backdropPhotosLoading,
                       diaryEntry: diaryEntry,
-                      relativeLandscapePhotoHeight: widget.landscapePhotoHeight,
-                      relativePortraitPhotoHeight: widget.portraitPhotoHeight,
+                      height: widget.backdropPhotoHeight,
                     ),
                     LitScrollbar(
                       child: ScrollableColumn(
                         controller: _scrollController,
                         verticalCut: 172.0,
                         padding: EdgeInsets.only(
-                          top: MediaQuery.of(context).size.height /
-                                  (constraints.maxHeight > constraints.maxWidth
-                                      ? widget.portraitPhotoHeight
-                                      : widget.landscapePhotoHeight) -
-                              30,
+                          top: widget.backdropPhotoHeight,
                         ),
                         children: [
                           EntryDetailCard(
-                            relativeLandscapePhotoHeight:
-                                widget.landscapePhotoHeight,
-                            relativePortraitPhotoHeight:
-                                widget.portraitPhotoHeight,
+                            backdropPhotoHeight: widget.backdropPhotoHeight,
+                            // relativeLandscapePhotoHeight:
+                            //     widget.landscapePhotoHeight,
+                            // relativePortraitPhotoHeight:
+                            //     widget.portraitPhotoHeight,
                             //index: widget.index,
                             boxLength: entriesBox.length,
                             listIndex: widget.listIndex,

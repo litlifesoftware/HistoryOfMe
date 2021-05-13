@@ -188,7 +188,7 @@ class _LitToggleButtonGroupItem extends StatelessWidget {
                             selected ? HexColor('#8e8e8e') : Colors.white,
                             selected ? Colors.white : HexColor('#8e8e8e'),
                             animationController!.value),
-                        fontSize: 16.0,
+                        fontSize: 14.0,
                       ),
                     ),
                   ),

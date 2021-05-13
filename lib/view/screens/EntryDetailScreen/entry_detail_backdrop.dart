@@ -8,15 +8,13 @@ class EntryDetailBackdrop extends StatelessWidget {
   final bool? loading;
   final List<BackdropPhoto> backdropPhotos;
   final DiaryEntry diaryEntry;
-  final double relativePortraitPhotoHeight;
-  final double relativeLandscapePhotoHeight;
+  final double height;
   const EntryDetailBackdrop({
     Key? key,
     required this.loading,
     required this.backdropPhotos,
     required this.diaryEntry,
-    required this.relativePortraitPhotoHeight,
-    required this.relativeLandscapePhotoHeight,
+    required this.height,
   }) : super(key: key);
 
   @override
@@ -28,10 +26,7 @@ class EntryDetailBackdrop extends StatelessWidget {
           children: [
             Container(
               width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height /
-                  (alternativeHeight(MediaQuery.of(context).size,
-                      portraitHeight: relativePortraitPhotoHeight,
-                      landscapeHeight: relativeLandscapePhotoHeight)),
+              height: height,
               decoration: loading!
                   ? BoxDecoration(color: LitColors.mediumGrey.withOpacity(0.2))
                   : BoxDecoration(
