@@ -374,13 +374,13 @@ class _EntryDetailFooter extends StatelessWidget {
                                 child: Icon(
                                   LitIcons.chevron_left_solid,
                                   size: 14.0,
-                                  color: AppTextStyles
-                                      .labeledButtonDarkTextStyle.color,
+                                  color: LitTextStyles
+                                      .sansSerifStyles[button].color,
                                 ),
                               ),
                               Text(
                                 "Previous".toUpperCase(),
-                                style: AppTextStyles.labeledButtonDarkTextStyle,
+                                style: LitTextStyles.sansSerifStyles[button],
                               )
                             ],
                           ),
@@ -404,7 +404,7 @@ class _EntryDetailFooter extends StatelessWidget {
                             children: [
                               Text(
                                 "Next".toUpperCase(),
-                                style: AppTextStyles.labeledButtonDarkTextStyle,
+                                style: LitTextStyles.sansSerifStyles[button],
                               ),
                               Padding(
                                 padding: const EdgeInsets.only(
@@ -413,8 +413,8 @@ class _EntryDetailFooter extends StatelessWidget {
                                 child: Icon(
                                   LitIcons.chevron_right_solid,
                                   size: 14.0,
-                                  color: AppTextStyles
-                                      .labeledButtonDarkTextStyle.color,
+                                  color: LitTextStyles
+                                      .sansSerifStyles[button].color,
                                 ),
                               ),
                             ],

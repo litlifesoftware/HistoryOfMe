@@ -169,12 +169,9 @@ class _UserProfileCardState extends State<UserProfileCard> {
                               ],
                               color: LitColors.mintGreen,
                               child: ClippedText(
-                                "Change Name",
+                                "Change Name".toUpperCase(),
                                 textAlign: TextAlign.center,
-                                style: LitTextStyles.sansSerif.copyWith(
-                                  fontSize: 13.0,
-                                  color: Colors.white,
-                                ),
+                                style: LitTextStyles.sansSerifStyles[button],
                               ),
                               onPressed: _showChangeNameDialog,
                             ),

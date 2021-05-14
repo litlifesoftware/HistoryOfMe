@@ -48,8 +48,8 @@ class EntryDetailCard extends StatefulWidget {
             const Color(0xFFd1cdcd),
           ]),
       borderRadius: BorderRadius.only(
-        topLeft: Radius.circular(30),
-        topRight: Radius.circular(30),
+        topLeft: Radius.circular(22),
+        topRight: Radius.circular(22),
       ),
     ),
     required this.isFirst,
@@ -158,8 +158,8 @@ class _Header extends StatelessWidget {
                 padding: const EdgeInsets.only(
                   top: 16.0,
                   bottom: 4.0,
-                  left: 30.0,
-                  right: 30.0,
+                  left: 24.0,
+                  right: 24.0,
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -206,8 +206,6 @@ class _Header extends StatelessWidget {
                             ),
                           ),
                         ),
-                        isLast ? _MetaLabel(title: "latest") : SizedBox(),
-                        isFirst ? _MetaLabel(title: "first") : SizedBox(),
                       ],
                     ),
                     Padding(
@@ -239,6 +237,23 @@ class _Header extends StatelessWidget {
                         ],
                       ),
                     ),
+                    (isLast | isFirst)
+                        ? Padding(
+                            padding: const EdgeInsets.symmetric(
+                              vertical: 4.0,
+                            ),
+                            child: Row(
+                              children: [
+                                isLast
+                                    ? _MetaLabel(title: "latest")
+                                    : SizedBox(),
+                                isFirst
+                                    ? _MetaLabel(title: "first")
+                                    : SizedBox(),
+                              ],
+                            ),
+                          )
+                        : SizedBox()
                   ],
                 ),
               ),
@@ -270,12 +285,14 @@ class _Header extends StatelessWidget {
                         ),
                         child: Text(
                           "edit".toUpperCase(),
-                          style: AppTextStyles.labeledButtonLightTextStyle,
+                          style: LitTextStyles.sansSerifStyles[button].copyWith(
+                            color: Colors.white,
+                          ),
                         ),
                       ),
                       Icon(
                         LitIcons.pencil,
-                        color: AppTextStyles.labeledButtonLightTextStyle.color,
+                        color: Colors.white,
                         size: 16.0,
                       ),
                     ],
@@ -297,31 +314,28 @@ class _MetaLabel extends StatelessWidget {
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 4.0),
-      child: Container(
-        decoration: BoxDecoration(
-          border: Border.all(
-            color: HexColor('#B2B2B2'),
-            width: 2.0,
-          ),
-          borderRadius: BorderRadius.circular(
-            15.0,
-          ),
+    return Container(
+      decoration: BoxDecoration(
+        border: Border.all(
+          color: HexColor('#B2B2B2'),
+          width: 2.0,
         ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(
-            vertical: 2.0,
-            horizontal: 12.0,
-          ),
-          child: Text(
-            title,
-            style: LitTextStyles.sansSerif.copyWith(
-              fontSize: 12.0,
-              letterSpacing: -0.05,
-              fontWeight: FontWeight.w600,
-              color: HexColor('#B2B2B2'),
-            ),
+        borderRadius: BorderRadius.circular(
+          15.0,
+        ),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+          vertical: 2.0,
+          horizontal: 12.0,
+        ),
+        child: Text(
+          title,
+          style: LitTextStyles.sansSerif.copyWith(
+            fontSize: 11.0,
+            letterSpacing: -0.05,
+            fontWeight: FontWeight.w600,
+            color: HexColor('#B2B2B2'),
           ),
         ),
       ),

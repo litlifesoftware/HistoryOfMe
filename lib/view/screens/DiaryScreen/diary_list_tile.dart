@@ -135,7 +135,6 @@ class _EntryDateLabel extends StatelessWidget {
         portraitWidth: portraitWidth,
         landscapeWidth: landscapeWidth,
       ),
-      height: 90.0,
       child: RotatedBox(
           quarterTurns: quaterTurns,
           child: Padding(
@@ -154,7 +153,7 @@ class _EntryDateLabel extends StatelessWidget {
                   ]),
               child: Padding(
                 padding: const EdgeInsets.symmetric(
-                  vertical: 2.0,
+                  vertical: 4.0,
                   horizontal: 12.0,
                 ),
                 child: Center(
@@ -165,7 +164,7 @@ class _EntryDateLabel extends StatelessWidget {
                     color: HexColor("bababa"),
                     letterSpacing: -0.12,
                     fontWeight: FontWeight.w700,
-                    fontSize: 12.0,
+                    fontSize: 11.0,
                   ),
                 )),
               ),
@@ -242,7 +241,6 @@ class _EntryCard extends StatelessWidget {
                           Text(
                             "${diaryEntry.title != initialDiaryEntryTitle ? diaryEntry.title : "Untitled"}",
                             style: LitTextStyles.sansSerif.copyWith(
-                              fontSize: 16.0,
                               letterSpacing: -0.02,
                               fontWeight: FontWeight.w600,
                               color: HexColor('444444'),
@@ -267,20 +265,16 @@ class _EntryCard extends StatelessWidget {
                             children: [
                               Text(
                                 "${DateFormat.yMMMMd(Intl.getCurrentLocale()).format(DateTime.parse(diaryEntry.date))}",
-                                style: LitTextStyles.sansSerif.copyWith(
-                                  fontSize: 12.0,
-                                  letterSpacing: -0.02,
-                                  fontWeight: FontWeight.w600,
+                                style: LitTextStyles.sansSerifStyles[caption]
+                                    .copyWith(
                                   color: HexColor('666666'),
                                 ),
                               ),
                               Text(
                                 "${relativeDateFormatter.format(relativeDateTime)}",
-                                style: LitTextStyles.sansSerif.copyWith(
-                                  fontSize: 11.0,
-                                  letterSpacing: -0.02,
-                                  fontWeight: FontWeight.w600,
-                                  color: HexColor('7f7f7f'),
+                                style: LitTextStyles.sansSerifStyles[caption]
+                                    .copyWith(
+                                  color: HexColor('666666'),
                                 ),
                               ),
                             ],

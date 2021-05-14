@@ -43,7 +43,10 @@ class _SettingsFooterState extends State<SettingsFooter> {
       agreeLabel: "Okay",
       art: HistoryOfMeLauncherIconArt(),
       privacyTags: [
-        PrivacyTag(text: "Private", isConform: true),
+        PrivacyTag(
+          text: "Private",
+          isConform: true,
+        ),
         PrivacyTag(
           text: "Offline",
           isConform: true,
