@@ -12,6 +12,7 @@ class BackdropPhotoOverlay extends StatefulWidget {
   final bool? loading;
   //final int selectedPhotoIndex;
   final DiaryEntry diaryEntry;
+  final double height;
   const BackdropPhotoOverlay({
     Key? key,
     required this.scrollController,
@@ -20,6 +21,7 @@ class BackdropPhotoOverlay extends StatefulWidget {
     required this.loading,
     //@required this.selectedPhotoIndex,
     required this.diaryEntry,
+    required this.height,
   }) : super(key: key);
 
   @override
@@ -65,97 +67,104 @@ class _BackdropPhotoOverlayState extends State<BackdropPhotoOverlay>
       child: AnimatedBuilder(
         animation: _onScrollAnimation,
         builder: (BuildContext context, Widget? _) {
-          return Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Transform(
-                transform: Matrix4.translationValues(
-                    -(_onScrollAnimation.value *
-                        MediaQuery.of(context).size.width),
-                    0,
-                    0),
-                child: Align(
-                  alignment: Alignment.topLeft,
-                  child: LitBackButton(
-                    backgroundColor: LitColors.mediumGrey.withOpacity(0.5),
-                    iconColor: Colors.white,
+          return Container(
+            height: widget.height,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Transform(
+                  transform: Matrix4.translationValues(
+                      -(_onScrollAnimation.value *
+                          MediaQuery.of(context).size.width),
+                      0,
+                      0),
+                  child: Align(
+                    alignment: Alignment.topLeft,
+                    child: LitBackButton(
+                      backgroundColor: LitColors.mediumGrey.withOpacity(0.5),
+                      iconColor: Colors.white,
+                    ),
                   ),
                 ),
-              ),
-              Padding(
-                padding:
-                    const EdgeInsets.only(top: 80.0, left: 30.0, right: 30.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    _ChangePhotoButton(
-                      onScrollAnimationController:
-                          _animationOnScrollController.animationController,
-                      onPressed: widget.showChangePhotoDialogCallback,
-                    ),
-                    widget.loading!
-                        ? SizedBox()
-                        : Align(
-                            alignment: Alignment.bottomRight,
-                            child: Transform(
-                              transform: Matrix4.translationValues(
-                                (_animationOnScrollController
-                                        .animationController.value *
-                                    MediaQuery.of(context).size.width),
-                                0,
-                                0,
-                              ),
-                              child: CleanInkWell(
-                                onTap: _navigateDetailScreen,
-                                child: BluredBackgroundContainer(
-                                  blurRadius: 8.0,
-                                  borderRadius: BorderRadius.all(
-                                    Radius.circular(16.0),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        _ChangePhotoButton(
+                          onScrollAnimationController:
+                              _animationOnScrollController.animationController,
+                          onPressed: widget.showChangePhotoDialogCallback,
+                        ),
+                        widget.loading!
+                            ? SizedBox()
+                            : Align(
+                                alignment: Alignment.bottomRight,
+                                child: Transform(
+                                  transform: Matrix4.translationValues(
+                                    (_animationOnScrollController
+                                            .animationController.value *
+                                        MediaQuery.of(context).size.width),
+                                    0,
+                                    0,
                                   ),
-                                  child: Container(
-                                    padding: const EdgeInsets.symmetric(
-                                      vertical: 3.0,
-                                      horizontal: 6.0,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      color: Colors.white12,
+                                  child: CleanInkWell(
+                                    onTap: _navigateDetailScreen,
+                                    child: BluredBackgroundContainer(
+                                      blurRadius: 8.0,
                                       borderRadius: BorderRadius.all(
                                         Radius.circular(16.0),
                                       ),
-                                    ),
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        _IconLabel(
-                                          text: BackdropPhotoController(
-                                            widget.backdropPhotos,
-                                            widget.diaryEntry,
-                                          ).findBackdropPhotoLocation(),
-                                          iconData: LitIcons.map_marker,
-                                          color: Colors.white,
+                                      child: Container(
+                                        padding: const EdgeInsets.symmetric(
+                                          vertical: 3.0,
+                                          horizontal: 6.0,
                                         ),
-                                        _IconLabel(
-                                          text: BackdropPhotoController(
-                                            widget.backdropPhotos,
-                                            widget.diaryEntry,
-                                          ).findBackdropPhotoPhotographer(),
-                                          iconData: LitIcons.person_solid,
-                                          color: Colors.white,
-                                        )
-                                      ],
+                                        decoration: BoxDecoration(
+                                          color: Colors.white12,
+                                          borderRadius: BorderRadius.all(
+                                            Radius.circular(16.0),
+                                          ),
+                                        ),
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            _IconLabel(
+                                              text: BackdropPhotoController(
+                                                widget.backdropPhotos,
+                                                widget.diaryEntry,
+                                              ).findBackdropPhotoLocation(),
+                                              iconData: LitIcons.map_marker,
+                                              color: Colors.white,
+                                            ),
+                                            _IconLabel(
+                                              text: BackdropPhotoController(
+                                                widget.backdropPhotos,
+                                                widget.diaryEntry,
+                                              ).findBackdropPhotoPhotographer(),
+                                              iconData: LitIcons.person_solid,
+                                              color: Colors.white,
+                                            )
+                                          ],
+                                        ),
+                                      ),
                                     ),
                                   ),
                                 ),
                               ),
-                            ),
-                          ),
-                  ],
+                      ],
+                    ),
+                  ),
                 ),
-              )
-            ],
+              ],
+            ),
           );
         },
       ),

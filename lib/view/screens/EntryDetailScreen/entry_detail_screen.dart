@@ -278,6 +278,7 @@ class _EntryDetailScreenState extends State<EntryDetailScreen>
                       backdropPhotos: backdropPhotos,
                       loading: backdropPhotosLoading,
                       diaryEntry: diaryEntry,
+                      height: widget.backdropPhotoHeight - 45.0,
                     ),
                   ],
                 ),
