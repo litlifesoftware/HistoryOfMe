@@ -85,7 +85,6 @@ class _ChangeNameDialogState extends State<ChangeNameDialog> {
             ),
           ),
         ),
-        //TODO implement button's disabled property value.
         Padding(
           padding: const EdgeInsets.symmetric(
             horizontal: 16.0,
