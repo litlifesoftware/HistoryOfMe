@@ -4,7 +4,6 @@ import 'package:history_of_me/controller/mood_translation_controller.dart';
 import 'package:history_of_me/data/constants.dart';
 import 'package:history_of_me/model/diary_entry.dart';
 import 'package:history_of_me/view/shared/animated_updated_label.dart';
-import 'package:history_of_me/view/shared/confirm_discard_draft_dialog.dart';
 import 'package:history_of_me/view/shared/editable_item_meta_info.dart';
 import 'package:hive/hive.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';
@@ -162,10 +161,9 @@ class _EntryEditingScreenState extends State<EntryEditingScreen>
   void _handleDiscardDraft() {
     showDialog(
       context: context,
-      builder: (_) => ConfirmDiscardDraftDialog(
-        unsavedChangesDetectedText:
-            "There have been changes made to this diary entry.",
-        onDiscardCallback: () {
+      builder: (_) => DiscardDraftDialog(
+        infoDescription: "There have been changes made to this diary entry.",
+        onDiscard: () {
           _routeController.dicardAndExit();
         },
       ),

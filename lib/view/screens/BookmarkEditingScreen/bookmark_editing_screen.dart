@@ -256,10 +256,9 @@ class _BookmarkEditingScreenState extends State<BookmarkEditingScreen>
   void _handleDiscardDraft() {
     showDialog(
       context: context,
-      builder: (_) => ConfirmDiscardDraftDialog(
-        unsavedChangesDetectedText:
-            "There have been changes made to your bookmark.",
-        onDiscardCallback: () {
+      builder: (_) => DiscardDraftDialog(
+        infoDescription: "There have been changes made to your bookmark.",
+        onDiscard: () {
           _routeController.closeDialog();
           _routeController.navigateBack();
         },

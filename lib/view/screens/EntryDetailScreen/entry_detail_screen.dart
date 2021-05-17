@@ -7,7 +7,6 @@ import 'package:history_of_me/controller/database/hive_query_controller.dart';
 import 'package:history_of_me/controller/routes/screen_router.dart';
 import 'package:history_of_me/model/backdrop_photo.dart';
 import 'package:history_of_me/model/diary_entry.dart';
-import 'package:history_of_me/view/styles/app_text_styles.dart';
 import 'package:hive/hive.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';
 

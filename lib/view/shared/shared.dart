@@ -1,7 +1,6 @@
 /// A list of all shared widgets used on HistoryOfMe's screens.
 export './animated_updated_label.dart';
 export './app_artwork.dart';
-export './confirm_discard_draft_dialog.dart';
 export './editable_item_meta_info.dart';
 export './lit_toggle_button_group.dart';
 export './purple_pink_button.dart';
