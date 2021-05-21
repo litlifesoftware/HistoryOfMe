@@ -164,77 +164,56 @@ class _NoFavoriteEntriesCard extends StatelessWidget {
       builder: (context, _) {
         return Transform(
           transform: Matrix4.translationValues(
-            -30 + (30 * animationController!.value),
-            0,
-            0,
-          ),
+              -30 + (30 * animationController!.value), 0, 0),
           child: FadeTransition(
             opacity: animationController!,
             child: Padding(
               padding: const EdgeInsets.symmetric(
                 vertical: 32.0,
-                horizontal: 16.0,
+                horizontal: 30.0,
               ),
-              child: ScrollableColumn(
-                children: [
-                  Text(
-                    "No Favorites Available",
-                    style: LitTextStyles.sansSerif.copyWith(
-                      color: HexColor('#8A8A8A'),
-                      fontSize: 18.0,
-                      fontWeight: FontWeight.w700,
-                      letterSpacing: 1.0,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 16.0),
-                    child: LitConstrainedSizedBox(
-                      landscapeWidthFactor: 0.45,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                        child: LayoutBuilder(builder: (context, constraints) {
-                          return Row(
-                            children: [
-                              Align(
-                                alignment: Alignment.center,
-                                child: SizedBox(
-                                  width: constraints.maxWidth * 0.35,
-                                  child: Center(child: ExclamationRectangle()),
-                                ),
-                              ),
-                              SizedBox(
-                                width: constraints.maxWidth * 0.65,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      "Add an entry to your favorites by tapping the heart icon on the read view.",
-                                      style: LitTextStyles.sansSerif.copyWith(
-                                        color: HexColor('#8A8A8A'),
-                                        fontSize: 13.0,
-                                        fontWeight: FontWeight.w600,
-                                        letterSpacing: 0.0,
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 8.0),
-                                      child: Icon(
-                                        LitIcons.heart_solid,
-                                        color: LitColors.lightGrey,
-                                        size: 24.0,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          );
-                        }),
+              child: LitConstrainedSizedBox(
+                landscapeWidthFactor: 0.45,
+                child: ScrollableColumn(
+                  children: [
+                    Text(
+                      "No Favorites Available",
+                      textAlign: TextAlign.center,
+                      style: LitTextStyles.sansSerif.copyWith(
+                        color: HexColor('#8A8A8A'),
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.w700,
+                        letterSpacing: 1.0,
                       ),
                     ),
-                  ),
-                ],
+                    SizedBox(height: 16.0),
+                    LayoutBuilder(builder: (context, constraints) {
+                      return Row(
+                        children: [
+                          Align(
+                            alignment: Alignment.center,
+                            child: SizedBox(
+                              width: constraints.maxWidth * 0.25,
+                              child: Center(child: ExclamationRectangle()),
+                            ),
+                          ),
+                          SizedBox(
+                            width: constraints.maxWidth * 0.75,
+                            child: Text(
+                              "Add an entry to your favorites by tapping the heart icon on your diary entry.",
+                              style: LitTextStyles.sansSerif.copyWith(
+                                color: HexColor('#8A8A8A'),
+                                fontSize: 13.0,
+                                fontWeight: FontWeight.w600,
+                                letterSpacing: 0.0,
+                              ),
+                            ),
+                          ),
+                        ],
+                      );
+                    }),
+                  ],
+                ),
               ),
             ),
           ),
