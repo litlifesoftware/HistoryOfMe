@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:history_of_me/controller/routes/screen_router.dart';
 import 'package:history_of_me/data/constants.dart';
 import 'package:history_of_me/model/diary_entry.dart';
-import 'package:intl/intl.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';
 import 'package:lit_relative_date_time/lit_relative_date_time.dart';
 
@@ -112,7 +111,7 @@ class _DiaryListTileState extends State<DiaryListTile> {
   }
 }
 
-class _EntryDateLabel extends StatelessWidget {
+class _EntryDateLabel extends StatefulWidget {
   final int quaterTurns;
   final String text;
   final Offset boxShadowOffset;
@@ -124,49 +123,61 @@ class _EntryDateLabel extends StatelessWidget {
     required this.boxShadowOffset,
     required this.landscapeWidthFactor,
   }) : super(key: key);
+
+  @override
+  __EntryDateLabelState createState() => __EntryDateLabelState();
+}
+
+class __EntryDateLabelState extends State<_EntryDateLabel> {
+  Size get _deviceSize {
+    return MediaQuery.of(context).size;
+  }
+
+  double get portraitWidth {
+    return MediaQuery.of(context).size.width * 0.125;
+  }
+
+  double get landscapeWidth {
+    return portraitWidth * widget.landscapeWidthFactor;
+  }
+
   @override
   Widget build(BuildContext context) {
-    final Size deviceSize = MediaQuery.of(context).size;
-    final double portraitWidth = MediaQuery.of(context).size.width * 0.125;
-    final double landscapeWidth = portraitWidth * landscapeWidthFactor;
     return SizedBox(
       width: alternativeWidth(
-        deviceSize,
+        _deviceSize,
         portraitWidth: portraitWidth,
         landscapeWidth: landscapeWidth,
       ),
       child: RotatedBox(
-          quarterTurns: quaterTurns,
+          quarterTurns: widget.quaterTurns,
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 8.0),
             child: Container(
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15.0),
-                  color: HexColor('efefef'),
-                  boxShadow: [
-                    BoxShadow(
-                      blurRadius: 15.0,
-                      offset: boxShadowOffset,
-                      color: Colors.black.withOpacity(0.20),
-                      spreadRadius: 2.0,
-                    )
-                  ]),
+                borderRadius: BorderRadius.circular(15.0),
+                color: HexColor('efefef'),
+                boxShadow: [
+                  BoxShadow(
+                    blurRadius: 15.0,
+                    offset: widget.boxShadowOffset,
+                    color: Colors.black.withOpacity(0.20),
+                    spreadRadius: 2.0,
+                  )
+                ],
+              ),
               child: Padding(
                 padding: const EdgeInsets.symmetric(
                   vertical: 4.0,
                   horizontal: 12.0,
                 ),
                 child: Center(
-                    child: ClippedText(
-                  "$text",
-                  textAlign: TextAlign.center,
-                  style: LitTextStyles.sansSerif.copyWith(
-                    color: HexColor("bababa"),
-                    letterSpacing: -0.12,
-                    fontWeight: FontWeight.w700,
-                    fontSize: 11.0,
+                  child: ClippedText(
+                    "${widget.text}",
+                    textAlign: TextAlign.center,
+                    style: LitTextStyles.sansSerifStyles[caption],
                   ),
-                )),
+                ),
               ),
             ),
           )),
@@ -174,7 +185,7 @@ class _EntryDateLabel extends StatelessWidget {
   }
 }
 
-class _EntryCard extends StatelessWidget {
+class _EntryCard extends StatefulWidget {
   final int listIndex;
   final DiaryEntry diaryEntry;
   final double landscapeWidthFactor;
@@ -188,31 +199,68 @@ class _EntryCard extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  __EntryCardState createState() => __EntryCardState();
+}
+
+class __EntryCardState extends State<_EntryCard> {
+  /// Returns the [RelativeDateTime] of the last diary entry update..
+  RelativeDateTime get _relativeDateTime {
+    return RelativeDateTime(
+      dateTime: DateTime.now(),
+      other: DateTime.fromMillisecondsSinceEpoch(
+        widget.diaryEntry.lastUpdated,
+      ),
+    );
+  }
+
+  /// Creates a [RelativeDateFormat].
+  RelativeDateFormat get _relativeDateFormatter {
+    return RelativeDateFormat(
+      Localizations.localeOf(context),
+    );
+  }
+
+  /// Returns the entry's formatted date.
+  String get _formattedDiaryDate {
+    DateTime date = DateTime.parse(widget.diaryEntry.date);
+    return date.formatAsLocalizedDate();
+  }
+
+  /// Returns the entry's last updated string.
+  String get _relativeDateUpdated {
+    return _relativeDateFormatter.format(_relativeDateTime);
+  }
+
+  bool get _titleAvailable {
+    return widget.diaryEntry.title != initialDiaryEntryTitle;
+  }
+
+  String get _title {
+    return _titleAvailable ? widget.diaryEntry.title : "Untitled";
+  }
+
+  double get _portraitWidth {
+    return MediaQuery.of(context).size.width * 0.75;
+  }
+
+  double get _landscapeWidth {
+    return _portraitWidth * widget.landscapeWidthFactor;
+  }
+
+  @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        final double portraitWidth = MediaQuery.of(context).size.width * 0.75;
-        final double landscapeWidth = portraitWidth * landscapeWidthFactor;
-
-        final RelativeDateTime relativeDateTime = RelativeDateTime(
-          dateTime: DateTime.now(),
-          other: DateTime.fromMillisecondsSinceEpoch(
-            diaryEntry.lastUpdated,
-          ),
-        );
-        final RelativeDateFormat relativeDateFormatter = RelativeDateFormat(
-          Localizations.localeOf(context),
-        );
         return SizedBox(
           width: alternativeWidth(
             MediaQuery.of(context).size,
-            portraitWidth: portraitWidth,
-            landscapeWidth: landscapeWidth,
+            portraitWidth: _portraitWidth,
+            landscapeWidth: _landscapeWidth,
           ),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
             child: LitPushedButton(
-              onPressed: onPressed,
+              onPressed: widget.onPressed,
               minScale: 0.94,
               animateOnStart: false,
               child: Stack(
@@ -238,14 +286,8 @@ class _EntryCard extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            "${diaryEntry.title != initialDiaryEntryTitle ? diaryEntry.title : "Untitled"}",
-                            style: LitTextStyles.sansSerif.copyWith(
-                              letterSpacing: -0.02,
-                              fontWeight: FontWeight.w600,
-                              color: HexColor('444444'),
-                            ),
-                          ),
+                          Text(_title,
+                              style: LitTextStyles.sansSerifStyles[body]),
                           Padding(
                             padding: const EdgeInsets.only(
                               bottom: 16.0,
@@ -264,14 +306,14 @@ class _EntryCard extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                "${DateFormat.yMMMMd(Intl.getCurrentLocale()).format(DateTime.parse(diaryEntry.date))}",
+                                _formattedDiaryDate,
                                 style: LitTextStyles.sansSerifStyles[caption]
                                     .copyWith(
                                   color: HexColor('666666'),
                                 ),
                               ),
                               Text(
-                                "${relativeDateFormatter.format(relativeDateTime)}",
+                                _relativeDateUpdated,
                                 style: LitTextStyles.sansSerifStyles[caption]
                                     .copyWith(
                                   color: HexColor('666666'),
@@ -296,7 +338,7 @@ class _EntryCard extends StatelessWidget {
                           color: Color.lerp(
                             LitColors.lightRed,
                             HexColor('bee5be'),
-                            diaryEntry.moodScore,
+                            widget.diaryEntry.moodScore,
                           ),
                           borderRadius: BorderRadius.circular(
                             5.95,

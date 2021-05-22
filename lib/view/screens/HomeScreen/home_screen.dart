@@ -8,6 +8,17 @@ import '../screens.dart';
 /// Displays the currently user selected tab. The navigation inside the
 /// [HomeScreen] will be performed using a [LitBottomNavigation].
 class HomeScreen extends StatefulWidget {
+  /// The bookmark animation's [Duration].
+  final Duration bookmarkAnimationDuration;
+
+  /// Creates a [HomeScreen].
+  ///
+  /// * [bookmarkAnimationDuration] will determine the bookmark's animation
+  ///   duration on each tab.
+  const HomeScreen({
+    Key? key,
+    this.bookmarkAnimationDuration = const Duration(milliseconds: 5000),
+  }) : super(key: key);
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
@@ -19,7 +30,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   void initState() {
     super.initState();
     _bookmarkAnimation = AnimationController(
-      duration: Duration(milliseconds: 5000),
+      duration: widget.bookmarkAnimationDuration,
       vsync: this,
     );
     _bookmarkAnimation.repeat(reverse: true);

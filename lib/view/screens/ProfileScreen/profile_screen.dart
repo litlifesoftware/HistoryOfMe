@@ -106,43 +106,8 @@ class _ProfileScreenState extends State<ProfileScreen>
                             ],
                             indicatorColor: LitColors.mediumGrey,
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(
-                              top: 160.0,
-                            ),
-                            child: Align(
-                              alignment: Alignment.topRight,
-                              child: Container(
-                                width:
-                                    isPortraitMode(MediaQuery.of(context).size)
-                                        ? MediaQuery.of(context).size.width
-                                        : MediaQuery.of(context).size.width / 2,
-                                child: Align(
-                                  alignment: isPortraitMode(
-                                          MediaQuery.of(context).size)
-                                      ? Alignment.centerRight
-                                      : Alignment.center,
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 16.0,
-                                    ),
-                                    child: LitBubbleButton(
-                                      child: Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 4.0, horizontal: 12.0),
-                                        child: Icon(
-                                          LitIcons.pencil,
-                                          color: Colors.white,
-                                          size: 20.0,
-                                        ),
-                                      ),
-                                      onPressed: () =>
-                                          _onEditBookmark(userData),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
+                          _EditBookmarkButton(
+                            onPressed: () => _onEditBookmark(userData),
                           ),
                         ],
                       ),
@@ -162,6 +127,55 @@ class _ProfileScreenState extends State<ProfileScreen>
           ),
         );
       },
+    );
+  }
+}
+
+/// A button allowing displayed on top of the bookmark to allow its editing.
+class _EditBookmarkButton extends StatelessWidget {
+  final void Function() onPressed;
+
+  /// Creates a [_EditBookmarkButton].
+  const _EditBookmarkButton({
+    Key? key,
+    required this.onPressed,
+  }) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(
+        top: 160.0,
+      ),
+      child: Align(
+        alignment: Alignment.topRight,
+        child: Container(
+          width: isPortraitMode(MediaQuery.of(context).size)
+              ? MediaQuery.of(context).size.width
+              : MediaQuery.of(context).size.width / 2,
+          child: Align(
+            alignment: isPortraitMode(MediaQuery.of(context).size)
+                ? Alignment.centerRight
+                : Alignment.center,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 16.0,
+              ),
+              child: LitBubbleButton(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 4.0, horizontal: 12.0),
+                  child: Icon(
+                    LitIcons.pencil,
+                    color: Colors.white,
+                    size: 20.0,
+                  ),
+                ),
+                onPressed: onPressed,
+              ),
+            ),
+          ),
+        ),
+      ),
     );
   }
 }
