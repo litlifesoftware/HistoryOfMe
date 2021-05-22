@@ -15,9 +15,10 @@ class UnselectedCreateTile extends StatelessWidget {
       child: Text(
         "$label",
         style: LitTextStyles.sansSerif.copyWith(
-            fontSize: 16.0,
-            color: HexColor('#444444'),
-            fontWeight: FontWeight.w700),
+          fontSize: 16.0,
+          color: LitColors.darkGrey,
+          fontWeight: FontWeight.w700,
+        ),
       ),
     );
   }

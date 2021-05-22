@@ -214,7 +214,7 @@ class HiveDBService {
   /// * [diaryEntry] is entry on which the change will be applied. It will also provided
   ///   the entrie's id.
   void updateDiaryEntryBackdrop(DiaryEntry diaryEntry, int newBackdropPhotoId) {
-    /// Updated Hive entry
+    /// Updated diary entry
     final DiaryEntry updatedDiaryEntry = DiaryEntry(
       uid: diaryEntry.uid,
       date: diaryEntry.date,
@@ -225,6 +225,24 @@ class HiveDBService {
       moodScore: diaryEntry.moodScore,
       favorite: diaryEntry.favorite,
       backdropPhotoId: newBackdropPhotoId,
+    );
+
+    updateDiaryEntry(updatedDiaryEntry);
+  }
+
+  /// Toggles the 'favorite' value on the provided [DiaryEntry].
+  void toggleDiaryEntryFavorite(DiaryEntry diaryEntry) {
+    /// Updated diary entry
+    DiaryEntry updatedDiaryEntry = DiaryEntry(
+      uid: diaryEntry.uid,
+      date: diaryEntry.date,
+      created: diaryEntry.created,
+      lastUpdated: diaryEntry.lastUpdated,
+      title: diaryEntry.title,
+      content: diaryEntry.content,
+      moodScore: diaryEntry.moodScore,
+      favorite: !(diaryEntry.favorite),
+      backdropPhotoId: diaryEntry.backdropPhotoId,
     );
 
     updateDiaryEntry(updatedDiaryEntry);
