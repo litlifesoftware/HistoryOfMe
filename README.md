@@ -104,11 +104,12 @@ History of Me is still under **development**. The first release will probably be
 
 ## Pre-Release Setup
 
-While under **History of Me**'s early development, the `lit_ui_kit` dependency should be included in the very same working directory as the app, as it is developed alongside **History of Me**. Keep in mind to regularly synchronize your local `lit_ui_kit` copy. The pub dependency will be set to the git repository and then to the regular pub.dev location soon. 
+While under **History of Me**'s early development, the `lit_ui_kit` dependency is liked using the git repository as source. The package will be updated rather frequently, so keep in mind to update your Flutter packages if you encounter liking issues on your local copy by running
+`flutter pub upgrade`
 
 ```yaml
-  lit_ui_kit:
-    path: ../lit_ui_kit/
+    git: 
+      url: https://github.com/litlifesoftware/lit_ui_kit.git
 ```
 
 ## License
