@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:history_of_me/data/constants.dart';
+import 'package:history_of_me/config/config.dart';
 
 class StripedDesignController {
   final Color? color;

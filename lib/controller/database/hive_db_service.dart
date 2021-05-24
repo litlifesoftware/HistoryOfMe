@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:history_of_me/model/app_settings.dart';
-import 'package:history_of_me/data/constants.dart';
+import 'package:history_of_me/config/config.dart';
 import 'package:history_of_me/model/user_data.dart';
 import 'package:history_of_me/model/diary_entry.dart';
 import 'package:history_of_me/model/user_created_color.dart';

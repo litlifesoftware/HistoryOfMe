@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:history_of_me/controller/database/hive_db_service.dart';
-import 'package:history_of_me/data/constants.dart';
+import 'package:history_of_me/config/config.dart';
 import 'package:history_of_me/model/user_created_color.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';
 
@@ -144,7 +144,7 @@ class _PrimaryColorSelectorCardState extends State<PrimaryColorSelectorCard>
 
   void _addColor(Color color) {
     try {
-      HiveDBService(debug: debug)
+      HiveDBService(debug: DEBUG)
           .addUserCreatedColor(color.alpha, color.red, color.green, color.blue);
       resetColorChannelValues();
       toggleEnableColorMix();

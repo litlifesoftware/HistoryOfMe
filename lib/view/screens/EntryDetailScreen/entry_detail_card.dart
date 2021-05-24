@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:history_of_me/controller/database/hive_db_service.dart';
 import 'package:history_of_me/controller/database/hive_query_controller.dart';
 import 'package:history_of_me/controller/mood_translation_controller.dart';
-import 'package:history_of_me/data/constants.dart';
+import 'package:history_of_me/config/config.dart';
 import 'package:history_of_me/model/diary_entry.dart';
 import 'package:history_of_me/view/shared/updated_label_text.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';

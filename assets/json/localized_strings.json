@@ -1,12 +1,62 @@
 {
   "your_name": {
-    "en": "Your Name",
-    "de": "Dein Name",
-    "ru": "потрачено"
+    "en": "your Name",
+    "de": "dein Name"
   },
   "compose": {
-    "en": "Compose",
-    "de": "Erstellen",
-    "ru": "VODKA"
+    "en": "compose",
+    "de": "erstellen"
+  },
+  "okay": {
+    "en": "okay",
+    "de": "okay"
+  },
+  "thats_me": {
+    "en": "That's me",
+    "de": "Das bin ich"
+  },
+  "what_shall_we_call_you": {
+    "en": "What shall we call you?",
+    "de": "Wie sollen wir dich nennen?"
+  },
+  "your_data_is_safe": {
+    "en": "Your data is safe",
+    "de": "Deine Daten sind sicher"
+  },
+  "offline_app_description": {
+    "en": "This app only stores your data on your device.\n\nWe nor any other third party are able to access your private data.",
+    "de": "Diese App speichert deine Daten nur auf deinem Geräte. Weder wir noch Dritte können auf deine privaten Daten zugreifen."
+  },
+  "confirm_your_age": {
+    "en": "Confirm your Age",
+    "de": "Alter bestätigen"
+  },
+  "confirm_your_age_subtitle": {
+    "en": "Are you 13 years old or older?",
+    "de": "Bist du 13 Jahre alt oder älter?"
+  },
+  "your_age": {
+    "en": "your age",
+    "de": "dein Alter"
+  },
+  "set_age": {
+    "en": "set",
+    "de": "wählen"
+  },
+  "submit": {
+    "en": "submit",
+    "de": "bestätigen"
+  },
+  "invalid_age_text": {
+    "en": "Seems like you are not old enough to use this app. Please check if input is correct.",
+    "de": "Es sieht so aus, dass du nicht alt genug bist, um diese App zu nutzen. Bitte bestätige, dass deine Eingabe korrekt ist."
+  },
+  "valid": {
+    "en": "Valid",
+    "de": "Gültig"
+  },
+  "choose_date": {
+    "en": "Choose date",
+    "de": "Datum wählen"
   }
 }

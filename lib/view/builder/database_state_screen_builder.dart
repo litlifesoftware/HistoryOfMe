@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:history_of_me/controller/database/hive_db_service.dart';
+import 'package:history_of_me/controller/localization/hom_localization_controller.dart';
+import 'package:history_of_me/config/config.dart';
 import 'package:history_of_me/model/user_data.dart';
 import 'package:history_of_me/view/screens/screens.dart';
 import 'package:hive/hive.dart';
@@ -26,7 +28,10 @@ class DatabaseStateScreenBuilder extends StatefulWidget {
 
 class _DatabaseStateScreenBuilderState
     extends State<DatabaseStateScreenBuilder> {
-  final _startupAnimationDuration = const Duration(milliseconds: 6000);
+  final Duration _startupAnimationDuration = const Duration(
+    milliseconds: 6000,
+  );
+  late HOMLocalizationController _localizationController;
   bool _shouldShowStartupScreen = false;
   bool _initalStartup = false;
 
@@ -73,7 +78,17 @@ class _DatabaseStateScreenBuilderState
   /// displayed.
   void _onPrivacyConfirmed() {
     LitRouteController(context).pushCupertinoWidget(
-      ConfirmAgeScreen(onSubmit: _onSubmitAge),
+      ConfirmAgeScreen(
+        onSubmit: _onSubmitAge,
+        invalidAgeText: _localizationController.invalidAgeText,
+        submitLabel: _localizationController.submit,
+        subtitle: _localizationController.confirmYourAgeSubtitle,
+        setLabel: _localizationController.setAge,
+        title: _localizationController.confirmYourAge,
+        validLabel: _localizationController.valid,
+        chooseDateLabel: _localizationController.chooseDate,
+        yourAgeLabel: _localizationController.yourAge,
+      ),
     );
   }
 
@@ -83,12 +98,12 @@ class _DatabaseStateScreenBuilderState
   void _onSubmitAge() {
     LitRouteController(context).replaceCurrentMaterialWidget(
       newWidget: LitSignUpScreen(
-        title: "What shall we call you?",
-        onSubmitButtonText: "THATS ME",
+        title: _localizationController.whatShallWeCallYou,
+        onSubmitButtonText: _localizationController.thatsMe,
         onSubmit: _handleUserCreation,
         inputFields: [
           LitTextField(
-            label: LitLocalizations.of(context)!.getLocalizedValue("your_name"),
+            label: _localizationController.yourName,
             onChange: _setUsername,
             icon: LitIcons.person,
           ),
@@ -114,7 +129,7 @@ class _DatabaseStateScreenBuilderState
     Future.delayed(
       _startupAnimationDuration,
     ).then((_) {
-      if (_initalStartup) {
+      if (_initalStartup & !DEBUG) {
         _toggleShouldShowStartupScreen();
       }
     });
@@ -123,6 +138,7 @@ class _DatabaseStateScreenBuilderState
   @override
   void initState() {
     super.initState();
+    _localizationController = HOMLocalizationController(context);
     _showStartupScreen();
   }
 
@@ -149,13 +165,17 @@ class _DatabaseStateScreenBuilderState
                 if (userData.isEmpty) {
                   _initalStartup = true;
                   // Show the startup screen only on the first app start.
-                  if (_shouldShowStartupScreen) {
+                  if (_shouldShowStartupScreen && !DEBUG) {
                     return LitStartupScreen(
                       animationDuration: _startupAnimationDuration,
                     );
                   } else {
                     return LitOfflineAppDisclaimerScreen(
                       onConfirm: _onPrivacyConfirmed,
+                      titleText: _localizationController.yourDataIsSafe,
+                      descriptionText:
+                          _localizationController.offlineAppDescription,
+                      confirmButtonLabel: _localizationController.okay,
                     );
                   }
                 } else {

@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
+import 'package:history_of_me/config/config.dart';
 import 'package:history_of_me/model/backdrop_photo.dart';
 import 'package:history_of_me/view/builder/builder.dart';
 import 'package:lit_localization_service/lit_localization_service.dart';
@@ -65,7 +66,7 @@ class _AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
+      debugShowCheckedModeBanner: DEBUG,
       theme: ThemeData(
         brightness: Brightness.light,
 
@@ -94,8 +95,6 @@ class _AppState extends State<App> {
         const Locale('en', ''),
         // German (no contry code)
         const Locale('de', ''),
-        // Russian (no contry code)
-        const Locale('ru', ''),
       ],
       title: 'History of Me',
       home: DatabaseStateScreenBuilder(

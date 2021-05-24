@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:history_of_me/controller/database/hive_db_service.dart';
-import 'package:history_of_me/data/constants.dart';
+import 'package:history_of_me/config/config.dart';
 import 'package:history_of_me/model/backdrop_photo.dart';
 import 'package:history_of_me/model/diary_entry.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';
@@ -36,14 +36,14 @@ class _ChangePhotoDialogState extends State<ChangePhotoDialog>
   void setSelectedImage(int? value) {
     if (!_isSelected(value)) {
       setState(() {
-        if (debug) print("Selected backdrop id: $value");
+        if (DEBUG) print("Selected backdrop id: $value");
         HiveDBService().updateDiaryEntryBackdrop(widget.diaryEntry, value!);
         _selectedImage = value;
       });
       _appearAnimationController.forward(from: 0.0);
       print(value);
     } else {
-      if (debug) print("Already Selected");
+      if (DEBUG) print("Already Selected");
     }
   }
 

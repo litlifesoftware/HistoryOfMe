@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:history_of_me/view/shared/shared.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';
 import 'package:history_of_me/controller/database/hive_db_service.dart';
-import 'package:history_of_me/data/constants.dart';
+import 'package:history_of_me/config/config.dart';
 import 'package:history_of_me/model/user_created_color.dart';
 import 'package:history_of_me/model/user_data.dart';
 import 'package:hive/hive.dart';
@@ -249,7 +249,7 @@ class _BookmarkEditingScreenState extends State<BookmarkEditingScreen>
   // }
 
   void _onSaveChanges() {
-    HiveDBService(debug: debug)
+    HiveDBService(debug: DEBUG)
         .updateUserData(_mapUserData(DateTime.now().millisecondsSinceEpoch));
   }
 
