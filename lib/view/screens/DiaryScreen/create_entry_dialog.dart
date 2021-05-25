@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:history_of_me/controller/database/hive_db_service.dart';
-import 'package:history_of_me/controller/routes/screen_router.dart';
+import 'package:history_of_me/controller/localization/hom_localizations.dart';
+import 'package:history_of_me/controller/routes/hom_navigator.dart';
 import 'package:history_of_me/view/shared/lit_toggle_button_group.dart';
 import 'package:history_of_me/model/diary_entry.dart';
 import 'package:intl/intl.dart';
@@ -23,7 +24,7 @@ class _CreateEntryDialogState extends State<CreateEntryDialog>
     with TickerProviderStateMixin {
   /// The screen router to switch to the newly created entry's editing
   /// screen.
-  late ScreenRouter _screenRouter;
+  late HOMNavigator _screenRouter;
   late AnimationController _appearAnimationController;
 
   /// Snackbar controller to show a message once the user tries to create an
@@ -77,10 +78,16 @@ class _CreateEntryDialogState extends State<CreateEntryDialog>
 
     if (!service.entryWithDateDoesExist(now)) {
       DiaryEntry createdEntry = service.addDiaryEntry(
-        date: DateTime(now.year, now.month, now.day),
+        date: DateTime(
+          now.year,
+          now.month,
+          now.day,
+        ),
       );
       _closeDialog();
-      _screenRouter.toEntryEditingScreen(diaryEntry: createdEntry);
+      _screenRouter.toEntryEditingScreen(
+        diaryEntry: createdEntry,
+      );
     } else {
       _duplicateSnackBarController.showSnackBar();
     }
@@ -91,10 +98,14 @@ class _CreateEntryDialogState extends State<CreateEntryDialog>
     HiveDBService service = HiveDBService();
 
     if (!service.entryWithDateDoesExist(date)) {
-      DiaryEntry createdEntry = service.addDiaryEntry(date: date);
+      DiaryEntry createdEntry = service.addDiaryEntry(
+        date: date,
+      );
       _closeDialog();
 
-      _screenRouter.toEntryEditingScreen(diaryEntry: createdEntry);
+      _screenRouter.toEntryEditingScreen(
+        diaryEntry: createdEntry,
+      );
     } else {
       _duplicateSnackBarController.showSnackBar();
     }
@@ -112,9 +123,9 @@ class _CreateEntryDialogState extends State<CreateEntryDialog>
   String get _snackbarText {
     switch (createEntryType) {
       case TODAY:
-        return "There already is a entry for today.";
+        return HOMLocalizations(context).existingEntryTodayDescr;
       case PREVIOUS_DAY:
-        return "There already is a entry for your selected day.";
+        return HOMLocalizations(context).existingEntrySelectedDayDescr;
       default:
         return "";
     }
@@ -123,10 +134,12 @@ class _CreateEntryDialogState extends State<CreateEntryDialog>
   @override
   void initState() {
     super.initState();
-    _screenRouter = ScreenRouter(context);
+    _screenRouter = HOMNavigator(context);
     _duplicateSnackBarController = LitSnackbarController()..init(this);
-    _appearAnimationController =
-        AnimationController(duration: Duration(milliseconds: 140), vsync: this);
+    _appearAnimationController = AnimationController(
+      duration: Duration(milliseconds: 140),
+      vsync: this,
+    );
     _appearAnimationController.forward();
   }
 
@@ -159,6 +172,11 @@ class _CreateEntryDialogState extends State<CreateEntryDialog>
                   setCreateEntryType: setCreateEntryType,
                 )
               : LitDatePickerDialog(
+                  title: HOMLocalizations(context).chooseDate,
+                  excludedMonthErrorMessage:
+                      HOMLocalizations(context).dateNotIncludedDescr,
+                  futureDateErrorMessage:
+                      HOMLocalizations(context).futureDaysNotAllowedDescr,
                   onBackCallback: () => setSelectedDialogType(TODAY),
                   onSubmit: _createPreviousDayEntry,
                   allowFutureDates: false,
@@ -166,12 +184,16 @@ class _CreateEntryDialogState extends State<CreateEntryDialog>
           IconSnackbar(
             iconData: LitIcons.info,
             text: _snackbarText,
-            textStyle: LitTextStyles.sansSerif
-                .copyWith(color: Colors.white, fontSize: 13.0),
+            textStyle: LitTextStyles.sansSerif.copyWith(
+              color: Colors.white,
+              fontSize: 13.0,
+            ),
             litSnackBarController: _duplicateSnackBarController,
             alignment: Alignment.topRight,
-            padding:
-                const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+            padding: const EdgeInsets.symmetric(
+              vertical: 8.0,
+              horizontal: 16.0,
+            ),
           ),
         ],
       ),
@@ -200,21 +222,10 @@ class DefaultCreateEntryDialog extends StatefulWidget {
 }
 
 class _DefaultCreateEntryDialogState extends State<DefaultCreateEntryDialog> {
-  String get _buttonLabel {
-    switch (widget.createEntryType) {
-      case TODAY:
-        return "Create for today";
-      case PREVIOUS_DAY:
-        return "Create for a previous day";
-      default:
-        return "";
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return LitTitledDialog(
-      titleText: "Add a diary entry",
+      titleText: HOMLocalizations(context).addDiaryEntry,
       child: AnimatedBuilder(
         animation: widget.animationController,
         builder: (BuildContext context, Widget? _) {
@@ -232,11 +243,11 @@ class _DefaultCreateEntryDialogState extends State<DefaultCreateEntryDialog> {
                   showDividersOnVerticalAxis: true,
                   items: [
                     LitToggleButtonGroupItemData(
-                      label: "For today",
+                      label: HOMLocalizations(context).forToday,
                       value: TODAY,
                     ),
                     LitToggleButtonGroupItemData(
-                      label: "For a previous day",
+                      label: HOMLocalizations(context).forPreviousDay,
                       value: PREVIOUS_DAY,
                     ),
                   ],
@@ -254,7 +265,7 @@ class _DefaultCreateEntryDialogState extends State<DefaultCreateEntryDialog> {
                       horizontal: 32.0,
                     ),
                     child: Text(
-                      _buttonLabel,
+                      HOMLocalizations(context).create.toUpperCase(),
                       style: LitTextStyles.sansSerif.copyWith(
                           fontSize: 15.0,
                           color: Colors.white,

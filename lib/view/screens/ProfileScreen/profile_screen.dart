@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:history_of_me/controller/database/hive_db_service.dart';
-import 'package:history_of_me/controller/routes/screen_router.dart';
+import 'package:history_of_me/controller/routes/hom_navigator.dart';
 import 'package:history_of_me/model/user_data.dart';
 import 'package:history_of_me/view/shared/bookmark/bookmark_back_preview.dart';
 import 'package:history_of_me/view/shared/bookmark/bookmark_front_preview.dart';
@@ -24,7 +24,7 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen>
     with TickerProviderStateMixin {
-  late ScreenRouter _screenRouter;
+  late HOMNavigator _screenRouter;
   late ScrollController _scrollController;
   late LitSnackbarController _snackbarController;
 
@@ -42,7 +42,7 @@ class _ProfileScreenState extends State<ProfileScreen>
   @override
   void initState() {
     super.initState();
-    _screenRouter = ScreenRouter(context);
+    _screenRouter = HOMNavigator(context);
     _scrollController = ScrollController();
     _snackbarController = LitSnackbarController();
   }

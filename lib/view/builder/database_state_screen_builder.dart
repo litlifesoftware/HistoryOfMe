@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:history_of_me/controller/database/hive_db_service.dart';
-import 'package:history_of_me/controller/localization/hom_localization_controller.dart';
+import 'package:history_of_me/controller/localization/hom_localizations.dart';
 import 'package:history_of_me/config/config.dart';
 import 'package:history_of_me/model/user_data.dart';
 import 'package:history_of_me/view/screens/screens.dart';
@@ -31,7 +31,7 @@ class _DatabaseStateScreenBuilderState
   final Duration _startupAnimationDuration = const Duration(
     milliseconds: 6000,
   );
-  late HOMLocalizationController _localizationController;
+  late HOMLocalizations _localizationController;
   bool _shouldShowStartupScreen = false;
   bool _initalStartup = false;
 
@@ -138,7 +138,7 @@ class _DatabaseStateScreenBuilderState
   @override
   void initState() {
     super.initState();
-    _localizationController = HOMLocalizationController(context);
+    _localizationController = HOMLocalizations(context);
     _showStartupScreen();
   }
 

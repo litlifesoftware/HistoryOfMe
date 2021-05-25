@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:history_of_me/config/styles.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';
 
 class PurplePinkButton extends StatelessWidget {
@@ -13,11 +14,11 @@ class PurplePinkButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LitGradientButton(
-      accentColor: const Color(0xFFDE8FFA),
-      color: const Color(0xFFFA72AA),
+      accentColor: lightPurple,
+      color: pink,
       child: Text(
         label.toUpperCase(),
-        style: LitTextStyles.sansSerif.copyWith(
+        style: LitTextStyles.sansSerifStyles[button].copyWith(
           color: Colors.white,
           fontSize: 13.0,
           fontWeight: FontWeight.w700,

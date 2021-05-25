@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:history_of_me/controller/routes/screen_router.dart';
+import 'package:history_of_me/controller/routes/hom_navigator.dart';
 import 'package:history_of_me/config/config.dart';
 import 'package:history_of_me/model/diary_entry.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';
@@ -24,7 +24,7 @@ class DiaryListTile extends StatefulWidget {
 }
 
 class _DiaryListTileState extends State<DiaryListTile> {
-  late ScreenRouter _screenRouter;
+  late HOMNavigator _screenRouter;
 
   void _onTilePressed() {
     _screenRouter.toDiaryEntryDetailScreen(
@@ -36,7 +36,7 @@ class _DiaryListTileState extends State<DiaryListTile> {
   @override
   void initState() {
     super.initState();
-    _screenRouter = ScreenRouter(context);
+    _screenRouter = HOMNavigator(context);
   }
 
   @override

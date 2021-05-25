@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:history_of_me/controller/database/hive_db_service.dart';
 import 'package:history_of_me/controller/database/hive_query_controller.dart';
-import 'package:history_of_me/controller/routes/screen_router.dart';
+import 'package:history_of_me/controller/routes/hom_navigator.dart';
 import 'package:history_of_me/model/backdrop_photo.dart';
 import 'package:history_of_me/model/diary_entry.dart';
 import 'package:hive/hive.dart';
@@ -46,7 +46,7 @@ class _EntryDetailScreenState extends State<EntryDetailScreen>
   ScrollController? _scrollController;
   late LitSettingsPanelController _settingsPanelController;
   HiveQueryController? _hiveQueryController;
-  late ScreenRouter _screenRouter;
+  late HOMNavigator _screenRouter;
 
   // final List<String> imageNames = [
   //   "assets/images/niilo-isotalo--BZc9Ee1qo0-unsplash.jpg",
@@ -150,7 +150,7 @@ class _EntryDetailScreenState extends State<EntryDetailScreen>
     _scrollController = ScrollController();
     _settingsPanelController = LitSettingsPanelController();
     _hiveQueryController = HiveQueryController();
-    _screenRouter = ScreenRouter(context);
+    _screenRouter = HOMNavigator(context);
   }
 
   @override

@@ -58,5 +58,49 @@
   "choose_date": {
     "en": "Choose date",
     "de": "Datum wählen"
+  },
+  "no_entries_found": {
+    "en": "No entires found",
+    "de": "Keine Einträge"
+  },
+  "create_first_entry_descr": {
+    "en": "There are no entries available. Do you want to create your first entry now?",
+    "de": "Es sind keine Einträge verfügbar. Möchtest du jetzt deinen ersten Eintrag erstellen?"
+  },
+  "create": {
+    "en": "create",
+    "de": "erstellen"
+  },
+  "create_entry": {
+    "en": "create entry",
+    "de": "Eintrag erstellen"
+  },
+  "existing_entry_today_descr": {
+    "en": "There already is a entry for today.",
+    "de": "Für heute gibt es bereits einen Eintrag."
+  },
+  "existing_entry_selected_day_descr": {
+    "en": "There already is a entry for your selected day.",
+    "de": "Für diesen Tag gibt es bereits einen Eintrag."
+  },
+  "for_today": {
+    "en": "For today",
+    "de": "Für heute erstellen"
+  },
+  "for_previous_day": {
+    "en": "For a previous day",
+    "de": "Für einen anderen Tag"
+  },
+  "add_diary_entry": {
+    "en": "Add a diary entry",
+    "de": "Tagebucheintrag erstellen"
+  },
+  "future_days_not_allowed_descr": {
+    "en": "Future dates are not allowed",
+    "de": "Zukünftige Tage sind nicht möglich"
+  },
+  "date_not_included_descr": {
+    "en": "Date not included in current month",
+    "de": "Tag außerhalb des Monats"
   }
 }

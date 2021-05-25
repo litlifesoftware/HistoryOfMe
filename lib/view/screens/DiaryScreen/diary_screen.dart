@@ -1,7 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:history_of_me/config/config.dart';
+import 'package:history_of_me/config/styles.dart';
 import 'package:history_of_me/controller/database/hive_db_service.dart';
 import 'package:history_of_me/controller/database/hive_query_controller.dart';
+import 'package:history_of_me/controller/localization/hom_localizations.dart';
+import 'package:history_of_me/controller/routes/hom_navigator.dart';
 import 'package:history_of_me/model/diary_entry.dart';
 import 'package:history_of_me/model/user_data.dart';
 import 'package:history_of_me/view/shared/bookmark/bookmark_front_preview.dart';
@@ -13,16 +17,17 @@ import 'package:lit_ui_kit/lit_ui_kit.dart';
 import 'create_entry_dialog.dart';
 import 'diary_list_view.dart';
 
-/// A screen widget displaying the user's diary.
-///
-/// The diary will list all available diary entries and interactive widgets to create additional
-/// entires.
+/// A screen widget displaying the user's diary on a vertical listview.
 class DiaryScreen extends StatefulWidget {
+  /// The bookmark's [AnimationController]
   final AnimationController bookmarkAnimation;
+  final Duration listViewAnimationDuration;
 
+  /// Creates a [DiaryScreen].
   const DiaryScreen({
     Key? key,
     required this.bookmarkAnimation,
+    this.listViewAnimationDuration = const Duration(milliseconds: 500),
   }) : super(key: key);
   @override
   _DiaryScreenState createState() => _DiaryScreenState();
@@ -30,7 +35,7 @@ class DiaryScreen extends StatefulWidget {
 
 class _DiaryScreenState extends State<DiaryScreen>
     with TickerProviderStateMixin {
-  late LitRouteController _routeController;
+  late HOMNavigator _navigator;
   late AnimationController _listViewAnimation;
   late ScrollController _scrollController;
 
@@ -39,7 +44,7 @@ class _DiaryScreenState extends State<DiaryScreen>
 
   /// Shows the 'create entry' dialog.
   void _showCreateEntryDialog() {
-    _routeController.showDialogWidget(CreateEntryDialog());
+    _navigator.showCreateEntryDialog();
   }
 
   /// Toggles the [_showFavoriteEntriesOnly] state value while replaying the animation controller
@@ -53,15 +58,19 @@ class _DiaryScreenState extends State<DiaryScreen>
   /// Sortes the [DiaryEntry]s inside the provided box and returns the sorted objects as a list.
   List<DiaryEntry> _getDiaryEntriesSorted(Box entriesBox) {
     return entriesBox.values.toList() as List<DiaryEntry>
-      ..sort(HiveQueryController().sortEntriesByDateAscending);
+      ..sort(
+        HiveQueryController().sortEntriesByDateAscending,
+      );
   }
 
   @override
   void initState() {
     _scrollController = ScrollController();
-    _listViewAnimation =
-        AnimationController(duration: Duration(milliseconds: 500), vsync: this);
-    _routeController = LitRouteController(context);
+    _listViewAnimation = AnimationController(
+      duration: widget.listViewAnimationDuration,
+      vsync: this,
+    );
+    _navigator = HOMNavigator(context);
     super.initState();
   }
 
@@ -83,9 +92,7 @@ class _DiaryScreenState extends State<DiaryScreen>
             backgroundColor: Color(userData!.primaryColor),
             onPressed: _showCreateEntryDialog,
             scrollController: _scrollController,
-            label: LitLocalizations.of(context)!
-                .getLocalizedValue('compose')
-                .toUpperCase(),
+            label: HOMLocalizations(context).compose.toUpperCase(),
             icon: LitIcons.plus,
           ),
           body: SafeArea(
@@ -139,7 +146,11 @@ class _CreateEntryCallToActionCard extends StatelessWidget {
         children: [
           BookmarkFrontPreview(
             padding: const EdgeInsets.only(
-                left: 16.0, right: 16.0, top: 32.0, bottom: 16.0),
+              left: 16.0,
+              right: 16.0,
+              top: 32.0,
+              bottom: 16.0,
+            ),
             userData: userData,
             animationController: bookmarkAnimation,
           ),
@@ -153,7 +164,9 @@ class _CreateEntryCallToActionCard extends StatelessWidget {
                 padding: EdgeInsets.only(
                     left: 32.0,
                     right: 32.0,
-                    bottom: isPortraitMode(MediaQuery.of(context).size)
+                    bottom: isPortraitMode(
+                      MediaQuery.of(context).size,
+                    )
                         ? 16.0
                         : 64.0,
                     top: 16.0),
@@ -171,30 +184,33 @@ class _CreateEntryCallToActionCard extends StatelessWidget {
                 child: Column(
                   children: [
                     Text(
-                      "No Entries Found",
+                      HOMLocalizations(context).createEntry,
                       style: LitTextStyles.sansSerifHeader.copyWith(
                         color: HexColor('#8A8A8A'),
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 16.0),
+                      padding: const EdgeInsets.only(
+                        top: 16.0,
+                        bottom: 8.0,
+                      ),
                       child: ExclamationRectangle(),
                     ),
                     Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 8.0),
+                      padding: const EdgeInsets.only(
+                        top: 8.0,
+                        bottom: 16.0,
+                      ),
                       child: Text(
-                        "There are no entries available. Do you want to create your first entry?",
+                        HOMLocalizations(context).createFirstEntryDescr,
                         textAlign: TextAlign.center,
-                        style: LitTextStyles.sansSerif.copyWith(
-                          color: HexColor('#8A8A8A'),
-                          fontSize: 13.0,
-                          fontWeight: FontWeight.w600,
-                          letterSpacing: 0.0,
+                        style: LitTextStyles.sansSerifStyles[body].copyWith(
+                          color: brownGreyTextColor,
                         ),
                       ),
                     ),
                     PurplePinkButton(
-                      label: "create entry",
+                      label: HOMLocalizations(context).createEntry,
                       onPressed: showCreateEntryDialog,
                     ),
                   ],

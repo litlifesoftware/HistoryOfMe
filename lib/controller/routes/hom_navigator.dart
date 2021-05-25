@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:history_of_me/model/models.dart';
+import 'package:history_of_me/view/screens/DiaryScreen/create_entry_dialog.dart';
 import 'package:history_of_me/view/screens/screens.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';
 
@@ -7,14 +8,14 @@ import 'package:lit_ui_kit/lit_ui_kit.dart';
 /// member method.
 ///
 /// Pass the [BuildContext] in order to manipulate the widget stack.
-class ScreenRouter {
+class HOMNavigator {
   /// The [BuildContext] instance required to initialize the [LitRouteController.]
   final BuildContext context;
 
-  /// Creates a [ScreenRouter].
+  /// Creates a [HOMNavigator].
   ///
   /// Pass on the [BuildContext] instance.
-  ScreenRouter(this.context) {
+  HOMNavigator(this.context) {
     _routeController = LitRouteController(context);
   }
 
@@ -63,5 +64,11 @@ class ScreenRouter {
     final Widget pushedWidget =
         BackdropPhotoDetailScreen(backdropPhoto: backdropPhoto);
     _routeController.pushMaterialWidget(pushedWidget);
+  }
+
+  void showCreateEntryDialog() {
+    _routeController.showDialogWidget(
+      CreateEntryDialog(),
+    );
   }
 }
