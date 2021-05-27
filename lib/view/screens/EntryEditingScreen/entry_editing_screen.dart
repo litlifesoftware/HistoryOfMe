@@ -333,13 +333,9 @@ class _EntryEditingScreenState extends State<EntryEditingScreen>
                                           ),
                                           valueTitleText:
                                               MoodTranslationController(
-                                                      moodScore: _moodScore,
-                                                      badMoodTranslation: "bad",
-                                                      mediumMoodTranslation:
-                                                          "alright",
-                                                      goodMoodTranslation:
-                                                          "good")
-                                                  .translatedLabelText,
+                                            moodScore: _moodScore,
+                                            context: context,
+                                          ).translatedLabelText,
                                           min: 0.0,
                                           max: 1.0,
                                         ),

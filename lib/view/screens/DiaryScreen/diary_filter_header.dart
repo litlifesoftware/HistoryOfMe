@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:history_of_me/controller/localization/hom_localizations.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';
 
 import 'diary_filter_header_delegate.dart';
@@ -34,6 +35,35 @@ class _DiaryFilterHeaderState extends State<DiaryFilterHeader>
 
   double get landscapeWidth {
     return portraitWidth * widget.landscapeWidthFactor;
+  }
+
+  String get _entriesLabel {
+    final String entry = HOMLocalizations(context).entry;
+    final String entires = HOMLocalizations(context).entires;
+    final String favorite = HOMLocalizations(context).favorite;
+
+    final bool plural =
+        (widget.filteredLength > 1) || (widget.filteredLength == 0);
+
+    // return  widget.showFavoritesOnly!
+    //                                   ? TextSpan(
+    //                                       text: " favorite ",
+    //                                       style: widget.accentTextStyle)
+    //                                   : TextSpan(),
+
+    if (widget.showFavoritesOnly!) {
+      if (plural) {
+        return " " + favorite + " " + entires;
+      } else {
+        return " " + favorite + " " + entry;
+      }
+    } else {
+      if (plural) {
+        return " " + entires;
+      } else {
+        return " " + entry;
+      }
+    }
   }
 
   void _onShowFavoritesOnlyToggle() {
@@ -99,14 +129,9 @@ class _DiaryFilterHeaderState extends State<DiaryFilterHeader>
                               text: TextSpan(
                                 style: widget.textStyle,
                                 children: [
-                                  TextSpan(text: "${widget.filteredLength} "),
-                                  widget.showFavoritesOnly!
-                                      ? TextSpan(
-                                          text: " favorite ",
-                                          style: widget.accentTextStyle)
-                                      : TextSpan(),
+                                  TextSpan(text: "${widget.filteredLength}"),
                                   TextSpan(
-                                      text: "entries",
+                                      text: _entriesLabel,
                                       style: widget.accentTextStyle),
                                 ],
                               ),

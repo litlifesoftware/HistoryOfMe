@@ -102,5 +102,65 @@
   "date_not_included_descr": {
     "en": "Date not included in current month",
     "de": "Tag außerhalb des Monats"
+  },
+  "untitled": {
+    "en": "Untitled",
+    "de": "Ohne Titel"
+  },
+  "entry": {
+    "en": "Entry",
+    "de": "Eintrag"
+  },
+  "entires": {
+    "en": "entries",
+    "de": "Einträge"
+  },
+  "favorite": {
+    "en": "favorite",
+    "de": "Lieblings -"
+  },
+  "latest": {
+    "en": "latest",
+    "de": "aktuell"
+  },
+  "first": {
+    "en": "first",
+    "de": "erster"
+  },
+  "edit": {
+    "en": "edit",
+    "de": "ändern"
+  },
+  "your_mood_was": {
+    "en": "Your mood was:",
+    "de": "Deine Stimmung war:"
+  },
+  "entry_is_empty": {
+    "en": "This diary entry is empty.",
+    "de": "Dieser Tagebucheintrag ist leer."
+  },
+  "entry_is_empty_descr": {
+    "en": "Edit your diary entry by tapping on the pencil icon.",
+    "de": "Bearbeite deinen Tagebucheintrag durch das drücken auf das Stift-Symbol."
+  },
+  "options": {
+    "en": "Options",
+    "de": "Optionen"
+  },
+  "delete": {
+    "en": "delete",
+    "de": "löschen"
+  },
+  "bad": {
+    "en": "bad",
+    "de": "schlecht"
+  },
+  "good": {
+    "en": "good",
+    "de": "gut"
+  },
+  "alright": {
+    "en": "alright",
+    "de": "in Ordnung"
   }
 }

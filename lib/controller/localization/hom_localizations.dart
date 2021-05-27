@@ -119,4 +119,64 @@ class HOMLocalizations {
   String get dateNotIncludedDescr {
     return getValue("date_not_included_descr");
   }
+
+  String get untitled {
+    return getValue("untitled");
+  }
+
+  String get entry {
+    return getValue("entry");
+  }
+
+  String get entires {
+    return getValue("entires");
+  }
+
+  String get favorite {
+    return getValue("favorite");
+  }
+
+  String get latest {
+    return getValue("latest");
+  }
+
+  String get first {
+    return getValue("first");
+  }
+
+  String get edit {
+    return getValue("edit");
+  }
+
+  String get yourMoodWas {
+    return getValue("your_mood_was");
+  }
+
+  String get entryIsEmpty {
+    return getValue("entry_is_empty");
+  }
+
+  String get entryIsEmptyDescr {
+    return getValue("entry_is_empty_descr");
+  }
+
+  String get options {
+    return getValue("options");
+  }
+
+  String get delete {
+    return getValue("delete");
+  }
+
+  String get bad {
+    return getValue("bad");
+  }
+
+  String get good {
+    return getValue("good");
+  }
+
+  String get alright {
+    return getValue("alright");
+  }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:history_of_me/controller/database/hive_db_service.dart';
 import 'package:history_of_me/controller/database/hive_query_controller.dart';
+import 'package:history_of_me/controller/localization/hom_localizations.dart';
 import 'package:history_of_me/controller/mood_translation_controller.dart';
 import 'package:history_of_me/config/config.dart';
 import 'package:history_of_me/model/diary_entry.dart';
@@ -17,6 +18,7 @@ class EntryDetailCard extends StatefulWidget {
   final bool isFirst;
   final bool isLast;
   final HiveQueryController? queryController;
+  final double minHeight;
   const EntryDetailCard({
     Key? key,
     required this.listIndex,
@@ -25,25 +27,27 @@ class EntryDetailCard extends StatefulWidget {
     required this.onEditCallback,
     required this.backdropPhotoHeight,
     this.backgroundDecoration = const BoxDecoration(
-      gradient: LinearGradient(
-          begin: Alignment.bottomLeft,
-          end: Alignment.topRight,
-          stops: const [
-            0.65,
-            1.00,
-          ],
-          colors: const [
-            const Color(0xFFf4f4f7),
-            const Color(0xFFd1cdcd),
-          ]),
+      gradient: const LinearGradient(
+        begin: Alignment.bottomLeft,
+        end: Alignment.topRight,
+        stops: [
+          0.65,
+          1.00,
+        ],
+        colors: [
+          Color(0xFFf4f4f7),
+          Color(0xFFd1cdcd),
+        ],
+      ),
       borderRadius: BorderRadius.only(
-        topLeft: Radius.circular(22),
-        topRight: Radius.circular(22),
+        topLeft: Radius.circular(22.0),
+        topRight: Radius.circular(22.0),
       ),
     ),
     required this.isFirst,
     required this.isLast,
     required this.queryController,
+    this.minHeight = 574.0,
   }) : super(key: key);
 
   @override
@@ -51,6 +55,8 @@ class EntryDetailCard extends StatefulWidget {
 }
 
 class _EntryDetailCardState extends State<EntryDetailCard> {
+  /// Returns the diary's number as a string label.
+  /// The value is based on the index in the hive box.
   String get _diaryNumberLabel {
     int number = widget.queryController!
             .getIndexChronologicallyByUID(widget.diaryEntry.uid) +
@@ -58,6 +64,7 @@ class _EntryDetailCardState extends State<EntryDetailCard> {
     return "$number";
   }
 
+  /// Toggles the 'favorite' state by updating the diary entry.
   void _onToggleFavorite() {
     HiveDBService().toggleDiaryEntryFavorite(widget.diaryEntry);
   }
@@ -67,14 +74,14 @@ class _EntryDetailCardState extends State<EntryDetailCard> {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(30),
-          topRight: Radius.circular(30),
+          topLeft: const Radius.circular(30),
+          topRight: const Radius.circular(30),
         ),
         color: Colors.white,
       ),
       child: ConstrainedBox(
         constraints: BoxConstraints(
-          minHeight: 574.0,
+          minHeight: widget.minHeight,
         ),
         child: Column(
           children: [
@@ -121,10 +128,11 @@ class _Header extends StatefulWidget {
 }
 
 class __HeaderState extends State<_Header> {
+  /// Returns the diary entry's title if available or return a fallback string
   String get _title {
     return widget.diaryEntry.title != initialDiaryEntryTitle
         ? widget.diaryEntry.title
-        : "Untitled";
+        : HOMLocalizations(context).untitled;
   }
 
   @override
@@ -141,50 +149,89 @@ class __HeaderState extends State<_Header> {
                   top: 16.0,
                   bottom: 4.0,
                   left: 24.0,
-                  right: 24.0,
+                  right: 16.0,
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          "Entry",
-                          style: LitTextStyles.sansSerifStyles[body].copyWith(
-                            fontSize: 16.5,
-                            letterSpacing: -0.22,
-                            fontWeight: FontWeight.w600,
-                            color: HexColor('#b2b2b2'),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: HexColor(
-                                "#b2b2b2",
-                              ),
-                              borderRadius: BorderRadius.circular(
-                                15.0,
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text(
+                              HOMLocalizations(context).entry,
+                              style:
+                                  LitTextStyles.sansSerifStyles[body].copyWith(
+                                fontSize: 16.5,
+                                letterSpacing: -0.22,
+                                fontWeight: FontWeight.w600,
+                                color: HexColor('#b2b2b2'),
                               ),
                             ),
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                vertical: 3.0,
-                                horizontal: 12.0,
-                              ),
-                              child: Text(
-                                //"${widget.index + 1}",
-                                widget.diaryNumberLabel,
-                                style: LitTextStyles.sansSerifStyles[body]
-                                    .copyWith(
-                                  fontWeight: black,
-                                  color: Colors.white,
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 8.0),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: HexColor(
+                                    "#b2b2b2",
+                                  ),
+                                  borderRadius: BorderRadius.circular(
+                                    15.0,
+                                  ),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    vertical: 3.0,
+                                    horizontal: 12.0,
+                                  ),
+                                  child: Text(
+                                    //"${widget.index + 1}",
+                                    widget.diaryNumberLabel,
+                                    style: LitTextStyles.sansSerifStyles[body]
+                                        .copyWith(
+                                      fontWeight: black,
+                                      color: Colors.white,
+                                    ),
+                                  ),
                                 ),
                               ),
                             ),
+                          ],
+                        ),
+                        LitGlowingButton(
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(14.0)),
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 8.0,
+                            horizontal: 18.0,
+                          ),
+                          onPressed: widget.onEditCallback,
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                  right: 4.0,
+                                ),
+                                child: Text(
+                                  HOMLocalizations(context).edit.toUpperCase(),
+                                  style: LitTextStyles.sansSerifStyles[button]
+                                      .copyWith(
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                              Icon(
+                                LitIcons.pencil,
+                                color: Colors.white,
+                                size: 16.0,
+                              ),
+                            ],
                           ),
                         ),
                       ],
@@ -217,23 +264,36 @@ class __HeaderState extends State<_Header> {
                         ],
                       ),
                     ),
-                    (widget.isLast | widget.isFirst)
-                        ? Padding(
-                            padding: const EdgeInsets.symmetric(
-                              vertical: 4.0,
-                            ),
-                            child: Row(
-                              children: [
-                                widget.isLast
-                                    ? _MetaLabel(title: "latest")
-                                    : SizedBox(),
-                                widget.isFirst
-                                    ? _MetaLabel(title: "first")
-                                    : SizedBox(),
-                              ],
-                            ),
-                          )
-                        : SizedBox()
+                    Row(
+                      children: [
+                        widget.isLast
+                            ? Padding(
+                                padding: EdgeInsets.only(
+                                  top: 4.0,
+                                  bottom: 4.0,
+                                  left: 0.0,
+                                  right: widget.isFirst ? 3.0 : 0,
+                                ),
+                                child: _MetaLabel(
+                                  title: HOMLocalizations(context).latest,
+                                ),
+                              )
+                            : SizedBox(),
+                        widget.isFirst
+                            ? Padding(
+                                padding: EdgeInsets.only(
+                                  top: 4.0,
+                                  bottom: 4.0,
+                                  left: widget.isLast ? 3.0 : 0.0,
+                                  right: 0.0,
+                                ),
+                                child: _MetaLabel(
+                                  title: HOMLocalizations(context).first,
+                                ),
+                              )
+                            : SizedBox(),
+                      ],
+                    ),
                   ],
                 ),
               ),
@@ -241,43 +301,6 @@ class __HeaderState extends State<_Header> {
                 moodScore: widget.diaryEntry.moodScore,
               ),
             ],
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(
-              vertical: 12.0,
-              horizontal: 16.0,
-            ),
-            child: Align(
-                alignment: Alignment.topRight,
-                child: LitGlowingButton(
-                  borderRadius: const BorderRadius.all(Radius.circular(14.0)),
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 8.0,
-                    horizontal: 18.0,
-                  ),
-                  onPressed: widget.onEditCallback,
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(
-                          right: 4.0,
-                        ),
-                        child: Text(
-                          "edit".toUpperCase(),
-                          style: LitTextStyles.sansSerifStyles[button].copyWith(
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                      Icon(
-                        LitIcons.pencil,
-                        color: Colors.white,
-                        size: 16.0,
-                      ),
-                    ],
-                  ),
-                )),
           ),
         ],
       ),
@@ -328,6 +351,14 @@ class __FavoriteButtonState extends State<_FavoriteButton>
     with TickerProviderStateMixin {
   late AnimationController _animationController;
 
+  Matrix4 get _transform {
+    double x = 0;
+    double y = ((widget.favorite! ? -8.0 : 8.0) +
+        (widget.favorite! ? 8.0 : -8.0) * _animationController.value);
+    double z = 0;
+    return Matrix4.translationValues(x, y, z);
+  }
+
   void _onTap() {
     _animationController
         .reverse(from: 1.0)
@@ -359,12 +390,7 @@ class __FavoriteButtonState extends State<_FavoriteButton>
             duration: _animationController.duration!,
             opacity: 0.5 + 0.5 * _animationController.value,
             child: Transform(
-              transform: Matrix4.translationValues(
-                  0,
-                  ((widget.favorite! ? -8.0 : 8.0) +
-                      (widget.favorite! ? 8.0 : -8.0) *
-                          _animationController.value),
-                  0),
+              transform: _transform,
               child: Icon(
                 widget.favorite! ? LitIcons.heart_solid : LitIcons.heart,
                 size: 26.0,
@@ -449,40 +475,43 @@ class _NoContentAvailableCard extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "This diary entry is empty.\n",
+          HOMLocalizations(context).entryIsEmpty,
           textAlign: TextAlign.left,
-          style: LitTextStyles.sansSerif.copyWith(
+          style: LitTextStyles.sansSerifStyles[body].copyWith(
             fontSize: 14.0,
-            letterSpacing: -0.05,
             fontWeight: FontWeight.w500,
             height: 1.7,
             color: HexColor('#939393'),
           ),
         ),
-        Row(
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            ExclamationRectangle(
-              width: 64.0,
-              height: 64.0,
-            ),
-            SizedBox(
-              width: MediaQuery.of(context).size.width - 60.0 - 64.0,
-              child: Padding(
-                padding: const EdgeInsets.only(left: 16.0),
-                child: Text(
-                  "Edit your diary entry by clicking on the pencil icon.",
-                  style: LitTextStyles.sansSerif.copyWith(
-                    fontSize: 14.0,
-                    letterSpacing: -0.15,
-                    fontWeight: FontWeight.w600,
-                    height: 1.7,
-                    color: HexColor('#939393'),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 24.0),
+          child: Row(
+            mainAxisSize: MainAxisSize.max,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              ExclamationRectangle(
+                width: 64.0,
+                height: 64.0,
+              ),
+              SizedBox(
+                width: MediaQuery.of(context).size.width - 60.0 - 64.0,
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 16.0),
+                  child: Text(
+                    HOMLocalizations(context).entryIsEmptyDescr,
+                    style: LitTextStyles.sansSerif.copyWith(
+                      fontSize: 14.0,
+                      letterSpacing: -0.15,
+                      fontWeight: FontWeight.w600,
+                      height: 1.7,
+                      color: HexColor('#939393'),
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         )
       ],
     );
@@ -508,9 +537,7 @@ class __MoodScoreIndicatorState extends State<_MoodScoreIndicator>
   String get _moodTranslationString {
     return MoodTranslationController(
       moodScore: widget.moodScore,
-      badMoodTranslation: "bad",
-      mediumMoodTranslation: "alright",
-      goodMoodTranslation: "good",
+      context: context,
     ).translatedLabelText.toUpperCase();
   }
 
@@ -565,7 +592,7 @@ class __MoodScoreIndicatorState extends State<_MoodScoreIndicator>
                 mainAxisSize: MainAxisSize.max,
                 children: [
                   Text(
-                    "Your mood was:",
+                    HOMLocalizations(context).yourMoodWas,
                     style: LitTextStyles.sansSerif.copyWith(
                       fontSize: 13.0,
                       letterSpacing: 0.25,
