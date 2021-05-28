@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:history_of_me/controller/localization/hom_localizations.dart';
 import 'package:history_of_me/controller/routes/hom_navigator.dart';
 import 'package:history_of_me/config/config.dart';
 import 'package:history_of_me/model/diary_entry.dart';
@@ -223,7 +224,7 @@ class __EntryCardState extends State<_EntryCard> {
   /// Returns the entry's formatted date.
   String get _formattedDiaryDate {
     DateTime date = DateTime.parse(widget.diaryEntry.date);
-    return date.formatAsLocalizedDate();
+    return date.formatAsLocalizedDate(context);
   }
 
   /// Returns the entry's last updated string.
@@ -236,7 +237,9 @@ class __EntryCardState extends State<_EntryCard> {
   }
 
   String get _title {
-    return _titleAvailable ? widget.diaryEntry.title : "Untitled";
+    return _titleAvailable
+        ? widget.diaryEntry.title
+        : HOMLocalizations(context).untitled;
   }
 
   double get _portraitWidth {

@@ -162,5 +162,17 @@
   "alright": {
     "en": "alright",
     "de": "in Ordnung"
+  },
+  "no_favorites_available": {
+    "en": "No favorites available",
+    "de": "Keine Favoriten verfügbar"
+  },
+  "no_favorites_available_descr": {
+    "en": "Add an entry to your favorites on your diary entry.",
+    "de": "Auf der Lese-Ansicht kannst du Tagebucheinträge zu deinen Lieblingseinträge hinzufügen."
+  },
+  "all": {
+    "en": "all",
+    "de": "alle"
   }
 }

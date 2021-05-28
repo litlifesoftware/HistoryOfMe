@@ -100,7 +100,7 @@ class _DetailsCard extends StatelessWidget {
               _BackdropCardDetailItem(
                 detailLabel: "Published",
                 detailValue:
-                    "${DateTime.parse(backdropPhoto.published!).formatAsLocalizedDateWithWeekday()}",
+                    "${DateTime.parse(backdropPhoto.published!).formatAsLocalizedDateWithWeekday(context)}",
                 constraints: constraints,
               ),
               backdropPhoto.description != null

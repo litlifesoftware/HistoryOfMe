@@ -5,6 +5,7 @@ export './editable_item_meta_info.dart';
 export './lit_toggle_button_group.dart';
 export './purple_pink_button.dart';
 export './updated_label_text.dart';
+export './feedback_description_text.dart';
 export './bookmark/bookmark_back.dart';
 export './bookmark/bookmark_back_preview.dart';
 export './bookmark/bookmark_container.dart';

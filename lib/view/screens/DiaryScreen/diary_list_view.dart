@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:history_of_me/controller/localization/hom_localizations.dart';
 import 'package:history_of_me/model/diary_entry.dart';
 import 'package:history_of_me/model/user_data.dart';
+import 'package:history_of_me/view/shared/shared.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';
 
 import 'diary_bookmark_header.dart';
@@ -136,12 +138,14 @@ class __NestedScrollViewBodyState extends State<_NestedScrollViewBody> {
                             ? DiaryListTile(
                                 animationController: widget.animationController,
                                 listIndex: listIndex,
-                                diaryEntry: diaryEntry)
+                                diaryEntry: diaryEntry,
+                              )
                             : SizedBox()
                         : DiaryListTile(
                             animationController: widget.animationController,
                             listIndex: listIndex,
-                            diaryEntry: diaryEntry);
+                            diaryEntry: diaryEntry,
+                          );
                   },
                 );
         },
@@ -164,7 +168,10 @@ class _NoFavoriteEntriesCard extends StatelessWidget {
       builder: (context, _) {
         return Transform(
           transform: Matrix4.translationValues(
-              -30 + (30 * animationController!.value), 0, 0),
+            -30 + (30 * animationController!.value),
+            0,
+            0,
+          ),
           child: FadeTransition(
             opacity: animationController!,
             child: Padding(
@@ -175,43 +182,20 @@ class _NoFavoriteEntriesCard extends StatelessWidget {
               child: LitConstrainedSizedBox(
                 landscapeWidthFactor: 0.45,
                 child: ScrollableColumn(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "No Favorites Available",
-                      textAlign: TextAlign.center,
-                      style: LitTextStyles.sansSerif.copyWith(
+                      HOMLocalizations(context).noFavoritesAvailable,
+                      textAlign: TextAlign.left,
+                      style: LitTextStyles.sansSerifStyles[header6].copyWith(
                         color: HexColor('#8A8A8A'),
-                        fontSize: 18.0,
-                        fontWeight: FontWeight.w700,
                         letterSpacing: 1.0,
                       ),
                     ),
                     SizedBox(height: 16.0),
-                    LayoutBuilder(builder: (context, constraints) {
-                      return Row(
-                        children: [
-                          Align(
-                            alignment: Alignment.center,
-                            child: SizedBox(
-                              width: constraints.maxWidth * 0.25,
-                              child: Center(child: ExclamationRectangle()),
-                            ),
-                          ),
-                          SizedBox(
-                            width: constraints.maxWidth * 0.75,
-                            child: Text(
-                              "Add an entry to your favorites by tapping the heart icon on your diary entry.",
-                              style: LitTextStyles.sansSerif.copyWith(
-                                color: HexColor('#8A8A8A'),
-                                fontSize: 13.0,
-                                fontWeight: FontWeight.w600,
-                                letterSpacing: 0.0,
-                              ),
-                            ),
-                          ),
-                        ],
-                      );
-                    }),
+                    FeedbackDescriptionText(
+                      text: HOMLocalizations(context).noFavoritesAvailableDescr,
+                    ),
                   ],
                 ),
               ),

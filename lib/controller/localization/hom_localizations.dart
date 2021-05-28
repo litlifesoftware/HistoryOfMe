@@ -179,4 +179,16 @@ class HOMLocalizations {
   String get alright {
     return getValue("alright");
   }
+
+  String get noFavoritesAvailable {
+    return getValue("no_favorites_available");
+  }
+
+  String get noFavoritesAvailableDescr {
+    return getValue("no_favorites_available_descr");
+  }
+
+  String get all {
+    return getValue("all");
+  }
 }

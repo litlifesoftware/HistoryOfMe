@@ -5,6 +5,7 @@ import 'package:history_of_me/controller/localization/hom_localizations.dart';
 import 'package:history_of_me/controller/mood_translation_controller.dart';
 import 'package:history_of_me/config/config.dart';
 import 'package:history_of_me/model/diary_entry.dart';
+import 'package:history_of_me/view/shared/shared.dart';
 import 'package:history_of_me/view/shared/updated_label_text.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';
 
@@ -428,7 +429,7 @@ class _TextPreview extends StatelessWidget {
               padding: const EdgeInsets.symmetric(vertical: 8.0),
               child: Text(
                 DateTime.parse(diaryEntry.date)
-                    .formatAsLocalizedDateWithWeekday(),
+                    .formatAsLocalizedDateWithWeekday(context),
                 style: LitTextStyles.sansSerif.copyWith(
                   fontSize: 15.4,
                   letterSpacing: 0.15,
@@ -486,31 +487,8 @@ class _NoContentAvailableCard extends StatelessWidget {
         ),
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 24.0),
-          child: Row(
-            mainAxisSize: MainAxisSize.max,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              ExclamationRectangle(
-                width: 64.0,
-                height: 64.0,
-              ),
-              SizedBox(
-                width: MediaQuery.of(context).size.width - 60.0 - 64.0,
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 16.0),
-                  child: Text(
-                    HOMLocalizations(context).entryIsEmptyDescr,
-                    style: LitTextStyles.sansSerif.copyWith(
-                      fontSize: 14.0,
-                      letterSpacing: -0.15,
-                      fontWeight: FontWeight.w600,
-                      height: 1.7,
-                      color: HexColor('#939393'),
-                    ),
-                  ),
-                ),
-              ),
-            ],
+          child: FeedbackDescriptionText(
+            text: HOMLocalizations(context).entryIsEmptyDescr,
           ),
         )
       ],

@@ -139,7 +139,7 @@ class _UserProfileCardState extends State<UserProfileCard> {
                               child: ClippedText(
                                 DateTime.fromMillisecondsSinceEpoch(
                                         widget.userData.created)
-                                    .formatAsLocalizedDate(),
+                                    .formatAsLocalizedDate(context),
                                 style: LitTextStyles.sansSerifBody,
                               ),
                             ),

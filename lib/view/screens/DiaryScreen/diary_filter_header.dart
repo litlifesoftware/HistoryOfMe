@@ -37,6 +37,7 @@ class _DiaryFilterHeaderState extends State<DiaryFilterHeader>
     return portraitWidth * widget.landscapeWidthFactor;
   }
 
+  /// Returns the amount of filted entires in human-readable format.
   String get _entriesLabel {
     final String entry = HOMLocalizations(context).entry;
     final String entires = HOMLocalizations(context).entires;
@@ -44,12 +45,6 @@ class _DiaryFilterHeaderState extends State<DiaryFilterHeader>
 
     final bool plural =
         (widget.filteredLength > 1) || (widget.filteredLength == 0);
-
-    // return  widget.showFavoritesOnly!
-    //                                   ? TextSpan(
-    //                                       text: " favorite ",
-    //                                       style: widget.accentTextStyle)
-    //                                   : TextSpan(),
 
     if (widget.showFavoritesOnly!) {
       if (plural) {
@@ -98,14 +93,9 @@ class _DiaryFilterHeaderState extends State<DiaryFilterHeader>
       floating: true,
       delegate: DiaryFilterHeaderDelegate(
         Container(
-          decoration: BoxDecoration(color: Colors.white, boxShadow: [
-            // BoxShadow(
-            //   blurRadius: 16.0,
-            //   color: Colors.grey.withOpacity(0.2),
-            //   offset: const Offset(0, -2),
-            //   spreadRadius: 2.0,
-            // )
-          ]),
+          decoration: BoxDecoration(
+            color: Colors.white,
+          ),
           child: SizedBox(
             width: alternativeWidth(MediaQuery.of(context).size,
                 portraitWidth: portraitWidth, landscapeWidth: landscapeWidth),
@@ -113,39 +103,40 @@ class _DiaryFilterHeaderState extends State<DiaryFilterHeader>
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 AnimatedBuilder(
-                    animation: _animationController,
-                    builder: (context, _) {
-                      return AnimatedOpacity(
-                        duration: _animationController.duration!,
-                        opacity: _animationController.value,
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(
-                            vertical: 16.0,
-                            horizontal: 8.0,
-                          ),
-                          child: Align(
-                            alignment: Alignment.topCenter,
-                            child: RichText(
-                              text: TextSpan(
-                                style: widget.textStyle,
-                                children: [
-                                  TextSpan(text: "${widget.filteredLength}"),
-                                  TextSpan(
-                                      text: _entriesLabel,
-                                      style: widget.accentTextStyle),
-                                ],
-                              ),
+                  animation: _animationController,
+                  builder: (context, _) {
+                    return AnimatedOpacity(
+                      duration: _animationController.duration!,
+                      opacity: _animationController.value,
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                          vertical: 16.0,
+                          horizontal: 8.0,
+                        ),
+                        child: Align(
+                          alignment: Alignment.topCenter,
+                          child: RichText(
+                            text: TextSpan(
+                              style: widget.textStyle,
+                              children: [
+                                TextSpan(text: "${widget.filteredLength}"),
+                                TextSpan(
+                                    text: _entriesLabel,
+                                    style: widget.accentTextStyle),
+                              ],
                             ),
                           ),
                         ),
-                      );
-                    }),
+                      ),
+                    );
+                  },
+                ),
                 Padding(
                   padding: const EdgeInsets.symmetric(
                     vertical: 12.0,
                   ),
                   child: SizedBox(
-                    width: 100.0,
+                    width: 112.0,
                     child: LitSliderToggleButton(
                       onPressed: _onShowFavoritesOnlyToggle,
                       enabledTitle: Icon(
@@ -155,8 +146,8 @@ class _DiaryFilterHeaderState extends State<DiaryFilterHeader>
                             ? widget.accentTextStyle.color
                             : widget.textStyle.color,
                       ),
-                      disabledTitle: Text(
-                        "all",
+                      disabledTitle: ClippedText(
+                        HOMLocalizations(context).all,
                         style: widget.textStyle.copyWith(
                           color: widget.showFavoritesOnly!
                               ? widget.textStyle.color

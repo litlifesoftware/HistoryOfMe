@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:history_of_me/config/config.dart';
 import 'package:history_of_me/config/styles.dart';
 import 'package:history_of_me/controller/database/hive_db_service.dart';
 import 'package:history_of_me/controller/database/hive_query_controller.dart';
@@ -11,10 +10,7 @@ import 'package:history_of_me/model/user_data.dart';
 import 'package:history_of_me/view/shared/bookmark/bookmark_front_preview.dart';
 import 'package:history_of_me/view/shared/purple_pink_button.dart';
 import 'package:hive/hive.dart';
-import 'package:lit_localization_service/lit_localization_service.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';
-
-import 'create_entry_dialog.dart';
 import 'diary_list_view.dart';
 
 /// A screen widget displaying the user's diary on a vertical listview.
