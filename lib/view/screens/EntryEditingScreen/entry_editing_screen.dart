@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:history_of_me/controller/database/hive_db_service.dart';
+import 'package:history_of_me/controller/localization/hom_localizations.dart';
 import 'package:history_of_me/controller/mood_translation_controller.dart';
 import 'package:history_of_me/config/config.dart';
 import 'package:history_of_me/model/diary_entry.dart';
@@ -43,19 +44,19 @@ class _EntryEditingScreenState extends State<EntryEditingScreen>
   late String _content;
 
   /// The [FocusNode] to control the focus on the title's [EditableText].
-  FocusNode? _titleEditFocusNode;
+  final FocusNode _titleEditFocusNode = FocusNode();
 
   /// The [FocusNode] to control the focus on the content's [EditableText].
-  FocusNode? _contentEditFocusNode;
+  final FocusNode _contentEditFocusNode = FocusNode();
 
   /// The controller to track the user's input on the title text.
-  TextEditingController? _titleEditingController;
+  late TextEditingController _titleEditingController;
 
   /// The controller to track the user's input on the content text.
-  TextEditingController? _contentEditingController;
+  late TextEditingController _contentEditingController;
 
-  ScrollController? _scrollController;
-  AnimationController? _fadeInAnimationController;
+  final ScrollController _scrollController = ScrollController();
+  late AnimationController _fadeInAnimationController;
 
   late LitRouteController _routeController;
   //TODO
@@ -63,16 +64,21 @@ class _EntryEditingScreenState extends State<EntryEditingScreen>
   /// screen may is initialized without a database reference with default values only.
   ///
   /// ===> detect any db changes using the ValueListener
-
+  ///
+  /// Syncs the editing controllers' text input with the corresponding state
+  /// values to check for any changes made to the inital values.
+  ///
+  /// This must rather be done on the didChangeDependencies method because the
+  /// listeners will be overriden on this very method.
   void _syncTextEditingControllerChanges() {
-    _titleEditingController!.addListener(() {
+    _titleEditingController.addListener(() {
       setState(() {
-        _title = _titleEditingController!.text;
+        _title = _titleEditingController.text;
       });
     });
-    _contentEditingController!.addListener(() {
+    _contentEditingController.addListener(() {
       setState(() {
-        _content = _contentEditingController!.text;
+        _content = _contentEditingController.text;
       });
     });
   }
@@ -113,13 +119,18 @@ class _EntryEditingScreenState extends State<EntryEditingScreen>
   // bool _moodScoreChanged;
 
   void _onSaveChanges() {
+    // Verify the title has been modified (does not equal the localized string).
+    String title =
+        (_titleEditingController.text != HOMLocalizations(context).untitled)
+            ? _titleEditingController.text
+            : "";
     DiaryEntry updatedDiaryEntry = DiaryEntry(
       uid: widget.diaryEntry.uid,
       date: widget.diaryEntry.date,
       created: widget.diaryEntry.created,
       lastUpdated: DateTime.now().millisecondsSinceEpoch,
-      title: _titleEditingController!.text,
-      content: _contentEditingController!.text,
+      title: title,
+      content: _contentEditingController.text,
       moodScore: _moodScore,
       favorite: widget.diaryEntry.favorite,
       backdropPhotoId: widget.diaryEntry.backdropPhotoId,
@@ -170,49 +181,64 @@ class _EntryEditingScreenState extends State<EntryEditingScreen>
     );
   }
 
+  /// Initializes the [_titleEditingController] using diary enty's title or
+  /// the localized 'untitled' string, if none title is available.
+  ///
+  /// The initialization must be done twice during runtime. First on the
+  /// initState method using an empty string to avoid null values on the
+  /// widget's build procedure and the second time on the didChangeDependencies
+  /// method to replace the empty string with the localized value for
+  /// 'untitled'.
+  void _initTitleEditingController(String fallbackValue) {
+    _titleEditingController = TextEditingController(
+        text: widget.diaryEntry.title != initialDiaryEntryTitle
+            ? widget.diaryEntry.title
+            : fallbackValue);
+  }
+
   @override
   void initState() {
     super.initState();
 
     _title = widget.diaryEntry.title;
     _content = widget.diaryEntry.content;
-
-    // _titleChanged = false;
-    // _contentChanged = false;
-    // _moodScoreChanged = false;
-
     _moodScore = widget.diaryEntry.moodScore;
 
-    _fadeInAnimationController =
-        AnimationController(duration: Duration(milliseconds: 540), vsync: this);
+    _fadeInAnimationController = AnimationController(
+      duration: Duration(milliseconds: 540),
+      vsync: this,
+    );
 
-    _titleEditFocusNode = FocusNode();
-    _titleEditingController = TextEditingController(
-        text: widget.diaryEntry.title != initialDiaryEntryTitle
-            ? widget.diaryEntry.title
-            : 'Untitled');
+    // Initialized using empty string.
+    _initTitleEditingController("");
     //_titleEditingController.addListener(_titleEditingControllerListener);
-    _contentEditFocusNode = FocusNode();
+
     _contentEditingController =
         TextEditingController(text: widget.diaryEntry.content);
     //_contentEditingController.addListener(_contentEditingControllerListener);
-    _scrollController = ScrollController();
 
     _routeController = LitRouteController(context);
+    //_syncTextEditingControllerChanges();
+    _fadeInAnimationController.forward();
+  }
+
+  @override
+  void didChangeDependencies() {
+    // Reinitalized using localized string.
+    _initTitleEditingController(HOMLocalizations(context).untitled);
     _syncTextEditingControllerChanges();
-    _fadeInAnimationController!.forward();
+    super.didChangeDependencies();
   }
 
   @override
   void dispose() {
-    _fadeInAnimationController!.dispose();
+    _fadeInAnimationController.dispose();
 
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    print("title: ${_titleEditingController!.text}");
     return ValueListenableBuilder(
       valueListenable: HiveDBService().getDiaryEntries(),
       builder: (BuildContext context, Box<DiaryEntry> entriesBox, Widget? _) {
@@ -233,7 +259,7 @@ class _EntryEditingScreenState extends State<EntryEditingScreen>
             child: Stack(
               children: [
                 AnimatedBuilder(
-                  animation: _fadeInAnimationController!,
+                  animation: _fadeInAnimationController,
                   builder: (BuildContext context, Widget? _) {
                     return Stack(
                       children: [
@@ -249,8 +275,7 @@ class _EntryEditingScreenState extends State<EntryEditingScreen>
                                 transform: Matrix4.translationValues(
                                     0,
                                     -50 +
-                                        (50 *
-                                            _fadeInAnimationController!.value),
+                                        (50 * _fadeInAnimationController.value),
                                     0),
                                 child: Column(
                                   children: [
