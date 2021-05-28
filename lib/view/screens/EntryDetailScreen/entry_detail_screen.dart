@@ -4,9 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:history_of_me/controller/database/hive_db_service.dart';
 import 'package:history_of_me/controller/database/hive_query_controller.dart';
+import 'package:history_of_me/controller/localization/hom_localizations.dart';
 import 'package:history_of_me/controller/routes/hom_navigator.dart';
 import 'package:history_of_me/model/backdrop_photo.dart';
 import 'package:history_of_me/model/diary_entry.dart';
+import 'package:history_of_me/view/shared/art/ellipse_icon.dart';
 import 'package:hive/hive.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';
 
@@ -167,16 +169,14 @@ class _EntryDetailScreenState extends State<EntryDetailScreen>
       settingsPanel: LitSettingsPanel(
         height: 128.0,
         controller: _settingsPanelController,
-        title: "Options",
+        title: HOMLocalizations(context).options,
         children: [
           LitPushedThroughButton(
             backgroundColor: LitColors.lightPink,
             child: ClippedText(
-              "Delete",
-              style: LitTextStyles.sansSerif.copyWith(
+              HOMLocalizations(context).delete.toUpperCase(),
+              style: LitTextStyles.sansSerifStyles[button].copyWith(
                 color: Colors.white,
-                fontWeight: FontWeight.w700,
-                fontSize: 16.0,
               ),
             ),
             onPressed: _showConfirmEntryDeletionCallback,
@@ -186,43 +186,15 @@ class _EntryDetailScreenState extends State<EntryDetailScreen>
       body: ValueListenableBuilder(
         valueListenable: HiveDBService().getDiaryEntries(),
         builder: (BuildContext context, Box<DiaryEntry> entriesBox, Widget? _) {
-          /// Ensure the entry has not been deleted yet (if it's the latest one available).
-
           final DiaryEntry? diaryEntry = entriesBox.get(widget.diaryEntryUid);
 
+          /// Verify the entry has not been deleted yet.
           if (diaryEntry != null) {
-            // final List<dynamic> diaryEntriesSorted =
-            //     _hiveQueryController.diaryEntriesSorted;
-
             final int lastIndex = (entriesBox.length - 1);
 
             final bool _isFirst = entriesBox.getAt(0)!.uid == diaryEntry.uid;
             final bool _isLast =
                 entriesBox.getAt(lastIndex)!.uid == diaryEntry.uid;
-
-            // final int _indexChronologically =
-            //     _hiveQueryController.getIndexChronologically(diaryEntry);
-
-            // final bool _previousEntryExists = _indexChronologically > 0;
-            // final bool _nextEntryExists =
-            //     _indexChronologically < (diaryEntriesSorted.length - 1);
-
-            // final String previousEntryUID =
-            //     _hiveQueryController.previousEntryExists(diaryEntry)
-            //         ? _hiveQueryController
-            //             .getPreviousDiaryEntry(_indexChronologically)
-            //             .uid
-            //         : diaryEntry.uid;
-
-            // final String nextEntryUID =
-            //     _hiveQueryController.nextEntryExists(diaryEntry)
-            //         ? diaryEntriesSorted[_indexChronologically + 1].uid
-            //         : diaryEntry.uid;
-
-            //print("chronological index $_indexChronologically");
-            print("current entry uid ${diaryEntry.uid}");
-            //print("previous entry uid $previousEntryUID");
-            //print("next entry uid $nextEntryUID");
 
             return LayoutBuilder(builder: (context, constraints) {
               return Container(
@@ -244,11 +216,6 @@ class _EntryDetailScreenState extends State<EntryDetailScreen>
                         children: [
                           EntryDetailCard(
                             backdropPhotoHeight: widget.backdropPhotoHeight,
-                            // relativeLandscapePhotoHeight:
-                            //     widget.landscapePhotoHeight,
-                            // relativePortraitPhotoHeight:
-                            //     widget.portraitPhotoHeight,
-                            //index: widget.index,
                             boxLength: entriesBox.length,
                             listIndex: widget.listIndex,
                             isFirst: _isFirst,
@@ -354,38 +321,9 @@ class _EntryDetailFooter extends StatelessWidget {
             Row(
               children: [
                 showPreviousButton
-                    ? Padding(
-                        padding: const EdgeInsets.only(
-                          right: 8.0,
-                        ),
-                        child: LitGradientButton(
-                          boxShadow: buttonBoxShadow,
-                          padding: const EdgeInsets.symmetric(
-                            vertical: 12.0,
-                            horizontal: 16.0,
-                          ),
-                          child: Row(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                  right: 4.0,
-                                ),
-                                child: Icon(
-                                  LitIcons.chevron_left_solid,
-                                  size: 14.0,
-                                  color: LitTextStyles
-                                      .sansSerifStyles[button].color,
-                                ),
-                              ),
-                              Text(
-                                "Previous".toUpperCase(),
-                                style: LitTextStyles.sansSerifStyles[button],
-                              )
-                            ],
-                          ),
-                          accentColor: Colors.grey[200]!,
-                          onPressed: onPreviousPressed,
-                        ),
+                    ? _BottomNavButton(
+                        isPrevious: true,
+                        onPressed: onPreviousPressed,
                       )
                     : SizedBox(),
                 showNextButton
@@ -393,35 +331,10 @@ class _EntryDetailFooter extends StatelessWidget {
                         padding: const EdgeInsets.only(
                           left: 8.0,
                         ),
-                        child: LitGradientButton(
-                          boxShadow: buttonBoxShadow,
-                          padding: const EdgeInsets.symmetric(
-                            vertical: 12.0,
-                            horizontal: 16.0,
-                          ),
-                          child: Row(
-                            children: [
-                              Text(
-                                "Next".toUpperCase(),
-                                style: LitTextStyles.sansSerifStyles[button],
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                  left: 4.0,
-                                ),
-                                child: Icon(
-                                  LitIcons.chevron_right_solid,
-                                  size: 14.0,
-                                  color: LitTextStyles
-                                      .sansSerifStyles[button].color,
-                                ),
-                              ),
-                            ],
-                          ),
-                          accentColor: Colors.grey[200]!,
+                        child: _BottomNavButton(
+                          isPrevious: false,
                           onPressed: onNextPressed,
-                        ),
-                      )
+                        ))
                     : SizedBox()
               ],
             ),
@@ -436,7 +349,7 @@ class _EntryDetailFooter extends StatelessWidget {
                 vertical: 12.0,
                 horizontal: 16.0,
               ),
-              child: EllipsisIcon(
+              child: EllipseIcon(
                 animated: false,
                 dotColor: Colors.white,
               ),
@@ -451,141 +364,74 @@ class _EntryDetailFooter extends StatelessWidget {
   }
 }
 
-class EllipsisIcon extends StatefulWidget {
-  final bool animated;
-  final Axis axis;
-  final double dotHeight;
-  final double dotWidth;
-  final Color dotColor;
-  final List<BoxShadow> boxShadow;
+/// A button enabling to navigate between all available diary entries.
+class _BottomNavButton extends StatelessWidget {
+  final bool isPrevious;
+  final void Function() onPressed;
 
-  const EllipsisIcon(
-      {Key? key,
-      this.animated = true,
-      this.axis = Axis.horizontal,
-      this.dotHeight = 8.0,
-      this.dotWidth = 8.0,
-      this.dotColor = LitColors.mediumGrey,
-      this.boxShadow = const [
-        BoxShadow(
-          blurRadius: 3.0,
-          color: Colors.black12,
-          offset: Offset(
-            1.0,
-            1.0,
-          ),
-          spreadRadius: 1.0,
-        )
-      ]})
-      : super(key: key);
-
-  @override
-  _EllipsisIconState createState() => _EllipsisIconState();
-}
-
-class _EllipsisIconState extends State<EllipsisIcon>
-    with TickerProviderStateMixin {
-  AnimationController? _animationController;
-
-  @override
-  void initState() {
-    super.initState();
-    _animationController = AnimationController(
-      duration: Duration(
-        milliseconds: 590,
-      ),
-      vsync: this,
-    );
-    if (widget.animated) {
-      _animationController!.forward();
-    }
-  }
-
-  @override
-  void dispose() {
-    _animationController!.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return AnimatedBuilder(
-      animation: _animationController!,
-      builder: (context, _) {
-        final List<Widget> children = [];
-        for (int i = 0; i < 3; i++) {
-          children.add(
-            _Dot(
-              animated: widget.animated,
-              axis: widget.axis,
-              animationController: _animationController,
-              height: widget.dotHeight,
-              width: widget.dotWidth,
-              color: widget.dotColor,
-              boxShadow: widget.boxShadow,
-            ),
-          );
-        }
-        return widget.axis == Axis.horizontal
-            ? Row(
-                mainAxisSize: MainAxisSize.min,
-                children: children,
-              )
-            : Column(
-                mainAxisSize: MainAxisSize.min,
-                children: children,
-              );
-      },
-    );
-  }
-}
-
-class _Dot extends StatelessWidget {
-  final AnimationController? animationController;
-  final bool animated;
-  final double height;
-  final double width;
-  final Color color;
-  final List<BoxShadow> boxShadow;
-  final Axis axis;
-  const _Dot({
+  const _BottomNavButton({
     Key? key,
-    required this.animationController,
-    required this.animated,
-    required this.height,
-    required this.width,
-    required this.color,
-    required this.boxShadow,
-    required this.axis,
+    required this.isPrevious,
+    required this.onPressed,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return Transform(
-      transform: animated
-          ? Matrix4.translationValues(
-              -8.0 + 8.0 * (animationController!.value),
-              0,
-              0,
-            )
-          : Matrix4.translationValues(
-              0,
-              0,
-              0,
-            ),
-      child: Padding(
+    return Padding(
+      padding: const EdgeInsets.only(
+        right: 8.0,
+      ),
+      child: LitGradientButton(
+        boxShadow: const [
+          const BoxShadow(
+            blurRadius: 6.0,
+            color: Colors.black26,
+            offset: Offset(2, 2),
+            spreadRadius: -1.0,
+          )
+        ],
         padding: const EdgeInsets.symmetric(
-          horizontal: 2.0,
-          vertical: 1.0,
+          vertical: 12.0,
+          horizontal: 16.0,
         ),
-        child: Container(
-          height: height,
-          width: width,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(4),
-            color: color,
-            boxShadow: boxShadow,
-          ),
+        child: Row(
+          children: [
+            isPrevious
+                ? Padding(
+                    padding: const EdgeInsets.only(
+                      right: 4.0,
+                    ),
+                    child: Icon(
+                      LitIcons.chevron_left_solid,
+                      size: 14.0,
+                      color: LitTextStyles.sansSerifStyles[button].color,
+                    ),
+                  )
+                : SizedBox(),
+            Text(
+              (isPrevious
+                      ? HOMLocalizations(context).previous
+                      : HOMLocalizations(context).next)
+                  .toUpperCase(),
+              style: LitTextStyles.sansSerifStyles[button].copyWith(
+                fontSize: 13.0,
+              ),
+            ),
+            !isPrevious
+                ? Padding(
+                    padding: const EdgeInsets.only(
+                      left: 4.0,
+                    ),
+                    child: Icon(
+                      LitIcons.chevron_right_solid,
+                      size: 14.0,
+                      color: LitTextStyles.sansSerifStyles[button].color,
+                    ),
+                  )
+                : SizedBox(),
+          ],
         ),
+        accentColor: Colors.grey[200]!,
+        onPressed: onPressed,
       ),
     );
   }

@@ -191,4 +191,12 @@ class HOMLocalizations {
   String get all {
     return getValue("all");
   }
+
+  String get previous {
+    return getValue("previous");
+  }
+
+  String get next {
+    return getValue("next");
+  }
 }

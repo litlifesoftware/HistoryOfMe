@@ -141,7 +141,7 @@
   },
   "entry_is_empty_descr": {
     "en": "Edit your diary entry by tapping on the pencil icon.",
-    "de": "Bearbeite deinen Tagebucheintrag durch das drücken auf das Stift-Symbol."
+    "de": "Bearbeite deinen Tagebucheintrag durch Drücken auf den Ändern-Knopf oben rechts."
   },
   "options": {
     "en": "Options",
@@ -174,5 +174,13 @@
   "all": {
     "en": "all",
     "de": "alle"
+  },
+  "previous": {
+    "en": "previous",
+    "de": "zurück"
+  },
+  "next": {
+    "en": "next",
+    "de": "vor"
   }
 }
