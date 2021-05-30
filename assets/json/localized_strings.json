@@ -182,5 +182,33 @@
   "next": {
     "en": "next",
     "de": "vor"
+  },
+  "choose_photo": {
+    "en": "Choose a photo",
+    "de": "Wähle ein Foto"
+  },
+  "selected": {
+    "en": "selected",
+    "de": "ausgewählt"
+  },
+  "details": {
+    "en": "details",
+    "de": "Details"
+  },
+  "creator": {
+    "en": "creator",
+    "de": "Ersteller"
+  },
+  "location": {
+    "en": "location",
+    "de": "Ort"
+  },
+  "published": {
+    "en": "published",
+    "de": "veröffentlicht"
+  },
+  "backdrop_photo_descr": {
+    "en": "What the creator is telling us about this photo:",
+    "de": "Was der Ersteller uns über das Foto erzählt:"
   }
 }

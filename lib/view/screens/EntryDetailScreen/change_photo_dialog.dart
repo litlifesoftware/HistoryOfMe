@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:history_of_me/controller/database/hive_db_service.dart';
 import 'package:history_of_me/config/config.dart';
+import 'package:history_of_me/controller/localization/hom_localizations.dart';
 import 'package:history_of_me/model/backdrop_photo.dart';
 import 'package:history_of_me/model/diary_entry.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';
 
 class ChangePhotoDialog extends StatefulWidget {
-  // final List<String> imageNames;
   final double borderRadius;
   final List<BackdropPhoto> backdropPhotos;
   final DiaryEntry diaryEntry;
   final double minHeight;
   const ChangePhotoDialog({
     Key? key,
-    //@required this.imageNames,
     this.borderRadius = 16.0,
     required this.backdropPhotos,
     required this.diaryEntry,
@@ -47,6 +46,21 @@ class _ChangePhotoDialogState extends State<ChangePhotoDialog>
     }
   }
 
+  List<Widget> get _listItems {
+    List<Widget> children = [];
+    for (int i = 0; i < widget.backdropPhotos.length; i++) {
+      children.add(
+        _BackdropPhotoSelectableItem(
+          backdropPhoto: widget.backdropPhotos[i],
+          setSelectedImage: setSelectedImage,
+          selected: _isSelected(widget.backdropPhotos[i].id),
+          animationController: _appearAnimationController,
+        ),
+      );
+    }
+    return children;
+  }
+
   @override
   void initState() {
     super.initState();
@@ -65,31 +79,21 @@ class _ChangePhotoDialogState extends State<ChangePhotoDialog>
         topLeft: const Radius.circular(24.0),
         topRight: const Radius.circular(24.0),
       ),
-      titleText: "Choose a photo",
+      titleText: HOMLocalizations(context).choosePhoto,
       minHeight: widget.minHeight,
-      leading:
-          DialogBackButton(onPressed: LitRouteController(context).closeDialog),
+      leading: DialogBackButton(
+        onPressed: LitRouteController(context).closeDialog,
+      ),
       child: Builder(
         builder: (
           BuildContext context,
         ) {
-          List<Widget> children = [];
-          for (int i = 0; i < widget.backdropPhotos.length; i++) {
-            children.add(
-              _BackdropPhotoSelectableItem(
-                backdropPhoto: widget.backdropPhotos[i],
-                setSelectedImage: setSelectedImage,
-                selected: _isSelected(widget.backdropPhotos[i].id),
-                animationController: _appearAnimationController,
-              ),
-            );
-          }
           return SizedBox(
             height: widget.minHeight,
             child: LitScrollbar(
               child: ListView(
                 physics: BouncingScrollPhysics(),
-                children: children,
+                children: _listItems,
               ),
             ),
           );
@@ -101,17 +105,28 @@ class _ChangePhotoDialogState extends State<ChangePhotoDialog>
 
 class _BackdropPhotoSelectableItem extends StatelessWidget {
   final BackdropPhoto backdropPhoto;
-  final void Function(int?) setSelectedImage;
   final bool selected;
-  final double borderRadius;
-  final AnimationController? animationController;
+  final AnimationController animationController;
+  final BorderRadius borderRadius;
+  final List<BoxShadow> boxShadow;
+  final void Function(int?) setSelectedImage;
   const _BackdropPhotoSelectableItem({
     Key? key,
     required this.backdropPhoto,
-    required this.setSelectedImage,
     required this.selected,
-    this.borderRadius = 16.0,
     required this.animationController,
+    this.borderRadius = const BorderRadius.all(
+      const Radius.circular(16.0),
+    ),
+    this.boxShadow = const [
+      const BoxShadow(
+        blurRadius: 13.0,
+        color: Colors.black45,
+        offset: Offset(2, 2),
+        spreadRadius: 1.0,
+      ),
+    ],
+    required this.setSelectedImage,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -126,16 +141,7 @@ class _BackdropPhotoSelectableItem extends StatelessWidget {
         ),
         child: Container(
           decoration: BoxDecoration(
-            boxShadow: selected
-                ? [
-                    BoxShadow(
-                      blurRadius: 13.0,
-                      color: Colors.black45,
-                      offset: Offset(2, 2),
-                      spreadRadius: 1.0,
-                    ),
-                  ]
-                : [],
+            boxShadow: selected ? boxShadow : [],
           ),
           child: Stack(
             alignment: Alignment.bottomRight,
@@ -143,9 +149,9 @@ class _BackdropPhotoSelectableItem extends StatelessWidget {
               AspectRatio(
                 aspectRatio: 4 / 3,
                 child: ClipRRect(
-                  borderRadius: BorderRadius.circular(borderRadius),
+                  borderRadius: borderRadius,
                   child: ClipRRect(
-                    borderRadius: BorderRadius.circular(8.0),
+                    borderRadius: borderRadius,
                     child: Image.asset(
                       backdropPhoto.assetUrl!,
                       height: 150.0,
@@ -155,68 +161,88 @@ class _BackdropPhotoSelectableItem extends StatelessWidget {
                 ),
               ),
               selected
-                  ? AnimatedBuilder(
-                      animation: animationController!,
-                      builder: (context, child) {
-                        return AnimatedOpacity(
-                          duration: animationController!.duration!,
-                          opacity: animationController!.value,
-                          child: Stack(
-                            children: [
-                              AspectRatio(
-                                aspectRatio: 4 / 3,
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                      borderRadius:
-                                          BorderRadius.circular(borderRadius),
-                                      gradient: LinearGradient(
-                                          begin: Alignment.topLeft,
-                                          end: Alignment.bottomRight,
-                                          colors: [
-                                            Colors.black54,
-                                            LitColors.lightPink
-                                                .withOpacity(0.8),
-                                          ])),
-                                ),
-                              ),
-                              AspectRatio(
-                                aspectRatio: 4 / 3,
-                                child: Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: Container(
-                                    child: RotatedBox(
-                                      quarterTurns: 3,
-                                      child: Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                          vertical: 8.0,
-                                        ),
-                                        child: LitBadge(
-                                          child: ScaledDownText(
-                                            "Selected",
-                                            style: LitTextStyles.sansSerif
-                                                .copyWith(
-                                              fontSize: 15,
-                                              letterSpacing: -0.22,
-                                              fontWeight: FontWeight.w600,
-                                              color: Colors.white,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        );
-                      },
+                  ? _SelectedPhotoOverlay(
+                      animationController: animationController,
+                      borderRadius: borderRadius,
                     )
                   : SizedBox(),
             ],
           ),
         ),
       ),
+    );
+  }
+}
+
+class _SelectedPhotoOverlay extends StatelessWidget {
+  final AnimationController animationController;
+  final BorderRadius borderRadius;
+
+  const _SelectedPhotoOverlay({
+    Key? key,
+    required this.animationController,
+    required this.borderRadius,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+      animation: animationController,
+      builder: (context, child) {
+        return AnimatedOpacity(
+          duration: animationController.duration!,
+          opacity: animationController.value,
+          child: Stack(
+            children: [
+              AspectRatio(
+                aspectRatio: 4 / 3,
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: borderRadius,
+                    gradient: LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      colors: [
+                        Colors.black54,
+                        LitColors.lightPink.withOpacity(
+                          0.8,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              AspectRatio(
+                aspectRatio: 4 / 3,
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Container(
+                    child: RotatedBox(
+                      quarterTurns: 3,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 8.0,
+                        ),
+                        child: LitBadge(
+                          child: ScaledDownText(
+                            HOMLocalizations(context).selected.capitalize(),
+                            style: LitTextStyles.sansSerif.copyWith(
+                              fontSize: 15,
+                              letterSpacing: -0.22,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }

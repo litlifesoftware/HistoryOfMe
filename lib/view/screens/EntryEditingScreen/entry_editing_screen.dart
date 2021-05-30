@@ -59,12 +59,7 @@ class _EntryEditingScreenState extends State<EntryEditingScreen>
   late AnimationController _fadeInAnimationController;
 
   late LitRouteController _routeController;
-  //TODO
-  /// Current db state and input state will have to be synchronized because the editing
-  /// screen may is initialized without a database reference with default values only.
-  ///
-  /// ===> detect any db changes using the ValueListener
-  ///
+
   /// Syncs the editing controllers' text input with the corresponding state
   /// values to check for any changes made to the inital values.
   ///
@@ -83,18 +78,9 @@ class _EntryEditingScreenState extends State<EntryEditingScreen>
     });
   }
 
-  // void _onButtonDragStart() {
-  //   _dragAnimationController.reverse();
-  // }
-
   void _onMoodScoreChanged(double value) {
     setState(() {
       _moodScore = value;
-      // if (_moodScore != widget.diaryEntry.moodScore) {
-      //   _moodScoreChanged = true;
-      // } else {
-      //   _moodScoreChanged = false;
-      // }
     });
   }
 
@@ -105,18 +91,6 @@ class _EntryEditingScreenState extends State<EntryEditingScreen>
     bool _moodScoreChanged = _moodScore != databaseEntry.moodScore;
     return (_titleChanged || _contentChanged || _moodScoreChanged);
   }
-
-  // void _resetAllChangedValues() {
-  //   setState(() {
-  //     _titleChanged = false;
-  //     _moodScoreChanged = false;
-  //     _contentChanged = false;
-  //   });
-  // }
-
-  // bool _titleChanged;
-  // bool _contentChanged;
-  // bool _moodScoreChanged;
 
   void _onSaveChanges() {
     // Verify the title has been modified (does not equal the localized string).
@@ -136,38 +110,7 @@ class _EntryEditingScreenState extends State<EntryEditingScreen>
       backdropPhotoId: widget.diaryEntry.backdropPhotoId,
     );
     HiveDBService().updateDiaryEntry(updatedDiaryEntry);
-
-    /// Resetting the the 'changed' state values does involve setting the state.
-    /// Therefore there will be no need for additional setState calls required to
-    /// reload the mutated data from the database.
-    //_resetAllChangedValues();
   }
-
-  // /// Action listener to set the changed flag on the content input.
-  // void _contentEditingControllerListener() {
-  //   if (widget.diaryEntry.title != _contentEditingController.text) {
-  //     setState(() {
-  //       _contentChanged = true;
-  //     });
-  //   } else {
-  //     setState(() {
-  //       _contentChanged = false;
-  //     });
-  //   }
-  // }
-
-  // /// Action listener to set the changed flag on the title input.
-  // void _titleEditingControllerListener() {
-  //   if (widget.diaryEntry.title != _titleEditingController.text) {
-  //     setState(() {
-  //       _titleChanged = true;
-  //     });
-  //   } else {
-  //     setState(() {
-  //       _titleChanged = false;
-  //     });
-  //   }
-  // }
 
   void _handleDiscardDraft() {
     showDialog(

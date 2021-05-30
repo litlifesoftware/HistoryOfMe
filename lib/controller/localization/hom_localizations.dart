@@ -199,4 +199,32 @@ class HOMLocalizations {
   String get next {
     return getValue("next");
   }
+
+  String get choosePhoto {
+    return getValue("choose_photo");
+  }
+
+  String get selected {
+    return getValue("selected");
+  }
+
+  String get details {
+    return getValue("details");
+  }
+
+  String get creator {
+    return getValue("creator");
+  }
+
+  String get location {
+    return getValue("location");
+  }
+
+  String get published {
+    return getValue("published");
+  }
+
+  String get backdropPhotoDesc {
+    return getValue("backdrop_photo_descr");
+  }
 }

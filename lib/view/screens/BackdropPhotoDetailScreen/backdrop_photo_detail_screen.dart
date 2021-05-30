@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:history_of_me/controller/localization/hom_localizations.dart';
 import 'package:history_of_me/model/backdrop_photo.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';
 
@@ -81,26 +82,26 @@ class _DetailsCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Details",
+                HOMLocalizations(context).details,
                 textAlign: TextAlign.left,
                 style: LitTextStyles.sansSerifHeader,
               ),
               _BackdropCardDetailItem(
                 icon: LitIcons.person,
-                detailLabel: "Photographer",
+                detailLabel: HOMLocalizations(context).creator,
                 detailValue: "${backdropPhoto.photographer}",
                 constraints: constraints,
               ),
               _BackdropCardDetailItem(
                 icon: LitIcons.map_marker,
-                detailLabel: "Location",
+                detailLabel: HOMLocalizations(context).location,
                 detailValue: "${backdropPhoto.location}",
                 constraints: constraints,
               ),
               _BackdropCardDetailItem(
-                detailLabel: "Published",
-                detailValue:
-                    "${DateTime.parse(backdropPhoto.published!).formatAsLocalizedDateWithWeekday(context)}",
+                detailLabel: HOMLocalizations(context).published.capitalize(),
+                detailValue: DateTime.parse(backdropPhoto.published!)
+                    .formatAsLocalizedDateWithWeekday(context),
                 constraints: constraints,
               ),
               backdropPhoto.description != null
@@ -117,11 +118,14 @@ class _DetailsCard extends StatelessWidget {
                               bottom: 8.0,
                             ),
                             child: Text(
-                                "${backdropPhoto.photographer} is telling us about this image:",
-                                style: LitTextStyles.sansSerifSmallHeader),
+                              HOMLocalizations(context).backdropPhotoDesc,
+                              style: LitTextStyles.sansSerifSmallHeader,
+                            ),
                           ),
-                          Text("${backdropPhoto.description}",
-                              style: LitTextStyles.sansSerifBody),
+                          Text(
+                            "${backdropPhoto.description}",
+                            style: LitTextStyles.sansSerifBody,
+                          ),
                         ],
                       ),
                     )
@@ -197,37 +201,38 @@ class __BackgroundState extends State<_Background>
     return Stack(
       children: [
         AnimatedBuilder(
-            animation: _transformAnimation,
-            builder: (context, _) {
-              return Container(
-                height: _deviceSize.height,
-                width: _deviceSize.width,
-                child: Transform(
-                  transform: _transform,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        fit: alternativeBoxFit(
-                          _deviceSize,
-                          portraitBoxFit: BoxFit.fitHeight,
-                          landscapeBoxFit: BoxFit.fitWidth,
-                        ),
-                        image: AssetImage(
-                          widget.backdropPhoto.assetUrl!,
-                        ),
+          animation: _transformAnimation,
+          builder: (context, _) {
+            return Container(
+              height: _deviceSize.height,
+              width: _deviceSize.width,
+              child: Transform(
+                transform: _transform,
+                child: Container(
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      fit: alternativeBoxFit(
+                        _deviceSize,
+                        portraitBoxFit: BoxFit.fitHeight,
+                        landscapeBoxFit: BoxFit.fitWidth,
+                      ),
+                      image: AssetImage(
+                        widget.backdropPhoto.assetUrl!,
                       ),
                     ),
                   ),
                 ),
-              );
-            }),
+              ),
+            );
+          },
+        ),
         BluredBackgroundContainer(
           child: Container(
             color: Colors.white10,
             height: _deviceSize.height,
             width: _deviceSize.width,
           ),
-          blurRadius: 5.0,
+          blurRadius: 4.0,
         ),
         Container(
           height: _deviceSize.height,
