@@ -67,11 +67,13 @@ class _ProfileScreenState extends State<ProfileScreen>
               ),
             ),
           ),
-          snackBar: LitIconSnackbar(
-            snackBarController: _snackbarController,
-            text: "Welcome Back, ${userData!.name}",
-            iconData: LitIcons.diary,
-          ),
+          snackbars: [
+            LitIconSnackbar(
+              snackBarController: _snackbarController,
+              text: "Welcome Back, ${userData!.name}",
+              iconData: LitIcons.diary,
+            ),
+          ],
           body: SafeArea(
             child: LitScrollbar(
               child: ScrollableColumn(

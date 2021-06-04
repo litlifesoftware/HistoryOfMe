@@ -348,11 +348,13 @@ class _BookmarkEditingScreenState extends State<BookmarkEditingScreen>
             shouldNavigateBack: !_userDataChanged(updatedUserData),
             onInvalidNavigation: _handleDiscardDraft,
           ),
-          snackBar: LitIconSnackbar(
-            snackBarController: _snackbarController,
-            text: "This color does already exist",
-            iconData: LitIcons.info,
-          ),
+          snackbars: [
+            LitIconSnackbar(
+              snackBarController: _snackbarController,
+              text: "This color does already exist",
+              iconData: LitIcons.info,
+            ),
+          ],
           body: LayoutBuilder(
             builder: (context, constraints) {
               return Stack(
