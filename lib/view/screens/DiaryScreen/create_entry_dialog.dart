@@ -181,14 +181,14 @@ class _CreateEntryDialogState extends State<CreateEntryDialog>
                   onSubmit: _createPreviousDayEntry,
                   allowFutureDates: false,
                 ),
-          IconSnackbar(
+          LitIconSnackbar(
             iconData: LitIcons.info,
             text: _snackbarText,
             textStyle: LitTextStyles.sansSerif.copyWith(
               color: Colors.white,
               fontSize: 13.0,
             ),
-            litSnackBarController: _duplicateSnackBarController,
+            snackBarController: _duplicateSnackBarController,
             alignment: Alignment.topRight,
             padding: const EdgeInsets.symmetric(
               vertical: 8.0,

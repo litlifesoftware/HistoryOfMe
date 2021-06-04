@@ -45,9 +45,9 @@ class _BookmarkEditingScreenState extends State<BookmarkEditingScreen>
 
   late AnimationController _appearAnimation;
 
-  LitSnackbarController? _snackbarController;
+  late LitSnackbarController _snackbarController;
 
-  ScrollController? _scrollController;
+  late ScrollController _scrollController;
 
   late LitRouteController _routeController;
 
@@ -348,8 +348,8 @@ class _BookmarkEditingScreenState extends State<BookmarkEditingScreen>
             shouldNavigateBack: !_userDataChanged(updatedUserData),
             onInvalidNavigation: _handleDiscardDraft,
           ),
-          snackBar: IconSnackbar(
-            litSnackBarController: _snackbarController,
+          snackBar: LitIconSnackbar(
+            snackBarController: _snackbarController,
             text: "This color does already exist",
             iconData: LitIcons.info,
           ),
@@ -432,7 +432,7 @@ class _BookmarkEditingScreenState extends State<BookmarkEditingScreen>
                                     //colors: _colors,
                                     //addColor: _handleAddColor,
                                     onAddColorError: () =>
-                                        _snackbarController!.showSnackBar(),
+                                        _snackbarController.showSnackBar(),
                                   ),
                                   QuoteCard(
                                     initialAuthor: _quoteAuthor,

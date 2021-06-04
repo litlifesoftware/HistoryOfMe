@@ -67,8 +67,8 @@ class _ProfileScreenState extends State<ProfileScreen>
               ),
             ),
           ),
-          snackBar: IconSnackbar(
-            litSnackBarController: _snackbarController,
+          snackBar: LitIconSnackbar(
+            snackBarController: _snackbarController,
             text: "Welcome Back, ${userData!.name}",
             iconData: LitIcons.diary,
           ),
