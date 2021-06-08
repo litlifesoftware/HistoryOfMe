@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:history_of_me/controller/database/hive_query_controller.dart';
-import 'package:intl/intl.dart';
+import 'package:history_of_me/controller/localization/hom_localizations.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';
 
 class StatisticsCard extends StatefulWidget {
@@ -9,7 +9,7 @@ class StatisticsCard extends StatefulWidget {
 }
 
 class _StatisticsCardState extends State<StatisticsCard> {
-  HiveQueryController? queryController;
+  late HiveQueryController queryController;
 
   @override
   void initState() {
@@ -19,7 +19,7 @@ class _StatisticsCardState extends State<StatisticsCard> {
 
   @override
   Widget build(BuildContext context) {
-    bool isAvailable = queryController!.totalDiaryEntries > 0;
+    bool isAvailable = queryController.totalDiaryEntries > 0;
     return LitGradientCard(
       margin: EdgeInsets.symmetric(
         horizontal: isAvailable ? 18.0 : 24.0,
@@ -59,7 +59,7 @@ class _StatisticsCardState extends State<StatisticsCard> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ScaledDownText(
-              "Statistics",
+              HOMLocalizations(context).statistics,
               textAlign: TextAlign.start,
               style: LitTextStyles.sansSerif.copyWith(
                 fontSize: 22.0,
@@ -107,6 +107,7 @@ class _NoDataAvailableInfo extends StatelessWidget {
                       vertical: 8.0,
                       horizontal: 16.0,
                     ),
+                    //TODO localize
                     child: Text(
                       "In order to show your statistics, you should have atleast one entry created.",
                       textAlign: TextAlign.left,
@@ -124,6 +125,7 @@ class _NoDataAvailableInfo extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(top: 16.0),
               child: Text(
+                //TODO localized
                 "Go back to your diary to create your first entry.",
                 textAlign: TextAlign.left,
                 style: LitTextStyles.sansSerif.copyWith(
@@ -142,7 +144,7 @@ class _NoDataAvailableInfo extends StatelessWidget {
 }
 
 class _StatisticDataList extends StatelessWidget {
-  final HiveQueryController? queryController;
+  final HiveQueryController queryController;
 
   const _StatisticDataList({
     Key? key,
@@ -153,44 +155,42 @@ class _StatisticDataList extends StatelessWidget {
     return Column(
       children: [
         _EntryStatisticText(
-          label: "Diary entries",
-          value: "${queryController!.totalDiaryEntries}",
+          label: HOMLocalizations(context).diaryEntries,
+          value: "${queryController.totalDiaryEntries}",
         ),
         _EntryStatisticText(
-          label: "Words written",
-          value: "${queryController!.totalWordsWritten}",
+          label: HOMLocalizations(context).wordsWritten,
+          value: "${queryController.totalWordsWritten}",
         ),
         _EntryStatisticText(
-          label: "Words per entry",
-          value: "${queryController!.avgWordWritten.toStringAsFixed(2)}",
+          label: HOMLocalizations(context).wordsPerEntry,
+          value: "${queryController.avgWordWritten.toStringAsFixed(2)}",
         ),
         _EntryStatisticText(
-          label: "Most words at once",
-          value: "${queryController!.mostWordsWrittenAtOnce}",
+          label: HOMLocalizations(context).mostWordsWrittenAtOnce,
+          value: "${queryController.mostWordsWrittenAtOnce}",
         ),
         _EntryStatisticText(
-          label: "Fewest words at once",
-          value: "${queryController!.leastWordsWrittenAtOnce}",
+          label: HOMLocalizations(context).fewestWordsAtOnce,
+          value: "${queryController.leastWordsWrittenAtOnce}",
         ),
         _EntryStatisticRichText(
-          label: "Entries this week",
-          value: "${queryController!.entriesThisWeek}",
+          label: HOMLocalizations(context).entriesThisWeek,
+          value: "${queryController.entriesThisWeek}",
           maxValue: "7",
         ),
         _EntryStatisticRichText(
-          label: "Entries this month",
-          value: "${queryController!.entriesThisMonth}",
+          label: HOMLocalizations(context).entriesThisMonth,
+          value: "${queryController.entriesThisMonth}",
           maxValue: "${DateTime.now().lastDayOfMonth()}",
         ),
         _EntryStatisticText(
-          label: "Latest entry",
-          value:
-              "${DateFormat.yMMMMd((Localizations.localeOf(context).languageCode)).format(queryController!.latestEntryDate)}",
+          label: HOMLocalizations(context).latestEntry,
+          value: queryController.latestEntryDate.formatAsLocalizedDate(context),
         ),
         _EntryStatisticText(
-          label: "First entry",
-          value:
-              "${DateFormat.yMMMMd((Localizations.localeOf(context).languageCode)).format(queryController!.firstEntryDate)}",
+          label: HOMLocalizations(context).firstEntry,
+          value: queryController.firstEntryDate.formatAsLocalizedDate(context),
         ),
       ],
     );
@@ -268,38 +268,39 @@ class _EntryStatisticRichText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _EntryStatistic(
-        label: label,
-        value: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Text(
-              value,
+      label: label,
+      value: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Text(
+            value,
+            style: LitTextStyles.sansSerif.copyWith(
+              fontSize: 16.0,
+              color: HexColor('#878787'),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 2.0,
+            ),
+            child: Text(
+              "/",
               style: LitTextStyles.sansSerif.copyWith(
                 fontSize: 16.0,
-                color: HexColor('#878787'),
+                fontWeight: FontWeight.w600,
+                color: HexColor('#CEC8CF'),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 2.0,
-              ),
-              child: Text(
-                "/",
-                style: LitTextStyles.sansSerif.copyWith(
-                  fontSize: 16.0,
-                  fontWeight: FontWeight.w600,
-                  color: HexColor('#CEC8CF'),
-                ),
-              ),
+          ),
+          Text(
+            maxValue,
+            style: LitTextStyles.sansSerif.copyWith(
+              fontSize: 16.0,
+              color: HexColor('#BEBABF'),
             ),
-            Text(
-              maxValue,
-              style: LitTextStyles.sansSerif.copyWith(
-                fontSize: 16.0,
-                color: HexColor('#BEBABF'),
-              ),
-            ),
-          ],
-        ));
+          ),
+        ],
+      ),
+    );
   }
 }

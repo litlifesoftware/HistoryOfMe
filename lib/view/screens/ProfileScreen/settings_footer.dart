@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:history_of_me/controller/localization/hom_localizations.dart';
 import 'package:history_of_me/model/backdrop_photo.dart';
 import 'package:history_of_me/model/user_data.dart';
 import 'package:history_of_me/view/screens/HistoryOfMeIntroScreen/history_of_me_intro_screen.dart';
@@ -99,6 +100,10 @@ class _SettingsFooterState extends State<SettingsFooter> {
                   role: "Photography",
                   names: backdropPhotoPhotographers,
                 ),
+                CreditData(
+                  role: "Inspired By",
+                  names: ["Your Name. (2016) - Movie"],
+                ),
               ],
             ),
           ),
@@ -119,32 +124,32 @@ class _SettingsFooterState extends State<SettingsFooter> {
   @override
   Widget build(BuildContext context) {
     return LitFooter(
-      title: "Settings",
+      title: HOMLocalizations(context).settings,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           LitPlainLabelButton(
-            label: "Take the tour",
+            label: HOMLocalizations(context).takeTheTour,
             onPressed: _takeTour,
             textAlign: TextAlign.right,
           ),
           LitPlainLabelButton(
-            label: "About this app",
+            label: HOMLocalizations(context).aboutThisApp,
             onPressed: _showAboutThisAppDialog,
             textAlign: TextAlign.right,
           ),
           LitPlainLabelButton(
-            label: "View Privacy",
+            label: HOMLocalizations(context).viewPrivacy,
             onPressed: _openPrivacyPolicy,
             textAlign: TextAlign.right,
           ),
           LitPlainLabelButton(
-            label: "Delete all data",
+            label: HOMLocalizations(context).deleteAllData,
             onPressed: _showDeleteDataDialog,
             textAlign: TextAlign.right,
           ),
           LitPlainLabelButton(
-            label: "Credits",
+            label: HOMLocalizations(context).credits,
             onPressed: _openCredits,
             textAlign: TextAlign.right,
           ),

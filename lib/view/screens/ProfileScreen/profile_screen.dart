@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:history_of_me/controller/database/hive_db_service.dart';
+import 'package:history_of_me/controller/localization/hom_localizations.dart';
 import 'package:history_of_me/controller/routes/hom_navigator.dart';
 import 'package:history_of_me/model/user_data.dart';
 import 'package:history_of_me/view/shared/bookmark/bookmark_back_preview.dart';
@@ -59,7 +60,7 @@ class _ProfileScreenState extends State<ProfileScreen>
             backgroundColor: Colors.white,
             child: Center(
               child: ClippedText(
-                "How are you today?",
+                HOMLocalizations(context).howAreYouToday,
                 textAlign: TextAlign.center,
                 style: LitTextStyles.sansSerif.copyWith(
                   fontSize: 16.0,
@@ -70,7 +71,8 @@ class _ProfileScreenState extends State<ProfileScreen>
           snackbars: [
             LitIconSnackbar(
               snackBarController: _snackbarController,
-              text: "Welcome Back, ${userData!.name}",
+              text:
+                  "${HOMLocalizations(context).welcomeBack}, ${userData!.name}!",
               iconData: LitIcons.diary,
             ),
           ],
@@ -79,39 +81,35 @@ class _ProfileScreenState extends State<ProfileScreen>
               child: ScrollableColumn(
                 controller: _scrollController,
                 children: [
-                  Column(
+                  Stack(
                     children: [
-                      Stack(
+                      IndexedPageView(
+                        height: 180.0,
+                        indicatorSpacingTop: 0.0,
                         children: [
-                          IndexedPageView(
-                            height: 180.0,
-                            indicatorSpacingTop: 0.0,
-                            children: [
-                              BookmarkFrontPreview(
-                                userData: userData,
-                                animationController: widget.bookmarkAnimation,
-                                padding: const EdgeInsets.only(
-                                  top: 16.0,
-                                  left: 16.0,
-                                  right: 32.0,
-                                ),
-                              ),
-                              BookmarkBackPreview(
-                                userData: userData,
-                                animationController: widget.bookmarkAnimation,
-                                padding: const EdgeInsets.only(
-                                  top: 32.0,
-                                  left: 32.0,
-                                  right: 32.0,
-                                ),
-                              ),
-                            ],
-                            indicatorColor: LitColors.mediumGrey,
+                          BookmarkFrontPreview(
+                            userData: userData,
+                            animationController: widget.bookmarkAnimation,
+                            padding: const EdgeInsets.only(
+                              top: 16.0,
+                              left: 16.0,
+                              right: 32.0,
+                            ),
                           ),
-                          _EditBookmarkButton(
-                            onPressed: () => _onEditBookmark(userData),
+                          BookmarkBackPreview(
+                            userData: userData,
+                            animationController: widget.bookmarkAnimation,
+                            padding: const EdgeInsets.only(
+                              top: 32.0,
+                              left: 32.0,
+                              right: 32.0,
+                            ),
                           ),
                         ],
+                        indicatorColor: LitColors.mediumGrey,
+                      ),
+                      _EditBookmarkButton(
+                        onPressed: () => _onEditBookmark(userData),
                       ),
                     ],
                   ),

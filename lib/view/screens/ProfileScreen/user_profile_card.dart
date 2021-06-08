@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:history_of_me/controller/localization/hom_localizations.dart';
 import 'package:history_of_me/model/user_data.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';
 
@@ -89,7 +90,7 @@ class _UserProfileCardState extends State<UserProfileCard> {
                     ),
                     child: ClippedText(
                       _usernameInitials,
-                      style: LitTextStyles.sansSerifHeader.copyWith(
+                      style: LitSansSerifStyles.header5.copyWith(
                         fontSize: 34.0,
                         color: _userColor.computeLuminance() >= 0.5
                             ? Colors.white
@@ -117,67 +118,51 @@ class _UserProfileCardState extends State<UserProfileCard> {
               child: LayoutBuilder(
                 builder: (context, constraints) {
                   return Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      SizedBox(
-                        width: constraints.maxWidth * 0.55,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(vertical: 4.0),
-                              child: ClippedText(
-                                "Diary created:",
-                                style: LitTextStyles.sansSerifSmallHeader,
-                              ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 4.0),
+                            child: ClippedText(
+                              "${HOMLocalizations(context).diaryCreated}:",
+                              style: LitSansSerifStyles.body2,
                             ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(vertical: 4.0),
-                              child: ClippedText(
-                                DateTime.fromMillisecondsSinceEpoch(
-                                        widget.userData.created)
-                                    .formatAsLocalizedDate(context),
-                                style: LitTextStyles.sansSerifBody,
-                              ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 4.0),
+                            child: ClippedText(
+                              DateTime.fromMillisecondsSinceEpoch(
+                                      widget.userData.created)
+                                  .formatAsLocalizedDate(context),
+                              style: LitSansSerifStyles.body,
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
-                      SizedBox(
-                        width: constraints.maxWidth * 0.45,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                            vertical: 8.0,
-                            horizontal: 4.0,
-                          ),
-                          child: Container(
-                            child: LitRoundedElevatedButton(
-                              padding: const EdgeInsets.symmetric(
-                                vertical: 6.0,
-                                horizontal: 8.0,
-                              ),
-                              boxShadow: [
-                                BoxShadow(
-                                  blurRadius: 13.0,
-                                  color: Colors.black12,
-                                  offset: Offset(-1, 1),
-                                  spreadRadius: 1.0,
-                                )
-                              ],
-                              color: LitColors.mintGreen,
-                              child: ClippedText(
-                                "Change Name".toUpperCase(),
-                                textAlign: TextAlign.center,
-                                style: LitTextStyles.sansSerifStyles[button],
-                              ),
-                              onPressed: _showChangeNameDialog,
-                            ),
-                          ),
+                      LitRoundedElevatedButton(
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 6.0,
+                          horizontal: 12.0,
                         ),
-                      )
+                        boxShadow: [
+                          BoxShadow(
+                            blurRadius: 13.0,
+                            color: Colors.black12,
+                            offset: Offset(-1, 1),
+                            spreadRadius: 1.0,
+                          )
+                        ],
+                        color: LitColors.mintGreen,
+                        child: ClippedText(
+                          HOMLocalizations(context).changeName.toUpperCase(),
+                          textAlign: TextAlign.center,
+                          style: LitSansSerifStyles.button,
+                        ),
+                        onPressed: _showChangeNameDialog,
+                      ),
                     ],
                   );
                 },

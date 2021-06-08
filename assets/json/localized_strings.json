@@ -210,5 +210,85 @@
   "backdrop_photo_descr": {
     "en": "What the creator is telling us about this photo:",
     "de": "Was der Ersteller uns über das Foto erzählt:"
+  },
+  "how_are_you_today": {
+    "en": "How are you today?",
+    "de": "Wie geht's dir heute?"
+  },
+  "welcome_back": {
+    "en": "Welcome back",
+    "de": "Willkommen zurück"
+  },
+  "diary_created": {
+    "en": "Diary created",
+    "de": "Tagebuch erstellt"
+  },
+  "change_name": {
+    "en": "change name",
+    "de": "Namen ändern"
+  },
+  "statistics": {
+    "en": "statistics",
+    "de": "Statistik"
+  },
+  "diary_entires": {
+    "en": "Diary entries",
+    "de": "Tagebucheinträge"
+  },
+  "words_written": {
+    "en": "Words written",
+    "de": "Verfasste Wörter"
+  },
+  "words_per_entry": {
+    "en": "Words per entry",
+    "de": "Wörter pro Eintrag"
+  },
+  "most_words_at_once": {
+    "en": "Most words at once",
+    "de": "Meiste Wörter zugleich"
+  },
+  "fewest_words_at_once": {
+    "en": "Fewest words at once",
+    "de": "Wenigste Wörter zugleich"
+  },
+  "entries_this_week": {
+    "en": "Entries this week",
+    "de": "Einträge diese Woche"
+  },
+  "enties_this_month": {
+    "en": "Entries this month",
+    "de": "Einträge diesen Monat"
+  },
+  "latest_entry": {
+    "en": "Latest entry",
+    "de": "Letzter Eintrag"
+  },
+  "first_entry": {
+    "en": "First Entry",
+    "de": "Erster Eintrag"
+  },
+  "settings": {
+    "en": "Settings",
+    "de": "Optionen"
+  },
+  "take_the_tour": {
+    "en": "Take the tour",
+    "de": "Tour starten"
+  },
+  "about_this_app": {
+    "en": "About this app",
+    "de": "Über diese App"
+  },
+  "view_privacy": {
+    "en": "View Privacy",
+    "de": "Privatsphäre"
+  },
+  "delete_all_data": {
+    "en": "Delete all data",
+    "de": "Alle Daten entfernen"
+  },
+  "credits": {
+    "en": "Credits",
+    "de": "Mitwirkende"
   }
 }

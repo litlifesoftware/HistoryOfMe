@@ -227,4 +227,84 @@ class HOMLocalizations {
   String get backdropPhotoDesc {
     return getValue("backdrop_photo_descr");
   }
+
+  String get howAreYouToday {
+    return getValue("how_are_you_today");
+  }
+
+  String get welcomeBack {
+    return getValue("welcome_back");
+  }
+
+  String get diaryCreated {
+    return getValue("diary_created");
+  }
+
+  String get changeName {
+    return getValue("change_name");
+  }
+
+  String get statistics {
+    return getValue("statistics");
+  }
+
+  String get diaryEntries {
+    return getValue("diary_entires");
+  }
+
+  String get wordsWritten {
+    return getValue("words_written");
+  }
+
+  String get wordsPerEntry {
+    return getValue("words_per_entry");
+  }
+
+  String get mostWordsWrittenAtOnce {
+    return getValue("most_words_at_once");
+  }
+
+  String get fewestWordsAtOnce {
+    return getValue("fewest_words_at_once");
+  }
+
+  String get entriesThisWeek {
+    return getValue("entries_this_week");
+  }
+
+  String get entriesThisMonth {
+    return getValue("enties_this_month");
+  }
+
+  String get latestEntry {
+    return getValue("latest_entry");
+  }
+
+  String get firstEntry {
+    return getValue("first_entry");
+  }
+
+  String get settings {
+    return getValue("settings");
+  }
+
+  String get takeTheTour {
+    return getValue("take_the_tour");
+  }
+
+  String get aboutThisApp {
+    return getValue("about_this_app");
+  }
+
+  String get viewPrivacy {
+    return getValue("view_privacy");
+  }
+
+  String get deleteAllData {
+    return getValue("delete_all_data");
+  }
+
+  String get credits {
+    return getValue("credits");
+  }
 }
