@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:history_of_me/controller/database/hive_db_service.dart';
+import 'package:history_of_me/controller/localization/hom_localizations.dart';
 import 'package:history_of_me/model/user_data.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';
 
@@ -40,7 +41,6 @@ class _ChangeNameDialogState extends State<ChangeNameDialog> {
   }
 
   void _onSubmit() {
-    print("${_nameController.text} was submitted");
     HiveDBService().updateUsername(widget.userData!, _updatedName);
     LitRouteController(context).closeDialog();
   }
@@ -57,15 +57,12 @@ class _ChangeNameDialogState extends State<ChangeNameDialog> {
     _focusNode = FocusNode();
   }
 
-  // Color(0xFFEAEACA),
-  //             Color(0xFFEDDEC0),
-
   @override
   Widget build(BuildContext context) {
     return LitTitledDialog(
       margin: const EdgeInsets.all(0.0),
       minHeight: 220.0,
-      titleText: "Change your name",
+      titleText: HOMLocalizations(context).changeYourName,
       actionButtons: [
         Padding(
           padding: const EdgeInsets.symmetric(
@@ -75,13 +72,10 @@ class _ChangeNameDialogState extends State<ChangeNameDialog> {
             borderRadius: 32.0,
             onPressed: _onCancel,
             accentColor: LitColors.lightGrey,
-            backgroundColor: LitColors.mediumGrey,
-            child: Text(
-              "Cancel",
-              style: LitTextStyles.sansSerif.copyWith(
-                color: Colors.white,
-                fontSize: 15.0,
-              ),
+            child: ScaledDownText(
+              HOMLocalizations(context).cancel,
+              uppercase: true,
+              style: LitSansSerifStyles.button,
             ),
           ),
         ),
@@ -95,12 +89,10 @@ class _ChangeNameDialogState extends State<ChangeNameDialog> {
             accentColor: Color(0xFFEDDEC0),
             backgroundColor: Color(0xFFEAEACA),
             disabled: !_isChanged,
-            child: Text(
-              "Apply",
-              style: LitTextStyles.sansSerif.copyWith(
-                color: LitColors.mediumGrey,
-                fontSize: 15.0,
-              ),
+            child: ScaledDownText(
+              HOMLocalizations(context).apply,
+              uppercase: true,
+              style: LitSansSerifStyles.button,
             ),
           ),
         )
@@ -145,7 +137,7 @@ class _ChangeNameDialogState extends State<ChangeNameDialog> {
                         child: Column(
                           children: [
                             EditableText(
-                              style: LitTextStyles.sansSerif,
+                              style: LitSansSerifStyles.body,
                               controller: _nameController,
                               focusNode: _focusNode,
                               cursorColor: LitColors.mediumGrey,
@@ -160,8 +152,9 @@ class _ChangeNameDialogState extends State<ChangeNameDialog> {
                                 height: 3.0,
                                 decoration: BoxDecoration(
                                   color: LitColors.mediumGrey.withOpacity(0.4),
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(12.0)),
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(12.0),
+                                  ),
                                 ),
                               ),
                             )
@@ -172,14 +165,6 @@ class _ChangeNameDialogState extends State<ChangeNameDialog> {
                   ),
                 ),
               ),
-              // Padding(
-              //     padding: const EdgeInsets.symmetric(vertical: 8.0),
-              //     child: Row(
-              //       mainAxisAlignment: _isChanged
-              //           ? MainAxisAlignment.spaceEvenly
-              //           : MainAxisAlignment.center,
-              //       children:
-              //     )),
             ],
           ),
         ),

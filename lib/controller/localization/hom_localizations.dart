@@ -244,6 +244,10 @@ class HOMLocalizations {
     return getValue("change_name");
   }
 
+  String get changeYourName {
+    return getValue("change_your_name");
+  }
+
   String get statistics {
     return getValue("statistics");
   }
@@ -306,5 +310,13 @@ class HOMLocalizations {
 
   String get credits {
     return getValue("credits");
+  }
+
+  String get cancel {
+    return getValue("cancel");
+  }
+
+  String get apply {
+    return getValue("apply");
   }
 }

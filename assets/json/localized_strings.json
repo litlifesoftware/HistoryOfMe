@@ -227,6 +227,10 @@
     "en": "change name",
     "de": "Namen ändern"
   },
+  "change_your_name": {
+    "en": "Change your name",
+    "de": "Deinen Namen ändern"
+  },
   "statistics": {
     "en": "statistics",
     "de": "Statistik"
@@ -290,5 +294,13 @@
   "credits": {
     "en": "Credits",
     "de": "Mitwirkende"
+  },
+  "cancel": {
+    "en": "cancel",
+    "de": "abbrechen"
+  },
+  "apply": {
+    "en": "apply",
+    "de": "anwenden"
   }
 }
