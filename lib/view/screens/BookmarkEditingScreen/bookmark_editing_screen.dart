@@ -13,8 +13,18 @@ import 'primary_color_selector_card.dart';
 import 'quote_card.dart';
 import 'secondary_color_selector_card.dart';
 
+/// A screen widget allowing to edit the user's bookmark using several input
+/// elements.
+///
+/// The initially provided [UserData] will be edited and submitted to the
+/// Hive database.
 class BookmarkEditingScreen extends StatefulWidget {
   final UserData? initialUserDataModel;
+
+  /// Creates a [BookmarkEditingScreen].
+  ///
+  /// * [initialUserDataModel] is the Hive-provided object representing the
+  ///   current state on the database.
   const BookmarkEditingScreen({
     Key? key,
     required this.initialUserDataModel,
@@ -25,22 +35,31 @@ class BookmarkEditingScreen extends StatefulWidget {
 
 class _BookmarkEditingScreenState extends State<BookmarkEditingScreen>
     with TickerProviderStateMixin {
-  // int selectedPattern;
-  //int stripeCount;
-  // int dotSize;
-
-  //UserData _userDataModel;
-
+  /// Stores the current [UserData.name] value.
   late String _name;
+
+  /// Stores the current [UserData.primaryColor] value.
   late int _primaryColor;
+
+  /// Stores the current [UserData.secondaryColor] value.
   late int _secondaryColor;
+
+  /// Stores the current [UserData.stripeCount] value.
   late int _stripeCount;
+
+  /// Stores the current [UserData.dotSize] value.
   late int _dotSize;
+
+  /// Stores the current [UserData.quote] value.
   late String _quote;
+
+  /// Stores the current [UserData.animated] value.
   late bool _animated;
 
+  /// Stores the current [UserData.designPatternIndex] value.
   late int _designPattern;
 
+  /// Stores the current [UserData.quoteAuthor] value.
   late String _quoteAuthor;
 
   late AnimationController _appearAnimation;
@@ -51,117 +70,64 @@ class _BookmarkEditingScreenState extends State<BookmarkEditingScreen>
 
   late LitRouteController _routeController;
 
+  /// Sets the [_designPattern] using the setState method.
   void setDesignPattern(int value) {
     setState(
       () {
-        // selectedPattern = value;
-        // _userDataModel = UserData(
-        //   name: _userDataModel.name,
-        //   bookmarkColor: _userDataModel.bookmarkColor,
-        //   stripeCount: _userDataModel.stripeCount,
-        //   dotSize: _userDataModel.dotSize,
-        //   quote: _userDataModel.quote,
-        //   displayQuote: _userDataModel.displayQuote,
-        //   designPatternIndex: value,
-        //   animated: _userDataModel.animated,
-        //   quoteAuthor: _userDataModel.quoteAuthor,
-        // );
         _designPattern = value;
       },
     );
   }
 
+  /// Sets the [_stripeCount] using the setState method.
   void onStripeSliderChange(double value) {
-    setState(() {
-      // stripeCount = value.round();
-      // _userDataModel = UserData(
-      //   name: _userDataModel.name,
-      //   bookmarkColor: _userDataModel.bookmarkColor,
-      //   stripeCount: value.round(),
-      //   dotSize: _userDataModel.dotSize,
-      //   quote: _userDataModel.quote,
-      //   displayQuote: _userDataModel.displayQuote,
-      //   designPatternIndex: _userDataModel.designPatternIndex,
-      //   animated: _userDataModel.animated,
-      //   quoteAuthor: _userDataModel.quoteAuthor,
-      // );
-      _stripeCount = value.round();
-    });
-    print("stripe slider $value");
+    setState(
+      () {
+        _stripeCount = value.round();
+      },
+    );
   }
 
+  /// Sets the [_dotSize] using the setState method.
   void onDotsSliderChange(double value) {
-    setState(() {
-      // stripeCount = value.round();
-      // _userDataModel = UserData(
-      //   name: _userDataModel.name,
-      //   bookmarkColor: _userDataModel.bookmarkColor,
-      //   stripeCount: _userDataModel.stripeCount,
-      //   dotSize: value.round(),
-      //   quote: _userDataModel.quote,
-      //   displayQuote: _userDataModel.displayQuote,
-      //   designPatternIndex: _userDataModel.designPatternIndex,
-      //   animated: _userDataModel.animated,
-      //   quoteAuthor: _userDataModel.quoteAuthor,
-      // );
-      _dotSize = value.round();
-    });
-    print("stripe slider $value");
+    setState(
+      () {
+        _dotSize = value.round();
+      },
+    );
   }
 
+  /// Sets the [_primaryColor] using the setState method.
   void _setPrimaryColor(Color color) {
-    setState(() {
-      // _userDataModel = UserData(
-      //   name: _userDataModel.name,
-      //   bookmarkColor: color.value,
-      //   stripeCount: _userDataModel.stripeCount,
-      //   dotSize: _userDataModel.dotSize,
-      //   quote: _userDataModel.quote,
-      //   displayQuote: _userDataModel.displayQuote,
-      //   designPatternIndex: _userDataModel.designPatternIndex,
-      //   animated: _userDataModel.animated,
-      //   quoteAuthor: _userDataModel.quoteAuthor,
-      // );
-      _primaryColor = color.value;
-    });
+    setState(
+      () {
+        _primaryColor = color.value;
+      },
+    );
   }
 
+  /// Sets the [_secondaryColor] using the setState method.
   void _setSecondaryColor(Color color) {
-    setState(() {
-      _secondaryColor = color.value;
-    });
+    setState(
+      () {
+        _secondaryColor = color.value;
+      },
+    );
   }
 
+  /// Sets the [_quote]. The will not be used on the view, therefore the
+  /// setState is not necessary.
   void setQuote(String quote) {
-    // _userDataModel = UserData(
-    //   name: _userDataModel.name,
-    //   bookmarkColor: _userDataModel.bookmarkColor,
-    //   stripeCount: _userDataModel.stripeCount,
-    //   dotSize: _userDataModel.dotSize,
-    //   quote: quote,
-    //   displayQuote: _userDataModel.displayQuote,
-    //   designPatternIndex: _userDataModel.designPatternIndex,
-    //   animated: _userDataModel.animated,
-    //   quoteAuthor: _userDataModel.quoteAuthor,
-    // );
     _quote = quote;
   }
 
+  /// Sets the [_quoteAuthor]. The will not be used on the view, therefore the
+  /// setState is not necessary.
   void setQuoteAuthor(String author) {
-    // _userDataModel = UserData(
-    //   name: _userDataModel.name,
-    //   bookmarkColor: _userDataModel.bookmarkColor,
-    //   stripeCount: _userDataModel.stripeCount,
-    //   dotSize: _userDataModel.dotSize,
-    //   quote: _userDataModel.quote,
-    //   displayQuote: _userDataModel.displayQuote,
-    //   designPatternIndex: _userDataModel.designPatternIndex,
-    //   animated: _userDataModel.animated,
-    //   quoteAuthor: author,
-    // );
     _quoteAuthor = author;
   }
 
+  /// Maps the state value into an [UserData] object.
   UserData _mapUserData(int lastUpdated) {
     return UserData(
       name: _name,
@@ -178,81 +144,45 @@ class _BookmarkEditingScreenState extends State<BookmarkEditingScreen>
     );
   }
 
+  /// Checks if there has been changes submitted by the user.
+  ///
+  /// Evaluates whether the state values are diffenent from the provided
+  /// [UserData] object.
   bool _userDataChanged(UserData other) {
-    //_userDataModel != widget.initialUserDataModel;
-    // ||
-    //     !listEquals(_colors, widget.initialColors
-    //     );
-
     if (_primaryColor != other.primaryColor) {
-      print("changed bookmark color");
       return true;
     }
-
     if (_secondaryColor != other.secondaryColor) {
       return true;
     }
-
     if (_designPattern != other.designPatternIndex) {
-      print("changed design pattern");
       return true;
     }
     if (_dotSize != other.dotSize) {
-      print("changed dotsize");
       return true;
     }
     if (_stripeCount != other.stripeCount) {
-      print("changed stripe count");
       return true;
     }
     if (_name != other.name) {
-      print("changed name");
       return true;
     }
     if (_quote != other.quote) {
-      print("changed quote");
       return true;
     }
     if (_quoteAuthor != other.quoteAuthor) {
-      print("changed quote author");
       return true;
     }
     return false;
   }
 
-  // UserData get _mappedUserData {
-  //   return UserData(
-  //     name: _name,
-  //     bookmarkColor: _bookmarkColor,
-  //     stripeCount: _stripeCount,
-  //     dotSize: _dotSize,
-  //     animated: _animated,
-  //     quote: _quote,
-  //     designPatternIndex: _designPattern,
-  //     quoteAuthor: _quoteAuthor,
-  //     lastUpdated: widget.initialUserDataModel.lastUpdated,
-  //   );
-  // }
-
-  // void _handleAddColor(Color color) {
-  //   // if (_colors.contains(color)) {
-  //   //   _handleColorDuplicate();
-  //   //   return false;
-  //   // } else {
-  //   //   setState(() {
-  //   //     _colors.add(color);
-  //   //   });
-  //   //   return true;
-  //   // }
-  //   return HiveDBService(debug: debug)
-  //       .addUserCreatedColor(color.alpha, color.red, color.green, color.blue);
-  // }
-
+  /// Updates the Hive database using the latest changes.
   void _onSaveChanges() {
     HiveDBService(debug: DEBUG)
         .updateUserData(_mapUserData(DateTime.now().millisecondsSinceEpoch));
   }
 
+  /// Shows the [DiscardDraftDialog].
   void _handleDiscardDraft() {
     showDialog(
       context: context,
@@ -266,58 +196,20 @@ class _BookmarkEditingScreenState extends State<BookmarkEditingScreen>
     );
   }
 
-  Widget get _configCard {
-    Widget _card;
-    switch (_designPattern) {
-      case 0:
-        _card = PatternConfigCard(
-          patternLabel: "Stripes",
-          patternValue: _stripeCount,
-          onPatternSliderChange: onStripeSliderChange,
-          min: 1,
-          max: 32,
-        );
-        break;
-      case 1:
-        _card = PatternConfigCard(
-          patternLabel: "Dotes",
-          patternValue: _dotSize,
-          onPatternSliderChange: onDotsSliderChange,
-          min: 12,
-          max: 32,
-        );
-        break;
-      default:
-        _card = PatternConfigCard(
-          patternLabel: "Stripes",
-          patternValue: _stripeCount,
-          onPatternSliderChange: onStripeSliderChange,
-          min: 1,
-          max: 32,
-        );
-    }
-
-    return _card;
-  }
-
   @override
   void initState() {
     super.initState();
-    // selectedPattern = 1;
-    //stripeCount = 1;
-    // _colors = [];
-    // widget.initialColors.forEach((color) {
-    //   _colors.add(color);
-    // });
+
     _snackbarController = LitSnackbarController();
     _scrollController = ScrollController();
     _routeController = LitRouteController(context);
     _appearAnimation = AnimationController(
-        duration: Duration(
-          milliseconds: 230,
-        ),
-        vsync: this);
-    //_userDataModel = widget.initialUserDataModel;
+      duration: Duration(
+        milliseconds: 230,
+      ),
+      vsync: this,
+    );
+
     _name = widget.initialUserDataModel!.name;
     _animated = widget.initialUserDataModel!.animated;
     _primaryColor = widget.initialUserDataModel!.primaryColor;
@@ -399,40 +291,44 @@ class _BookmarkEditingScreenState extends State<BookmarkEditingScreen>
                                 onSelectCallback: setDesignPattern,
                                 items: [
                                   LitToggleButtonGroupItemData(
-                                      label: "Striped", value: 0),
+                                    label: "Striped",
+                                    value: 0,
+                                  ),
                                   LitToggleButtonGroupItemData(
-                                      label: "Dotted", value: 1),
+                                    label: "Dotted",
+                                    value: 1,
+                                  ),
                                 ],
                               ),
                             ],
                           ),
                         ),
-                        //Text("stripe count $stripeCount"),
                         ValueListenableBuilder(
                           valueListenable:
                               HiveDBService().getUserCreatedColors(),
                           builder: (BuildContext context,
                               Box<UserCreatedColor> colorsBox, Widget? _) {
-                            // List<UserCreatedColor> userColors = colorsBox.values
-                            //     .toList()
-                            //     .cast<UserCreatedColor>();
                             List<UserCreatedColor> userColors =
                                 colorsBox.values.toList();
-                            print(userColors);
+
                             return ConstrainedBox(
                               constraints: BoxConstraints(
                                   minHeight:
                                       MediaQuery.of(context).size.height),
                               child: Column(
                                 children: [
-                                  _configCard,
+                                  _ConfigCardBuilder(
+                                    designPattern: _designPattern,
+                                    dotSize: _dotSize,
+                                    stripeCount: _stripeCount,
+                                    onStripeSliderChange: onStripeSliderChange,
+                                    onDotsSliderChange: onDotsSliderChange,
+                                  ),
                                   PrimaryColorSelectorCard(
                                     selectedColorValue: _primaryColor,
                                     onSelectPrimaryColor: _setPrimaryColor,
                                     userCreatedColors: userColors,
                                     cardTitle: "Main Color",
-                                    //colors: _colors,
-                                    //addColor: _handleAddColor,
                                     onAddColorError: () =>
                                         _snackbarController.showSnackBar(),
                                   ),
@@ -479,5 +375,53 @@ class _BookmarkEditingScreenState extends State<BookmarkEditingScreen>
         );
       },
     );
+  }
+}
+
+/// A builder widget returning the [PatternConfigCard] using the `Stripes` or
+/// the `Dots` configuration.
+class _ConfigCardBuilder extends StatelessWidget {
+  final int designPattern;
+  final int dotSize;
+  final int stripeCount;
+  final void Function(double) onStripeSliderChange;
+  final void Function(double) onDotsSliderChange;
+  const _ConfigCardBuilder({
+    Key? key,
+    required this.designPattern,
+    required this.dotSize,
+    required this.stripeCount,
+    required this.onStripeSliderChange,
+    required this.onDotsSliderChange,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    switch (designPattern) {
+      case 0:
+        return PatternConfigCard(
+          patternLabel: "Stripes",
+          patternValue: stripeCount,
+          onPatternSliderChange: onStripeSliderChange,
+          min: 1,
+          max: 32,
+        );
+      case 1:
+        return PatternConfigCard(
+          patternLabel: "Dots",
+          patternValue: dotSize,
+          onPatternSliderChange: onDotsSliderChange,
+          min: 12,
+          max: 32,
+        );
+      default:
+        return PatternConfigCard(
+          patternLabel: "Stripes",
+          patternValue: stripeCount,
+          onPatternSliderChange: onStripeSliderChange,
+          min: 1,
+          max: 32,
+        );
+    }
   }
 }
