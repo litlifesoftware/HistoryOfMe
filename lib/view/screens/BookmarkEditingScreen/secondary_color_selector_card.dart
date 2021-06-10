@@ -13,7 +13,7 @@ class SecondaryColorSelectorCard extends StatefulWidget {
   final void Function(Color color) onSelectSecondaryColor;
   const SecondaryColorSelectorCard({
     Key? key,
-    this.cardTitle = "Secondary Color",
+    required this.cardTitle,
     this.buttonBoxShadow = const [
       const BoxShadow(
         blurRadius: 2.0,

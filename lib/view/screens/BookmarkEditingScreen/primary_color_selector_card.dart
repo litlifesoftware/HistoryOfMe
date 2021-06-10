@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:history_of_me/controller/database/hive_db_service.dart';
 import 'package:history_of_me/config/config.dart';
+import 'package:history_of_me/controller/localization/hom_localizations.dart';
 import 'package:history_of_me/model/user_created_color.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';
 
@@ -20,7 +21,7 @@ class PrimaryColorSelectorCard extends StatefulWidget {
   final List<UserCreatedColor> userCreatedColors;
   const PrimaryColorSelectorCard({
     Key? key,
-    this.cardTitle = "Design Color",
+    required this.cardTitle,
     required this.selectedColorValue,
     required this.onSelectPrimaryColor,
     //this.colors = const [],
@@ -233,11 +234,11 @@ class _PrimaryColorSelectorCardState extends State<PrimaryColorSelectorCard>
                         horizontal: 12.0,
                       ),
                       child: Text(
-                        "Show ${showAllColors ? 'less' : 'more'}",
-                        style: LitTextStyles.sansSerif.copyWith(
+                        showAllColors
+                            ? HOMLocalizations(context).less.toUpperCase()
+                            : HOMLocalizations(context).more.toUpperCase(),
+                        style: LitSansSerifStyles.button.copyWith(
                           color: Colors.white,
-                          fontWeight: FontWeight.w700,
-                          fontSize: 13.0,
                         ),
                       ),
                       onPressed: toggleAllColors,
@@ -253,11 +254,9 @@ class _PrimaryColorSelectorCardState extends State<PrimaryColorSelectorCard>
                                 horizontal: 12.0,
                               ),
                               child: Text(
-                                "Reset",
-                                style: LitTextStyles.sansSerif.copyWith(
+                                HOMLocalizations(context).reset.toUpperCase(),
+                                style: LitSansSerifStyles.button.copyWith(
                                   color: Colors.white,
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: 13.0,
                                 ),
                               ),
                               onPressed: resetColorChannelValues,
@@ -293,11 +292,9 @@ class _PrimaryColorSelectorCardState extends State<PrimaryColorSelectorCard>
                                       ),
                               )
                             : Text(
-                                "Create Color",
-                                style: LitTextStyles.sansSerif.copyWith(
+                                HOMLocalizations(context).create.toUpperCase(),
+                                style: LitSansSerifStyles.button.copyWith(
                                   color: Colors.white,
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: 13.0,
                                 ),
                               ),
                         onPressed: handleColorMixerPress,

@@ -319,4 +319,60 @@ class HOMLocalizations {
   String get apply {
     return getValue("apply");
   }
+
+  String get unsavedBookmarkDescr {
+    return getValue("unsaved_bookmark_descr");
+  }
+
+  String get unsaved {
+    return getValue("unsaved");
+  }
+
+  String get discardChanges {
+    return getValue("discard_changes");
+  }
+
+  String get discard {
+    return getValue("discard");
+  }
+
+  String get colorAlreadyExists {
+    return getValue("color_already_exists");
+  }
+
+  String get dotted {
+    return getValue("dotted");
+  }
+
+  String get striped {
+    return getValue("striped");
+  }
+
+  String get mainColor {
+    return getValue("main_color");
+  }
+
+  String get accentColor {
+    return getValue("accent_color");
+  }
+
+  String get quote {
+    return getValue("quote");
+  }
+
+  String get by {
+    return getValue("by");
+  }
+
+  String get more {
+    return getValue("more");
+  }
+
+  String get less {
+    return getValue("less");
+  }
+
+  String get reset {
+    return getValue("reset");
+  }
 }

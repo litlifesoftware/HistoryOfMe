@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:history_of_me/controller/localization/hom_localizations.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';
 
 class QuoteCard extends StatefulWidget {
-  //final UserData userDataModel;
   final String? initialQuote;
   final String? initialAuthor;
   final void Function(String) onQuoteChanged;
   final void Function(String) onAuthorChanged;
   const QuoteCard({
     Key? key,
-    //@required this.userDataModel,
     required this.initialQuote,
     required this.initialAuthor,
     required this.onAuthorChanged,
@@ -44,7 +43,7 @@ class _QuoteCardState extends State<QuoteCard> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "Quote",
+          HOMLocalizations(context).quote,
           style: LitTextStyles.sansSerif.copyWith(
             color: HexColor('#878787'),
             fontSize: 22.0,
@@ -71,34 +70,36 @@ class _QuoteCardState extends State<QuoteCard> {
           ),
         ),
         Padding(
-            padding: const EdgeInsets.symmetric(
-              vertical: 8.0,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "by",
-                  style: LitTextStyles.sansSerif.copyWith(
-                      fontSize: 13.0,
-                      fontWeight: FontWeight.w600,
-                      color: LitColors.mediumGrey.withOpacity(
-                        0.6,
-                      )),
-                ),
-                EditableText(
-                  backgroundCursorColor: Colors.black,
-                  cursorColor: LitColors.mediumGrey,
-                  maxLines: 1,
-                  controller: _authorEditingController,
-                  focusNode: _authorFocus,
-                  style: LitTextStyles.sansSerif.copyWith(
-                    fontWeight: FontWeight.w700,
+          padding: const EdgeInsets.symmetric(
+            vertical: 8.0,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                HOMLocalizations(context).by,
+                style: LitTextStyles.sansSerif.copyWith(
+                  fontSize: 13.0,
+                  fontWeight: FontWeight.w600,
+                  color: LitColors.mediumGrey.withOpacity(
+                    0.6,
                   ),
-                  onChanged: widget.onAuthorChanged,
                 ),
-              ],
-            )),
+              ),
+              EditableText(
+                backgroundCursorColor: Colors.black,
+                cursorColor: LitColors.mediumGrey,
+                maxLines: 1,
+                controller: _authorEditingController,
+                focusNode: _authorFocus,
+                style: LitTextStyles.sansSerif.copyWith(
+                  fontWeight: FontWeight.w700,
+                ),
+                onChanged: widget.onAuthorChanged,
+              ),
+            ],
+          ),
+        ),
       ],
     ));
   }

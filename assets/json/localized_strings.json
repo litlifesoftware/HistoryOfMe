@@ -302,5 +302,61 @@
   "apply": {
     "en": "apply",
     "de": "anwenden"
+  },
+  "unsaved_bookmark_descr": {
+    "en": "There have been changes made to your bookmark.",
+    "de": "Es gibt ungespeicherte Änderungen an deinem Lesezeichen."
+  },
+  "unsaved": {
+    "en": "Unsaved",
+    "de": "Ungespeichert"
+  },
+  "discard": {
+    "en": "discard",
+    "de": "verwerfen"
+  },
+  "discard_changes": {
+    "en": "Do you want to discard your changes?",
+    "de": "Möchtest du diese Änderungen verwerfen?"
+  },
+  "color_already_exists": {
+    "en": "This color does already exist.",
+    "de": "Diese Farbe existiert bereits."
+  },
+  "dotted": {
+    "en": "Dotted",
+    "de": "Punkte"
+  },
+  "striped": {
+    "en": "Striped",
+    "de": "Streifen"
+  },
+  "main_color": {
+    "en": "Main Color",
+    "de": "Hauptfarbe"
+  },
+  "accent_color": {
+    "en": "Accent Color",
+    "de": "Akzentfarbe"
+  },
+  "quote": {
+    "en": "Quote",
+    "de": "Zitat"
+  },
+  "by": {
+    "en": "by",
+    "de": "von"
+  },
+  "more": {
+    "en": "more",
+    "de": "mehr"
+  },
+  "less": {
+    "en": "less",
+    "de": "weniger"
+  },
+  "reset": {
+    "en": "reset",
+    "de": "neu"
   }
 }

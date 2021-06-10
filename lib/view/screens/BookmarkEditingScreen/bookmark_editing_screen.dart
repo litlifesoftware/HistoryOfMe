@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:history_of_me/controller/localization/hom_localizations.dart';
 import 'package:history_of_me/view/shared/shared.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';
 import 'package:history_of_me/controller/database/hive_db_service.dart';
@@ -187,7 +188,11 @@ class _BookmarkEditingScreenState extends State<BookmarkEditingScreen>
     showDialog(
       context: context,
       builder: (_) => DiscardDraftDialog(
-        infoDescription: "There have been changes made to your bookmark.",
+        titleText: HOMLocalizations(context).unsaved,
+        infoDescription: HOMLocalizations(context).unsavedBookmarkDescr,
+        discardText: HOMLocalizations(context).discardChanges,
+        cancelButtonLabel: HOMLocalizations(context).cancel,
+        discardButtonLabel: HOMLocalizations(context).discard,
         onDiscard: () {
           _routeController.closeDialog();
           _routeController.navigateBack();
@@ -232,7 +237,6 @@ class _BookmarkEditingScreenState extends State<BookmarkEditingScreen>
           appBar: FixedOnScrollAppbar(
             scrollController: _scrollController,
             backgroundColor: Colors.white,
-            height: 50.0,
             child: EditableItemMetaInfo(
               lastUpdateTimestamp: updatedUserData.lastUpdated,
               showUnsavedBadge: _userDataChanged(updatedUserData),
@@ -243,7 +247,7 @@ class _BookmarkEditingScreenState extends State<BookmarkEditingScreen>
           snackbars: [
             LitIconSnackbar(
               snackBarController: _snackbarController,
-              text: "This color does already exist",
+              text: HOMLocalizations(context).colorAlreadyExists,
               iconData: LitIcons.info,
             ),
           ],
@@ -291,11 +295,11 @@ class _BookmarkEditingScreenState extends State<BookmarkEditingScreen>
                                 onSelectCallback: setDesignPattern,
                                 items: [
                                   LitToggleButtonGroupItemData(
-                                    label: "Striped",
+                                    label: HOMLocalizations(context).striped,
                                     value: 0,
                                   ),
                                   LitToggleButtonGroupItemData(
-                                    label: "Dotted",
+                                    label: HOMLocalizations(context).dotted,
                                     value: 1,
                                   ),
                                 ],
@@ -328,7 +332,8 @@ class _BookmarkEditingScreenState extends State<BookmarkEditingScreen>
                                     selectedColorValue: _primaryColor,
                                     onSelectPrimaryColor: _setPrimaryColor,
                                     userCreatedColors: userColors,
-                                    cardTitle: "Main Color",
+                                    cardTitle:
+                                        HOMLocalizations(context).mainColor,
                                     onAddColorError: () =>
                                         _snackbarController.showSnackBar(),
                                   ),
@@ -339,6 +344,8 @@ class _BookmarkEditingScreenState extends State<BookmarkEditingScreen>
                                     onQuoteChanged: setQuote,
                                   ),
                                   SecondaryColorSelectorCard(
+                                    cardTitle:
+                                        HOMLocalizations(context).accentColor,
                                     userCreatedColors: userColors,
                                     selectedSecondaryColorValue:
                                         _secondaryColor,
@@ -362,8 +369,11 @@ class _BookmarkEditingScreenState extends State<BookmarkEditingScreen>
                           child: LitGradientButton(
                             accentColor: const Color(0xFFDE8FFA),
                             color: const Color(0xFFFA72AA),
-                            child: Icon(LitIcons.disk,
-                                size: 28.0, color: Colors.white),
+                            child: Icon(
+                              LitIcons.disk,
+                              size: 28.0,
+                              color: Colors.white,
+                            ),
                             onPressed: _onSaveChanges,
                           ),
                         )
@@ -400,7 +410,7 @@ class _ConfigCardBuilder extends StatelessWidget {
     switch (designPattern) {
       case 0:
         return PatternConfigCard(
-          patternLabel: "Stripes",
+          patternLabel: HOMLocalizations(context).striped,
           patternValue: stripeCount,
           onPatternSliderChange: onStripeSliderChange,
           min: 1,
@@ -408,7 +418,7 @@ class _ConfigCardBuilder extends StatelessWidget {
         );
       case 1:
         return PatternConfigCard(
-          patternLabel: "Dots",
+          patternLabel: HOMLocalizations(context).dotted,
           patternValue: dotSize,
           onPatternSliderChange: onDotsSliderChange,
           min: 12,
@@ -416,7 +426,7 @@ class _ConfigCardBuilder extends StatelessWidget {
         );
       default:
         return PatternConfigCard(
-          patternLabel: "Stripes",
+          patternLabel: HOMLocalizations(context).striped,
           patternValue: stripeCount,
           onPatternSliderChange: onStripeSliderChange,
           min: 1,
