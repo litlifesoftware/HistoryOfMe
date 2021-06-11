@@ -29,27 +29,28 @@ class _SettingsFooterState extends State<SettingsFooter> {
   void _showAboutThisAppDialog() {
     LitRouteController(context).showDialogWidget(
       AboutAppDialog(
+        title: HOMLocalizations(context).aboutThisApp,
         appName: "History of Me",
         art: HistoryOfMeLauncherIconArt(),
-        infoDescription: "Your own personal diary.",
+        infoDescription: HOMLocalizations(context).yourOwnPersonalDiary,
       ),
     );
   }
 
   void _openPrivacyPolicy() {
     LitRouteController(context).pushCupertinoWidget(LitPrivacyPolicyScreen(
+      title: HOMLocalizations(context).privacy,
       onAgreeCallback: () => LitRouteController(context).pop(),
-      privacyText:
-          "History of Me's goal is to provide the most private experience available on mobile devices. Your data will always remain on your device. The creator of the app nor any third party will be able to view your content. There is no connection to the internet, all required data to use the app will be stored locally.",
-      agreeLabel: "Okay",
+      privacyText: HOMLocalizations(context).privacyDescr,
+      agreeLabel: HOMLocalizations(context).okay,
       art: HistoryOfMeLauncherIconArt(),
       privacyTags: [
         PrivacyTag(
-          text: "Private",
+          text: HOMLocalizations(context).private,
           isConform: true,
         ),
         PrivacyTag(
-          text: "Offline",
+          text: HOMLocalizations(context).offline,
           isConform: true,
         ),
       ],
@@ -81,27 +82,27 @@ class _SettingsFooterState extends State<SettingsFooter> {
             LitCreditsScreen(
               art: HistoryOfMeLauncherIconArt(),
               appTitle: "History Of Me",
-              subTitle: "Your own personal diary.",
-              screenTitle: "Credits",
+              subTitle: HOMLocalizations(context).yourOwnPersonalDiary,
+              screenTitle: HOMLocalizations(context).credits,
               credits: [
                 CreditData(
-                  role: "UX Design",
+                  role: HOMLocalizations(context).uxDesign,
                   names: [
                     "Michael Grigorenko",
                   ],
                 ),
                 CreditData(
-                  role: "Development",
+                  role: HOMLocalizations(context).development,
                   names: [
                     "Michael Grigorenko",
                   ],
                 ),
                 CreditData(
-                  role: "Photography",
+                  role: HOMLocalizations(context).photos,
                   names: backdropPhotoPhotographers,
                 ),
                 CreditData(
-                  role: "Inspired By",
+                  role: HOMLocalizations(context).inspiredBy,
                   names: ["Your Name. (2016) - Movie"],
                 ),
               ],

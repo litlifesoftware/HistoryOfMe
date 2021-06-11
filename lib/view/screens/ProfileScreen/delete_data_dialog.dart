@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:history_of_me/controller/localization/hom_localizations.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';
 
 class DeleteDataDialog extends StatelessWidget {
@@ -26,7 +27,7 @@ class DeleteDataDialog extends StatelessWidget {
                       horizontal: 16.0,
                     ),
                     child: Text(
-                      "To delete all your data including your diary and other user specific data, simply uninstall this app.",
+                      HOMLocalizations(context).deleteAllDataDescr,
                       style: LitTextStyles.sansSerifBodyTighterSmaller,
                     ),
                   ),
@@ -36,7 +37,7 @@ class DeleteDataDialog extends StatelessWidget {
           ],
         );
       }),
-      titleText: "Delete your data",
+      titleText: HOMLocalizations(context).deleteAllData,
     );
   }
 }

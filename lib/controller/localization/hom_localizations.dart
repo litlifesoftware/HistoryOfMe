@@ -300,12 +300,20 @@ class HOMLocalizations {
     return getValue("about_this_app");
   }
 
+  String get yourOwnPersonalDiary {
+    return getValue("your_own_personal_diary");
+  }
+
   String get viewPrivacy {
     return getValue("view_privacy");
   }
 
   String get deleteAllData {
     return getValue("delete_all_data");
+  }
+
+  String get deleteAllDataDescr {
+    return getValue("delete_all_data_descr");
   }
 
   String get credits {
@@ -374,5 +382,77 @@ class HOMLocalizations {
 
   String get reset {
     return getValue("reset");
+  }
+
+  String get introduction {
+    return getValue("introduction");
+  }
+
+  String get organize {
+    return getValue("organize");
+  }
+
+  String get browseDiaryTitle {
+    return getValue("browse_diary_title");
+  }
+
+  String get browseDiaryDescr {
+    return getValue("browse_diary_descr");
+  }
+
+  String get relive {
+    return getValue("relive");
+  }
+
+  String get readYourDiaryEntriesTitle {
+    return getValue("read_your_diary_entries_title");
+  }
+
+  String get readYourDiaryEntriesDescr {
+    return getValue("read_your_diary_entries_descr");
+  }
+
+  String get personalize {
+    return getValue("personalize");
+  }
+
+  String get customizeBookmarkTitle {
+    return getValue("customize_bookmark_title");
+  }
+
+  String get customizeBookmarkDescr {
+    return getValue("customize_bookmark_descr");
+  }
+
+  String get privacy {
+    return getValue("privacy");
+  }
+
+  String get privacyDescr {
+    return getValue("privacy_descr");
+  }
+
+  String get private {
+    return getValue("private");
+  }
+
+  String get offline {
+    return getValue("offline");
+  }
+
+  String get uxDesign {
+    return getValue("ux_design");
+  }
+
+  String get development {
+    return getValue("development");
+  }
+
+  String get photos {
+    return getValue("photos");
+  }
+
+  String get inspiredBy {
+    return getValue("inspired_by");
   }
 }

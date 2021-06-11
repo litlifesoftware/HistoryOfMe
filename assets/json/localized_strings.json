@@ -283,6 +283,10 @@
     "en": "About this app",
     "de": "Über diese App"
   },
+  "your_own_personal_diary": {
+    "en": "Your own personal diary.",
+    "de": "Dein eigenes, persönliches Tagebuch."
+  },
   "view_privacy": {
     "en": "View Privacy",
     "de": "Privatsphäre"
@@ -290,6 +294,10 @@
   "delete_all_data": {
     "en": "Delete all data",
     "de": "Alle Daten entfernen"
+  },
+  "delete_all_data_descr": {
+    "en": "To delete all your data including your diary and other user specific data, simply uninstall this app.",
+    "de": "Um alle Daten dieser App inklusive deiner Benutzerdaten zu löschen, deinstalliere einfach diese App von deinem Gerät."
   },
   "credits": {
     "en": "Credits",
@@ -358,5 +366,77 @@
   "reset": {
     "en": "reset",
     "de": "neu"
+  },
+  "introduction": {
+    "en": "Introduction",
+    "de": "Einführung"
+  },
+  "organize": {
+    "en": "Organize",
+    "de": "Ordne"
+  },
+  "browse_diary_title": {
+    "en": "Browse through your diary",
+    "de": "Überblicke dein Tagebuch"
+  },
+  "browse_diary_descr": {
+    "en": "History of Me offers you your own personal diary. You can browse through all your diary entries and organize your writings.",
+    "de": "History Of Me bietet dir dein eigenes, persönliches Tagebuch. Überblicke und stöbere durch deine Einträge."
+  },
+  "relive": {
+    "en": "Relive",
+    "de": "Wiedererlebe"
+  },
+  "read_your_diary_entries_title": {
+    "en": "Read your diary entries",
+    "de": "Lies deine Einträge"
+  },
+  "read_your_diary_entries_descr": {
+    "en": "Tap on one of the entires on your diary in order to read an entry and to relive your memories.",
+    "de": "Tippe auf einen deiner Einträge in der Tagebuch-List, um einen Eintrag zu lesen und um deine Erinnerungen wiederzuerwecken."
+  },
+  "personalize": {
+    "en": "Personalize",
+    "de": "Personalisiere"
+  },
+  "customize_bookmark_title": {
+    "en": "Customize your bookmark",
+    "de": "Passe dein Lesezeichen an"
+  },
+  "customize_bookmark_descr": {
+    "en": "Can you see the bookmark on top of your diary? You can customize it. Go to your profile and tap on the pencil under your bookmark to edit it. Set your favorite color pallet and a nice pattern. Don't forget to save your changes!",
+    "de": "Kannst du das Lesezeichen oben über deinem Tagebuch sehen? Diesen kannst du anpassen. Gehe hierfür zu deinem Profil und tippe auf das Stift-Symbol unter dem Lesezeichen. Bei der Bearbeitung kann du deine Lieblingsfarben auswählen und auch das Muster festlegen. Aber vergiss bitte nicht die Änderungen zu speichern!"
+  },
+  "privacy": {
+    "en": "Privacy",
+    "de": "Privatsphäre"
+  },
+  "privacy_descr": {
+    "en": "History of Me's goal is to provide the most private experience available on mobile devices. Your data will always remain on your device. The creator of the app nor any third party will be able to view your content. There is no connection to the internet, all required data to use the app will be stored offline.",
+    "de": "History of Me möchte dir die höchste Datenschutzsicherheit bieten. Deine Daten verbleiben nur auf deinem Gerät. Weder der Ersteller der App noch eine andere Person können auf deine Inhalte zugreifen. Es wird keine Übertragung über das Internet stattfinden, alle Daten bleiben offline."
+  },
+  "private": {
+    "en": "private",
+    "de": "privat"
+  },
+  "offline": {
+    "en": "offline",
+    "de": "offline"
+  },
+  "ux_design": {
+    "en": "UX Design",
+    "de": "UX Design"
+  },
+  "development": {
+    "en": "Development",
+    "de": "Entwicklung"
+  },
+  "photos": {
+    "en": "Photos",
+    "de": "Fotos"
+  },
+  "inspired_by": {
+    "en": "Inspired by",
+    "de": "Inspiriert durch"
   }
 }
