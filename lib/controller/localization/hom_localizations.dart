@@ -332,6 +332,10 @@ class HOMLocalizations {
     return getValue("unsaved_bookmark_descr");
   }
 
+  String get unsavedEntryDescr {
+    return getValue("unsaved_entry_descr");
+  }
+
   String get unsaved {
     return getValue("unsaved");
   }
@@ -462,5 +466,13 @@ class HOMLocalizations {
 
   String get statisticsFallbackAdv {
     return getValue("statistics_fallback_adv");
+  }
+
+  String get deleteEntry {
+    return getValue("delete_entry");
+  }
+
+  String get deleteEntryDescr {
+    return getValue("delete_entry_descr");
   }
 }

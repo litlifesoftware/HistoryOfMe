@@ -116,7 +116,11 @@ class _EntryEditingScreenState extends State<EntryEditingScreen>
     showDialog(
       context: context,
       builder: (_) => DiscardDraftDialog(
-        infoDescription: "There have been changes made to this diary entry.",
+        titleText: HOMLocalizations(context).unsaved,
+        infoDescription: HOMLocalizations(context).unsavedEntryDescr,
+        discardText: HOMLocalizations(context).discardChanges,
+        cancelButtonLabel: HOMLocalizations(context).cancel,
+        discardButtonLabel: HOMLocalizations(context).discard,
         onDiscard: () {
           _routeController.dicardAndExit();
         },
@@ -279,7 +283,9 @@ class _EntryEditingScreenState extends State<EntryEditingScreen>
                                               left: 8.0,
                                             ),
                                             child: Text(
-                                              "Your mood was".toUpperCase(),
+                                              HOMLocalizations(context)
+                                                  .yourMoodWas
+                                                  .toUpperCase(),
                                               style: LitTextStyles.sansSerif
                                                   .copyWith(
                                                 letterSpacing: 0.59,

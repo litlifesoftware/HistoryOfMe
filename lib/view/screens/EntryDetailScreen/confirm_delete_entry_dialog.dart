@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:history_of_me/controller/database/hive_db_service.dart';
+import 'package:history_of_me/controller/localization/hom_localizations.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';
 
 class ConfirmDeleteEntryDialog extends StatefulWidget {
@@ -29,7 +30,7 @@ class _ConfirmDeleteEntryDialogState extends State<ConfirmDeleteEntryDialog> {
   @override
   Widget build(BuildContext context) {
     return LitTitledDialog(
-      titleText: "Delete entry",
+      titleText: HOMLocalizations(context).deleteEntry,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -52,7 +53,7 @@ class _ConfirmDeleteEntryDialogState extends State<ConfirmDeleteEntryDialog> {
                     SizedBox(
                       width: constraints.maxWidth * 0.6,
                       child: Text(
-                        "Do you want to delete your diary entry?",
+                        HOMLocalizations(context).deleteEntryDescr,
                         textAlign: TextAlign.left,
                         style: LitTextStyles.sansSerif.copyWith(
                           fontSize: 14.0,
@@ -87,11 +88,9 @@ class _ConfirmDeleteEntryDialogState extends State<ConfirmDeleteEntryDialog> {
             horizontal: 20.0,
           ),
           child: Text(
-            "Cancel",
-            style: LitTextStyles.sansSerif.copyWith(
+            HOMLocalizations(context).cancel.toUpperCase(),
+            style: LitSansSerifStyles.button.copyWith(
               color: Colors.white,
-              fontSize: 16.0,
-              fontWeight: FontWeight.w700,
             ),
           ),
           onPressed: _onCancel,
@@ -103,11 +102,9 @@ class _ConfirmDeleteEntryDialogState extends State<ConfirmDeleteEntryDialog> {
             horizontal: 20.0,
           ),
           child: Text(
-            "Delete",
-            style: LitTextStyles.sansSerif.copyWith(
+            HOMLocalizations(context).delete.toUpperCase(),
+            style: LitSansSerifStyles.button.copyWith(
               color: Colors.white,
-              fontSize: 16.0,
-              fontWeight: FontWeight.w700,
             ),
           ),
           onPressed: _onDelete,

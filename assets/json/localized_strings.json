@@ -149,7 +149,7 @@
   },
   "delete": {
     "en": "delete",
-    "de": "löschen"
+    "de": "entfernen"
   },
   "bad": {
     "en": "bad",
@@ -315,6 +315,10 @@
     "en": "There have been changes made to your bookmark.",
     "de": "Es gibt ungespeicherte Änderungen an deinem Lesezeichen."
   },
+  "unsaved_entry_descr": {
+    "en": "There have been changes made to your bookmark.",
+    "de": "Es gibt ungespeicherte Änderungen an deinem Tagebucheintrag."
+  },
   "unsaved": {
     "en": "Unsaved",
     "de": "Ungespeichert"
@@ -446,5 +450,13 @@
   "statistics_fallback_adv": {
     "en": "Go back to your diary to create your first entry.",
     "de": "Gehe zurück zu deinem Tagebuch, um deinen ersten Eintrag zu erstellen."
+  },
+  "delete_entry": {
+    "en": "Delete Entry",
+    "de": "Eintrag entfernen"
+  },
+  "delete_entry_descr": {
+    "en": "Do you want to delete your diary entry?",
+    "de": "Möchtest du deinen Tagebucheintrag wirklich entfernen?"
   }
 }
