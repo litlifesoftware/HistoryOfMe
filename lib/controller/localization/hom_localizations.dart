@@ -455,4 +455,12 @@ class HOMLocalizations {
   String get inspiredBy {
     return getValue("inspired_by");
   }
+
+  String get statisticsFallbackDescr {
+    return getValue("statistics_fallback_descr");
+  }
+
+  String get statisticsFallbackAdv {
+    return getValue("statistics_fallback_adv");
+  }
 }

@@ -107,9 +107,8 @@ class _NoDataAvailableInfo extends StatelessWidget {
                       vertical: 8.0,
                       horizontal: 16.0,
                     ),
-                    //TODO localize
                     child: Text(
-                      "In order to show your statistics, you should have atleast one entry created.",
+                      HOMLocalizations(context).statisticsFallbackDescr,
                       textAlign: TextAlign.left,
                       style: LitTextStyles.sansSerif.copyWith(
                         color: HexColor('#8A8A8A'),
@@ -125,8 +124,7 @@ class _NoDataAvailableInfo extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(top: 16.0),
               child: Text(
-                //TODO localized
-                "Go back to your diary to create your first entry.",
+                HOMLocalizations(context).statisticsFallbackAdv,
                 textAlign: TextAlign.left,
                 style: LitTextStyles.sansSerif.copyWith(
                   color: HexColor('#8A8A8A'),

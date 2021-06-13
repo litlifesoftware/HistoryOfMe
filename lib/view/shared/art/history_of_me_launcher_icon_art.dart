@@ -4,6 +4,7 @@ class HistoryOfMeLauncherIconArt extends StatelessWidget {
   final BorderRadius borderRadius;
   final double height;
   final double width;
+  final List<BoxShadow> boxShadow;
   const HistoryOfMeLauncherIconArt({
     Key? key,
     this.borderRadius = const BorderRadius.all(
@@ -11,6 +12,7 @@ class HistoryOfMeLauncherIconArt extends StatelessWidget {
     ),
     this.height = 84.0,
     this.width = 84.0,
+    this.boxShadow = const [],
   }) : super(key: key);
 
   @override
@@ -22,6 +24,7 @@ class HistoryOfMeLauncherIconArt extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(height / 4)),
           color: Color(0xFFFFF7EF),
+          boxShadow: boxShadow,
         ),
         child: Padding(
           padding: EdgeInsets.all(height / 4),

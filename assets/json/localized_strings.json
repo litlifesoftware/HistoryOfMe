@@ -438,5 +438,13 @@
   "inspired_by": {
     "en": "Inspired by",
     "de": "Inspiriert durch"
+  },
+  "statistics_fallback_descr": {
+    "en": "In order to show your statistics, you should have atleast one entry created.",
+    "de": "Um deine Statistiken zu sehen, solltest du mindestens einen Eintrag erstellen."
+  },
+  "statistics_fallback_adv": {
+    "en": "Go back to your diary to create your first entry.",
+    "de": "Gehe zurück zu deinem Tagebuch, um deinen ersten Eintrag zu erstellen."
   }
 }

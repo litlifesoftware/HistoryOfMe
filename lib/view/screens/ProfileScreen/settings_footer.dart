@@ -80,7 +80,19 @@ class _SettingsFooterState extends State<SettingsFooter> {
         .then(
           (value) => LitRouteController(context).pushMaterialWidget(
             LitCreditsScreen(
-              art: HistoryOfMeLauncherIconArt(),
+              art: HistoryOfMeLauncherIconArt(
+                boxShadow: [
+                  BoxShadow(
+                    blurRadius: 3.0,
+                    color: Colors.black12,
+                    offset: Offset(
+                      -2,
+                      2,
+                    ),
+                    spreadRadius: -1,
+                  )
+                ],
+              ),
               appTitle: "History Of Me",
               subTitle: HOMLocalizations(context).yourOwnPersonalDiary,
               screenTitle: HOMLocalizations(context).credits,
