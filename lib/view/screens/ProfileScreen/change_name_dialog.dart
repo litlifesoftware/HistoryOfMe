@@ -74,7 +74,7 @@ class _ChangeNameDialogState extends State<ChangeNameDialog> {
             accentColor: LitColors.lightGrey,
             child: ScaledDownText(
               HOMLocalizations(context).cancel,
-              uppercase: true,
+              upperCase: true,
               style: LitSansSerifStyles.button,
             ),
           ),
@@ -91,7 +91,7 @@ class _ChangeNameDialogState extends State<ChangeNameDialog> {
             disabled: !_isChanged,
             child: ScaledDownText(
               HOMLocalizations(context).apply,
-              uppercase: true,
+              upperCase: true,
               style: LitSansSerifStyles.button,
             ),
           ),
