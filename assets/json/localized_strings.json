@@ -72,7 +72,7 @@
     "de": "erstellen"
   },
   "create_entry": {
-    "en": "create entry",
+    "en": "Create Entry",
     "de": "Eintrag erstellen"
   },
   "existing_entry_today_descr": {
@@ -184,7 +184,7 @@
     "de": "vor"
   },
   "choose_photo": {
-    "en": "Choose a photo",
+    "en": "Choose a Photo",
     "de": "Wähle ein Foto"
   },
   "selected": {
@@ -192,15 +192,15 @@
     "de": "ausgewählt"
   },
   "details": {
-    "en": "details",
+    "en": "Details",
     "de": "Details"
   },
   "creator": {
-    "en": "creator",
+    "en": "Creator",
     "de": "Ersteller"
   },
   "location": {
-    "en": "location",
+    "en": "Location",
     "de": "Ort"
   },
   "published": {
@@ -232,7 +232,7 @@
     "de": "Deinen Namen ändern"
   },
   "statistics": {
-    "en": "statistics",
+    "en": "Statistics",
     "de": "Statistik"
   },
   "diary_entires": {
