@@ -178,7 +178,7 @@ class _BookmarkEditingScreenState extends State<BookmarkEditingScreen>
   }
 
   /// Updates the Hive database using the latest changes.
-  void _onSaveChanges() {
+  void _saveChanges() {
     HiveDBService(debug: DEBUG)
         .updateUserData(_mapUserData(DateTime.now().millisecondsSinceEpoch));
   }
@@ -360,24 +360,10 @@ class _BookmarkEditingScreenState extends State<BookmarkEditingScreen>
                       ],
                     ),
                   ),
-                  _userDataChanged(updatedUserData)
-                      ? LitDraggable(
-                          initialDragOffset: Offset(
-                            MediaQuery.of(context).size.width - 90.0,
-                            MediaQuery.of(context).size.height - 90.0,
-                          ),
-                          child: LitGradientButton(
-                            accentColor: const Color(0xFFDE8FFA),
-                            color: const Color(0xFFFA72AA),
-                            child: Icon(
-                              LitIcons.disk,
-                              size: 28.0,
-                              color: Colors.white,
-                            ),
-                            onPressed: _onSaveChanges,
-                          ),
-                        )
-                      : SizedBox(),
+                  PurplePinkSaveButton(
+                    disabled: !_userDataChanged(updatedUserData),
+                    onSaveChanges: _saveChanges,
+                  )
                 ],
               );
             },

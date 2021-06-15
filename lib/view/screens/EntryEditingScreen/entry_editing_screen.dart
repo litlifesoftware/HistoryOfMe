@@ -6,6 +6,7 @@ import 'package:history_of_me/config/config.dart';
 import 'package:history_of_me/model/diary_entry.dart';
 import 'package:history_of_me/view/shared/animated_updated_label.dart';
 import 'package:history_of_me/view/shared/editable_item_meta_info.dart';
+import 'package:history_of_me/view/shared/shared.dart';
 import 'package:hive/hive.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';
 
@@ -92,7 +93,7 @@ class _EntryEditingScreenState extends State<EntryEditingScreen>
     return (_titleChanged || _contentChanged || _moodScoreChanged);
   }
 
-  void _onSaveChanges() {
+  void _saveChanges() {
     // Verify the title has been modified (does not equal the localized string).
     String title =
         (_titleEditingController.text != HOMLocalizations(context).untitled)
@@ -319,21 +320,10 @@ class _EntryEditingScreenState extends State<EntryEditingScreen>
                             ],
                           ),
                         ),
-                        _isChanged(dbDiaryEntry)
-                            ? LitDraggable(
-                                initialDragOffset: Offset(
-                                  MediaQuery.of(context).size.width - 90.0,
-                                  MediaQuery.of(context).size.height - 90.0,
-                                ),
-                                child: LitGradientButton(
-                                  accentColor: const Color(0xFFDE8FFA),
-                                  color: const Color(0xFFFA72AA),
-                                  child: Icon(LitIcons.disk,
-                                      size: 28.0, color: Colors.white),
-                                  onPressed: _onSaveChanges,
-                                ),
-                              )
-                            : SizedBox(),
+                        PurplePinkSaveButton(
+                          disabled: !_isChanged(dbDiaryEntry),
+                          onSaveChanges: _saveChanges,
+                        ),
                       ],
                     );
                   },
