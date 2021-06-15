@@ -32,10 +32,12 @@ class EntryDetailBackdrop extends StatelessWidget {
                   : BoxDecoration(
                       image: DecorationImage(
                         fit: BoxFit.fitWidth,
-                        image: AssetImage(BackdropPhotoController(
-                          backdropPhotos,
-                          diaryEntry,
-                        ).findBackdropPhotoUrl()!),
+                        image: AssetImage(
+                          BackdropPhotoController(
+                            backdropPhotos,
+                            diaryEntry,
+                          ).findBackdropPhotoUrl()!,
+                        ),
                       ),
                     ),
             ),

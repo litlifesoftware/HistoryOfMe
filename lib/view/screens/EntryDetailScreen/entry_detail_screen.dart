@@ -209,11 +209,19 @@ class _EntryDetailScreenState extends State<EntryDetailScreen>
                     LitScrollbar(
                       child: ScrollableColumn(
                         controller: _scrollController,
-                        verticalCut: 172.0,
-                        padding: EdgeInsets.only(
-                          top: widget.backdropPhotoHeight,
-                        ),
                         children: [
+                          BackdropPhotoOverlay(
+                            scrollController: _scrollController,
+                            showChangePhotoDialogCallback: () =>
+                                _showChangePhotoDialog(diaryEntry),
+                            backdropPhotos: backdropPhotos,
+                            loading: backdropPhotosLoading,
+                            diaryEntry: diaryEntry,
+                            height: widget.backdropPhotoHeight - 45.0,
+                          ),
+                          SizedBox(
+                            height: 16.0,
+                          ),
                           EntryDetailCard(
                             backdropPhotoHeight: widget.backdropPhotoHeight,
                             boxLength: entriesBox.length,
@@ -236,15 +244,6 @@ class _EntryDetailScreenState extends State<EntryDetailScreen>
                           ),
                         ],
                       ),
-                    ),
-                    BackdropPhotoOverlay(
-                      scrollController: _scrollController,
-                      showChangePhotoDialogCallback: () =>
-                          _showChangePhotoDialog(diaryEntry),
-                      backdropPhotos: backdropPhotos,
-                      loading: backdropPhotosLoading,
-                      diaryEntry: diaryEntry,
-                      height: widget.backdropPhotoHeight - 45.0,
                     ),
                   ],
                 ),
