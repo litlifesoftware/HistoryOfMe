@@ -44,33 +44,29 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Builder(
-        builder: (context) {
-          return LitTabView(tabs: [
-            LitNavigableTab(
-              tabData: LitBottomNavigationTabData(
-                index: 0,
-                icon: LitIcons.home,
-                iconSelected: LitIcons.home_alt,
-              ),
-              screen: DiaryScreen(
-                bookmarkAnimation: _bookmarkAnimation,
-              ),
-            ),
-            LitNavigableTab(
-              tabData: LitBottomNavigationTabData(
-                index: 1,
-                icon: LitIcons.person,
-                iconSelected: LitIcons.person_solid,
-              ),
-              screen: ProfileScreen(
-                bookmarkAnimation: _bookmarkAnimation,
-              ),
-            )
-          ]);
-        },
-      ),
+    return LitTabView(
+      tabs: [
+        LitNavigableTab(
+          tabData: LitBottomNavigationTabData(
+            index: 0,
+            icon: LitIcons.home,
+            iconSelected: LitIcons.home_alt,
+          ),
+          screen: DiaryScreen(
+            bookmarkAnimation: _bookmarkAnimation,
+          ),
+        ),
+        LitNavigableTab(
+          tabData: LitBottomNavigationTabData(
+            index: 1,
+            icon: LitIcons.person,
+            iconSelected: LitIcons.person_solid,
+          ),
+          screen: ProfileScreen(
+            bookmarkAnimation: _bookmarkAnimation,
+          ),
+        )
+      ],
     );
   }
 }
