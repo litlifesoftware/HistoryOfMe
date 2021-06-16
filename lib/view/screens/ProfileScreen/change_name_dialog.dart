@@ -64,38 +64,17 @@ class _ChangeNameDialogState extends State<ChangeNameDialog> {
       minHeight: 220.0,
       titleText: HOMLocalizations(context).changeYourName,
       actionButtons: [
-        Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 16.0,
-          ),
-          child: LitPushedThroughButton(
-            borderRadius: 32.0,
-            onPressed: _onCancel,
-            accentColor: LitColors.lightGrey,
-            child: ScaledDownText(
-              HOMLocalizations(context).cancel,
-              upperCase: true,
-              style: LitSansSerifStyles.button,
-            ),
-          ),
+        DialogActionButton(
+          label: HOMLocalizations(context).cancel,
+          onPressed: _onCancel,
         ),
-        Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 16.0,
-          ),
-          child: LitPushedThroughButton(
-            borderRadius: 32.0,
-            onPressed: _onSubmit,
-            accentColor: Color(0xFFEDDEC0),
-            backgroundColor: Color(0xFFEAEACA),
-            disabled: !_isChanged,
-            child: ScaledDownText(
-              HOMLocalizations(context).apply,
-              upperCase: true,
-              style: LitSansSerifStyles.button,
-            ),
-          ),
-        )
+        DialogActionButton(
+          label: HOMLocalizations(context).apply,
+          accentColor: Color(0xFFEDDEC0),
+          backgroundColor: Color(0xFFEAEACA),
+          disabled: !_isChanged,
+          onPressed: _onSubmit,
+        ),
       ],
       child: CleanInkWell(
         onTap: _defocus,
