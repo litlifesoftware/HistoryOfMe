@@ -31,82 +31,59 @@ class _ConfirmDeleteEntryDialogState extends State<ConfirmDeleteEntryDialog> {
   Widget build(BuildContext context) {
     return LitTitledDialog(
       titleText: HOMLocalizations(context).deleteEntry,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(
-              vertical: 16.0,
-              horizontal: 16.0,
-            ),
-            child: LayoutBuilder(
-              builder: (context, constraints) {
-                return Row(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    SizedBox(
-                      width: constraints.maxWidth * 0.4,
-                      child: Center(child: ExclamationRectangle()),
-                    ),
-                    SizedBox(
-                      width: constraints.maxWidth * 0.6,
-                      child: Text(
-                        HOMLocalizations(context).deleteEntryDescr,
-                        textAlign: TextAlign.left,
-                        style: LitTextStyles.sansSerif.copyWith(
-                          fontSize: 14.0,
-                          fontWeight: FontWeight.w700,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+          vertical: 16.0,
+          horizontal: 16.0,
+        ),
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            return Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  flex: 1,
+                  child: LayoutBuilder(
+                    builder: (context, constraints) {
+                      return ExclamationRectangle(
+                        margin: const EdgeInsets.symmetric(
+                          vertical: 8.0,
+                          horizontal: 8.0,
                         ),
+                        height: constraints.maxWidth,
+                        width: constraints.maxWidth,
+                      );
+                    },
+                  ),
+                ),
+                Expanded(
+                  flex: 2,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                    child: Text(
+                      HOMLocalizations(context).deleteEntryDescr,
+                      textAlign: TextAlign.left,
+                      style: LitSansSerifStyles.body.copyWith(
+                        color: LitColors.lightGrey,
                       ),
                     ),
-                  ],
-                );
-              },
-            ),
-          ),
-          // Padding(
-          //   padding: const EdgeInsets.symmetric(
-          //     vertical: 16.0,
-          //   ),
-          //   child: Row(
-          //     mainAxisSize: MainAxisSize.max,
-          //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          //     children: [
-
-          //     ],
-          //   ),
-          // )
-        ],
+                  ),
+                ),
+              ],
+            );
+          },
+        ),
       ),
       actionButtons: [
-        LitRoundedFlatButton(
-          color: LitColors.mediumGrey,
-          padding: const EdgeInsets.symmetric(
-            vertical: 8.0,
-            horizontal: 20.0,
-          ),
-          child: Text(
-            HOMLocalizations(context).cancel.toUpperCase(),
-            style: LitSansSerifStyles.button.copyWith(
-              color: Colors.white,
-            ),
-          ),
+        DialogActionButton(
+          label: HOMLocalizations(context).cancel.toUpperCase(),
           onPressed: _onCancel,
         ),
-        LitRoundedFlatButton(
-          color: LitColors.midRed,
-          padding: const EdgeInsets.symmetric(
-            vertical: 8.0,
-            horizontal: 20.0,
-          ),
-          child: Text(
-            HOMLocalizations(context).delete.toUpperCase(),
-            style: LitSansSerifStyles.button.copyWith(
-              color: Colors.white,
-            ),
-          ),
+        DialogActionButton(
+          label: HOMLocalizations(context).delete.toUpperCase(),
+          backgroundColor: LitColors.lightRed,
+          accentColor: Colors.white,
           onPressed: _onDelete,
         ),
       ],
