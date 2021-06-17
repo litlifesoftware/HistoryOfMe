@@ -155,13 +155,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.0.1"
-  cupertino_icons:
-    dependency: "direct main"
-    description:
-      name: cupertino_icons
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.3"
   dart_style:
     dependency: transitive
     description:
@@ -313,12 +306,10 @@ packages:
   lit_ui_kit:
     dependency: "direct main"
     description:
-      path: "."
-      ref: HEAD
-      resolved-ref: "26ab39dedfbbf2cdf21e9e43be2beda2c3a0203e"
-      url: "https://github.com/litlifesoftware/lit_ui_kit.git"
-    source: git
-    version: "1.0.4"
+      name: lit_ui_kit
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.5"
   logging:
     dependency: transitive
     description:

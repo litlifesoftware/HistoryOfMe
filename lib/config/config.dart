@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-const bool DEBUG = true;
+const bool DEBUG = false;
 
 const Size bookmarkDimensions = const Size(8.5, 2.5);
 const int minStripeCount = 1;
