@@ -50,11 +50,9 @@ class _UserProfileCardState extends State<UserProfileCard> {
   Widget build(BuildContext context) {
     return LitConstrainedSizedBox(
       child: Padding(
-        padding: const EdgeInsets.only(
-          left: 24.0,
-          right: 24.0,
-          top: 12.0,
-          bottom: 8.0,
+        padding: const EdgeInsets.symmetric(
+          horizontal: 16.0,
+          vertical: 8.0,
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -110,64 +108,82 @@ class _UserProfileCardState extends State<UserProfileCard> {
               ),
               child: ClippedText(
                 "${widget.userData.name}",
-                style: LitTextStyles.sansSerifHeader,
+                style: LitSansSerifStyles.header6,
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
-              child: LayoutBuilder(
-                builder: (context, constraints) {
-                  return Row(
+            LayoutBuilder(
+              builder: (context, constraints) {
+                return SizedBox(
+                  width: constraints.maxWidth,
+                  child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 4.0),
-                            child: ClippedText(
-                              "${HOMLocalizations(context).diaryCreated}:",
-                              style: LitSansSerifStyles.body2,
+                      SizedBox(
+                        width: constraints.maxWidth / 2,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 4.0),
+                              child: ClippedText(
+                                "${HOMLocalizations(context).diaryCreated}:",
+                                style: LitSansSerifStyles.body2,
+                              ),
                             ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 4.0),
-                            child: ClippedText(
-                              DateTime.fromMillisecondsSinceEpoch(
-                                      widget.userData.created)
-                                  .formatAsLocalizedDate(context),
-                              style: LitSansSerifStyles.body,
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 4.0),
+                              child: ClippedText(
+                                DateTime.fromMillisecondsSinceEpoch(
+                                        widget.userData.created)
+                                    .formatAsLocalizedDate(context),
+                                style: LitSansSerifStyles.body,
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                      LitRoundedElevatedButton(
-                        padding: const EdgeInsets.symmetric(
-                          vertical: 6.0,
-                          horizontal: 12.0,
+                      SizedBox(
+                        width: constraints.maxWidth / 2,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 4.0,
+                          ),
+                          child: Align(
+                            alignment: Alignment.centerRight,
+                            child: LitRoundedElevatedButton(
+                              padding: const EdgeInsets.symmetric(
+                                vertical: 6.0,
+                                horizontal: 16.0,
+                              ),
+                              boxShadow: [
+                                BoxShadow(
+                                  blurRadius: 13.0,
+                                  color: Colors.black12,
+                                  offset: Offset(-1, 1),
+                                  spreadRadius: 1.0,
+                                )
+                              ],
+                              color: LitColors.mintGreen,
+                              child: ClippedText(
+                                HOMLocalizations(context)
+                                    .changeName
+                                    .toUpperCase(),
+                                textAlign: TextAlign.center,
+                                style: LitSansSerifStyles.button,
+                              ),
+                              onPressed: _showChangeNameDialog,
+                            ),
+                          ),
                         ),
-                        boxShadow: [
-                          BoxShadow(
-                            blurRadius: 13.0,
-                            color: Colors.black12,
-                            offset: Offset(-1, 1),
-                            spreadRadius: 1.0,
-                          )
-                        ],
-                        color: LitColors.mintGreen,
-                        child: ClippedText(
-                          HOMLocalizations(context).changeName.toUpperCase(),
-                          textAlign: TextAlign.center,
-                          style: LitSansSerifStyles.button,
-                        ),
-                        onPressed: _showChangeNameDialog,
                       ),
                     ],
-                  );
-                },
-              ),
-            )
+                  ),
+                );
+              },
+            ),
           ],
         ),
       ),
