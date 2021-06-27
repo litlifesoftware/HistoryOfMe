@@ -306,9 +306,11 @@ packages:
   lit_ui_kit:
     dependency: "direct main"
     description:
-      name: lit_ui_kit
-      url: "https://pub.dartlang.org"
-    source: hosted
+      path: "."
+      ref: HEAD
+      resolved-ref: "2c5f8ab57b818dec9f96c7e1971865b157813ac9"
+      url: "https://github.com/litlifesoftware/lit_ui_kit.git"
+    source: git
     version: "1.0.5"
   logging:
     dependency: transitive

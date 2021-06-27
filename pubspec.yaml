@@ -31,10 +31,11 @@ dependencies:
   hive_flutter: ^1.0.0
   hive_generator: ^1.0.1
   build_runner: ^1.12.2
-  lit_ui_kit: ^1.0.5
+  lit_ui_kit: 
+    # ^1.0.5
     # Specify alternative lit_ui_kit locations
-    # git: 
-    #   url: https://github.com/litlifesoftware/lit_ui_kit.git
+    git: 
+      url: https://github.com/litlifesoftware/lit_ui_kit.git
     # path: ../lit_ui_kit/
   lit_localization_service: ^0.0.2
   lit_relative_date_time: ^0.0.2
