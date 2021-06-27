@@ -5,7 +5,6 @@ import 'package:history_of_me/controller/localization/hom_localizations.dart';
 import 'package:history_of_me/model/user_created_color.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';
 
-import 'color_mixer.dart';
 import 'deletable_container.dart';
 import 'selectable_color_tile.dart';
 
@@ -114,21 +113,36 @@ class _PrimaryColorSelectorCardState extends State<PrimaryColorSelectorCard>
     //     blueChannel != 0;
   }
 
-  void handleColorMixerPress() {
-    if (enableColorMix) {
-      colorValuesSet
-          ? _addColor(
-              Color.fromARGB(
-                alphaChannel,
-                redChannel,
-                greenChannel,
-                blueChannel,
-              ),
-            )
-          : toggleEnableColorMix();
-    } else {
-      toggleEnableColorMix();
-    }
+  // void handleColorMixerPress() {
+  //   if (enableColorMix) {
+  //     colorValuesSet
+  //         ? _addColor(
+  //             Color.fromARGB(
+  //               alphaChannel,
+  //               redChannel,
+  //               greenChannel,
+  //               blueChannel,
+  //             ),
+  //           )
+  //         : toggleEnableColorMix();
+  //   } else {
+  //     toggleEnableColorMix();
+  //   }
+  // }
+  void handleOnCreateColorPress() {
+    showDialog(
+      context: context,
+      builder: (_) => LitColorPickerDialog(
+        onApplyColor: (Color color) {
+          _addColor(color);
+        },
+        initialColor: Color(widget.selectedColorValue!),
+        applyLabel: "Apply",
+        resetLabel: "Reset",
+        titleText: "Pick a color",
+        transparentColorText: "Color is fully transparent",
+      ),
+    );
   }
 
   void resetColorChannelValues() {
@@ -145,10 +159,16 @@ class _PrimaryColorSelectorCardState extends State<PrimaryColorSelectorCard>
 
   void _addColor(Color color) {
     try {
-      HiveDBService(debug: DEBUG)
-          .addUserCreatedColor(color.alpha, color.red, color.green, color.blue);
+      HiveDBService(debug: DEBUG).addUserCreatedColor(
+        color.alpha,
+        color.red,
+        color.green,
+        color.blue,
+      );
       resetColorChannelValues();
-      toggleEnableColorMix();
+      // toggleEnableColorMix();
+      animateMixColorTransition();
+      animateAdditionalColorsTransition();
     } catch (e) {
       widget.onAddColorError();
     }
@@ -191,37 +211,56 @@ class _PrimaryColorSelectorCardState extends State<PrimaryColorSelectorCard>
               fontSize: 22.0,
             ),
           ),
-          !enableColorMix
-              ? Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                        vertical: 8.0,
-                      ),
-                      child: UserCreatedColorGrid(
-                        additionalColorsAnimationController:
-                            _additionalColorsAnimationController,
-                        boxShadow: widget.buttonBoxShadow,
-                        onSelectColorCallback: widget.onSelectPrimaryColor,
-                        selectedColorValue: widget.selectedColorValue,
-                        showAllColors: showAllColors,
-                        userColors: widget.userCreatedColors,
-                      ),
-                    ),
-                  ],
-                )
-              : ColorMixer(
-                  alphaChannel: alphaChannel,
-                  redChannel: redChannel,
-                  greenChanne: greenChannel,
-                  blueChannel: blueChannel,
-                  onAlphaChannelChange: onAlphaChannelChange,
-                  onRedColorChannelChange: onRedColorChannelChange,
-                  onGreenColorChannelChange: onGreenColorChannelChange,
-                  onBlueColorChannelChange: onBlueColorChannelChange,
-                  animationController: _colorSliderAnimationController,
+          // !enableColorMix
+          //     ? Column(
+          //         crossAxisAlignment: CrossAxisAlignment.start,
+          //         children: [
+          //           Padding(
+          //             padding: const EdgeInsets.symmetric(
+          //               vertical: 8.0,
+          //             ),
+          //             child: UserCreatedColorGrid(
+          //               additionalColorsAnimationController:
+          //                   _additionalColorsAnimationController,
+          //               boxShadow: widget.buttonBoxShadow,
+          //               onSelectColorCallback: widget.onSelectPrimaryColor,
+          //               selectedColorValue: widget.selectedColorValue,
+          //               showAllColors: showAllColors,
+          //               userColors: widget.userCreatedColors,
+          //             ),
+          //           ),
+          //         ],
+          //       )
+          //     : ColorMixer(
+          //         alphaChannel: alphaChannel,
+          //         redChannel: redChannel,
+          //         greenChanne: greenChannel,
+          //         blueChannel: blueChannel,
+          //         onAlphaChannelChange: onAlphaChannelChange,
+          //         onRedColorChannelChange: onRedColorChannelChange,
+          //         onGreenColorChannelChange: onGreenColorChannelChange,
+          //         onBlueColorChannelChange: onBlueColorChannelChange,
+          //         animationController: _colorSliderAnimationController,
+          //       ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  vertical: 8.0,
                 ),
+                child: UserCreatedColorGrid(
+                  additionalColorsAnimationController:
+                      _additionalColorsAnimationController,
+                  boxShadow: widget.buttonBoxShadow,
+                  onSelectColorCallback: widget.onSelectPrimaryColor,
+                  selectedColorValue: widget.selectedColorValue,
+                  showAllColors: showAllColors,
+                  userColors: widget.userCreatedColors,
+                ),
+              ),
+            ],
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -297,7 +336,7 @@ class _PrimaryColorSelectorCardState extends State<PrimaryColorSelectorCard>
                                   color: Colors.white,
                                 ),
                               ),
-                        onPressed: handleColorMixerPress,
+                        onPressed: handleOnCreateColorPress,
                       ),
                     )
                   : SizedBox(),
