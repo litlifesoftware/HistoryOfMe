@@ -475,4 +475,12 @@ class HOMLocalizations {
   String get deleteEntryDescr {
     return getValue("delete_entry_descr");
   }
+
+  String get pickAColor {
+    return getValue("pick_a_color");
+  }
+
+  String get colorIsTransparent {
+    return getValue("color_is_transparent");
+  }
 }

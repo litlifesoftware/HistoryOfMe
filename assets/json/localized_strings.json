@@ -458,5 +458,13 @@
   "delete_entry_descr": {
     "en": "Do you want to delete your diary entry?",
     "de": "Möchtest du deinen Tagebucheintrag wirklich entfernen?"
+  },
+  "pick_a_color": {
+    "en": "Pick a Color",
+    "de": "Farbe auswählen"
+  },
+  "color_is_transparent": {
+    "en": "Color is fully transparent",
+    "de": "Farbe ist transparent"
   }
 }

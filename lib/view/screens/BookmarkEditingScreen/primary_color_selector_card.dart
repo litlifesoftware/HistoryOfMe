@@ -8,35 +8,44 @@ import 'package:lit_ui_kit/lit_ui_kit.dart';
 import 'deletable_container.dart';
 import 'selectable_color_tile.dart';
 
+/// A widget allowing to either select one of the previously created colors or
+/// to enable the user to create a new color.
 class PrimaryColorSelectorCard extends StatefulWidget {
-  final String cardTitle;
-  final int? selectedColorValue;
-  final void Function(Color) onSelectPrimaryColor;
-  //final List<Color> colors;
-  //final void Function(Color) addColor;
-  final void Function() onAddColorError;
-  //final void Function() handleColorDuplicate;
-  final List<BoxShadow> buttonBoxShadow;
-  final List<UserCreatedColor> userCreatedColors;
+  /// Creates a [PrimaryColorSelectorCard].
   const PrimaryColorSelectorCard({
     Key? key,
     required this.cardTitle,
     required this.selectedColorValue,
-    required this.onSelectPrimaryColor,
-    //this.colors = const [],
-    //@required this.addColor,
-    required this.onAddColorError,
-    //@required this.handleColorDuplicate,
     this.buttonBoxShadow = const [
       const BoxShadow(
         blurRadius: 2.0,
         color: Colors.black12,
-        offset: Offset(2, 1),
+        offset: Offset(2.0, 1.0),
         spreadRadius: 0.5,
       ),
     ],
     required this.userCreatedColors,
+    required this.onSelectPrimaryColor,
+    required this.onAddColorError,
   }) : super(key: key);
+
+  /// The card's title.
+  final String cardTitle;
+
+  /// The currently selected color.
+  final int selectedColorValue;
+
+  /// The button's box shadow.
+  final List<BoxShadow> buttonBoxShadow;
+
+  /// All previously created colors.
+  final List<UserCreatedColor> userCreatedColors;
+
+  /// Handles the 'on select color' action.
+  final void Function(Color) onSelectPrimaryColor;
+
+  /// Handles any errors, if adding the color failed.
+  final void Function() onAddColorError;
 
   @override
   _PrimaryColorSelectorCardState createState() =>
@@ -45,90 +54,33 @@ class PrimaryColorSelectorCard extends StatefulWidget {
 
 class _PrimaryColorSelectorCardState extends State<PrimaryColorSelectorCard>
     with TickerProviderStateMixin {
-  AnimationController? _additionalColorsAnimationController;
-  AnimationController? _colorSliderAnimationController;
-  bool showAllColors = false;
-  bool enableColorMix = false;
-  int redChannel = 0;
-  int greenChannel = 0;
-  int blueChannel = 0;
-  int alphaChannel = 0;
-  Future<void> animateMixColorTransition() async {
-    return enableColorMix
-        ? _additionalColorsAnimationController!.forward(from: 0.0)
-        : _additionalColorsAnimationController!.reverse(from: 1.0);
-  }
+  late AnimationController _additionalColorsAnimationController;
+  late AnimationController _colorSliderAnimationController;
 
+  /// States whether to show all available colors.
+  bool showAllColors = false;
+
+  /// Animates the selectable color cards.
   Future<void> animateAdditionalColorsTransition() async {
     return showAllColors
-        ? _additionalColorsAnimationController!
+        ? _additionalColorsAnimationController
             .reverse(from: 1.0)
-            .then((value) => _additionalColorsAnimationController!.forward())
-        : _additionalColorsAnimationController!.forward(from: 0.0);
+            .then((value) => _additionalColorsAnimationController.forward())
+        : _additionalColorsAnimationController.forward(from: 0.0);
   }
 
+  /// Toggles the [showAllColors] values and plays the color card animation.
   void toggleAllColors() {
-    animateAdditionalColorsTransition().then((value) => setState(() {
+    animateAdditionalColorsTransition().then(
+      (value) => setState(
+        () {
           showAllColors = !showAllColors;
-        }));
+        },
+      ),
+    );
   }
 
-  void toggleEnableColorMix() {
-    animateMixColorTransition().then((value) => setState(() {
-          enableColorMix = !enableColorMix;
-        }));
-  }
-
-  void onAlphaChannelChange(double value) {
-    setState(() {
-      alphaChannel = value.round();
-    });
-  }
-
-  void onRedColorChannelChange(double value) {
-    setState(() {
-      redChannel = value.round();
-    });
-  }
-
-  void onGreenColorChannelChange(double value) {
-    setState(() {
-      greenChannel = value.round();
-    });
-  }
-
-  void onBlueColorChannelChange(double value) {
-    setState(() {
-      blueChannel = value.round();
-    });
-  }
-
-  bool get colorValuesSet {
-    return Color.fromARGB(
-            alphaChannel, redChannel, greenChannel, blueChannel) !=
-        Color.fromARGB(0, 0, 0, 0);
-    // return alphaChannel != 0 ||
-    //     redChannel != 0 ||
-    //     greenChannel != 0 ||
-    //     blueChannel != 0;
-  }
-
-  // void handleColorMixerPress() {
-  //   if (enableColorMix) {
-  //     colorValuesSet
-  //         ? _addColor(
-  //             Color.fromARGB(
-  //               alphaChannel,
-  //               redChannel,
-  //               greenChannel,
-  //               blueChannel,
-  //             ),
-  //           )
-  //         : toggleEnableColorMix();
-  //   } else {
-  //     toggleEnableColorMix();
-  //   }
-  // }
+  /// Shows the [LitColorPickerDialog] to enable user input for color values.
   void handleOnCreateColorPress() {
     showDialog(
       context: context,
@@ -136,27 +88,17 @@ class _PrimaryColorSelectorCardState extends State<PrimaryColorSelectorCard>
         onApplyColor: (Color color) {
           _addColor(color);
         },
-        initialColor: Color(widget.selectedColorValue!),
-        applyLabel: "Apply",
-        resetLabel: "Reset",
-        titleText: "Pick a color",
-        transparentColorText: "Color is fully transparent",
+        initialColor: Color(widget.selectedColorValue),
+        applyLabel: HOMLocalizations(context).apply,
+        resetLabel: HOMLocalizations(context).reset,
+        titleText: HOMLocalizations(context).pickAColor,
+        transparentColorText: HOMLocalizations(context).colorIsTransparent,
       ),
     );
   }
 
-  void resetColorChannelValues() {
-    _colorSliderAnimationController!
-        .reverse(from: 1.0)
-        .then((_) => setState(() {
-              alphaChannel = 0;
-              redChannel = 0;
-              greenChannel = 0;
-              blueChannel = 0;
-            }))
-        .then((__) => _colorSliderAnimationController!.forward());
-  }
-
+  /// Adds a user created color or displays a error message, if adding the
+  /// color has failed.
   void _addColor(Color color) {
     try {
       HiveDBService(debug: DEBUG).addUserCreatedColor(
@@ -165,19 +107,21 @@ class _PrimaryColorSelectorCardState extends State<PrimaryColorSelectorCard>
         color.green,
         color.blue,
       );
-      resetColorChannelValues();
-      // toggleEnableColorMix();
-      animateMixColorTransition();
+
       animateAdditionalColorsTransition();
+      // Prevent the duplicate color to be added to the database.
     } catch (e) {
       widget.onAddColorError();
+
+      // Select the provided color as the user's primary color.
+      widget.onSelectPrimaryColor(color);
     }
   }
 
   @override
   void initState() {
     super.initState();
-
+    // Initialize all controllers.
     _additionalColorsAnimationController = AnimationController(
       duration: Duration(milliseconds: 250),
       vsync: this,
@@ -186,15 +130,15 @@ class _PrimaryColorSelectorCardState extends State<PrimaryColorSelectorCard>
       duration: Duration(milliseconds: 130),
       vsync: this,
     );
-
-    _additionalColorsAnimationController!.forward();
-    _colorSliderAnimationController!.forward();
+    // Play back the animations.
+    _additionalColorsAnimationController.forward();
+    _colorSliderAnimationController.forward();
   }
 
   @override
   void dispose() {
-    _additionalColorsAnimationController!.dispose();
-    _colorSliderAnimationController!.dispose();
+    _additionalColorsAnimationController.dispose();
+    _colorSliderAnimationController.dispose();
     super.dispose();
   }
 
@@ -211,37 +155,6 @@ class _PrimaryColorSelectorCardState extends State<PrimaryColorSelectorCard>
               fontSize: 22.0,
             ),
           ),
-          // !enableColorMix
-          //     ? Column(
-          //         crossAxisAlignment: CrossAxisAlignment.start,
-          //         children: [
-          //           Padding(
-          //             padding: const EdgeInsets.symmetric(
-          //               vertical: 8.0,
-          //             ),
-          //             child: UserCreatedColorGrid(
-          //               additionalColorsAnimationController:
-          //                   _additionalColorsAnimationController,
-          //               boxShadow: widget.buttonBoxShadow,
-          //               onSelectColorCallback: widget.onSelectPrimaryColor,
-          //               selectedColorValue: widget.selectedColorValue,
-          //               showAllColors: showAllColors,
-          //               userColors: widget.userCreatedColors,
-          //             ),
-          //           ),
-          //         ],
-          //       )
-          //     : ColorMixer(
-          //         alphaChannel: alphaChannel,
-          //         redChannel: redChannel,
-          //         greenChanne: greenChannel,
-          //         blueChannel: blueChannel,
-          //         onAlphaChannelChange: onAlphaChannelChange,
-          //         onRedColorChannelChange: onRedColorChannelChange,
-          //         onGreenColorChannelChange: onGreenColorChannelChange,
-          //         onBlueColorChannelChange: onBlueColorChannelChange,
-          //         animationController: _colorSliderAnimationController,
-          //       ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -264,44 +177,23 @@ class _PrimaryColorSelectorCardState extends State<PrimaryColorSelectorCard>
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              !enableColorMix
-                  ? LitRoundedElevatedButton(
-                      color: LitColors.lightGrey,
-                      boxShadow: widget.buttonBoxShadow,
-                      padding: const EdgeInsets.symmetric(
-                        vertical: 6.0,
-                        horizontal: 12.0,
-                      ),
-                      child: Text(
-                        showAllColors
-                            ? HOMLocalizations(context).less.toUpperCase()
-                            : HOMLocalizations(context).more.toUpperCase(),
-                        style: LitSansSerifStyles.button.copyWith(
-                          color: Colors.white,
-                        ),
-                      ),
-                      onPressed: toggleAllColors,
-                    )
-                  : Align(
-                      alignment: Alignment.centerLeft,
-                      child: colorValuesSet
-                          ? LitRoundedElevatedButton(
-                              color: LitColors.midRed,
-                              boxShadow: widget.buttonBoxShadow,
-                              padding: const EdgeInsets.symmetric(
-                                vertical: 6.0,
-                                horizontal: 12.0,
-                              ),
-                              child: Text(
-                                HOMLocalizations(context).reset.toUpperCase(),
-                                style: LitSansSerifStyles.button.copyWith(
-                                  color: Colors.white,
-                                ),
-                              ),
-                              onPressed: resetColorChannelValues,
-                            )
-                          : SizedBox(),
-                    ),
+              LitRoundedElevatedButton(
+                color: LitColors.lightGrey,
+                boxShadow: widget.buttonBoxShadow,
+                padding: const EdgeInsets.symmetric(
+                  vertical: 6.0,
+                  horizontal: 12.0,
+                ),
+                child: Text(
+                  showAllColors
+                      ? HOMLocalizations(context).less.toUpperCase()
+                      : HOMLocalizations(context).more.toUpperCase(),
+                  style: LitSansSerifStyles.button.copyWith(
+                    color: Colors.white,
+                  ),
+                ),
+                onPressed: toggleAllColors,
+              ),
               showAllColors
                   ? Align(
                       alignment: Alignment.centerRight,
@@ -312,30 +204,12 @@ class _PrimaryColorSelectorCardState extends State<PrimaryColorSelectorCard>
                           vertical: 6.0,
                           horizontal: 12.0,
                         ),
-                        child: enableColorMix
-                            ? Padding(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 4.0,
-                                  vertical: 2.0,
-                                ),
-                                child: colorValuesSet
-                                    ? Icon(
-                                        LitIcons.check,
-                                        color: LitColors.mediumOliveGreen,
-                                        size: 15.0,
-                                      )
-                                    : Icon(
-                                        LitIcons.chevron_left_solid,
-                                        color: Colors.white,
-                                        size: 15.0,
-                                      ),
-                              )
-                            : Text(
-                                HOMLocalizations(context).create.toUpperCase(),
-                                style: LitSansSerifStyles.button.copyWith(
-                                  color: Colors.white,
-                                ),
-                              ),
+                        child: Text(
+                          HOMLocalizations(context).create.toUpperCase(),
+                          style: LitSansSerifStyles.button.copyWith(
+                            color: Colors.white,
+                          ),
+                        ),
                         onPressed: handleOnCreateColorPress,
                       ),
                     )
@@ -348,13 +222,14 @@ class _PrimaryColorSelectorCardState extends State<PrimaryColorSelectorCard>
   }
 }
 
+/// A widget displaying a grid of selectable color cards.
 class UserCreatedColorGrid extends StatefulWidget {
-  final AnimationController? additionalColorsAnimationController;
+  final AnimationController additionalColorsAnimationController;
   final List<BoxShadow> boxShadow;
-  final bool? showAllColors;
+  final bool showAllColors;
   final List<UserCreatedColor> userColors;
   final void Function(Color) onSelectColorCallback;
-  final int? selectedColorValue;
+  final int selectedColorValue;
   const UserCreatedColorGrid({
     Key? key,
     required this.additionalColorsAnimationController,
@@ -370,39 +245,39 @@ class UserCreatedColorGrid extends StatefulWidget {
 
 class _UserCreatedColorGridState extends State<UserCreatedColorGrid>
     with TickerProviderStateMixin {
-  bool? _deletionEnabled;
+  /// States whether the user has entered the 'deletion' mode to remove colors.
+  bool _deletionEnabled = false;
 
-  AnimationController? _animationController;
+  late AnimationController _animationController;
 
+  /// Toggles the [_deletionEnabled] value and plays back the animation.
   void _toggleDeletionEnabled() {
     setState(() {
-      _deletionEnabled = !_deletionEnabled!;
+      _deletionEnabled = !_deletionEnabled;
     });
-    if (_deletionEnabled!) {
-      _animationController!.repeat(reverse: true);
+    if (_deletionEnabled) {
+      _animationController.repeat(reverse: true);
     } else {
-      if (_animationController!.isAnimating) {
-        _animationController!.stop();
-        _animationController!.animateTo(1.0);
+      if (_animationController.isAnimating) {
+        _animationController.stop();
+        _animationController.animateTo(1.0);
       }
     }
-    print("toggled deletion with new state $_deletionEnabled");
   }
 
   @override
   void initState() {
     super.initState();
-    _deletionEnabled = false;
     _animationController = AnimationController(
       vsync: this,
       duration: Duration(milliseconds: 1000),
     );
-    _animationController!.forward();
+    _animationController.forward();
   }
 
   @override
   void dispose() {
-    _animationController!.dispose();
+    _animationController.dispose();
     super.dispose();
   }
 
@@ -411,13 +286,13 @@ class _UserCreatedColorGridState extends State<UserCreatedColorGrid>
     return LayoutBuilder(
       builder: (context, constraints) {
         return AnimatedBuilder(
-          animation: widget.additionalColorsAnimationController!,
+          animation: widget.additionalColorsAnimationController,
           builder: (context, _) {
-            List<Widget> columnChildren = [];
+            List<Widget> _colorGrid = [];
             const int columns = 5;
             int colorIndex = 0;
             for (int i = 0;
-                widget.showAllColors!
+                widget.showAllColors
                     ? (i < (widget.userColors.length / columns).ceil())
                     : (i < (1));
                 i++) {
@@ -428,9 +303,8 @@ class _UserCreatedColorGridState extends State<UserCreatedColorGrid>
                   colorRow.add(
                     AnimatedOpacity(
                       duration:
-                          widget.additionalColorsAnimationController!.duration!,
-                      opacity:
-                          widget.additionalColorsAnimationController!.value,
+                          widget.additionalColorsAnimationController.duration!,
+                      opacity: widget.additionalColorsAnimationController.value,
                       child: _DeletableColorGridItem(
                         animation: _animationController,
                         boxShadow: widget.boxShadow,
@@ -448,12 +322,12 @@ class _UserCreatedColorGridState extends State<UserCreatedColorGrid>
                   colorIndex++;
                 }
               }
-              columnChildren.add(Row(
+              _colorGrid.add(Row(
                 children: colorRow,
               ));
             }
             return Column(
-              children: columnChildren,
+              children: _colorGrid,
             );
           },
         );
@@ -462,13 +336,16 @@ class _UserCreatedColorGridState extends State<UserCreatedColorGrid>
   }
 }
 
+/// A widget displaying a selectable color card.
+///
+/// The [deletionEnabled] will state whether the color be allowed to be removed.
 class _DeletableColorGridItem extends StatefulWidget {
-  final bool? deletionEnabled;
-  final Animation? animation;
+  final bool deletionEnabled;
+  final Animation animation;
   final List<BoxShadow> boxShadow;
   final int index;
   final List<dynamic> userColors;
-  final int? selectedColorValue;
+  final int selectedColorValue;
   final void Function(Color) onSelectColorCallback;
   final BoxConstraints constraints;
   final int columns;
@@ -491,6 +368,7 @@ class _DeletableColorGridItem extends StatefulWidget {
 }
 
 class _DeletableColorGridItemState extends State<_DeletableColorGridItem> {
+  /// Returns a [Color] object based on the provided [UserCreatedColor].
   Color _mapColor(UserCreatedColor userColor) {
     int red = userColor.red;
     int green = userColor.green;
@@ -499,6 +377,7 @@ class _DeletableColorGridItemState extends State<_DeletableColorGridItem> {
     return Color.fromARGB(alpha, red, green, blue);
   }
 
+  /// Deletes the color permanently.
   void _onDelete() {
     HiveDBService().deleteUserCreatedColor(widget.index);
   }

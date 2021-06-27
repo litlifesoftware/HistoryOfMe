@@ -4,13 +4,10 @@ import 'package:lit_ui_kit/lit_ui_kit.dart';
 
 import 'selectable_color_tile.dart';
 
+/// A card widget displaying a scrolling list of selectable color cards.
+///
+/// The selected color's values are set to be the bookmark's secondary color.
 class SecondaryColorSelectorCard extends StatefulWidget {
-  final String cardTitle;
-  final List<BoxShadow> buttonBoxShadow;
-  final List<UserCreatedColor> userCreatedColors;
-  //final UserData? userData;
-  final int selectedSecondaryColorValue;
-  final void Function(Color color) onSelectSecondaryColor;
   const SecondaryColorSelectorCard({
     Key? key,
     required this.cardTitle,
@@ -27,6 +24,21 @@ class SecondaryColorSelectorCard extends StatefulWidget {
     required this.onSelectSecondaryColor,
   }) : super(key: key);
 
+  /// The card's title.
+  final String cardTitle;
+
+  /// The box shadow applied to the buttons.
+  final List<BoxShadow> buttonBoxShadow;
+
+  /// The list of selectable colors.
+  final List<UserCreatedColor> userCreatedColors;
+
+  /// The currently selected color (as an integer value).
+  final int selectedSecondaryColorValue;
+
+  /// The callback to update the selected color.
+  final void Function(Color color) onSelectSecondaryColor;
+
   @override
   _SecondaryColorSelectorCardState createState() =>
       _SecondaryColorSelectorCardState();
@@ -34,21 +46,24 @@ class SecondaryColorSelectorCard extends StatefulWidget {
 
 class _SecondaryColorSelectorCardState
     extends State<SecondaryColorSelectorCard> {
+  /// States whether the provided [color] is currently selected.
+  bool _colorIsSelected(Color color) {
+    return color == Color(widget.selectedSecondaryColorValue);
+  }
+
+  /// Returns the color values as a [Color] object of an specific item on the
+  /// provided [widget.userCreatedColors] list (based on its index).
+  Color _mapSelectedColor(int index) {
+    return Color.fromARGB(
+      widget.userCreatedColors[index].alpha,
+      widget.userCreatedColors[index].red,
+      widget.userCreatedColors[index].green,
+      widget.userCreatedColors[index].blue,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    bool _colorIsSelected(Color color) {
-      return color == Color(widget.selectedSecondaryColorValue);
-    }
-
-    Color _mapSelectedColor(int index) {
-      return Color.fromARGB(
-        widget.userCreatedColors[index].alpha,
-        widget.userCreatedColors[index].red,
-        widget.userCreatedColors[index].green,
-        widget.userCreatedColors[index].blue,
-      );
-    }
-
     return LitElevatedCard(
       margin: const EdgeInsets.all(0.0),
       child: Column(
@@ -87,7 +102,9 @@ class _SecondaryColorSelectorCardState
                     return SelectableColorTile(
                       onSelectCallback: widget.onSelectSecondaryColor,
                       color: _mapSelectedColor(index),
-                      selected: _colorIsSelected(_mapSelectedColor(index)),
+                      selected: _colorIsSelected(
+                        _mapSelectedColor(index),
+                      ),
                     );
                   },
                 ),
