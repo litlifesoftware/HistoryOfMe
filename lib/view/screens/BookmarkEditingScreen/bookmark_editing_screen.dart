@@ -20,16 +20,15 @@ import 'secondary_color_selector_card.dart';
 /// The initially provided [UserData] will be edited and submitted to the
 /// Hive database.
 class BookmarkEditingScreen extends StatefulWidget {
-  final UserData? initialUserDataModel;
-
   /// Creates a [BookmarkEditingScreen].
-  ///
-  /// * [initialUserDataModel] is the Hive-provided object representing the
-  ///   current state on the database.
   const BookmarkEditingScreen({
     Key? key,
     required this.initialUserDataModel,
   }) : super(key: key);
+
+  /// The inital user data, whose values can be edited by the user.
+  final UserData? initialUserDataModel;
+
   @override
   _BookmarkEditingScreenState createState() => _BookmarkEditingScreenState();
 }
@@ -201,10 +200,14 @@ class _BookmarkEditingScreenState extends State<BookmarkEditingScreen>
     );
   }
 
+  void _onAddColorError() {
+    _snackbarController.showSnackBar();
+  }
+
   @override
   void initState() {
     super.initState();
-
+    // Initialize all controllers.
     _snackbarController = LitSnackbarController();
     _scrollController = ScrollController();
     _routeController = LitRouteController(context);
@@ -214,7 +217,7 @@ class _BookmarkEditingScreenState extends State<BookmarkEditingScreen>
       ),
       vsync: this,
     );
-
+    // Inital state variables using the provided user data object.
     _name = widget.initialUserDataModel!.name;
     _animated = widget.initialUserDataModel!.animated;
     _primaryColor = widget.initialUserDataModel!.primaryColor;
@@ -224,6 +227,7 @@ class _BookmarkEditingScreenState extends State<BookmarkEditingScreen>
     _quote = widget.initialUserDataModel!.quote;
     _quoteAuthor = widget.initialUserDataModel!.quoteAuthor;
     _designPattern = widget.initialUserDataModel!.designPatternIndex;
+    // Play the animation.
     _appearAnimation.forward();
   }
 
@@ -334,8 +338,7 @@ class _BookmarkEditingScreenState extends State<BookmarkEditingScreen>
                                     userCreatedColors: userColors,
                                     cardTitle:
                                         HOMLocalizations(context).mainColor,
-                                    onAddColorError: () =>
-                                        _snackbarController.showSnackBar(),
+                                    onAddColorError: _onAddColorError,
                                   ),
                                   QuoteCard(
                                     initialAuthor: _quoteAuthor,
