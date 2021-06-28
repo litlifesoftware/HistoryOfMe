@@ -10,7 +10,9 @@ Now available on the Play Store.
 
 <a href='https://play.google.com/store/apps/details?id=com.litlifesoftware.historyofme'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png' height='80px'/></a>
 
+## Trailer
 
+[![History of Me Trailer](https://i.ytimg.com/an_webp/58lSSH4YNj0/mqdefault_6s.webp?du=3000&sqp=CIKN6IYG&rs=AOn4CLB0tBQLxPK3MK-qgc30dVq5NhKDJA)](https://www.youtube.com/watch?v=58lSSH4YNj0)
 
 ## Screenshots
 
@@ -106,12 +108,14 @@ features and functionality:
 
 ## Status
 
-History of Me is still under **development**. The first release will probably be published in **mid 2021**. Crucial features are implemented, but need to be polished. German localization will be implemented soon.
+History of Me is now available on Google Play. Production binaries/APKs are also available on the [Release Section](https://github.com/litlifesoftware/HistoryOfMe/releases). Additional features are coming in next releases.
+This app is currently localized in:
+- `English`
+- `German`
 
 ## Pre-Release Setup
 
-While under **History of Me**'s early development, the `lit_ui_kit` dependency is liked using the git repository as source. The package will be updated rather frequently, so keep in mind to update your Flutter packages if you encounter liking issues on your local copy by running
-`flutter pub upgrade`
+While under **History of Me**'s development, the `lit_ui_kit` dependency is liked set to the git repository as source. The package will be updated rather frequently, so keep in mind to update your Flutter packages if you encounter issues on your local copy by running `flutter pub upgrade`
 
 ```yaml
     git: 
