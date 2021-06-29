@@ -12,7 +12,7 @@ Now available on the Play Store.
 
 ## Trailer
 
-[![History of Me Trailer](https://i.ytimg.com/an_webp/58lSSH4YNj0/mqdefault_6s.webp?du=3000&sqp=CIKN6IYG&rs=AOn4CLB0tBQLxPK3MK-qgc30dVq5NhKDJA)](https://www.youtube.com/watch?v=58lSSH4YNj0)
+[![History of Me Trailer](https://img.youtube.com/vi/58lSSH4YNj0/0.jpg)](https://www.youtube.com/watch?v=58lSSH4YNj0)
 
 ## Screenshots
 
