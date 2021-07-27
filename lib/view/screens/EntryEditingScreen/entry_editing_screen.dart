@@ -8,7 +8,7 @@ import 'package:history_of_me/view/shared/animated_updated_label.dart';
 import 'package:history_of_me/view/shared/editable_item_meta_info.dart';
 import 'package:history_of_me/view/shared/shared.dart';
 import 'package:hive/hive.dart';
-import 'package:lit_ui_kit/lit_ui_kit.dart';
+import 'package:leitmotif/leitmotif.dart';
 
 import 'editable_title_header.dart';
 
@@ -196,10 +196,12 @@ class _EntryEditingScreenState extends State<EntryEditingScreen>
             scrollController: _scrollController,
             backgroundColor: Colors.white,
             height: 50.0,
-            child: EditableItemMetaInfo(
-              lastUpdateTimestamp: dbDiaryEntry.lastUpdated,
-              showUnsavedBadge: _isChanged(dbDiaryEntry),
-            ),
+            title:
+                _isChanged(dbDiaryEntry) ? "${dbDiaryEntry.lastUpdated}" : "",
+            // child: EditableItemMetaInfo(
+            //   lastUpdateTimestamp: dbDiaryEntry.lastUpdated,
+            //   showUnsavedBadge: _isChanged(dbDiaryEntry),
+            // ),
             shouldNavigateBack: !_isChanged(dbDiaryEntry),
             onInvalidNavigation: _handleDiscardDraft,
           ),
@@ -305,7 +307,7 @@ class _EntryEditingScreenState extends State<EntryEditingScreen>
                                             LitColors.lightRed,
                                             HexColor('bee5be'),
                                             _moodScore,
-                                          ),
+                                          )!,
                                           valueTitleText:
                                               MoodTranslationController(
                                             moodScore: _moodScore,

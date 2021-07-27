@@ -6,7 +6,7 @@ import 'package:history_of_me/config/config.dart';
 import 'package:history_of_me/model/backdrop_photo.dart';
 import 'package:history_of_me/view/builder/builder.dart';
 import 'package:lit_localization_service/lit_localization_service.dart';
-import 'package:lit_ui_kit/lit_ui_kit.dart';
+import 'package:leitmotif/leitmotif.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 /// The main Flutter widget of `HistoryOfMe`.

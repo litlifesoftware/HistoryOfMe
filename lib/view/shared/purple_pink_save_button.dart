@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:lit_ui_kit/buttons.dart';
-import 'package:lit_ui_kit/containers.dart';
-import 'package:lit_ui_kit/icons.dart';
+import 'package:leitmotif/buttons.dart';
+import 'package:leitmotif/containers.dart';
+import 'package:leitmotif/icons.dart';
 
 /// A draggable purple pink button showing a [LitIcons.disk] icon as button
 /// label.

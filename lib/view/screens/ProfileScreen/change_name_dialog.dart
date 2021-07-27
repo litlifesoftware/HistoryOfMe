@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:history_of_me/controller/database/hive_db_service.dart';
 import 'package:history_of_me/controller/localization/hom_localizations.dart';
 import 'package:history_of_me/model/user_data.dart';
-import 'package:lit_ui_kit/lit_ui_kit.dart';
+import 'package:leitmotif/leitmotif.dart';
 
 class ChangeNameDialog extends StatefulWidget {
   final UserData? userData;
@@ -116,7 +116,7 @@ class _ChangeNameDialogState extends State<ChangeNameDialog> {
                         child: Column(
                           children: [
                             EditableText(
-                              style: LitSansSerifStyles.body,
+                              style: LitSansSerifStyles.body1,
                               controller: _nameController,
                               focusNode: _focusNode,
                               cursorColor: LitColors.mediumGrey,

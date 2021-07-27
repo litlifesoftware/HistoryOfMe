@@ -3,7 +3,7 @@ import 'package:history_of_me/controller/localization/hom_localizations.dart';
 import 'package:history_of_me/model/diary_entry.dart';
 import 'package:history_of_me/model/user_data.dart';
 import 'package:history_of_me/view/shared/shared.dart';
-import 'package:lit_ui_kit/lit_ui_kit.dart';
+import 'package:leitmotif/leitmotif.dart';
 
 import 'diary_bookmark_header.dart';
 import 'diary_list_tile.dart';

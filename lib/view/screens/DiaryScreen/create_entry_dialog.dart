@@ -5,7 +5,7 @@ import 'package:history_of_me/controller/routes/hom_navigator.dart';
 import 'package:history_of_me/view/shared/lit_toggle_button_group.dart';
 import 'package:history_of_me/model/diary_entry.dart';
 import 'package:intl/intl.dart';
-import 'package:lit_ui_kit/lit_ui_kit.dart';
+import 'package:leitmotif/leitmotif.dart';
 
 /// The today indicator.
 const int TODAY = 1;

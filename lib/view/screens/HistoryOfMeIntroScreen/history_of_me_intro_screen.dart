@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:history_of_me/controller/localization/hom_localizations.dart';
 import 'package:history_of_me/view/shared/app_artwork.dart';
 import 'package:history_of_me/view/shared/art/history_of_me_app_logo.dart';
-import 'package:lit_ui_kit/lit_ui_kit.dart';
+import 'package:leitmotif/leitmotif.dart';
 
 /// A screen widget displaying a modified version of the [LitOnboardingScreen].
 ///
@@ -48,17 +48,17 @@ class _HistoryOfMeIntroScreenState extends State<HistoryOfMeIntroScreen> {
         ),
       ),
       textItems: [
-        OnboardingText(
+        TextPageContent(
           subtitle: HOMLocalizations(context).organize,
           title: HOMLocalizations(context).browseDiaryTitle,
           text: HOMLocalizations(context).browseDiaryDescr,
         ),
-        OnboardingText(
+        TextPageContent(
           subtitle: HOMLocalizations(context).relive,
           title: HOMLocalizations(context).readYourDiaryEntriesTitle,
           text: HOMLocalizations(context).readYourDiaryEntriesDescr,
         ),
-        OnboardingText(
+        TextPageContent(
           subtitle: HOMLocalizations(context).personalize,
           title: HOMLocalizations(context).customizeBookmarkTitle,
           text: HOMLocalizations(context).customizeBookmarkDescr,

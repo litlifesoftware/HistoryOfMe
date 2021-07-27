@@ -10,7 +10,7 @@ import 'package:history_of_me/model/backdrop_photo.dart';
 import 'package:history_of_me/model/diary_entry.dart';
 import 'package:history_of_me/view/shared/art/ellipse_icon.dart';
 import 'package:hive/hive.dart';
-import 'package:lit_ui_kit/lit_ui_kit.dart';
+import 'package:leitmotif/leitmotif.dart';
 
 import 'backdrop_photo_overlay.dart';
 import 'change_photo_dialog.dart';

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:history_of_me/controller/localization/hom_localizations.dart';
 import 'package:history_of_me/model/user_data.dart';
-import 'package:lit_ui_kit/lit_ui_kit.dart';
+import 'package:leitmotif/leitmotif.dart';
 
 import 'change_name_dialog.dart';
 
@@ -56,7 +56,7 @@ class _UserProfileCardState extends State<UserProfileCard> {
               ),
               child: ClippedText(
                 "${widget.userData.name}",
-                style: LitSansSerifStyles.header6,
+                style: LitSansSerifStyles.h6,
               ),
             ),
             LayoutBuilder(
@@ -87,7 +87,7 @@ class _UserProfileCardState extends State<UserProfileCard> {
                                 DateTime.fromMillisecondsSinceEpoch(
                                   widget.userData.created,
                                 ).formatAsLocalizedDate(context),
-                                style: LitSansSerifStyles.body,
+                                style: LitSansSerifStyles.body1,
                               ),
                             ),
                           ],
@@ -217,7 +217,7 @@ class __UserIconState extends State<_UserIcon> {
             ),
             child: ClippedText(
               _usernameInitials,
-              style: LitSansSerifStyles.header5.copyWith(
+              style: LitSansSerifStyles.h5.copyWith(
                 fontSize: 34.0,
                 color: _userColor.computeLuminance() >= 0.5
                     ? Colors.white

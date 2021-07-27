@@ -7,7 +7,7 @@ import 'package:history_of_me/model/backdrop_photo.dart';
 import 'package:history_of_me/model/user_data.dart';
 import 'package:history_of_me/view/screens/HistoryOfMeIntroScreen/history_of_me_intro_screen.dart';
 import 'package:history_of_me/view/shared/art/history_of_me_launcher_icon_art.dart';
-import 'package:lit_ui_kit/lit_ui_kit.dart';
+import 'package:leitmotif/leitmotif.dart';
 
 import 'delete_data_dialog.dart';
 
@@ -28,7 +28,7 @@ class _SettingsFooterState extends State<SettingsFooter> {
   //late LitRouteController _routeController;
   void _showAboutThisAppDialog() {
     LitRouteController(context).showDialogWidget(
-      AboutAppDialog(
+      LitAboutDialog(
         title: HOMLocalizations(context).aboutThisApp,
         appName: "History of Me",
         art: HistoryOfMeLauncherIconArt(),

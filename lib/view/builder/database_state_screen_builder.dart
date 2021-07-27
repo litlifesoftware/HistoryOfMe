@@ -6,7 +6,7 @@ import 'package:history_of_me/model/user_data.dart';
 import 'package:history_of_me/view/screens/screens.dart';
 import 'package:hive/hive.dart';
 import 'package:lit_localization_service/lit_localization_service.dart';
-import 'package:lit_ui_kit/lit_ui_kit.dart';
+import 'package:leitmotif/leitmotif.dart';
 
 /// A builder widget to return the appropriate screen considering the current
 /// database state.
@@ -78,7 +78,7 @@ class _DatabaseStateScreenBuilderState
   /// displayed.
   void _onPrivacyConfirmed() {
     LitRouteController(context).pushCupertinoWidget(
-      ConfirmAgeScreen(
+      LitConfirmAgeScreen(
         onSubmit: _onSubmitAge,
         invalidAgeText: _localizationController.invalidAgeText,
         submitLabel: _localizationController.submit,
@@ -95,7 +95,7 @@ class _DatabaseStateScreenBuilderState
   /// Handles the actions once the user confirmes his age. To create the actual
   /// user data entry, the user has to provide his name using the
   /// [LitSignUpScreen].
-  void _onSubmitAge() {
+  void _onSubmitAge(DateTime date) {
     LitRouteController(context).replaceCurrentMaterialWidget(
       newWidget: LitSignUpScreen(
         title: _localizationController.whatShallWeCallYou,

@@ -3,7 +3,7 @@ import 'package:history_of_me/controller/backdrop_photo_controller.dart';
 import 'package:history_of_me/controller/routes/hom_navigator.dart';
 import 'package:history_of_me/model/backdrop_photo.dart';
 import 'package:history_of_me/model/diary_entry.dart';
-import 'package:lit_ui_kit/lit_ui_kit.dart';
+import 'package:leitmotif/leitmotif.dart';
 
 class BackdropPhotoOverlay extends StatefulWidget {
   final ScrollController? scrollController;

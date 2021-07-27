@@ -7,7 +7,7 @@ import 'package:history_of_me/config/config.dart';
 import 'package:history_of_me/model/diary_entry.dart';
 import 'package:history_of_me/view/shared/shared.dart';
 import 'package:history_of_me/view/shared/updated_label_text.dart';
-import 'package:lit_ui_kit/lit_ui_kit.dart';
+import 'package:leitmotif/leitmotif.dart';
 
 class EntryDetailCard extends StatefulWidget {
   final int listIndex;

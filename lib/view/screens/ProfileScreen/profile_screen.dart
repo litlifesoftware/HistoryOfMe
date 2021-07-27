@@ -6,7 +6,7 @@ import 'package:history_of_me/model/user_data.dart';
 import 'package:history_of_me/view/shared/bookmark/bookmark_back_preview.dart';
 import 'package:history_of_me/view/shared/bookmark/bookmark_front_preview.dart';
 import 'package:hive/hive.dart';
-import 'package:lit_ui_kit/lit_ui_kit.dart';
+import 'package:leitmotif/leitmotif.dart';
 
 import 'settings_footer.dart';
 import 'statistics_card.dart';
@@ -58,15 +58,7 @@ class _ProfileScreenState extends State<ProfileScreen>
           appBar: FixedOnScrollAppbar(
             scrollController: _scrollController,
             backgroundColor: Colors.white,
-            child: Center(
-              child: ClippedText(
-                HOMLocalizations(context).howAreYouToday,
-                textAlign: TextAlign.center,
-                style: LitTextStyles.sansSerif.copyWith(
-                  fontSize: 16.0,
-                ),
-              ),
-            ),
+            title: HOMLocalizations(context).howAreYouToday,
           ),
           snackbars: [
             LitIconSnackbar(

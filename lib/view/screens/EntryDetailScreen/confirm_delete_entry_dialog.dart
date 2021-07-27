@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:history_of_me/controller/database/hive_db_service.dart';
 import 'package:history_of_me/controller/localization/hom_localizations.dart';
-import 'package:lit_ui_kit/lit_ui_kit.dart';
+import 'package:leitmotif/leitmotif.dart';
 
 class ConfirmDeleteEntryDialog extends StatefulWidget {
   // final int index;
@@ -64,7 +64,7 @@ class _ConfirmDeleteEntryDialogState extends State<ConfirmDeleteEntryDialog> {
                     child: Text(
                       HOMLocalizations(context).deleteEntryDescr,
                       textAlign: TextAlign.left,
-                      style: LitSansSerifStyles.body.copyWith(
+                      style: LitSansSerifStyles.body1.copyWith(
                         color: LitColors.lightGrey,
                       ),
                     ),

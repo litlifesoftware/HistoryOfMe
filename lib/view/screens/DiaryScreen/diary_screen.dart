@@ -10,7 +10,7 @@ import 'package:history_of_me/model/user_data.dart';
 import 'package:history_of_me/view/shared/bookmark/bookmark_front_preview.dart';
 import 'package:history_of_me/view/shared/purple_pink_button.dart';
 import 'package:hive/hive.dart';
-import 'package:lit_ui_kit/lit_ui_kit.dart';
+import 'package:leitmotif/leitmotif.dart';
 import 'diary_list_view.dart';
 
 /// A screen widget displaying the user's diary on a vertical listview.
