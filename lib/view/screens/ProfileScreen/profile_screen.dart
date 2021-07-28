@@ -55,7 +55,7 @@ class _ProfileScreenState extends State<ProfileScreen>
       builder: (BuildContext context, Box<UserData> userDataBox, Widget? _) {
         UserData? userData = userDataBox.getAt(0);
         return LitScaffold(
-          appBar: FixedOnScrollAppbar(
+          appBar: FixedOnScrollTitledAppbar(
             scrollController: _scrollController,
             backgroundColor: Colors.white,
             title: HOMLocalizations(context).howAreYouToday,
