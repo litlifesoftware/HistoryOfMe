@@ -241,9 +241,10 @@ class _BookmarkEditingScreenState extends State<BookmarkEditingScreen>
           appBar: FixedOnScrollAppbar(
             scrollController: _scrollController,
             backgroundColor: Colors.white,
-            title: _userDataChanged(updatedUserData)
-                ? "${updatedUserData.lastUpdated}"
-                : "",
+            child: EditableItemMetaInfo(
+              lastUpdateTimestamp: updatedUserData.lastUpdated,
+              showUnsavedBadge: _userDataChanged(updatedUserData),
+            ),
             shouldNavigateBack: !_userDataChanged(updatedUserData),
             onInvalidNavigation: _handleDiscardDraft,
           ),
