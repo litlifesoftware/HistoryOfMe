@@ -196,12 +196,10 @@ class _EntryEditingScreenState extends State<EntryEditingScreen>
             scrollController: _scrollController,
             backgroundColor: Colors.white,
             height: 50.0,
-            title:
-                _isChanged(dbDiaryEntry) ? "${dbDiaryEntry.lastUpdated}" : "",
-            // child: EditableItemMetaInfo(
-            //   lastUpdateTimestamp: dbDiaryEntry.lastUpdated,
-            //   showUnsavedBadge: _isChanged(dbDiaryEntry),
-            // ),
+            child: EditableItemMetaInfo(
+              lastUpdateTimestamp: dbDiaryEntry.lastUpdated,
+              showUnsavedBadge: _isChanged(dbDiaryEntry),
+            ),
             shouldNavigateBack: !_isChanged(dbDiaryEntry),
             onInvalidNavigation: _handleDiscardDraft,
           ),
