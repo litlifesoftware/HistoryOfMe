@@ -16,7 +16,7 @@ class ChangePhotoDialog extends StatefulWidget {
     this.borderRadius = 16.0,
     required this.backdropPhotos,
     required this.diaryEntry,
-    this.minHeight = 512.0,
+    this.minHeight = 348.0,
   }) : super(key: key);
 
   @override
