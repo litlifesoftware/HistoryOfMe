@@ -30,7 +30,7 @@ class PurplePinkSaveButton extends StatelessWidget {
         ? LitDraggable(
             initialDragOffset: Offset(
               MediaQuery.of(context).size.width - 90.0,
-              MediaQuery.of(context).size.height - 130.0,
+              MediaQuery.of(context).size.height - 156.0,
             ),
             child: LitGradientButton(
               accentColor: const Color(0xFFDE8FFA),
