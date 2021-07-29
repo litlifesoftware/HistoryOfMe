@@ -43,8 +43,6 @@ class _EditableItemMetaInfoState extends State<EditableItemMetaInfo>
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.end,
-      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         widget.showUnsavedBadge
             ? _AnimatedUnchangedBadge(
@@ -68,22 +66,27 @@ class _AnimatedUnchangedBadge extends StatelessWidget {
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return AnimatedBuilder(
-      animation: animation!,
-      builder: (context, _) {
-        return LitTextBadge(
-          backgroundColor: Color.lerp(
-                  LitColors.mediumGrey, Colors.white, 0.8 * animation!.value) ??
-              LitColors.mediumGrey,
-          label: HOMLocalizations(context).unsaved,
-          textColor: Color.lerp(
-                Colors.white,
+    return ConstrainedBox(
+      constraints: BoxConstraints(
+        maxWidth: 86.0,
+      ),
+      child: AnimatedBuilder(
+        animation: animation!,
+        builder: (context, _) {
+          return LitTextBadge(
+            backgroundColor: Color.lerp(LitColors.mediumGrey, Colors.white,
+                    0.8 * animation!.value) ??
                 LitColors.mediumGrey,
-                0.1 + (animation!.value * 0.9),
-              ) ??
-              Colors.white,
-        );
-      },
+            label: HOMLocalizations(context).unsaved,
+            textColor: Color.lerp(
+                  Colors.white,
+                  LitColors.mediumGrey,
+                  0.1 + (animation!.value * 0.9),
+                ) ??
+                Colors.white,
+          );
+        },
+      ),
     );
   }
 }
