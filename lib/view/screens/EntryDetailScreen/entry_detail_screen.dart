@@ -164,39 +164,45 @@ class _EntryDetailScreenState extends State<EntryDetailScreen>
   @override
   Widget build(BuildContext context) {
     print(backdropPhotosLoading);
-    return LitScaffold(
-      wrapInSafeArea: false,
-      settingsPanel: LitSettingsPanel(
-        height: 128.0,
-        controller: _settingsPanelController,
-        title: HOMLocalizations(context).options,
-        children: [
-          LitPushedThroughButton(
-            backgroundColor: LitColors.lightPink,
-            child: ClippedText(
-              HOMLocalizations(context).delete.toUpperCase(),
-              style: LitTextStyles.sansSerifStyles[button].copyWith(
-                color: Colors.white,
-              ),
+    return ValueListenableBuilder(
+      valueListenable: HiveDBService().getDiaryEntries(),
+      builder: (BuildContext context, Box<DiaryEntry> entriesBox, Widget? _) {
+        final DiaryEntry? diaryEntry = entriesBox.get(widget.diaryEntryUid);
+
+        /// Verify the entry has not been deleted yet.
+        if (diaryEntry != null) {
+          final int lastIndex = (entriesBox.length - 1);
+
+          final bool _isFirst = entriesBox.getAt(0)!.uid == diaryEntry.uid;
+          final bool _isLast =
+              entriesBox.getAt(lastIndex)!.uid == diaryEntry.uid;
+
+          return LitScaffold(
+            // wrapInSafeArea: false,
+            appBar: FixedOnScrollTitledAppbar(
+              scrollController: _scrollController,
+              title: diaryEntry.title != ""
+                  ? diaryEntry.title
+                  : HOMLocalizations(context).untitled,
             ),
-            onPressed: _showConfirmEntryDeletionCallback,
-          ),
-        ],
-      ),
-      body: ValueListenableBuilder(
-        valueListenable: HiveDBService().getDiaryEntries(),
-        builder: (BuildContext context, Box<DiaryEntry> entriesBox, Widget? _) {
-          final DiaryEntry? diaryEntry = entriesBox.get(widget.diaryEntryUid);
-
-          /// Verify the entry has not been deleted yet.
-          if (diaryEntry != null) {
-            final int lastIndex = (entriesBox.length - 1);
-
-            final bool _isFirst = entriesBox.getAt(0)!.uid == diaryEntry.uid;
-            final bool _isLast =
-                entriesBox.getAt(lastIndex)!.uid == diaryEntry.uid;
-
-            return LayoutBuilder(builder: (context, constraints) {
+            settingsPanel: LitSettingsPanel(
+              height: 128.0,
+              controller: _settingsPanelController,
+              title: HOMLocalizations(context).options,
+              children: [
+                LitPushedThroughButton(
+                  backgroundColor: LitColors.lightPink,
+                  child: ClippedText(
+                    HOMLocalizations(context).delete.toUpperCase(),
+                    style: LitTextStyles.sansSerifStyles[button].copyWith(
+                      color: Colors.white,
+                    ),
+                  ),
+                  onPressed: _showConfirmEntryDeletionCallback,
+                ),
+              ],
+            ),
+            body: LayoutBuilder(builder: (context, constraints) {
               return Container(
                 child: Stack(
                   children: [
@@ -248,12 +254,12 @@ class _EntryDetailScreenState extends State<EntryDetailScreen>
                   ],
                 ),
               );
-            });
-          } else {
-            return SizedBox();
-          }
-        },
-      ),
+            }),
+          );
+        } else {
+          return SizedBox();
+        }
+      },
     );
   }
 }
