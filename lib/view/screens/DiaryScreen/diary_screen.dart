@@ -109,8 +109,7 @@ class _DiaryScreenState extends State<DiaryScreen>
                     : _CreateEntryCallToActionCard(
                         bookmarkAnimation: widget.bookmarkAnimation,
                         userData: userData,
-                        showCreateEntryDialog: _showCreateEntryDialog,
-                      );
+                        showCreateEntryDialog: _showCreateEntryDialog);
               },
             ),
           ),
@@ -141,18 +140,14 @@ class _CreateEntryCallToActionCard extends StatelessWidget {
         mainAxisSize: MainAxisSize.max,
         children: [
           BookmarkFrontPreview(
-            padding: const EdgeInsets.only(
-              left: 16.0,
-              right: 16.0,
-              top: 32.0,
-              bottom: 16.0,
-            ),
+            padding: const EdgeInsets.all(16),
             userData: userData,
             animationController: bookmarkAnimation,
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(
-              vertical: 16.0,
+            padding: const EdgeInsets.only(
+              top: 16.0,
+              bottom: 108.0,
             ),
             child: LitConstrainedSizedBox(
               landscapeWidthFactor: 0.55,
