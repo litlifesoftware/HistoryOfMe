@@ -121,6 +121,19 @@ class HiveQueryController {
     return first;
   }
 
+  /// Returns the calculated average mood described as a double value.
+  double get avgMood {
+    double moodSum = 0;
+
+    _diaryEntries.forEach((entry) {
+      moodSum = moodSum + entry.moodScore;
+    });
+
+    print("avg. mood: ${moodSum / _diaryEntries.length} ");
+
+    return moodSum / _diaryEntries.length;
+  }
+
   int sortEntriesByDateAscending(dynamic a, dynamic b) {
     DateTime dateTimeA = DateTime.parse(a.date);
     DateTime dateTimeB = DateTime.parse(b.date);
