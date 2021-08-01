@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:leitmotif/leitmotif.dart';
 
-class PatternConfigCard extends StatelessWidget {
+class PatternConfigCard extends StatefulWidget {
+  final int designPattern;
   final String patternLabel;
   final int? patternValue;
   final void Function(double) onPatternSliderChange;
@@ -9,20 +10,33 @@ class PatternConfigCard extends StatelessWidget {
   final int max;
   const PatternConfigCard({
     Key? key,
+    required this.designPattern,
     required this.patternLabel,
     required this.patternValue,
     required this.onPatternSliderChange,
     required this.min,
     required this.max,
   }) : super(key: key);
+
+  @override
+  _PatternConfigCardState createState() => _PatternConfigCardState();
+}
+
+class _PatternConfigCardState extends State<PatternConfigCard> {
+  bool get _showMetaData {
+    return widget.designPattern == 0;
+  }
+
   @override
   Widget build(BuildContext context) {
     return LitElevatedCard(
       child: LitSlider(
-        max: max.toDouble(),
-        min: min.toDouble(),
-        onChanged: onPatternSliderChange,
-        value: patternValue!.toDouble(),
+        displayValue: _showMetaData,
+        displayRangeBadges: _showMetaData,
+        max: widget.max.toDouble(),
+        min: widget.min.toDouble(),
+        onChanged: widget.onPatternSliderChange,
+        value: widget.patternValue!.toDouble(),
       ),
     );
   }

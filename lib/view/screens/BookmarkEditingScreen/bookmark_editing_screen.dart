@@ -399,6 +399,7 @@ class _ConfigCardBuilder extends StatelessWidget {
     switch (designPattern) {
       case 0:
         return PatternConfigCard(
+          designPattern: designPattern,
           patternLabel: HOMLocalizations(context).striped,
           patternValue: stripeCount,
           onPatternSliderChange: onStripeSliderChange,
@@ -407,6 +408,7 @@ class _ConfigCardBuilder extends StatelessWidget {
         );
       case 1:
         return PatternConfigCard(
+          designPattern: designPattern,
           patternLabel: HOMLocalizations(context).dotted,
           patternValue: dotSize,
           onPatternSliderChange: onDotsSliderChange,
@@ -415,6 +417,7 @@ class _ConfigCardBuilder extends StatelessWidget {
         );
       default:
         return PatternConfigCard(
+          designPattern: designPattern,
           patternLabel: HOMLocalizations(context).striped,
           patternValue: stripeCount,
           onPatternSliderChange: onStripeSliderChange,
