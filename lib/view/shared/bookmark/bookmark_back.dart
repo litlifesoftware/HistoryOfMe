@@ -93,14 +93,13 @@ class _BookmarkBackState extends State<BookmarkBack> {
                                         horizontal: 2.0),
                                     child: ClippedText(
                                       "${widget.userData!.quote}",
-                                      maxLines: 4,
-                                      style: LitTextStyles.sansSerif.copyWith(
-                                          height: 1.27,
-                                          backgroundColor: Color(
-                                              widget.userData!.secondaryColor),
-                                          fontSize: 12.0,
-                                          color: _quoteTextColor,
-                                          letterSpacing: -0.3),
+                                      maxLines: 3,
+                                      style:
+                                          LitSansSerifStyles.overline.copyWith(
+                                        backgroundColor: Color(
+                                            widget.userData!.secondaryColor),
+                                        color: _quoteTextColor,
+                                      ),
                                       textAlign: TextAlign.center,
                                     ),
                                   ),
@@ -146,7 +145,7 @@ class _BookmarkBackState extends State<BookmarkBack> {
                                 child: Icon(
                                   LitIcons.quote_left,
                                   color: HexColor('#727272'),
-                                  size: 10.0,
+                                  size: 8.0,
                                 ),
                               ),
                             ),
@@ -160,7 +159,7 @@ class _BookmarkBackState extends State<BookmarkBack> {
                                 child: Icon(
                                   LitIcons.quote_right,
                                   color: HexColor('#727272'),
-                                  size: 10.0,
+                                  size: 8.0,
                                 ),
                               ),
                             )
