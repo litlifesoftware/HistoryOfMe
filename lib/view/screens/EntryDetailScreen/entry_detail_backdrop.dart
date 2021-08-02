@@ -31,6 +31,7 @@ class EntryDetailBackdrop extends StatelessWidget {
                   ? BoxDecoration(color: LitColors.mediumGrey.withOpacity(0.2))
                   : BoxDecoration(
                       image: DecorationImage(
+                        alignment: Alignment.topCenter,
                         fit: BoxFit.fitWidth,
                         image: AssetImage(
                           BackdropPhotoController(
