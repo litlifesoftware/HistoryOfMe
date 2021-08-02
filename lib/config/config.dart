@@ -34,3 +34,7 @@ const String initialDiaryEntryTitle = "";
 const String initialDiaryEntryContent = "";
 const double initialDiaryEntryMoodScore = 0.5;
 const int initalDiaryEntryBackdropId = 1;
+
+const bool initialAgreedPrivacy = true;
+const bool initialDarkMode = false;
+const int initialTabIndex = 0;

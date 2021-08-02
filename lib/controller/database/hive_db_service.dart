@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:history_of_me/app.dart';
 import 'package:history_of_me/model/app_settings.dart';
 import 'package:history_of_me/config/config.dart';
 import 'package:history_of_me/model/user_data.dart';
@@ -23,16 +24,29 @@ class HiveDBService {
   const HiveDBService({this.debug = false});
   Future<void> initHiveDB() async {
     await Hive.initFlutter();
-    //Hive.registerAdapter(AppSettingsAdapter());
     Hive.registerAdapter(UserDataAdapter());
     Hive.registerAdapter(UserCreatedColorAdapter());
     Hive.registerAdapter(DiaryEntryAdapter());
+    Hive.registerAdapter(AppSettingsAdapter());
   }
 
   /// The key to access the [AppSettings] Box.
-  static const String _appSettingsKey = 'app_settings';
+  ///
+  /// This key needed to be renamed to `local_settings` to avoid name
+  /// conflicts with the [_userDataKey].
+  static const String _appSettingsKey = 'local_settings';
+
+  /// The key to access the [AppSettings] Box.
+  ///
+  /// This key was mistakenly named `app_settings`. This key was actually
+  /// reserved for the [AppSettings] model. `app_settings` must continue to be
+  /// used to avoid existing data to be lost after a rename.
   static const String _userDataKey = 'app_settings';
+
+  /// The key to access the [UserCreatedColor] Box.
   static const String _userCreatedColorsKey = 'user_created_colors';
+
+  /// The key to access the [DiaryEntry] Box.
   static const String _diaryEntriesKey = 'diary_entries';
 
   /// Opens the [AppSettings] Box.
@@ -79,15 +93,18 @@ class HiveDBService {
     }
   }
 
-  /// Opens all [Box]es used across the app.
+  /// Opens all [Box] instances chronologically.
   ///
-  /// Returns an integer value to state whether opening the [Box]es was successful.
+  /// The boxes must be opened in the correct order as defined on the
+  /// `@HiveType` annotion provided by the model class.
+  ///
+  /// Returns an integer value to state whether the opening was successful.
   Future<int> openBoxes() async {
     try {
-      //await openAppSettingsBox();
       await openUserDataBox();
       await openUserCreatedColorsDataBox();
       await openDiaryEntryDataBox();
+      await openAppSettingsBox();
       print("Opened Boxes");
       return 0;
     } catch (e) {
@@ -102,9 +119,33 @@ class HiveDBService {
     return Hive.box<AppSettings>(_appSettingsKey).listenable();
   }
 
+  /// Creates an initial [AppSettings] instance using the default values.
+  void createAppSettings() {
+    AppSettings appSettings = AppSettings(
+      privacyPolicyAgreed: initialAgreedPrivacy,
+      darkMode: initialDarkMode,
+      tabIndex: initialTabIndex,
+    );
+    if (Hive.box<AppSettings>(_appSettingsKey).isEmpty) {
+      Hive.box<AppSettings>(_appSettingsKey).add(appSettings);
+    } else {
+      print("AppSettings object already created");
+    }
+  }
+
   /// Updates the [AppSettings].
   void updateAppSettings(AppSettings appSettings) {
     Hive.box<AppSettings>(_appSettingsKey).putAt(0, appSettings);
+  }
+
+  /// Updates the [AppSettings] instance using the provided `tabIndex` value.
+  void updateTabIndex(AppSettings appSettings, int tabIndex) {
+    AppSettings updatedAppSettings = AppSettings(
+      privacyPolicyAgreed: appSettings.privacyPolicyAgreed,
+      darkMode: appSettings.darkMode,
+      tabIndex: tabIndex,
+    );
+    updateAppSettings(updatedAppSettings);
   }
 
   /// Gets the [UserData] from the Hive box as a [ValueListenable].
@@ -112,7 +153,8 @@ class HiveDBService {
     return Hive.box<UserData>(_userDataKey).listenable();
   }
 
-  /// Stores the initial [UserData] model to the Hive database on the first app startup.
+  /// Stores the initial [UserData] model to the Hive database on the first app
+  /// startup.
   ///
   /// The provided username must be obtained by the user.
   void createUserData(String username) {
