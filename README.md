@@ -90,8 +90,8 @@ Consider checking out their profiles and photos.
 History Of Me uses the following Dart dependencies in order to implement certain
 features and functionality:
 
-- [lit_ui_kit](https://pub.dev/packages/lit_ui_kit)
-  > LitUIKit enables you to create unique user interfaces in less time. [More information](https://www.github.com/litlifesoftware/lit_ui_kit)
+- [leitmotif](https://pub.dev/packages/leitmotif)
+  > A collection of widgets and screens for Flutter implementing the Leitmotif Design Language. [More information](https://www.github.com/litlifesoftware/leitmotif)
 - [lit_localization_service](https://pub.dev/packages/lit_localization_service)
   > LitLocalizationService enables you to parse JSON files storing your localization data. [More information](https://www.github.com/litlifesoftware/lit_localization_service)
 - [lit_relative_date_time](https://pub.dev/packages/lit_relative_date_time)
@@ -115,11 +115,11 @@ This app is currently localized in:
 
 ## Pre-Release Setup
 
-While under **History of Me**'s development, the `lit_ui_kit` dependency is liked set to the git repository as source. The package will be updated rather frequently, so keep in mind to update your Flutter packages if you encounter issues on your local copy by running `flutter pub upgrade`
+While under **History of Me**'s development, the `leitmotif` dependency is likely set to the git repository as source location. The package will be updated rather frequently, so keep in mind to update your Flutter packages if you encounter issues on your local copy by running `flutter pub upgrade`
 
 ```yaml
     git: 
-      url: https://github.com/litlifesoftware/lit_ui_kit.git
+      url: https://github.com/litlifesoftware/leitmotif.git
 ```
 
 ## License
