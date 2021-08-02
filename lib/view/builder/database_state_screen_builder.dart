@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:history_of_me/controller/database/hive_db_service.dart';
 import 'package:history_of_me/controller/localization/hom_localizations.dart';
 import 'package:history_of_me/config/config.dart';
-import 'package:history_of_me/model/user_data.dart';
+import 'package:history_of_me/model/models.dart';
 import 'package:history_of_me/view/screens/screens.dart';
 import 'package:hive/hive.dart';
 import 'package:lit_localization_service/lit_localization_service.dart';
@@ -55,14 +55,14 @@ class _DatabaseStateScreenBuilderState
     _username = input;
   }
 
-  /// Creates the [UserData] object on the Hive database and pops all recently
-  /// added screen widgets required for signing in the first time.
+  /// Creates the initial [UserData] and [AppSettings] .
   ///
   /// Clearing the navigation stack will be done using a setState method to
-  /// ensure the UI will be rebuild which required to mount the new widget tree
-  /// correctly.
+  /// ensure the view will be rebuild. This is is required to mount the new
+  /// widget tree correctly.
   void _handleUserCreation() {
     _dbService.createUserData(_username);
+    _dbService.createAppSettings();
     setState(() {
       LitRouteController(context).clearNavigationStack();
     });
