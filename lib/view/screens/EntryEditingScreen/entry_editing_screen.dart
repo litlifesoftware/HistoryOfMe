@@ -153,7 +153,7 @@ class _EntryEditingScreenState extends State<EntryEditingScreen>
     _moodScore = widget.diaryEntry.moodScore;
 
     _fadeInAnimationController = AnimationController(
-      duration: Duration(milliseconds: 540),
+      duration: Duration(milliseconds: 450),
       vsync: this,
     );
 
@@ -195,138 +195,106 @@ class _EntryEditingScreenState extends State<EntryEditingScreen>
           appBar: FixedOnScrollAppbar(
             scrollController: _scrollController,
             backgroundColor: Colors.white,
-            height: 50.0,
+            shouldNavigateBack: !_isChanged(dbDiaryEntry),
+            onInvalidNavigation: _handleDiscardDraft,
             child: EditableItemMetaInfo(
               lastUpdateTimestamp: dbDiaryEntry.lastUpdated,
               showUnsavedBadge: _isChanged(dbDiaryEntry),
             ),
-            shouldNavigateBack: !_isChanged(dbDiaryEntry),
-            onInvalidNavigation: _handleDiscardDraft,
           ),
           body: SafeArea(
             child: Stack(
               children: [
-                AnimatedBuilder(
-                  animation: _fadeInAnimationController,
-                  builder: (BuildContext context, Widget? _) {
-                    return Stack(
-                      children: [
-                        LitScrollbar(
-                          scrollController: _scrollController,
-                          child: ScrollableColumn(
-                            controller: _scrollController,
+                LitScrollbar(
+                  scrollController: _scrollController,
+                  child: ScrollableColumn(
+                    controller: _scrollController,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 16.0,
+                        ),
+                        child: Column(
+                          children: [
+                            AnimatedUpdatedLabel(
+                              lastUpdateTimestamp: dbDiaryEntry.lastUpdated,
+                            ),
+                            EditableTitleHeader(
+                              textEditingController: _titleEditingController,
+                              focusNode: _titleEditFocusNode,
+                              animationController: _fadeInAnimationController,
+                            ),
+                            _DiaryContentInput(
+                              contentEditController: _contentEditingController,
+                              contentEditFocusNode: _contentEditFocusNode,
+                              fadeInAnimationController:
+                                  _fadeInAnimationController,
+                            ),
+                          ],
+                        ),
+                      ),
+                      LitGradientCard(
+                        boxShadow: [
+                          BoxShadow(
+                            blurRadius: 8.0,
+                            color: Colors.black38,
+                            offset: Offset(-4.0, 2.0),
+                            spreadRadius: 1.0,
+                          )
+                        ],
+                        borderRadius: const BorderRadius.all(Radius.zero),
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                            bottom: 16.0,
+                            top: 4.0,
+                            left: 16.0,
+                            right: 16.0,
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisSize: MainAxisSize.max,
                             children: [
-                              FadeInTransformContainer(
-                                animationController: _fadeInAnimationController,
-                                transform: Matrix4.translationValues(
-                                    0,
-                                    -50 +
-                                        (50 * _fadeInAnimationController.value),
-                                    0),
-                                child: Column(
-                                  children: [
-                                    AnimatedUpdatedLabel(
-                                      padding: const EdgeInsets.only(
-                                        left: 25.0,
-                                        right: 25.0,
-                                        top: 16.0,
-                                        bottom: 4.0,
-                                      ),
-                                      lastUpdateTimestamp:
-                                          dbDiaryEntry.lastUpdated,
-                                    ),
-                                    EditableTitleHeader(
-                                      textEditingController:
-                                          _titleEditingController,
-                                      focusNode: _titleEditFocusNode,
-                                    ),
-                                  ],
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 4.0,
+                                  horizontal: 4.0,
+                                ),
+                                child: Text(
+                                  HOMLocalizations(context)
+                                      .yourMoodWas
+                                      .toUpperCase(),
+                                  style: LitSansSerifStyles.subtitle2,
                                 ),
                               ),
-                              _DiaryContentInput(
-                                contentEditController:
-                                    _contentEditingController,
-                                contentEditFocusNode: _contentEditFocusNode,
-                                fadeInAnimationController:
-                                    _fadeInAnimationController,
+                              LitSliderCard(
+                                padding: const EdgeInsets.symmetric(),
+                                value: _moodScore,
+                                onChanged: _onMoodScoreChanged,
+                                activeTrackColor: Color.lerp(
+                                  LitColors.lightRed,
+                                  Color(0xFFbee5be),
+                                  _moodScore,
+                                )!,
+                                valueTitleText: MoodTranslationController(
+                                  moodScore: _moodScore,
+                                  context: context,
+                                ).uppercaseLabel,
+                                min: 0.0,
+                                max: 1.0,
                               ),
-                              LitGradientCard(
-                                  boxShadow: [
-                                    BoxShadow(
-                                      blurRadius: 8.0,
-                                      color: Colors.black38,
-                                      offset: Offset(-4.0, 2.0),
-                                      spreadRadius: 1.0,
-                                    )
-                                  ],
-                                  borderRadius:
-                                      const BorderRadius.all(Radius.zero),
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(
-                                      bottom: 24.0,
-                                      top: 8.0,
-                                      //   vertical: 8.0,
-                                      left: 16.0,
-                                      right: 16.0,
-                                    ),
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Container(
-                                          child: Padding(
-                                            padding: const EdgeInsets.only(
-                                              bottom: 8.0,
-                                              left: 8.0,
-                                            ),
-                                            child: Text(
-                                              HOMLocalizations(context)
-                                                  .yourMoodWas
-                                                  .toUpperCase(),
-                                              style: LitTextStyles.sansSerif
-                                                  .copyWith(
-                                                letterSpacing: 0.59,
-                                                fontWeight: FontWeight.w700,
-                                                height: 1.8,
-                                                color: LitColors.mediumGrey,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        LitSliderCard(
-                                          padding: const EdgeInsets.symmetric(),
-                                          value: _moodScore,
-                                          onChanged: _onMoodScoreChanged,
-                                          activeTrackColor: Color.lerp(
-                                            LitColors.lightRed,
-                                            HexColor('bee5be'),
-                                            _moodScore,
-                                          )!,
-                                          valueTitleText:
-                                              MoodTranslationController(
-                                            moodScore: _moodScore,
-                                            context: context,
-                                          ).translatedLabelText,
-                                          min: 0.0,
-                                          max: 1.0,
-                                        ),
-                                      ],
-                                    ),
-                                  ))
                             ],
                           ),
                         ),
-                        PurplePinkSaveButton(
-                          disabled: !_isChanged(dbDiaryEntry),
-                          onSaveChanges: _saveChanges,
-                        ),
-                      ],
-                    );
-                  },
+                      )
+                    ],
+                  ),
+                ),
+                PurplePinkSaveButton(
+                  disabled: !_isChanged(dbDiaryEntry),
+                  onSaveChanges: _saveChanges,
                 ),
               ],
             ),
@@ -338,54 +306,56 @@ class _EntryEditingScreenState extends State<EntryEditingScreen>
 }
 
 class _DiaryContentInput extends StatelessWidget {
-  final AnimationController? fadeInAnimationController;
+  final AnimationController fadeInAnimationController;
   final TextEditingController? contentEditController;
   final FocusNode? contentEditFocusNode;
-
+  final EdgeInsets padding;
   const _DiaryContentInput({
     Key? key,
     required this.fadeInAnimationController,
     required this.contentEditController,
     required this.contentEditFocusNode,
+    this.padding = const EdgeInsets.symmetric(
+      vertical: 8.0,
+      horizontal: 16.0,
+    ),
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return FadeInTransformContainer(
-      animationController: fadeInAnimationController,
-      transform: Matrix4.translationValues(
-        MediaQuery.of(context).size.width / 3 +
-            (-MediaQuery.of(context).size.width /
-                3 *
-                fadeInAnimationController!.value),
-        0,
-        0,
-      ),
-      child: ConstrainedBox(
-        constraints: BoxConstraints(
-          minHeight: MediaQuery.of(context).size.height - 164.0,
-        ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(
-            vertical: 8.0,
-            horizontal: 25.0,
-          ),
-          child: EditableText(
-            controller: contentEditController!,
-            focusNode: contentEditFocusNode!,
-            style: LitTextStyles.sansSerif.copyWith(
-              fontSize: 15.5,
-              letterSpacing: 0.19,
-              fontWeight: FontWeight.w600,
-              height: 1.8,
-              color: HexColor('#939393'),
+    return AnimatedBuilder(
+        animation: fadeInAnimationController,
+        builder: (context, snapshot) {
+          return FadeInTransformContainer(
+            animationController: fadeInAnimationController,
+            transform: Matrix4.translationValues(
+              MediaQuery.of(context).size.width / 3 +
+                  (-MediaQuery.of(context).size.width /
+                      3 *
+                      fadeInAnimationController.value),
+              0,
+              0,
             ),
-            cursorColor: HexColor('#b7b7b7'),
-            backgroundCursorColor: Colors.black,
-            selectionColor: HexColor('#b7b7b7'),
-            maxLines: null,
-          ),
-        ),
-      ),
-    );
+            child: ConstrainedBox(
+              constraints: BoxConstraints(
+                minHeight: MediaQuery.of(context).size.height - 164.0,
+              ),
+              child: Padding(
+                padding: padding,
+                child: EditableText(
+                  controller: contentEditController!,
+                  focusNode: contentEditFocusNode!,
+                  style: LitSansSerifStyles.body2.copyWith(
+                    height: 1.65,
+                    color: Color(0xFF939393),
+                  ),
+                  cursorColor: HexColor('#b7b7b7'),
+                  backgroundCursorColor: Colors.black,
+                  selectionColor: HexColor('#b7b7b7'),
+                  maxLines: null,
+                ),
+              ),
+            ),
+          );
+        });
   }
 }
