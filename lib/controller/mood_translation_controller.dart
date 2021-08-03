@@ -22,4 +22,9 @@ class MoodTranslationController {
     }
     return HOMLocalizations(context).bad;
   }
+
+  /// Returns a label in 	in upper case.
+  String get uppercaseLabel {
+    return translatedLabelText.toUpperCase();
+  }
 }
