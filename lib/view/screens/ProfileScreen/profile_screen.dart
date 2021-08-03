@@ -63,8 +63,10 @@ class _ProfileScreenState extends State<ProfileScreen>
           snackbars: [
             LitIconSnackbar(
               snackBarController: _snackbarController,
-              text:
-                  "${HOMLocalizations(context).welcomeBack}, ${userData!.name}!",
+              text: HOMLocalizations(context).welcomeBack +
+                  ", " +
+                  userData!.name +
+                  "!",
               iconData: LitIcons.diary,
             ),
           ],

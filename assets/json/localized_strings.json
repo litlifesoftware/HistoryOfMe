@@ -466,5 +466,9 @@
   "color_is_transparent": {
     "en": "Color is fully transparent",
     "de": "Farbe ist transparent"
+  },
+  "average_mood": {
+    "en" : "Average Mood",
+    "de": "Durchschnittliche Stimmung"
   }
 }

@@ -483,4 +483,8 @@ class HOMLocalizations {
   String get colorIsTransparent {
     return getValue("color_is_transparent");
   }
+
+  String get averageMood {
+    return getValue("average_mood");
+  }
 }
