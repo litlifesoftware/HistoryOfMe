@@ -258,9 +258,11 @@ class _EntryEditingScreenState extends State<EntryEditingScreen>
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Padding(
-                                padding: const EdgeInsets.symmetric(
-                                  vertical: 4.0,
-                                  horizontal: 4.0,
+                                padding: const EdgeInsets.only(
+                                  bottom: 24.0,
+                                  top: 16.0,
+                                  left: 4.0,
+                                  right: 4.0,
                                 ),
                                 child: Text(
                                   HOMLocalizations(context)
