@@ -32,7 +32,7 @@ dependencies:
   hive_generator: ^1.0.1
   build_runner: ^1.12.2
   leitmotif: 
-    ^1.4.0
+    ^1.4.1
     # Specify alternative leitmotif-flutter locations
     # git: 
     #   url: https://github.com/litlifesoftware/leitmotif-flutter.git
