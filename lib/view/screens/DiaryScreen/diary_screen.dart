@@ -43,15 +43,16 @@ class _DiaryScreenState extends State<DiaryScreen>
     _navigator.showCreateEntryDialog();
   }
 
-  /// Toggles the [_showFavoriteEntriesOnly] state value while replaying the animation controller
-  /// to animate the list view tiles again.
+  /// Toggles the [_showFavoriteEntriesOnly] state value while replaying the
+  /// animation controller to animate the list view tiles again.
   void toggleShowFavoritesOnly() {
     setState(() {
       _showFavoriteEntriesOnly = !_showFavoriteEntriesOnly;
     });
   }
 
-  /// Sortes the [DiaryEntry]s inside the provided box and returns the sorted objects as a list.
+  /// Sortes the [DiaryEntry]s inside the provided box and returns the sorted
+  /// objects as a list.
   List<DiaryEntry> _getDiaryEntriesSorted(Box entriesBox) {
     return entriesBox.values.toList() as List<DiaryEntry>
       ..sort(

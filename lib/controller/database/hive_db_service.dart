@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:history_of_me/app.dart';
 import 'package:history_of_me/model/app_settings.dart';
 import 'package:history_of_me/config/config.dart';
 import 'package:history_of_me/model/user_data.dart';
