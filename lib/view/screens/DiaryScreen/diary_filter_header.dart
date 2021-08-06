@@ -48,15 +48,15 @@ class _DiaryFilterHeaderState extends State<DiaryFilterHeader>
 
     if (widget.showFavoritesOnly!) {
       if (plural) {
-        return " " + favorite + " " + entires;
+        return " " + favorite.capitalize() + " " + entires.capitalize();
       } else {
-        return " " + favorite + " " + entry;
+        return " " + favorite.capitalize() + " " + entry.capitalize();
       }
     } else {
       if (plural) {
-        return " " + entires;
+        return " " + entires.capitalize();
       } else {
-        return " " + entry;
+        return " " + entry.capitalize();
       }
     }
   }
