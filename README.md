@@ -1,6 +1,6 @@
-# History of Me
+![History of Me Feature Graphic](assets/misc/Google_Playstore_Promo_Image_2.png "History of Me Feature Graphic")
 
-## ![History of Me Feature Graphic](assets/misc/Google_Playstore_Promo_Image_2.png "History of Me Feature Graphic")
+## What is History of Me?
 
 **Your own personal diary**
 
