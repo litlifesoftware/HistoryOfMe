@@ -15,4 +15,18 @@ class AppSettings {
     required this.darkMode,
     required this.tabIndex,
   });
+
+  factory AppSettings.fromJson(Map<String, dynamic> json) {
+    return AppSettings(
+      privacyPolicyAgreed: json['privacyPolicyAgreed'] as bool,
+      darkMode: json['darkMode'] as bool,
+      tabIndex: json['tabIndex'] as int,
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+        'privacyPolicyAgreed': privacyPolicyAgreed,
+        'darkMode': darkMode,
+        'tabIndex': tabIndex,
+      };
 }
