@@ -33,4 +33,30 @@ class DiaryEntry {
     required this.favorite,
     required this.backdropPhotoId,
   });
+
+  factory DiaryEntry.fromJson(Map<String, dynamic> json) {
+    return DiaryEntry(
+      uid: json['uid'] as String,
+      date: json['date'] as String,
+      created: json['created'] as int,
+      lastUpdated: json['lastUpdated'] as int,
+      title: json['title'] as String,
+      content: json['content'] as String,
+      moodScore: json['moodScore'] as double,
+      favorite: json['favorite'] as bool,
+      backdropPhotoId: json['backdropPhotoId'] as int,
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+        'uid': uid,
+        'date': date,
+        'created': created,
+        'lastUpdated': lastUpdated,
+        'title': title,
+        'content': content,
+        'moodScore': moodScore,
+        'favorite': favorite,
+        'backdropPhotoId': backdropPhotoId,
+      };
 }
