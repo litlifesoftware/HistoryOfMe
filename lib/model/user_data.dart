@@ -39,4 +39,34 @@ class UserData {
     required this.lastUpdated,
     required this.created,
   });
+
+  factory UserData.fromJson(Map<String, dynamic> json) {
+    return UserData(
+      name: json['name'],
+      primaryColor: json['primaryColor'],
+      secondaryColor: json['secondaryColor'],
+      stripeCount: json['stripeCount'],
+      dotSize: json['dotSize'],
+      animated: json['animated'],
+      quote: json['quote'],
+      designPatternIndex: json['designPatternIndex'],
+      quoteAuthor: json['quoteAuthor'],
+      lastUpdated: json['lastUpdated'],
+      created: json['created'],
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+        'name': name,
+        'primaryColor': primaryColor,
+        'secondaryColor': secondaryColor,
+        'stripeCount': stripeCount,
+        'dotSize': dotSize,
+        'animated': animated,
+        'quote': quote,
+        'designPatternIndex': designPatternIndex,
+        'quoteAuthor': quoteAuthor,
+        'lastUpdated': lastUpdated,
+        'created': created,
+      };
 }
