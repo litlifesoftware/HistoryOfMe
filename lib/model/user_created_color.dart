@@ -22,4 +22,22 @@ class UserCreatedColor {
     required this.green,
     required this.blue,
   });
+
+  factory UserCreatedColor.fromJson(Map<String, dynamic> json) {
+    return UserCreatedColor(
+      uid: json['uid'] as String,
+      alpha: json['alpha'] as int,
+      red: json['red'] as int,
+      green: json['green'] as int,
+      blue: json['blue'] as int,
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+        'uid': uid,
+        'alpha': alpha,
+        'red': red,
+        'green': green,
+        'blue': blue,
+      };
 }
