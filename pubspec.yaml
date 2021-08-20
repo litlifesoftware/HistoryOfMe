@@ -31,6 +31,7 @@ dependencies:
   hive_flutter: ^1.0.0
   hive_generator: ^1.0.1
   build_runner: ^1.12.2
+  path_provider: ^2.0.2
   leitmotif: 
     ^1.4.1
     # Specify alternative leitmotif-flutter locations
