@@ -42,17 +42,17 @@ class UserData {
 
   factory UserData.fromJson(Map<String, dynamic> json) {
     return UserData(
-      name: json['name'],
-      primaryColor: json['primaryColor'],
-      secondaryColor: json['secondaryColor'],
-      stripeCount: json['stripeCount'],
-      dotSize: json['dotSize'],
-      animated: json['animated'],
-      quote: json['quote'],
-      designPatternIndex: json['designPatternIndex'],
-      quoteAuthor: json['quoteAuthor'],
-      lastUpdated: json['lastUpdated'],
-      created: json['created'],
+      name: json['name'] as String,
+      primaryColor: json['primaryColor'] as int,
+      secondaryColor: json['secondaryColor'] as int,
+      stripeCount: json['stripeCount'] as int,
+      dotSize: json['dotSize'] as int,
+      animated: json['animated'] as bool,
+      quote: json['quote'] as String,
+      designPatternIndex: json['designPatternIndex'] as int,
+      quoteAuthor: json['quoteAuthor'] as String,
+      lastUpdated: json['lastUpdated'] as int,
+      created: json['created'] as int,
     );
   }
 
