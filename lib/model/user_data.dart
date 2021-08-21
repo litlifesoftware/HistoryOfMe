@@ -2,6 +2,8 @@ import 'package:hive/hive.dart';
 
 part 'user_data.g.dart';
 
+/// A model class storing user-specific data as well as the currently edited
+/// bookmark configuration.
 @HiveType(typeId: 0)
 class UserData {
   @HiveField(0)
@@ -26,6 +28,8 @@ class UserData {
   final int lastUpdated;
   @HiveField(10)
   final int created;
+
+  /// Creates an [UserData] object.
   const UserData({
     required this.name,
     required this.primaryColor,
@@ -40,6 +44,9 @@ class UserData {
     required this.created,
   });
 
+  /// Creates an [UserData] object by serializing the provided `Map` data.
+  ///
+  /// `JSON` decoding must be done before serialization.
   factory UserData.fromJson(Map<String, dynamic> json) {
     return UserData(
       name: json['name'] as String,
@@ -56,6 +63,9 @@ class UserData {
     );
   }
 
+  /// Creates a `Map` object based on this [UserData] object.
+  ///
+  /// `JSON` encoding must be done after serialization.
   Map<String, dynamic> toJson() => {
         'name': name,
         'primaryColor': primaryColor,
