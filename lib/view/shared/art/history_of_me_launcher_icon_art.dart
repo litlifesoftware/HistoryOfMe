@@ -22,7 +22,9 @@ class HistoryOfMeLauncherIconArt extends StatelessWidget {
         height: height,
         width: width,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(height / 4)),
+          borderRadius: BorderRadius.all(
+            Radius.circular(height / 3),
+          ),
           color: Color(0xFFFFF7EF),
           boxShadow: boxShadow,
         ),
