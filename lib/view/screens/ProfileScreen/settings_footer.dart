@@ -6,6 +6,7 @@ import 'package:history_of_me/controller/localization/hom_localizations.dart';
 import 'package:history_of_me/model/backdrop_photo.dart';
 import 'package:history_of_me/model/user_data.dart';
 import 'package:history_of_me/view/screens/HistoryOfMeIntroScreen/history_of_me_intro_screen.dart';
+import 'package:history_of_me/view/screens/ProfileScreen/diary_backup_dialog.dart';
 import 'package:history_of_me/view/shared/art/history_of_me_launcher_icon_art.dart';
 import 'package:leitmotif/leitmotif.dart';
 
@@ -34,6 +35,12 @@ class _SettingsFooterState extends State<SettingsFooter> {
         art: HistoryOfMeLauncherIconArt(),
         infoDescription: HOMLocalizations(context).yourOwnPersonalDiary,
       ),
+    );
+  }
+
+  void _showBackupDialog() {
+    LitRouteController(context).showDialogWidget(
+      DiaryBackupDialog(),
     );
   }
 
@@ -141,6 +148,11 @@ class _SettingsFooterState extends State<SettingsFooter> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
+          LitPlainLabelButton(
+            label: "Manage Backup",
+            onPressed: _showBackupDialog,
+            textAlign: TextAlign.right,
+          ),
           LitPlainLabelButton(
             label: HOMLocalizations(context).takeTheTour,
             onPressed: _takeTour,
