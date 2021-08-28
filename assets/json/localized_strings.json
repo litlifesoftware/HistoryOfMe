@@ -468,7 +468,60 @@
     "de": "Farbe ist transparent"
   },
   "average_mood": {
-    "en" : "Average Mood",
+    "en": "Average Mood",
     "de": "Durchschnittliche Stimmung"
+  },
+  "manage_backup": {
+    "en": "Manage Backup",
+    "de": "Backup verwalten"
+  },
+  "loading_backup": {
+    "en": "Loading Backup",
+    "de": "Backup wird geladen"
+  },
+  "no_backup_found": {
+    "en": "No Backup found",
+    "de": "Kein Backup gefunden"
+  },
+  "backup_now": {
+    "en": "Backup now",
+    "de": "Jetzt sichern"
+  },
+
+  "backup_now_short": {
+    "en": "Backup",
+    "de": "Sichern"
+  },
+  "no_backup_title": {
+    "en": "We did not find any backups.",
+    "de": "Wir haben keine Backups gefunden."
+  },
+  "no_backup_descr": {
+    "en": "Consider to backup your diary to prevent possible data loss.",
+    "de": "Ziehe in Erwägung dein Tagebuch zu sichern, um einen Datenverlust zu vermeiden."
+  },
+  "general_backup_descr": {
+    "en": "Backups help you to restore your diary after you deleted this app.",
+    "de": "Backups ermöglichen das Wiederherstellen deines Tagebuchs, auch wenn du diese App entfernst."
+  },
+  "last_backup": {
+    "en": "Last Backup",
+    "de": "Letzte Sicherung"
+  },
+  "up_to_date": {
+    "en": "Up to date",
+    "de": "Aktuell"
+  },
+  "up_to_date_descr": {
+    "en": "Your backup is up-to-date!",
+    "de": "Dein Backup ist aktuell!"
+  },
+  "not_up_to_date_descr": {
+    "en": "Your backup is older than two days. We recommend to backup your diary regularly to prevent data loss.",
+    "de": "Dein Backup ist älter als zwei Tage. Wir empfehlen dein Tagebuch regelmäßig zu sichern, um einen Datenverlust zu vermeiden."
+  },
+  "backup_your_diary": {
+    "en": "Backup your diary",
+    "de": "Sichere dein Tagebuch"
   }
 }

@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:history_of_me/controller/controllers.dart';
 import 'package:history_of_me/model/diary_backup.dart';
 import 'package:history_of_me/model/models.dart';
 import 'package:history_of_me/view/provider/providers.dart';
@@ -139,7 +140,7 @@ class _LoadingBackupDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LitTitledDialog(
-      titleText: "Loading Backup",
+      titleText: HOMLocalizations(context).loadingBackup,
       child: Center(
         child: ConstrainedBox(
           constraints: BoxConstraints(minHeight: 192.0),
@@ -169,10 +170,10 @@ class _CreateBackupDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LitTitledDialog(
-      titleText: "No Backup found",
+      titleText: HOMLocalizations(context).noBackupFound,
       actionButtons: [
         DialogActionButton(
-          label: "BACKUP NOW",
+          label: HOMLocalizations(context).backupNow.toUpperCase(),
           onPressed: writeBackup,
         )
       ],
@@ -191,7 +192,7 @@ class _CreateBackupDialog extends StatelessWidget {
               bottom: 16.0,
             ),
             child: Text(
-              "We did not find any backups.",
+              HOMLocalizations(context).noBackupTitle,
               style: LitSansSerifStyles.body2,
             ),
           ),
@@ -201,7 +202,7 @@ class _CreateBackupDialog extends StatelessWidget {
               top: 16.0,
             ),
             child: Text(
-              "Consider to backup your diary to prevent possible data loss.",
+              HOMLocalizations(context).noBackupDescr,
               style: LitSansSerifStyles.caption,
             ),
           ),
@@ -227,13 +228,13 @@ class _ManageBackupDialog extends StatelessWidget {
     return LitTitledDialog(
       actionButtons: [
         DialogActionButton(
-          label: "DELETE",
+          label: HOMLocalizations(context).delete,
           onPressed: deleteBackup,
           backgroundColor: LitColors.lightPink,
           accentColor: Colors.white,
         ),
         DialogActionButton(
-          label: "BACKUP",
+          label: HOMLocalizations(context).backupNowShort,
           onPressed: writeBackup,
         ),
       ],
@@ -250,7 +251,7 @@ class _ManageBackupDialog extends StatelessWidget {
           );
         },
       ),
-      titleText: "Backup your diary",
+      titleText: HOMLocalizations(context).backupYourDiary,
     );
   }
 }
@@ -295,11 +296,11 @@ class __BackupPreviewState extends State<_BackupPreview> {
         _InfoDescription(),
         SizedBox(height: 16.0),
         _MetaDataText(
-          keyText: "Total entries:",
+          keyText: (HOMLocalizations(context).entires) + ":",
           valueText: widget.diaryBackup.diaryEntries.length.toString(),
         ),
         _MetaDataText(
-          keyText: "Last Backup:",
+          keyText: (HOMLocalizations(context).lastBackup) + ":",
           valueText: DateTime.parse(widget.diaryBackup.backupDate)
               .formatAsLocalizedDate(context),
           description: _relBackupDateFormatter.format(
@@ -355,7 +356,7 @@ class _InfoDescription extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 16.0),
                 child: Center(
                   child: ClippedText(
-                    "Backups help you to restore your diary after you deleted this app or if you loose your phone.",
+                    HOMLocalizations(context).generalBackupDescr,
                     maxLines: 3,
                     style: LitSansSerifStyles.caption,
                   ),
@@ -420,7 +421,7 @@ class __UpToDateIndicatorState extends State<_UpToDateIndicator> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Up to date:",
+                HOMLocalizations(context).upToDate,
                 style: LitSansSerifStyles.subtitle2,
               ),
               Container(
@@ -447,11 +448,11 @@ class __UpToDateIndicatorState extends State<_UpToDateIndicator> {
             padding: const EdgeInsets.only(top: 4.0),
             child: _isUpToDate
                 ? Text(
-                    "Your diary is up-to-date!",
+                    HOMLocalizations(context).upToDateDescr,
                     style: LitSansSerifStyles.caption,
                   )
                 : Text(
-                    "Your diary is older than two days. We recommend to backup your diary regularly to prevent data loss.",
+                    HOMLocalizations(context).notUpToDateDescr,
                     style: LitSansSerifStyles.caption.copyWith(
                       color: LitColors.darkRed,
                     ),
@@ -486,7 +487,7 @@ class _MetaDataText extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.end,
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text(
+              ClippedText(
                 keyText,
                 style: LitSansSerifStyles.subtitle2,
               ),
@@ -498,12 +499,12 @@ class _MetaDataText extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.end,
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text(
+              ClippedText(
                 valueText,
                 style: LitSansSerifStyles.body2,
               ),
               description != null
-                  ? Text(
+                  ? ClippedText(
                       description!,
                       style: LitSansSerifStyles.caption,
                     )

@@ -149,7 +149,7 @@ class _SettingsFooterState extends State<SettingsFooter> {
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           LitPlainLabelButton(
-            label: "Manage Backup",
+            label: HOMLocalizations(context).manageBackup,
             onPressed: _showBackupDialog,
             textAlign: TextAlign.right,
           ),

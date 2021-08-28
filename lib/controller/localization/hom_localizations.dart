@@ -487,4 +487,56 @@ class HOMLocalizations {
   String get averageMood {
     return getValue("average_mood");
   }
+
+  String get manageBackup {
+    return getValue("manage_backup");
+  }
+
+  String get loadingBackup {
+    return getValue("loading_backup");
+  }
+
+  String get noBackupFound {
+    return getValue("no_backup_found");
+  }
+
+  String get backupNow {
+    return getValue("backup_now");
+  }
+
+  String get backupNowShort {
+    return getValue("backup_now_short");
+  }
+
+  String get noBackupTitle {
+    return getValue("no_backup_title");
+  }
+
+  String get noBackupDescr {
+    return getValue("no_backup_descr");
+  }
+
+  String get generalBackupDescr {
+    return getValue("general_backup_descr");
+  }
+
+  String get lastBackup {
+    return getValue("last_backup");
+  }
+
+  String get upToDate {
+    return getValue("up_to_date");
+  }
+
+  String get upToDateDescr {
+    return getValue("up_to_date_descr");
+  }
+
+  String get notUpToDateDescr {
+    return getValue("not_up_to_date_descr");
+  }
+
+  String get backupYourDiary {
+    return getValue("backup_your_diary");
+  }
 }
