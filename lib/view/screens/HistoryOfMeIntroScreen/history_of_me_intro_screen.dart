@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:history_of_me/controller/localization/hom_localizations.dart';
-import 'package:history_of_me/view/shared/app_artwork.dart';
-import 'package:history_of_me/view/shared/art/history_of_me_app_logo.dart';
+import 'package:history_of_me/view/shared/shared.dart';
 import 'package:leitmotif/leitmotif.dart';
 
 /// A screen widget displaying a modified version of the [LitOnboardingScreen].
