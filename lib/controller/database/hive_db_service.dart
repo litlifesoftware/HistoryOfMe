@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:history_of_me/model/app_settings.dart';
 import 'package:history_of_me/config/config.dart';
+import 'package:history_of_me/model/diary_backup.dart';
 import 'package:history_of_me/model/user_data.dart';
 import 'package:history_of_me/model/diary_entry.dart';
 import 'package:history_of_me/model/user_created_color.dart';
@@ -132,6 +133,14 @@ class HiveDBService {
     }
   }
 
+  void restoreAppSettings(AppSettings appSettings) {
+    if (Hive.box<AppSettings>(_appSettingsKey).isEmpty) {
+      Hive.box<AppSettings>(_appSettingsKey).add(appSettings);
+    } else {
+      print("'AppSettings' already existing. Restoring failed.");
+    }
+  }
+
   /// Updates the [AppSettings].
   void updateAppSettings(AppSettings appSettings) {
     Hive.box<AppSettings>(_appSettingsKey).putAt(0, appSettings);
@@ -175,6 +184,14 @@ class HiveDBService {
       Hive.box<UserData>(_userDataKey).add(userData);
     } else {
       print("UserData object already created");
+    }
+  }
+
+  void restoreUserData(UserData userData) {
+    if (Hive.box<UserData>(_userDataKey).isEmpty) {
+      Hive.box<UserData>(_userDataKey).add(userData);
+    } else {
+      print("'UserData' already existing. Restoring failed.");
     }
   }
 
@@ -239,6 +256,14 @@ class HiveDBService {
 
     Hive.box<DiaryEntry>(_diaryEntriesKey).put(diaryEntry.uid, diaryEntry);
     return diaryEntry;
+  }
+
+  Future<void> addDiaryEntryBatch({
+    required List<DiaryEntry> diaryEntries,
+  }) async {
+    for (DiaryEntry entry in diaryEntries) {
+      Hive.box<DiaryEntry>(_diaryEntriesKey).put(entry.uid, entry);
+    }
   }
 
   /// Updates an existing diary entry on the Hive database using the provided updated
@@ -348,6 +373,18 @@ class HiveDBService {
     Hive.box<UserCreatedColor>(_userCreatedColorsKey).add(userCreatedColor);
   }
 
+  Future<void> addUserCreatedColorBatch({
+    required List<UserCreatedColor> userCreatedColors,
+  }) async {
+    for (UserCreatedColor ucc in userCreatedColors) {
+      try {
+        addUserCreatedColor(ucc.alpha, ucc.red, ucc.green, ucc.blue);
+      } catch (e) {
+        print("'UserCreatedColor' with provided values already exists.");
+      }
+    }
+  }
+
   void deleteUserCreatedColor(int index) {
     Hive.box<UserCreatedColor>(_userCreatedColorsKey).deleteAt(index);
   }
@@ -368,5 +405,17 @@ class HiveDBService {
     String timestampHash = timestamp.toRadixString(16);
     String saltHash = salt.toRadixString(16);
     return "$timestampHash$saltHash";
+  }
+
+  Future<void> rebuildDatabase(DiaryBackup backup) async {
+    restoreAppSettings(backup.appSettings);
+    print("'AppSettings' restored from Backup.");
+    restoreUserData(backup.userData);
+    print("'UserData' restored from Backup.");
+    await addDiaryEntryBatch(diaryEntries: backup.diaryEntries);
+    print("'DiaryEntry' objects restored from Backup.");
+    await addUserCreatedColorBatch(userCreatedColors: backup.userCreatedColors);
+    print("'UserCreatedColor' objects restored from Backup.");
+    print("Successfully restored database.");
   }
 }
