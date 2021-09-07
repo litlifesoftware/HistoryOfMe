@@ -27,12 +27,12 @@ dependencies:
     sdk: flutter
 
   intl: ^0.17.0
-  hive: ^2.0.1
-  hive_flutter: ^1.0.0
+  hive: ^2.0.4
+  hive_flutter: ^1.1.0
   hive_generator: ^1.0.1
   build_runner: ^1.12.2
-  path_provider: ^2.0.2
-  package_info_plus: ^1.0.5
+  path_provider: ^2.0.3
+  package_info_plus: ^1.0.6
   leitmotif:
     # ^1.4.1
     # Specify alternative leitmotif-flutter locations
@@ -45,7 +45,7 @@ dependencies:
     # ^0.0.1
     # Specify alternative lit_backup_service locations
     git:
-      url: https://github.com/litlifesoftware/lit_backup_service.git
+     url: https://github.com/litlifesoftware/lit_backup_service.git
     # path: ../lit_backup_service/
 
 dev_dependencies:
