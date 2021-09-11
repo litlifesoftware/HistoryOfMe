@@ -19,6 +19,11 @@ class StripedDesign extends StatelessWidget implements BookmarkDesign {
       borderRadius: BorderRadius.all(Radius.circular(radius)),
       child: Stack(
         children: [
+          // Ensure to paint on a solid background to avoid transparency
+          // on semi-transparent colors.
+          Container(
+            color: Colors.white,
+          ),
           Column(
             children: StripedDesignController(
               radius: radius,
