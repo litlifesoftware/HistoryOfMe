@@ -11,12 +11,18 @@ class AppSettings {
   final bool darkMode;
   @HiveField(2)
   final int tabIndex;
+  @HiveField(3)
+  final String? installationID;
+  @HiveField(4)
+  final String? lastBackup;
 
   /// Creates a [AppSettings] object.
   const AppSettings({
     required this.privacyPolicyAgreed,
     required this.darkMode,
     required this.tabIndex,
+    required this.installationID,
+    required this.lastBackup,
   });
 
   /// Creates a [AppSettings] object by serializing the provided `Map` data.
@@ -27,6 +33,8 @@ class AppSettings {
       privacyPolicyAgreed: json['privacyPolicyAgreed'] as bool,
       darkMode: json['darkMode'] as bool,
       tabIndex: json['tabIndex'] as int,
+      installationID: json['installationID'] as String?,
+      lastBackup: json['lastBackup'] as String?,
     );
   }
 
@@ -37,5 +45,7 @@ class AppSettings {
         'privacyPolicyAgreed': privacyPolicyAgreed,
         'darkMode': darkMode,
         'tabIndex': tabIndex,
+        'installationID': installationID,
+        'lastBackup': lastBackup,
       };
 }
