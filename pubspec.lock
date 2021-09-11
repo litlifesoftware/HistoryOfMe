@@ -315,19 +315,17 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: c9b67bd04d452a8f6004f9c90bf122aaf7c9dd3c
+      resolved-ref: "9d4372bab8338d8a66ddaed0ef327e074c66cf58"
       url: "https://github.com/litlifesoftware/leitmotif-flutter.git"
     source: git
     version: "1.4.2"
   lit_backup_service:
     dependency: "direct main"
     description:
-      path: "."
-      ref: HEAD
-      resolved-ref: a6b6d6358aa483af5db65b835fb8e35d7200d855
-      url: "https://github.com/litlifesoftware/lit_backup_service.git"
-    source: git
-    version: "0.0.1"
+      name: lit_backup_service
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.0"
   lit_localization_service:
     dependency: "direct main"
     description:
@@ -341,7 +339,7 @@ packages:
       name: lit_relative_date_time
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.0.2"
+    version: "1.0.0"
   logging:
     dependency: transitive
     description:

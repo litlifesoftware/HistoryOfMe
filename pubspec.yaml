@@ -40,13 +40,8 @@ dependencies:
       url: https://github.com/litlifesoftware/leitmotif-flutter.git
     # path: ../leitmotif-flutter/
   lit_localization_service: ^0.0.2
-  lit_relative_date_time: ^0.0.2
-  lit_backup_service:
-    # ^0.0.1
-    # Specify alternative lit_backup_service locations
-    git:
-     url: https://github.com/litlifesoftware/lit_backup_service.git
-    # path: ../lit_backup_service/
+  lit_relative_date_time: ^1.0.0
+  lit_backup_service: ^1.0.0
 
 dev_dependencies:
   # For information on the generic Dart part of this file, see the
