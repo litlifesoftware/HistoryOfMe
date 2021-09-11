@@ -13,12 +13,21 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 ///
 /// It's main purpose is to initialize the [MaterialApp] widget and to load the
 /// read-only content from the local storage.
+///
+/// It also provides the option to restart the whole app if required using
+/// its `restartApp()` method.
 class App extends StatefulWidget {
+  static void restartApp(BuildContext context) {
+    context.findAncestorStateOfType<_AppState>()!.restartApp();
+  }
+
   @override
   _AppState createState() => _AppState();
 }
 
 class _AppState extends State<App> {
+  Key _key = UniqueKey();
+
   /// The background photos fetched from local storage.
   List<String?> backdropPhotoUrlList = [];
 
@@ -48,6 +57,13 @@ class _AppState extends State<App> {
     return parseBackdropPhotos(data);
   }
 
+  /// Restart the app globally by creating a new [UniqueKey].
+  void restartApp() {
+    setState(() {
+      _key = UniqueKey();
+    });
+  }
+
   @override
   void initState() {
     super.initState();
@@ -65,40 +81,43 @@ class _AppState extends State<App> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: DEBUG,
-      theme: ThemeData(
-        brightness: Brightness.light,
+    return KeyedSubtree(
+      key: _key,
+      child: MaterialApp(
+        debugShowCheckedModeBanner: DEBUG,
+        theme: ThemeData(
+          brightness: Brightness.light,
 
-        primarySwatch: Colors.grey,
-        primaryColor: Colors.grey[50],
-        primaryColorBrightness: Brightness.light,
+          primarySwatch: Colors.grey,
+          primaryColor: Colors.grey[50],
+          primaryColorBrightness: Brightness.light,
 
-        //Sliver scroll physics color
-        accentColor: Colors.transparent,
-        accentColorBrightness: Brightness.light,
-      ),
-      localizationsDelegates: [
-        LitLocalizationServiceDelegate(
-          jsonAssetURL: 'assets/json/localized_strings.json',
-          supportedLanguages: ['en', 'de'],
-          debug: true,
+          //Sliver scroll physics color
+          accentColor: Colors.transparent,
+          accentColorBrightness: Brightness.light,
         ),
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
+        localizationsDelegates: [
+          LitLocalizationServiceDelegate(
+            jsonAssetURL: 'assets/json/localized_strings.json',
+            supportedLanguages: ['en', 'de'],
+            debug: true,
+          ),
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
 
-      /// Supported languages
-      supportedLocales: [
-        // English (no contry code)
-        const Locale('en', ''),
-        // German (no contry code)
-        const Locale('de', ''),
-      ],
-      title: 'History of Me',
-      home: DatabaseStateScreenBuilder(
-        localizationsAssetURL: 'assets/json/localized_strings.json',
+        /// Supported languages
+        supportedLocales: [
+          // English (no contry code)
+          const Locale('en', ''),
+          // German (no contry code)
+          const Locale('de', ''),
+        ],
+        title: 'History of Me',
+        home: DatabaseStateScreenBuilder(
+          localizationsAssetURL: 'assets/json/localized_strings.json',
+        ),
       ),
     );
   }
