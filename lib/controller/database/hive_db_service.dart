@@ -119,15 +119,30 @@ class HiveDBService {
     return Hive.box<AppSettings>(_appSettingsKey).listenable();
   }
 
-  /// Creates an initial [AppSettings] instance using the default values.
-  void createAppSettings() {
-    AppSettings appSettings = AppSettings(
+  AppSettings get _defaultAppSettings {
+    return AppSettings(
       privacyPolicyAgreed: initialAgreedPrivacy,
       darkMode: initialDarkMode,
       tabIndex: initialTabIndex,
+      installationID: createInstallationID(),
+      lastBackup: "",
     );
+  }
+
+  AppSettings _createClearnAppSettings(AppSettings appSettings) {
+    return AppSettings(
+      privacyPolicyAgreed: appSettings.privacyPolicyAgreed,
+      darkMode: appSettings.darkMode,
+      tabIndex: 0,
+      installationID: createInstallationID(),
+      lastBackup: "",
+    );
+  }
+
+  /// Creates an initial [AppSettings] instance using the default values.
+  void createAppSettings() {
     if (Hive.box<AppSettings>(_appSettingsKey).isEmpty) {
-      Hive.box<AppSettings>(_appSettingsKey).add(appSettings);
+      Hive.box<AppSettings>(_appSettingsKey).add(_defaultAppSettings);
     } else {
       print("AppSettings object already created");
     }
@@ -135,7 +150,8 @@ class HiveDBService {
 
   void restoreAppSettings(AppSettings appSettings) {
     if (Hive.box<AppSettings>(_appSettingsKey).isEmpty) {
-      Hive.box<AppSettings>(_appSettingsKey).add(appSettings);
+      Hive.box<AppSettings>(_appSettingsKey)
+          .add(_createClearnAppSettings(appSettings));
     } else {
       print("'AppSettings' already existing. Restoring failed.");
     }
@@ -152,6 +168,20 @@ class HiveDBService {
       privacyPolicyAgreed: appSettings.privacyPolicyAgreed,
       darkMode: appSettings.darkMode,
       tabIndex: tabIndex,
+      installationID: appSettings.installationID,
+      lastBackup: appSettings.lastBackup,
+    );
+    updateAppSettings(updatedAppSettings);
+  }
+
+  /// Updates the [AppSettings] instance using the provided `lastBackup` value.
+  void updateLastBackup(AppSettings appSettings, DateTime lastBackup) {
+    AppSettings updatedAppSettings = AppSettings(
+      privacyPolicyAgreed: appSettings.privacyPolicyAgreed,
+      darkMode: appSettings.darkMode,
+      tabIndex: appSettings.tabIndex,
+      installationID: appSettings.installationID,
+      lastBackup: lastBackup.toIso8601String(),
     );
     updateAppSettings(updatedAppSettings);
   }
@@ -405,6 +435,11 @@ class HiveDBService {
     String timestampHash = timestamp.toRadixString(16);
     String saltHash = salt.toRadixString(16);
     return "$timestampHash$saltHash";
+  }
+
+  static String createInstallationID() {
+    int timestamp = DateTime.now().millisecondsSinceEpoch;
+    return timestamp.toRadixString(16);
   }
 
   Future<void> rebuildDatabase(DiaryBackup backup) async {
