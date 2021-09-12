@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:history_of_me/config/config.dart';
-import 'package:history_of_me/controller/database/hive_db_service.dart';
-import 'package:history_of_me/model/app_settings.dart';
+import 'package:history_of_me/controller/controllers.dart';
+import 'package:history_of_me/model/models.dart';
 import 'package:hive/hive.dart';
 import 'package:leitmotif/leitmotif.dart';
 
@@ -64,10 +64,13 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     return ValueListenableBuilder(
       valueListenable: _hiveDBService.getAppSettings(),
       builder: (context, Box<AppSettings> appSettingsBox, _) {
+        // Fallback AppSettings.
         AppSettings appSettings = AppSettings(
           privacyPolicyAgreed: initialAgreedPrivacy,
           darkMode: initialDarkMode,
           tabIndex: initialTabIndex,
+          installationID: "0",
+          lastBackup: "",
         );
         // Try to retrieve the `AppSettings` instance
         try {
