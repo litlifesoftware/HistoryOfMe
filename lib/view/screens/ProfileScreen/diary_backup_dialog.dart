@@ -2,31 +2,47 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:history_of_me/controller/controllers.dart';
-import 'package:history_of_me/model/diary_backup.dart';
 import 'package:history_of_me/model/models.dart';
 import 'package:history_of_me/view/provider/providers.dart';
 import 'package:leitmotif/leitmotif.dart';
-import 'package:leitmotif/dialogs.dart';
 import 'package:lit_backup_service/lit_backup_service.dart';
 import 'package:lit_relative_date_time/lit_relative_date_time.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
+/// A Flutter dialog widget allowing the user to create and manage backup files.
+///
+/// Each backup file is specific to one [installationID], due to it being used
+/// in the backup file name.
 class DiaryBackupDialog extends StatefulWidget {
-  const DiaryBackupDialog({Key? key}) : super(key: key);
+  /// The current installation's id.
+  ///
+  /// Used for naming backup files.
+  final String installationID;
+  const DiaryBackupDialog({
+    Key? key,
+    required this.installationID,
+  }) : super(key: key);
 
   @override
   _DiaryBackupDialogState createState() => _DiaryBackupDialogState();
 }
 
 class _DiaryBackupDialogState extends State<DiaryBackupDialog> {
-  final BackupStorage backupStorage = BackupStorage(
-    organizationName: "LitLifeSoftware",
-    applicationName: "HistoryOfMe",
-    fileName: "historyofmebackup",
-  );
+  final HiveDBService _dbService = HiveDBService();
+  late BackupStorage _backupStorage;
+  late PackageInfo _packageInfo;
 
-  PackageInfo? _packageInfo;
+  /// Initializes the [_backupStorage].
+  void _initBackupStorage() {
+    _backupStorage = BackupStorage(
+      organizationName: "LitLifeSoftware",
+      applicationName: "HistoryOfMe",
+      fileName: "historyofmebackup",
+      installationID: widget.installationID,
+    );
+  }
 
+  /// Initializes the [_packageInfo].
   Future<void> _initPackageInfo() async {
     var info = await PackageInfo.fromPlatform();
     setState(() {
@@ -34,49 +50,83 @@ class _DiaryBackupDialogState extends State<DiaryBackupDialog> {
     });
   }
 
-  Future<void> _writeBackup(DiaryBackup backup) async {
+  /// Creates a backup file on the device's file storage and updates the
+  /// meta data on the primary database.
+  Future<void> _writeBackup(
+    DiaryBackup backup,
+    AppSettings appSettings,
+  ) async {
+    final DateTime now = DateTime.now();
     setState(
       () => {
-        backupStorage.writeBackup(backup),
+        _backupStorage.writeBackup(backup),
       },
     );
+    _dbService.updateLastBackup(appSettings, now);
   }
 
+  /// Deletes the currently maintained backup file.
   Future<void> _deleteBackup() async {
     setState(
       () => {
-        backupStorage.deleteBackup(),
+        _backupStorage.deleteBackup(),
       },
     );
   }
 
-  DiaryBackup _createBackup(
+  /// Returns a [DiaryBackup] (backup file content) using cleaned user data
+  /// copies.
+  ///
+  /// The initial tap index will lead to the `ProfileScreen` to avoid the
+  /// `HomeScreen` being rendered incorrectly on first startup after
+  /// restoring the diary.
+  DiaryBackup _getCleanBackup(
     AppSettings appSettings,
     List<DiaryEntry> diaryEntries,
     List<UserCreatedColor> userCreatedColors,
     UserData userData,
   ) {
+    final cleanSettings = AppSettings(
+      privacyPolicyAgreed: appSettings.privacyPolicyAgreed,
+      darkMode: appSettings.privacyPolicyAgreed,
+      tabIndex: 0,
+      installationID: appSettings.installationID,
+      lastBackup: "",
+    );
     return DiaryBackup(
-      appSettings: appSettings,
+      appSettings: cleanSettings,
       diaryEntries: diaryEntries,
       userCreatedColors: userCreatedColors,
       userData: userData,
-      appVersion: _packageInfo!.version,
+      appVersion: _packageInfo.version,
       backupDate: DateTime.now().toIso8601String(),
     );
   }
 
+  /// Returns a [BackupModel] using the the currently maintained backup file's
+  /// content.
   Future<BackupModel?> _readBackup() {
-    return backupStorage.readBackup(
+    return _backupStorage.readBackup(
       decode: (contents) => DiaryBackup.fromJson(
         jsonDecode(contents),
       ),
     );
   }
 
+  /// Rebuilds the view using a simple `setState` call.
+  void _rebuildView() {
+    setState(() {});
+  }
+
+  /// Request all required permissions to access the local file storage.
+  void _requestPermissions() {
+    _backupStorage.requestPermissions().then((value) => _rebuildView());
+  }
+
   @override
   void initState() {
     _initPackageInfo();
+    _initBackupStorage();
     super.initState();
   }
 
@@ -102,12 +152,13 @@ class _DiaryBackupDialogState extends State<DiaryBackupDialog> {
                         diaryBackup: diaryBackup,
                         deleteBackup: _deleteBackup,
                         writeBackup: () => _writeBackup(
-                          _createBackup(
+                          _getCleanBackup(
                             appSettings,
                             diaryEntries,
                             userCreatedColors,
                             userData,
                           ),
+                          appSettings,
                         ),
                       )
                     : Text("Unsupported Backup!");
@@ -117,15 +168,31 @@ class _DiaryBackupDialogState extends State<DiaryBackupDialog> {
             } else if (snap.connectionState == ConnectionState.waiting) {
               return _LoadingBackupDialog();
             }
-            return _CreateBackupDialog(
-              writeBackup: () => _writeBackup(
-                _createBackup(
-                  appSettings,
-                  diaryEntries,
-                  userCreatedColors,
-                  userData,
-                ),
-              ),
+
+            return FutureBuilder(
+              future: _backupStorage.hasPermissions(),
+              builder: (context, AsyncSnapshot<bool> hasPerSnap) {
+                print(hasPerSnap.data);
+                if (hasPerSnap.hasData && hasPerSnap.data!) {
+                  return _CreateBackupDialog(
+                    writeBackup: () => _writeBackup(
+                      _getCleanBackup(
+                        appSettings,
+                        diaryEntries,
+                        userCreatedColors,
+                        userData,
+                      ),
+                      appSettings,
+                    ),
+                  );
+                }
+                if (hasPerSnap.hasData && !hasPerSnap.data!) {
+                  return _PermissionDeniedDialog(
+                    onGrant: _requestPermissions,
+                  );
+                }
+                return SizedBox();
+              },
             );
           },
         );
@@ -134,6 +201,7 @@ class _DiaryBackupDialogState extends State<DiaryBackupDialog> {
   }
 }
 
+/// A Flutter widget displaying a placeholder dialog while loading content.
 class _LoadingBackupDialog extends StatelessWidget {
   const _LoadingBackupDialog({Key? key}) : super(key: key);
 
@@ -159,6 +227,51 @@ class _LoadingBackupDialog extends StatelessWidget {
   }
 }
 
+/// A dialog widget allowing the user to grant the required permissions.
+class _PermissionDeniedDialog extends StatelessWidget {
+  final void Function() onGrant;
+  const _PermissionDeniedDialog({
+    Key? key,
+    required this.onGrant,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return LitTitledDialog(
+      titleText: HOMLocalizations(context).permissionsRequired,
+      actionButtons: [
+        DialogActionButton(
+          label: HOMLocalizations(context).addPermissions,
+          onPressed: onGrant,
+        )
+      ],
+      child: ScrollableColumn(
+        constrained: false,
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        padding: const EdgeInsets.symmetric(
+          vertical: 16.0,
+          horizontal: 16.0,
+        ),
+        children: [
+          _InfoDescription(),
+          Padding(
+            padding: const EdgeInsets.only(
+              top: 16.0,
+            ),
+            child: Text(
+              HOMLocalizations(context).permissionsRequiredDesc,
+              style: LitSansSerifStyles.caption,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// A dialog widget allowing the user to create a new backup.
 class _CreateBackupDialog extends StatelessWidget {
   final void Function() writeBackup;
 
@@ -212,6 +325,7 @@ class _CreateBackupDialog extends StatelessWidget {
   }
 }
 
+/// A dialog widget allowing the user to manage an existing backup.
 class _ManageBackupDialog extends StatelessWidget {
   final DiaryBackup diaryBackup;
   final void Function() deleteBackup;
@@ -256,6 +370,7 @@ class _ManageBackupDialog extends StatelessWidget {
   }
 }
 
+/// A Flutter widget displaying a visual preview of the provided [DiaryBackup].
 class _BackupPreview extends StatefulWidget {
   final DiaryBackup diaryBackup;
   const _BackupPreview({
@@ -268,19 +383,6 @@ class _BackupPreview extends StatefulWidget {
 }
 
 class __BackupPreviewState extends State<_BackupPreview> {
-  RelativeDateTime get _relBackupDate {
-    return RelativeDateTime(
-      dateTime: DateTime.now(),
-      other: DateTime.parse(widget.diaryBackup.backupDate),
-    );
-  }
-
-  RelativeDateFormat get _relBackupDateFormatter {
-    return RelativeDateFormat(
-      Localizations.localeOf(context),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return ScrollableColumn(
@@ -295,17 +397,24 @@ class __BackupPreviewState extends State<_BackupPreview> {
       children: [
         _InfoDescription(),
         SizedBox(height: 16.0),
-        _MetaDataText(
-          keyText: (HOMLocalizations(context).entires) + ":",
+        _MetaDataItem(
+          keyText: HOMLocalizations(context).installationID + ":",
+          valueText: widget.diaryBackup.appSettings.installationID.toString(),
+        ),
+        _MetaDataItem(
+          keyText: (HOMLocalizations(context).entires.capitalize()) + ":",
           valueText: widget.diaryBackup.diaryEntries.length.toString(),
         ),
-        _MetaDataText(
-          keyText: (HOMLocalizations(context).lastBackup) + ":",
-          valueText: DateTime.parse(widget.diaryBackup.backupDate)
-              .formatAsLocalizedDate(context),
-          description: _relBackupDateFormatter.format(
-            _relBackupDate,
-          ),
+        AnimatedRelativeDateTimeBuilder(
+          date: DateTime.parse(widget.diaryBackup.backupDate),
+          builder: (relDate, formatted) {
+            return _MetaDataItem(
+              keyText: (HOMLocalizations(context).lastBackup) + ":",
+              valueText: DateTime.parse(widget.diaryBackup.backupDate)
+                  .formatAsLocalizedDate(context),
+              description: formatted,
+            );
+          },
         ),
         _UpToDateIndicator(
           diaryBackup: widget.diaryBackup,
@@ -315,61 +424,21 @@ class __BackupPreviewState extends State<_BackupPreview> {
   }
 }
 
+/// A Flutter widget displaying a text for what backups are used for.
 class _InfoDescription extends StatelessWidget {
   const _InfoDescription({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        return Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              height: 50.0,
-              child: Center(
-                child: Container(
-                  height: 42.0,
-                  width: 42.0,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    boxShadow: LitBoxShadows.sm,
-                    borderRadius: BorderRadius.circular(
-                      16.0,
-                    ),
-                  ),
-                  child: Center(
-                    child: Icon(
-                      LitIcons.info,
-                      size: 13.0,
-                      color: Color(0xFF616161),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            Container(
-              height: 50.0,
-              width: constraints.maxWidth - 42.0,
-              child: Padding(
-                padding: const EdgeInsets.only(left: 16.0),
-                child: Center(
-                  child: ClippedText(
-                    HOMLocalizations(context).generalBackupDescr,
-                    maxLines: 3,
-                    style: LitSansSerifStyles.caption,
-                  ),
-                ),
-              ),
-            ),
-          ],
-        );
-      },
+    return LitDescriptionTextBox(
+      padding: const EdgeInsets.all(0),
+      text: HOMLocalizations(context).generalBackupDescr,
     );
   }
 }
 
+/// A Flutter widget visually indicating whether the provided [DiaryBackup] is
+/// considered up-to-date.
 class _UpToDateIndicator extends StatefulWidget {
   final DiaryBackup diaryBackup;
   const _UpToDateIndicator({
@@ -383,21 +452,16 @@ class _UpToDateIndicator extends StatefulWidget {
 
 class __UpToDateIndicatorState extends State<_UpToDateIndicator> {
   bool get _isUpToDate {
-    int daysSinceBackup = DateTime.now()
-        .difference(
-          DateTime.parse(widget.diaryBackup.backupDate),
-        )
-        .inDays;
+    const int MAX_DAYS_ALLOWED = 2;
+    DateTime date = DateTime.parse(widget.diaryBackup.backupDate);
+    int daysSinceBackup = DateTime.now().difference(date).inDays;
 
-    return daysSinceBackup < 2;
+    return daysSinceBackup < MAX_DAYS_ALLOWED;
   }
 
   final Color _colorGood = Color(0xFFECFFE9);
-
   final Color _colorBad = Color(0xFFF2E4E4);
-
   final IconData _iconGood = LitIcons.check;
-
   final IconData _iconBad = LitIcons.times;
 
   Color get _color {
@@ -464,11 +528,12 @@ class __UpToDateIndicatorState extends State<_UpToDateIndicator> {
   }
 }
 
-class _MetaDataText extends StatelessWidget {
+/// A Flutter widget displaying a named metadata value.
+class _MetaDataItem extends StatelessWidget {
   final String keyText;
   final String valueText;
   final String? description;
-  const _MetaDataText({
+  const _MetaDataItem({
     Key? key,
     required this.keyText,
     required this.valueText,
