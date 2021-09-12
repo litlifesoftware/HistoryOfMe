@@ -32,6 +32,8 @@ class AllDataProvider extends StatefulWidget {
 class _AllDataProviderState extends State<AllDataProvider> {
   final HiveDBService _service = HiveDBService();
 
+  late DatabaseStateValidator _validator;
+
   /// Extract the main object used from the [AppSettings]'s `Box`.
 
   AppSettings _getAppSettings(Box<AppSettings> appSettingsBox) {
@@ -58,11 +60,25 @@ class _AllDataProviderState extends State<AllDataProvider> {
     return userCreatedColorBox.values.toList();
   }
 
+  void _validateAppSettings(Box<AppSettings> appSettingsBox) {
+    final appSettings = appSettingsBox.getAt(0);
+    if (appSettings != null) {
+      _validator.validateAppSettings(appSettings);
+    }
+  }
+
+  @override
+  void initState() {
+    _validator = DatabaseStateValidator(dbService: _service);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
       valueListenable: _service.getAppSettings(),
       builder: (context, Box<AppSettings> appSettingsBox, _) {
+        _validateAppSettings(appSettingsBox);
         return ValueListenableBuilder(
           valueListenable: _service.getUserData(),
           builder: (context, Box<UserData> userDataBox, _) {
