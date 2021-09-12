@@ -18,3 +18,4 @@ export './bookmark/bookmark_preview_container.dart';
 export './bookmark/bookmark_title.dart';
 export './art/history_of_me_app_logo.dart';
 export './art/history_of_me_launcher_icon_art.dart';
+export './art/user_icon.dart';
