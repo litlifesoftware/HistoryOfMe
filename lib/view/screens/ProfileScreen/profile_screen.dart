@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:history_of_me/controller/database/hive_db_service.dart';
 import 'package:history_of_me/controller/localization/hom_localizations.dart';
 import 'package:history_of_me/controller/routes/hom_navigator.dart';
 import 'package:history_of_me/model/user_data.dart';
+import 'package:history_of_me/view/provider/all_data_provider.dart';
 import 'package:history_of_me/view/shared/bookmark/bookmark_back_preview.dart';
 import 'package:history_of_me/view/shared/bookmark/bookmark_front_preview.dart';
-import 'package:hive/hive.dart';
 import 'package:leitmotif/leitmotif.dart';
 
 import 'settings_footer.dart';
@@ -50,22 +49,27 @@ class _ProfileScreenState extends State<ProfileScreen>
 
   @override
   Widget build(BuildContext context) {
-    return ValueListenableBuilder(
-      valueListenable: HiveDBService().getUserData(),
-      builder: (BuildContext context, Box<UserData> userDataBox, Widget? _) {
-        UserData? userData = userDataBox.getAt(0);
+    return AllDataProvider(
+      builder: (
+        context,
+        appSettings,
+        userData,
+        diaryEntries,
+        userCreatedColors,
+      ) {
         return LitScaffold(
           appBar: FixedOnScrollTitledAppbar(
             scrollController: _scrollController,
             backgroundColor: Colors.white,
             title: HOMLocalizations(context).howAreYouToday,
+            displayBackButton: false,
           ),
           snackbars: [
             LitIconSnackbar(
               snackBarController: _snackbarController,
               text: HOMLocalizations(context).welcomeBack +
                   ", " +
-                  userData!.name +
+                  userData.name +
                   "!",
               iconData: LitIcons.diary,
             ),
@@ -114,6 +118,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                   StatisticsCard(),
                   SettingsFooter(
                     userData: userData,
+                    appSettings: appSettings,
                   ),
                 ],
               ),
@@ -157,7 +162,9 @@ class _EditBookmarkButton extends StatelessWidget {
               child: LitBubbleButton(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(
-                      vertical: 4.0, horizontal: 12.0),
+                    vertical: 4.0,
+                    horizontal: 12.0,
+                  ),
                   child: Icon(
                     LitIcons.pencil,
                     color: Colors.white,

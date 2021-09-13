@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:history_of_me/controller/localization/hom_localizations.dart';
+import 'package:history_of_me/model/app_settings.dart';
 import 'package:history_of_me/model/backdrop_photo.dart';
 import 'package:history_of_me/model/user_data.dart';
 import 'package:history_of_me/view/screens/HistoryOfMeIntroScreen/history_of_me_intro_screen.dart';
@@ -13,10 +14,12 @@ import 'package:leitmotif/leitmotif.dart';
 import 'delete_data_dialog.dart';
 
 class SettingsFooter extends StatefulWidget {
+  final AppSettings appSettings;
   final UserData? userData;
 
   const SettingsFooter({
     Key? key,
+    required this.appSettings,
     required this.userData,
   }) : super(key: key);
   @override
@@ -40,7 +43,9 @@ class _SettingsFooterState extends State<SettingsFooter> {
 
   void _showBackupDialog() {
     LitRouteController(context).showDialogWidget(
-      DiaryBackupDialog(),
+      DiaryBackupDialog(
+        installationID: widget.appSettings.installationID ?? "",
+      ),
     );
   }
 
@@ -122,7 +127,7 @@ class _SettingsFooterState extends State<SettingsFooter> {
                 ),
                 CreditData(
                   role: HOMLocalizations(context).inspiredBy,
-                  names: ["Your Name. (2016) - Movie"],
+                  names: ["Your Name. (2016)"],
                 ),
               ],
             ),
