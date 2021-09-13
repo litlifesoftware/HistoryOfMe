@@ -539,4 +539,20 @@ class HOMLocalizations {
   String get backupYourDiary {
     return getValue("backup_your_diary");
   }
+
+  String get installationID {
+    return getValue("installation_id");
+  }
+
+  String get permissionsRequired {
+    return getValue("permissions_required");
+  }
+
+  String get permissionsRequiredDesc {
+    return getValue("permissions_required_descr");
+  }
+
+  String get addPermissions {
+    return getValue("add_permissions");
+  }
 }

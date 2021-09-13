@@ -497,12 +497,12 @@
     "de": "Wir haben keine Backups gefunden."
   },
   "no_backup_descr": {
-    "en": "Consider to backup your diary to prevent possible data loss.",
-    "de": "Ziehe in Erwägung dein Tagebuch zu sichern, um einen Datenverlust zu vermeiden."
+    "en": "Backup your diary to prevent possible data loss.",
+    "de": "Sichere dein Tagebuch, um einen Datenverlust zu vermeiden."
   },
   "general_backup_descr": {
     "en": "Backups help you to restore your diary after you deleted this app.",
-    "de": "Backups ermöglichen das Wiederherstellen deines Tagebuchs, auch wenn du diese App entfernst."
+    "de": "Backups ermöglichen das Wiederherstellen deines Tagebuchs, auch nachdem du diese App entfernt hast."
   },
   "last_backup": {
     "en": "Last Backup",
@@ -523,5 +523,21 @@
   "backup_your_diary": {
     "en": "Backup your diary",
     "de": "Sichere dein Tagebuch"
+  },
+  "installation_id": {
+    "en": "Installation-ID",
+    "de": "Installationsnummer"
+  },
+  "permissions_required": {
+    "en": "Permissions required",
+    "de": "Berechtigungen benötigt"
+  },
+  "permissions_required_descr": {
+    "en": "This app requires additional permissions in order to backup your diary on your local device. Without these permissions accessing data on your device will not be possible. You can always remove these permissions on your device settings or by deleting this app. Please keep in mind, that your data is only stored locally.",
+    "de": "Diese App benötigt zusätzliche Berechtigungen, um Backups deines Tagebuchs zu erstellen. Ohne diese Berechtigungen ist das Auslesen der Datein auf deinem Gerät nicht möglich. Du kannst jederzeit die Berechtigungen widerrufen. Hierfür kannst du die Berechtigungs-Verwaltung in deinen Geräte-Einstellungen aufrufen oder diese App deinstallieren. Bitte beachte, dass deine Daten nur lokal gespeichert werden."
+  },
+  "add_permissions": {
+    "en": "Add Permissions",
+    "de": "Berechtigungen hinzufügen"
   }
 }
