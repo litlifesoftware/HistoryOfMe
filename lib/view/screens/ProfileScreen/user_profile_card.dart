@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:history_of_me/controller/localization/hom_localizations.dart';
 import 'package:history_of_me/model/user_data.dart';
+import 'package:history_of_me/view/shared/shared.dart';
 import 'package:leitmotif/leitmotif.dart';
 
 import 'change_name_dialog.dart';
@@ -45,9 +46,9 @@ class _UserProfileCardState extends State<UserProfileCard> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            _UserIcon(
+            UserIcon(
+              size: 96.0,
               userData: widget.userData,
-              onPressedUserIcon: widget.onPressedUserIcon,
             ),
             Padding(
               padding: const EdgeInsets.only(
@@ -129,100 +130,6 @@ class _UserProfileCardState extends State<UserProfileCard> {
               ),
             ),
           ],
-        ),
-      ),
-    );
-  }
-}
-
-/// A widget displaying a colored user icon.
-class _UserIcon extends StatefulWidget {
-  /// The provided [UserData].
-  final UserData userData;
-
-  /// The size which accounts for both, width and height.
-  final double size;
-  final void Function() onPressedUserIcon;
-  const _UserIcon({
-    Key? key,
-    required this.userData,
-    this.size = 96.0,
-    required this.onPressedUserIcon,
-  }) : super(key: key);
-
-  @override
-  __UserIconState createState() => __UserIconState();
-}
-
-class __UserIconState extends State<_UserIcon> {
-  /// Returns a stylized user color.
-  Color get _userColor {
-    Color uColor = Color(widget.userData.primaryColor);
-    Color contrastColor = Color(0xFFDDDDDD);
-    int alpha = uColor.alpha;
-    int red = (uColor.red * 0.8).floor();
-    int green = (uColor.green * 0.8).floor();
-    int blue = (uColor.blue * 0.8).floor();
-    Color desatColor = Color.fromARGB(alpha, red, green, blue);
-    return Color.lerp(contrastColor, desatColor, 0.3)!;
-  }
-
-  /// Returns the initials of the user derived by the username.
-  String get _usernameInitials {
-    String initals = "";
-    List<String> names = "${widget.userData.name}".split(" ");
-    // Add the first character of each substring (name elements).
-    for (String nameElement in names) {
-      if (initals.length < 3) {
-        initals = initals + nameElement.substring(0, 1);
-      }
-    }
-
-    return initals;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return CleanInkWell(
-      onTap: widget.onPressedUserIcon,
-      child: Container(
-        height: widget.size,
-        width: widget.size,
-        decoration: BoxDecoration(
-          boxShadow: [
-            BoxShadow(
-              blurRadius: 4.0,
-              color: Colors.black26,
-              offset: Offset(
-                -3.5,
-                2.5,
-              ),
-              spreadRadius: -3.0,
-            )
-          ],
-          gradient: LinearGradient(
-              begin: Alignment.topRight,
-              end: Alignment.bottomLeft,
-              colors: [Colors.white, _userColor]),
-          borderRadius: BorderRadius.all(Radius.circular(38.0)),
-        ),
-        child: Center(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 8.0,
-            ),
-            child: ClippedText(
-              _usernameInitials,
-              style: LitSansSerifStyles.h5.copyWith(
-                fontSize: 34.0,
-                color: _userColor.computeLuminance() >= 0.5
-                    ? Colors.white
-                    : Color(0xFF888888),
-                fontWeight: FontWeight.w700,
-                letterSpacing: 1.0,
-              ),
-            ),
-          ),
         ),
       ),
     );
