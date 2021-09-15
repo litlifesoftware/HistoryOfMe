@@ -19,3 +19,4 @@ export './bookmark/bookmark_title.dart';
 export './art/history_of_me_app_logo.dart';
 export './art/history_of_me_launcher_icon_art.dart';
 export './art/user_icon.dart';
+export './card/create_new_diary_action_card.dart';
