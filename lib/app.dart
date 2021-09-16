@@ -12,11 +12,24 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 /// The main Flutter widget of `HistoryOfMe`.
 ///
 /// It's main purpose is to initialize the [MaterialApp] widget and to load the
-/// read-only content from the local storage.
+/// read-only content from the local storage and to provide basic meta data such
+/// as the app name.
 ///
 /// It also provides the option to restart the whole app if required using
 /// its `restartApp()` method.
 class App extends StatefulWidget {
+  /// The application's name.
+  static const String appName = "History Of Me";
+
+  /// The application's slogan.
+  static const String appSlogan = "Your own personal diary.";
+
+  /// The localization file's location.
+  static const String localizationFilePath =
+      "assets/json/localized_strings.json";
+
+  /// Restarts the whole application by creating a new [UniqueKey] on the
+  /// uppermost widget ([MaterialApp]).
   static void restartApp(BuildContext context) {
     context.findAncestorStateOfType<_AppState>()!.restartApp();
   }
@@ -46,8 +59,11 @@ class _AppState extends State<App> {
   /// create [BackdropPhoto] instances.
   void parseBackdropPhotos(String assetData) {
     final parsed = jsonDecode(assetData).cast<Map<String, dynamic>>();
-    parsed.forEach((json) => setState(
-        () => backdropPhotoUrlList.add(BackdropPhoto.fromJson(json).assetUrl)));
+    parsed.forEach(
+      (json) => setState(
+        () => backdropPhotoUrlList.add(BackdropPhoto.fromJson(json).assetUrl),
+      ),
+    );
   }
 
   /// Loads the `JSON` file content and initiates the parsing process.
@@ -98,7 +114,7 @@ class _AppState extends State<App> {
         ),
         localizationsDelegates: [
           LitLocalizationServiceDelegate(
-            jsonAssetURL: 'assets/json/localized_strings.json',
+            jsonAssetURL: App.localizationFilePath,
             supportedLanguages: ['en', 'de'],
             debug: true,
           ),
@@ -116,7 +132,7 @@ class _AppState extends State<App> {
         ],
         title: 'History of Me',
         home: DatabaseStateScreenBuilder(
-          localizationsAssetURL: 'assets/json/localized_strings.json',
+          localizationsAssetURL: App.localizationFilePath,
         ),
       ),
     );
