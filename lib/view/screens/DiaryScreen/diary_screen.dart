@@ -91,6 +91,7 @@ class _DiaryScreenState extends State<DiaryScreen>
             scrollController: _scrollController,
             label: HOMLocalizations(context).compose.toUpperCase(),
             icon: LitIcons.plus,
+            blurred: false,
           ),
           body: SafeArea(
             child: ValueListenableBuilder(
@@ -106,11 +107,13 @@ class _DiaryScreenState extends State<DiaryScreen>
                         scrollController: _scrollController,
                         showFavoriteEntriesOnly: _showFavoriteEntriesOnly,
                         toggleShowFavoritesOnly: toggleShowFavoritesOnly,
-                        userData: userData)
+                        userData: userData,
+                      )
                     : _CreateEntryCallToActionCard(
                         bookmarkAnimation: widget.bookmarkAnimation,
                         userData: userData,
-                        showCreateEntryDialog: _showCreateEntryDialog);
+                        showCreateEntryDialog: _showCreateEntryDialog,
+                      );
               },
             ),
           ),
