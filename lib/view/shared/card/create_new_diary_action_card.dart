@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:history_of_me/controller/controllers.dart';
+import 'package:history_of_me/view/styles/app_colors.dart';
 import 'package:leitmotif/leitmotif.dart';
 
+/// A Flutter widget displaying an action card to allow the user to create a
+/// new diary.
 class CreateNewActionCard extends StatelessWidget {
+  /// Handles the `create` action.
   final void Function() onCreate;
+
+  /// Creates a [CreateNewActionCard].
   const CreateNewActionCard({
     Key? key,
     required this.onCreate,
@@ -11,14 +18,14 @@ class CreateNewActionCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LitTitledActionCard(
-      title: "Create a new diary",
-      subtitle: "Start a new journey",
+      title: HOMLocalizations(context).createNewDiary,
+      subtitle: HOMLocalizations(context).startNewJourney,
       actionButtonData: [
         ActionButtonData(
-          title: "Create new diary",
+          title: HOMLocalizations(context).create,
           onPressed: onCreate,
-          backgroundColor: Color(0xFFEBC7CF),
-          accentColor: Color(0xFFDFD7F4),
+          backgroundColor: AppColors.pastelPink,
+          accentColor: AppColors.pastelPurple,
         ),
       ],
     );
