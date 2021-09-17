@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:history_of_me/config/styles.dart';
 import 'package:history_of_me/controller/database/hive_db_service.dart';
 import 'package:history_of_me/controller/database/hive_query_controller.dart';
 import 'package:history_of_me/controller/localization/hom_localizations.dart';
@@ -199,9 +198,7 @@ class _CreateEntryCallToActionCard extends StatelessWidget {
                       child: Text(
                         HOMLocalizations(context).createFirstEntryDescr,
                         textAlign: TextAlign.center,
-                        style: LitTextStyles.sansSerifStyles[body].copyWith(
-                          color: brownGreyTextColor,
-                        ),
+                        style: LitSansSerifStyles.body2,
                       ),
                     ),
                     PurplePinkButton(

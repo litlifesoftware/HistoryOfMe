@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:history_of_me/config/styles.dart';
+import 'package:history_of_me/styles.dart';
 import 'package:leitmotif/leitmotif.dart';
 
+/// A Flutter widget displaying a gradient-decorated button.
 class PurplePinkButton extends StatelessWidget {
+  /// The button's label.
   final String label;
+
+  /// Handles the `onPressed` action.
   final void Function() onPressed;
 
+  /// Creates a [PurplePinkButton].
   const PurplePinkButton({
     Key? key,
     required this.label,
@@ -14,8 +19,8 @@ class PurplePinkButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LitGradientButton(
-      accentColor: lightPurple,
-      color: pink,
+      accentColor: AppColors.purple,
+      color: AppColors.pink,
       child: Text(
         label.toUpperCase(),
         style: LitTextStyles.sansSerifStyles[button].copyWith(
