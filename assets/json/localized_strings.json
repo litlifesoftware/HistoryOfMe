@@ -487,7 +487,6 @@
     "en": "Backup now",
     "de": "Jetzt sichern"
   },
-
   "backup_now_short": {
     "en": "Backup",
     "de": "Sichern"
@@ -539,5 +538,85 @@
   "add_permissions": {
     "en": "Add Permissions",
     "de": "Berechtigungen hinzufügen"
+  },
+  "new_diary": {
+    "en": "New Diary",
+    "de": "Neues Tagebuch"
+  },
+  "create_new_diary": {
+    "en": "Create new diary",
+    "de": "Neues Tagebuch erstellen"
+  },
+  "cancel_restore_descr": {
+    "en": "Do you want to create a new diary instead of restoring your previous one?",
+    "de": "Möchtest du ein neues Tagebuch erstellen, anstelle dein vorheriges Tagebuch wiederherzustellen?"
+  },
+  "we_found_your_diary": {
+    "en": "We found your diary",
+    "de": "Wir haben dein Tagebuch gefunden"
+  },
+  "continue_your_journey": {
+    "en": "Continue your journey",
+    "de": "Führe deine Reise fort"
+  },
+  "start_new_journey": {
+    "en": "Start a new journey",
+    "de": "Beginne eine neue Reise"
+  },
+  "diary": {
+    "en": "diary",
+    "de": "Tagebuch"
+  },
+  "last_updated": {
+    "en": "Last updated",
+    "de": "Zuletzt verändert"
+  },
+  "restore": {
+    "en": "Restore",
+    "de": "Wiederherstellen"
+  },
+  "restore_your_diary": {
+    "en": "Restore your diary",
+    "de": "Stelle dein Tagebuch wieder her"
+  },
+  "restore_from_backup": {
+    "en": "Restore from backup",
+    "de": "Von Backup wiederherstellen"
+  },
+  "restore_from_file": {
+    "en": "Restore from file",
+    "de": "Von Datei wiederherstellen"
+  },
+  "we_need_your_backup_file": {
+    "en": "We need your backup file",
+    "de": "Wir benötigen deine Backup Datei"
+  },
+  "pick_file_descr": {
+    "en": "Please provide your 'History of Me' backup file. Backup files have a unique file name and are usually stored in your 'Download' folder on this location",
+    "de": "Bitte stelle deine 'History of Me'-Backupdatei zur Verfügung. Backup-Datein haben einen eindeutigen Dateinamen und befinden sich üblicherweise in deinem 'Download'-Ordner unter folgendem Pfad"
+  },
+  "pick_file": {
+    "en": "Pick file",
+    "de": "Auswählen"
+  },
+  "select_your_backup": {
+    "en": "Select your backup",
+    "de": "Wähle dein Backup aus"
+  },
+  "reading_backup_denied": {
+    "en": "Reading backup denied",
+    "de": "Auslesen verweigert"
+  },
+  "reading_backup_denied_descr": {
+    "en": "History of Me needs additional permissions in order to access your storage. This will be required to read your diary backup.",
+    "de": "History of Me benötigt zusätzliche Rechte, um auf deinen Speicher zuzugreifen. Dies ist notwendig, damit Backup-Datein ausgelesen werden können."
+  },
+  "request_permissions": {
+    "en": "Request permissions",
+    "de": "Zulassen"
+  },
+  "this_file_is_not_supported": {
+    "en": "This backup file is not supported.",
+    "de": "Diese Datei wird nicht unterstützt."
   }
 }

@@ -555,4 +555,84 @@ class HOMLocalizations {
   String get addPermissions {
     return getValue("add_permissions");
   }
+
+  String get newDiary {
+    return getValue("new_diary");
+  }
+
+  String get createNewDiary {
+    return getValue("create_new_diary");
+  }
+
+  String get cancelRestoreDescr {
+    return getValue("cancel_restore_descr");
+  }
+
+  String get weFoundYourDiary {
+    return getValue("we_found_your_diary");
+  }
+
+  String get continueYourJourney {
+    return getValue("continue_your_journey");
+  }
+
+  String get startNewJourney {
+    return getValue("start_new_journey");
+  }
+
+  String get diary {
+    return getValue("diary");
+  }
+
+  String get lastUpdated {
+    return getValue("last_updated");
+  }
+
+  String get restore {
+    return getValue("restore");
+  }
+
+  String get restoreYourDiary {
+    return getValue("restore_your_diary");
+  }
+
+  String get restoreFromBackup {
+    return getValue("restore_from_backup");
+  }
+
+  String get restoreFromFile {
+    return getValue("restore_from_file");
+  }
+
+  String get weNeedYourBackupFile {
+    return getValue("we_need_your_backup_file");
+  }
+
+  String get pickFileDescr {
+    return getValue("pick_file_descr");
+  }
+
+  String get pickFile {
+    return getValue("pick_file");
+  }
+
+  String get selectYourBackup {
+    return getValue("select_your_backup");
+  }
+
+  String get readingBackupDenied {
+    return getValue("reading_backup_denied");
+  }
+
+  String get readingBackupDeniedDescr {
+    return getValue("reading_backup_denied_descr");
+  }
+
+  String get requestPermissions {
+    return getValue("request_permissions");
+  }
+
+  String get thisFileIsNotSupported {
+    return getValue("this_file_is_not_supported");
+  }
 }
