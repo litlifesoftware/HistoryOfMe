@@ -24,6 +24,9 @@ class App extends StatefulWidget {
   /// The application's slogan.
   static const String appSlogan = "Your own personal diary.";
 
+  /// The application's developer.
+  static const String appDeveloper = "LitLifeSoftware";
+
   /// The localization file's location.
   static const String localizationFilePath =
       "assets/json/localized_strings.json";
