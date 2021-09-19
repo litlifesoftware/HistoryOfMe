@@ -618,5 +618,9 @@
   "this_file_is_not_supported": {
     "en": "This backup file is not supported.",
     "de": "Diese Datei wird nicht unterstützt."
+  },
+  "diary_of": {
+    "en": "Diary of",
+    "de": "Tagebuch von"
   }
 }

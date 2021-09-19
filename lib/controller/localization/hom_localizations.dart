@@ -635,4 +635,8 @@ class HOMLocalizations {
   String get thisFileIsNotSupported {
     return getValue("this_file_is_not_supported");
   }
+
+  String get diaryOf {
+    return getValue("diary_of");
+  }
 }

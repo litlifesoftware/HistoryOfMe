@@ -1,12 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:history_of_me/app.dart';
+import 'package:history_of_me/controller/localization/hom_localizations.dart';
 import 'package:history_of_me/model/models.dart';
+import 'package:history_of_me/styles.dart';
 import 'package:history_of_me/view/shared/shared.dart';
 import 'package:leitmotif/leitmotif.dart';
 import 'package:lit_relative_date_time/lit_relative_date_time.dart';
 
+/// A Flutter widget rendering a visual preview the provided [DiaryBackup] and
+/// allowing the user to rebuild the database using the provided backup.
+///
 class DiaryPreviewCard extends StatelessWidget {
+  /// The preview data.
   final DiaryBackup diaryBackup;
+
+  /// Handles the action to rebuild the database.
   final Future Function() rebuildDatabase;
+
+  /// The user icon's size displayed on the backup preview.
+  final double _userIconSize = 48.0;
+
+  /// Creates a [DiaryPreviewCard].
   const DiaryPreviewCard({
     Key? key,
     required this.diaryBackup,
@@ -16,8 +30,8 @@ class DiaryPreviewCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LitTitledActionCard(
-      title: "We found your diary",
-      subtitle: "Continue your journey",
+      title: HOMLocalizations(context).weFoundYourDiary,
+      subtitle: HOMLocalizations(context).continueYourJourney,
       child: LayoutBuilder(
         builder: (context, constraints) {
           return Column(
@@ -28,17 +42,13 @@ class DiaryPreviewCard extends StatelessWidget {
                 builder: (constex, constraints) {
                   return Row(
                     children: [
-                      SizedBox(
-                        height: 48.0,
-                        width: 48.0,
-                        child: UserIcon(
-                          size: 48.0,
-                          userData: diaryBackup.userData,
-                        ),
+                      UserIcon(
+                        size: _userIconSize,
+                        userData: diaryBackup.userData,
                       ),
                       SizedBox(
-                        height: 48.0,
-                        width: constraints.maxWidth - 48.0,
+                        height: _userIconSize,
+                        width: constraints.maxWidth - _userIconSize,
                         child: Padding(
                           padding: const EdgeInsets.only(
                             left: 8.0,
@@ -46,32 +56,8 @@ class DiaryPreviewCard extends StatelessWidget {
                             bottom: 2.0,
                             right: 2.0,
                           ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                diaryBackup.userData.name + "'s diary",
-                                style: LitSansSerifStyles.subtitle2,
-                              ),
-                              RichText(
-                                text: TextSpan(
-                                  children: [
-                                    TextSpan(
-                                      text: "History of Me",
-                                      style: LitSansSerifStyles.caption,
-                                    ),
-                                    TextSpan(
-                                      text: " ${diaryBackup.appVersion}",
-                                      style:
-                                          LitSansSerifStyles.caption.copyWith(
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
+                          child: _BackupPreviewTitle(
+                            diaryBackup: diaryBackup,
                           ),
                         ),
                       )
@@ -88,55 +74,8 @@ class DiaryPreviewCard extends StatelessWidget {
               SizedBox(
                 height: 16.0,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Total entries: ",
-                    style: LitSansSerifStyles.body2,
-                  ),
-                  LitBadge(
-                    borderRadius: BorderRadius.circular(16.0),
-                    backgroundColor: LitColors.lightGrey,
-                    child: Text(
-                      diaryBackup.diaryEntries.length.toString(),
-                      style: LitSansSerifStyles.caption.copyWith(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  )
-                ],
-              ),
-              SizedBox(height: 8.0),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Last updated: ",
-                    style: LitSansSerifStyles.body2,
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Text(
-                        DateTime.parse(diaryBackup.backupDate)
-                            .formatAsLocalizedDateTime(context),
-                        style: LitSansSerifStyles.subtitle1,
-                      ),
-                      RelativeDateTimeBuilder.now(
-                        date: DateTime.parse(diaryBackup.backupDate),
-                        builder: (date, formatted) {
-                          return Text(
-                            formatted,
-                            style: LitSansSerifStyles.caption,
-                          );
-                        },
-                      ),
-                    ],
-                  )
-                ],
+              _MetaDataPreview(
+                diaryBackup: diaryBackup,
               ),
             ],
           );
@@ -144,12 +83,136 @@ class DiaryPreviewCard extends StatelessWidget {
       ),
       actionButtonData: [
         ActionButtonData(
-          title: "RESTORE DIARY".toUpperCase(),
+          title: HOMLocalizations(context).restore.toUpperCase(),
           onPressed: rebuildDatabase,
-          backgroundColor: Color(0xFFC7EBD3),
-          accentColor: Color(0xFFD7ECF4),
+          backgroundColor: AppColors.pastelGreen,
+          accentColor: AppColors.pastelBlue,
         ),
       ],
+    );
+  }
+}
+
+/// A Flutter widget displaying the backup preview's title.
+class _BackupPreviewTitle extends StatelessWidget {
+  final DiaryBackup diaryBackup;
+  const _BackupPreviewTitle({
+    Key? key,
+    required this.diaryBackup,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        ClippedText(
+          HOMLocalizations(context).diaryOf + " " + diaryBackup.userData.name,
+          style: LitSansSerifStyles.subtitle2,
+        ),
+        RichText(
+          overflow: TextOverflow.ellipsis,
+          text: TextSpan(
+            children: [
+              TextSpan(
+                text: App.appName,
+                style: LitSansSerifStyles.caption,
+              ),
+              TextSpan(
+                text: " " + diaryBackup.appVersion,
+                style: LitSansSerifStyles.caption.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+/// A Flutter widget displaying the [DiaryBackup]'s meta data.
+class _MetaDataPreview extends StatelessWidget {
+  final DiaryBackup diaryBackup;
+  final double _labelWidth = 128.0;
+  const _MetaDataPreview({
+    Key? key,
+    required this.diaryBackup,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                SizedBox(
+                  width: _labelWidth,
+                  child: Text(
+                    HOMLocalizations(context).entires + ": ",
+                    style: LitSansSerifStyles.body2,
+                  ),
+                ),
+                LitBadge(
+                  borderRadius: BorderRadius.circular(16.0),
+                  backgroundColor: LitColors.lightGrey,
+                  child: Text(
+                    diaryBackup.diaryEntries.length.toString(),
+                    style: LitSansSerifStyles.caption.copyWith(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                )
+              ],
+            ),
+            SizedBox(height: 8.0),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                SizedBox(
+                  width: _labelWidth,
+                  child: Text(
+                    HOMLocalizations(context).lastUpdated + ": ",
+                    style: LitSansSerifStyles.body2,
+                  ),
+                ),
+                SizedBox(
+                  width: 4.0,
+                ),
+                SizedBox(
+                  width: constraints.maxWidth - _labelWidth - 4.0,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      ClippedText(
+                        DateTime.parse(diaryBackup.backupDate)
+                            .formatAsLocalizedDate(context),
+                        style: LitSansSerifStyles.subtitle1,
+                      ),
+                      RelativeDateTimeBuilder.now(
+                        date: DateTime.parse(diaryBackup.backupDate),
+                        builder: (date, formatted) {
+                          return ClippedText(
+                            formatted,
+                            style: LitSansSerifStyles.caption,
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ],
+        );
+      },
     );
   }
 }
