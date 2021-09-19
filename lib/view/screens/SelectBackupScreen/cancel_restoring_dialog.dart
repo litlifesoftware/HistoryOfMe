@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:history_of_me/controller/controllers.dart';
 import 'package:leitmotif/leitmotif.dart';
 
+/// A Flutter widget allowing the user to confirm the creation of a new diary
+/// while canceling the restoring of a backuped diary.
+///
 class CancelRestoringDialog extends StatelessWidget {
+  /// Handles the `cancel` action.
   final void Function() onCancel;
+
+  /// Creates a [CancelRestoringDialog].
   const CancelRestoringDialog({
     Key? key,
     required this.onCancel,
@@ -12,17 +19,19 @@ class CancelRestoringDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return LitTitledDialog(
       child: LitDescriptionTextBox(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-        text:
-            "Do you want to create a new diary instead of restoring your old one?",
+        padding: const EdgeInsets.symmetric(
+          horizontal: 16.0,
+          vertical: 8.0,
+        ),
+        text: HOMLocalizations(context).cancelRestoreDescr,
       ),
-      titleText: "Create new diary?",
+      titleText: HOMLocalizations(context).createNewDiary + "?",
       actionButtons: [
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8.0),
           child: LitPushedThroughButton(
             child: Text(
-              "Create new".toUpperCase(),
+              HOMLocalizations(context).create.toUpperCase(),
               style: LitSansSerifStyles.button,
               textAlign: TextAlign.center,
             ),
