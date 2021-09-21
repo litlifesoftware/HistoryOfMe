@@ -405,16 +405,23 @@ class __BackupPreviewState extends State<_BackupPreview> {
           keyText: (HOMLocalizations(context).entires.capitalize()) + ":",
           valueText: widget.diaryBackup.diaryEntries.length.toString(),
         ),
-        AnimatedRelativeDateTimeBuilder(
-          date: DateTime.parse(widget.diaryBackup.backupDate),
-          builder: (relDate, formatted) {
-            return _MetaDataItem(
-              keyText: (HOMLocalizations(context).lastBackup) + ":",
-              valueText: DateTime.parse(widget.diaryBackup.backupDate)
-                  .formatAsLocalizedDate(context),
-              description: formatted,
-            );
-          },
+        _MetaDataItem(
+          keyText: (HOMLocalizations(context).lastBackup) + ":",
+          valueText: DateTime.parse(widget.diaryBackup.backupDate)
+              .formatAsLocalizedDate(context),
+        ),
+        Align(
+          alignment: Alignment.centerRight,
+          child: AnimatedRelativeDateTimeBuilder(
+            animateOpacity: true,
+            date: DateTime.parse(widget.diaryBackup.backupDate),
+            builder: (relDate, formatted) {
+              return ClippedText(
+                formatted,
+                style: LitSansSerifStyles.caption,
+              );
+            },
+          ),
         ),
         _UpToDateIndicator(
           diaryBackup: widget.diaryBackup,
@@ -475,7 +482,7 @@ class __UpToDateIndicatorState extends State<_UpToDateIndicator> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4.0),
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
