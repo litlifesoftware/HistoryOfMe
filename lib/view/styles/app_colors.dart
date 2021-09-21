@@ -2,8 +2,10 @@ import 'package:flutter/painting.dart';
 
 /// A collection of [Color] objects used in `History of Me`.
 class AppColors {
-  ///
+  /// A purple `Color`.
   static const Color purple = const Color(0xFFDE8FFA);
+
+  /// A pink `Color`.
   static const Color pink = const Color(0xFFFA72AA);
 
   /// A pastel blue `Color`.
