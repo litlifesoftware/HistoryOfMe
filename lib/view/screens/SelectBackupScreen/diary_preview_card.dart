@@ -154,7 +154,7 @@ class _MetaDataPreview extends StatelessWidget {
                 SizedBox(
                   width: _labelWidth,
                   child: Text(
-                    HOMLocalizations(context).entires + ": ",
+                    HOMLocalizations(context).entires.capitalize() + ": ",
                     style: LitSansSerifStyles.body2,
                   ),
                 ),
