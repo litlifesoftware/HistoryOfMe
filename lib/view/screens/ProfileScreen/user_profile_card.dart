@@ -49,6 +49,7 @@ class _UserProfileCardState extends State<UserProfileCard> {
             UserIcon(
               size: 96.0,
               userData: widget.userData,
+              onPressed: widget.onPressedUserIcon,
             ),
             Padding(
               padding: const EdgeInsets.only(
