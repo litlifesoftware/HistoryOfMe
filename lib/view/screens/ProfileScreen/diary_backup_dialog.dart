@@ -551,39 +551,50 @@ class _MetaDataItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            crossAxisAlignment: CrossAxisAlignment.end,
-            mainAxisSize: MainAxisSize.min,
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          return Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              ClippedText(
-                keyText,
-                style: LitSansSerifStyles.subtitle2,
+              SizedBox(
+                width: (constraints.maxWidth / 2) - 2.0,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    ClippedText(
+                      keyText,
+                      style: LitSansSerifStyles.subtitle2,
+                    ),
+                    description != null ? Text("") : SizedBox()
+                  ],
+                ),
               ),
-              description != null ? Text("") : SizedBox()
+              SizedBox(width: 4.0),
+              SizedBox(
+                width: (constraints.maxWidth / 2) - 2.0,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    ClippedText(
+                      valueText,
+                      style: LitSansSerifStyles.body2,
+                    ),
+                    description != null
+                        ? ClippedText(
+                            description!,
+                            style: LitSansSerifStyles.caption,
+                          )
+                        : SizedBox()
+                  ],
+                ),
+              )
             ],
-          ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            crossAxisAlignment: CrossAxisAlignment.end,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              ClippedText(
-                valueText,
-                style: LitSansSerifStyles.body2,
-              ),
-              description != null
-                  ? ClippedText(
-                      description!,
-                      style: LitSansSerifStyles.caption,
-                    )
-                  : SizedBox()
-            ],
-          )
-        ],
+          );
+        },
       ),
     );
   }
