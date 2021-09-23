@@ -184,16 +184,8 @@ class _CreateEntryDialogState extends State<CreateEntryDialog>
           LitIconSnackbar(
             iconData: LitIcons.info,
             text: _snackbarText,
-            textStyle: LitTextStyles.sansSerif.copyWith(
-              color: Colors.white,
-              fontSize: 13.0,
-            ),
             snackBarController: _duplicateSnackBarController,
             alignment: Alignment.topRight,
-            padding: const EdgeInsets.symmetric(
-              vertical: 8.0,
-              horizontal: 16.0,
-            ),
           ),
         ],
       ),
