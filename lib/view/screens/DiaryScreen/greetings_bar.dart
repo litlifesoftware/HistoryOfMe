@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:history_of_me/controller/localization/hom_localizations.dart';
 import 'package:leitmotif/leitmotif.dart';
 
 class GreetingsBar extends StatelessWidget {
@@ -20,7 +21,7 @@ class GreetingsBar extends StatelessWidget {
           vertical: 16.0,
         ),
         child: Text(
-          "How are you today?",
+          HOMLocalizations(context).howAreYouToday,
           textAlign: TextAlign.center,
           style: LitTextStyles.sansSerif.copyWith(
             fontSize: 16.0,
