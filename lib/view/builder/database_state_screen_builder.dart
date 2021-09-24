@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:history_of_me/app.dart';
 import 'package:history_of_me/controller/database/hive_db_service.dart';
 import 'package:history_of_me/controller/localization/hom_localizations.dart';
 import 'package:history_of_me/config/config.dart';
 import 'package:history_of_me/model/models.dart';
+import 'package:history_of_me/view/screens/RestoreDiaryScreen/restore_diary_screen.dart';
 import 'package:history_of_me/view/screens/screens.dart';
 import 'package:hive/hive.dart';
 import 'package:lit_localization_service/lit_localization_service.dart';
@@ -63,9 +65,8 @@ class _DatabaseStateScreenBuilderState
   void _handleUserCreation() {
     _dbService.createUserData(_username);
     _dbService.createAppSettings();
-    setState(() {
-      LitRouteController(context).clearNavigationStack();
-    });
+    LitRouteController(context).clearNavigationStack();
+    App.restartApp(context);
   }
 
   /// Handles the privacy confirmation.
@@ -78,16 +79,21 @@ class _DatabaseStateScreenBuilderState
   /// displayed.
   void _onPrivacyConfirmed() {
     LitRouteController(context).pushCupertinoWidget(
-      LitConfirmAgeScreen(
-        onSubmit: _onSubmitAge,
-        invalidAgeText: _localizationController.invalidAgeText,
-        submitLabel: _localizationController.submit,
-        subtitle: _localizationController.confirmYourAgeSubtitle,
-        setLabel: _localizationController.setAge,
-        title: _localizationController.confirmYourAge,
-        validLabel: _localizationController.valid,
-        chooseDateLabel: _localizationController.chooseDate,
-        yourAgeLabel: _localizationController.yourAge,
+      RestoreDiaryScreen(
+        onCreateNewInstance: () =>
+            LitRouteController(context).pushCupertinoWidget(
+          LitConfirmAgeScreen(
+            onSubmit: _onSubmitAge,
+            invalidAgeText: _localizationController.invalidAgeText,
+            submitLabel: _localizationController.submit,
+            subtitle: _localizationController.confirmYourAgeSubtitle,
+            setLabel: _localizationController.setAge,
+            title: _localizationController.confirmYourAge,
+            validLabel: _localizationController.valid,
+            chooseDateLabel: _localizationController.chooseDate,
+            yourAgeLabel: _localizationController.yourAge,
+          ),
+        ),
       ),
     );
   }
