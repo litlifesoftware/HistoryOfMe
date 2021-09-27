@@ -168,6 +168,8 @@ class _EntryEditingScreenState extends State<EntryEditingScreen>
     _routeController = LitRouteController(context);
     //_syncTextEditingControllerChanges();
     _fadeInAnimationController.forward();
+    // Allow editing the entry at the start.
+    _contentEditFocusNode.requestFocus();
   }
 
   @override
