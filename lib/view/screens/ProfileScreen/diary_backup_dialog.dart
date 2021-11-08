@@ -212,15 +212,7 @@ class _LoadingBackupDialog extends StatelessWidget {
       child: Center(
         child: ConstrainedBox(
           constraints: BoxConstraints(minHeight: 192.0),
-          child: SizedBox(
-            height: 64.0,
-            width: 64.0,
-            child: JugglingLoadingIndicator(
-              indicatorColor: Colors.black,
-              backgroundColor: Colors.white,
-              shadowOpacity: 0.25,
-            ),
-          ),
+          child: JugglingLoadingIndicator(),
         ),
       ),
     );
@@ -241,8 +233,10 @@ class _PermissionDeniedDialog extends StatelessWidget {
       titleText: HOMLocalizations(context).permissionsRequired,
       actionButtons: [
         DialogActionButton(
-          label: HOMLocalizations(context).addPermissions,
-          onPressed: onGrant,
+          data: ActionButtonData(
+            title: HOMLocalizations(context).addPermissions,
+            onPressed: onGrant,
+          ),
         )
       ],
       child: ScrollableColumn(
@@ -286,8 +280,10 @@ class _CreateBackupDialog extends StatelessWidget {
       titleText: HOMLocalizations(context).noBackupFound,
       actionButtons: [
         DialogActionButton(
-          label: HOMLocalizations(context).backupNow.toUpperCase(),
-          onPressed: writeBackup,
+          data: ActionButtonData(
+            title: HOMLocalizations(context).backupNow.toUpperCase(),
+            onPressed: writeBackup,
+          ),
         )
       ],
       child: ScrollableColumn(
@@ -342,14 +338,18 @@ class _ManageBackupDialog extends StatelessWidget {
     return LitTitledDialog(
       actionButtons: [
         DialogActionButton(
-          label: HOMLocalizations(context).delete,
-          onPressed: deleteBackup,
-          backgroundColor: LitColors.lightPink,
-          accentColor: Colors.white,
+          data: ActionButtonData(
+            title: HOMLocalizations(context).delete,
+            onPressed: deleteBackup,
+            backgroundColor: LitColors.lightPink,
+            accentColor: Colors.white,
+          ),
         ),
         DialogActionButton(
-          label: HOMLocalizations(context).backupNowShort,
-          onPressed: writeBackup,
+          data: ActionButtonData(
+            title: HOMLocalizations(context).backupNowShort,
+            onPressed: writeBackup,
+          ),
         ),
       ],
       child: AllDataProvider(

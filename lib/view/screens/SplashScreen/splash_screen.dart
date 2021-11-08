@@ -11,18 +11,10 @@ import 'package:leitmotif/leitmotif.dart';
 class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: HexColor('#F6F4F4'),
-      body: ConstrainedBox(
-        constraints: BoxConstraints(
-          minHeight: MediaQuery.of(context).size.height,
-          minWidth: MediaQuery.of(context).size.width,
-        ),
-        child: Center(
-          child: HistoryOfMeAppLogo(
-            showKeyImage: false,
-          ),
-        ),
+    return LitStaticLoadingScreen(
+      child: HistoryOfMeAppLogo(
+        color: Colors.white,
+        showKeyImage: false,
       ),
     );
   }

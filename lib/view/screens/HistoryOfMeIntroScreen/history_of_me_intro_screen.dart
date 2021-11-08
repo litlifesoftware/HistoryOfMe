@@ -23,30 +23,39 @@ class _HistoryOfMeIntroScreenState extends State<HistoryOfMeIntroScreen> {
   @override
   Widget build(BuildContext context) {
     return LitOnboardingScreen(
-      title: HOMLocalizations(context).introduction,
-      nextButtonLabel: HOMLocalizations(context).next,
-      art: SizedBox(
-        width: MediaQuery.of(context).size.width * 0.55,
-        child: LayoutBuilder(
-          builder: (context, constraints) {
-            return Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                HistoryOfMeAppLogo(
-                  width: constraints.maxWidth * 0.25,
-                  showKeyImage: true,
-                  color: Colors.white,
-                ),
-                AppArtwork(
-                  width: constraints.maxWidth * 0.65,
-                ),
-              ],
-            );
-          },
+      //title: HOMLocalizations(context).introduction,
+      //nextButtonLabel: HOMLocalizations(context).next,
+
+      art: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 16.0),
+        child: SizedBox(
+          width: MediaQuery.of(context).size.width * 0.55,
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              return Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  HistoryOfMeAppLogo(
+                    width: constraints.maxWidth * 0.25,
+                    showKeyImage: true,
+                    color: Colors.white,
+                  ),
+                  AppArtwork(
+                    width: constraints.maxWidth * 0.65,
+                  ),
+                ],
+              );
+            },
+          ),
         ),
       ),
       textItems: [
+        TextPageContent(
+          subtitle: HOMLocalizations(context).private,
+          title: HOMLocalizations(context).privacy,
+          text: HOMLocalizations(context).privacyDescr,
+        ),
         TextPageContent(
           subtitle: HOMLocalizations(context).organize,
           title: HOMLocalizations(context).browseDiaryTitle,
@@ -63,7 +72,7 @@ class _HistoryOfMeIntroScreenState extends State<HistoryOfMeIntroScreen> {
           text: HOMLocalizations(context).customizeBookmarkDescr,
         ),
       ],
-      onExit: _onExit,
+      onDismiss: _onExit,
     );
   }
 }

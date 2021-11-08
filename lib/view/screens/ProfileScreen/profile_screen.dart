@@ -62,11 +62,12 @@ class _ProfileScreenState extends State<ProfileScreen>
             scrollController: _scrollController,
             backgroundColor: Colors.white,
             title: HOMLocalizations(context).howAreYouToday,
-            displayBackButton: false,
+            //displayBackButton: false,
           ),
           snackbars: [
             LitIconSnackbar(
               snackBarController: _snackbarController,
+              title: userData.name,
               text: HOMLocalizations(context).welcomeBack +
                   ", " +
                   userData.name +

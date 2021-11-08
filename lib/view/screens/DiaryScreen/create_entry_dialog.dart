@@ -173,13 +173,13 @@ class _CreateEntryDialogState extends State<CreateEntryDialog>
                 )
               : LitDatePickerDialog(
                   title: HOMLocalizations(context).chooseDate,
-                  excludedMonthErrorMessage:
-                      HOMLocalizations(context).dateNotIncludedDescr,
-                  futureDateErrorMessage:
-                      HOMLocalizations(context).futureDaysNotAllowedDescr,
-                  onBackCallback: () => setSelectedDialogType(TODAY),
+                  // excludedMonthErrorMessage:
+                  //     HOMLocalizations(context).dateNotIncludedDescr,
+                  // futureDateErrorMessage:
+                  //     HOMLocalizations(context).futureDaysNotAllowedDescr,
+                  // onBackCallback: () => setSelectedDialogType(TODAY),
                   onSubmit: _createPreviousDayEntry,
-                  allowFutureDates: false,
+                  //allowFutureDates: false,
                 ),
           LitIconSnackbar(
             iconData: LitIcons.info,

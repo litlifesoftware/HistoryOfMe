@@ -88,20 +88,22 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           transitionListener: (index) => _onTabSwitch(index, appSettings),
           tabs: [
             LitNavigableTab(
-              tabData: LitBottomNavigationTabData(
+              tabData: LitBottomNavigationItemData(
                 index: 0,
-                icon: LitIcons.home,
-                iconSelected: LitIcons.home_alt,
+                icon: LitIcons.home_alt,
+                iconAlt: LitIcons.home,
+                title: "Home",
               ),
               screen: DiaryScreen(
                 bookmarkAnimation: _bookmarkAnimation,
               ),
             ),
             LitNavigableTab(
-              tabData: LitBottomNavigationTabData(
+              tabData: LitBottomNavigationItemData(
                 index: 1,
                 icon: LitIcons.person,
-                iconSelected: LitIcons.person_solid,
+                iconAlt: LitIcons.person_solid,
+                title: "Profile",
               ),
               screen: ProfileScreen(
                 bookmarkAnimation: _bookmarkAnimation,

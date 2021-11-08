@@ -77,14 +77,18 @@ class _ConfirmDeleteEntryDialogState extends State<ConfirmDeleteEntryDialog> {
       ),
       actionButtons: [
         DialogActionButton(
-          label: HOMLocalizations(context).cancel.toUpperCase(),
-          onPressed: _onCancel,
+          data: ActionButtonData(
+            title: HOMLocalizations(context).cancel.toUpperCase(),
+            onPressed: _onCancel,
+          ),
         ),
         DialogActionButton(
-          label: HOMLocalizations(context).delete.toUpperCase(),
-          backgroundColor: LitColors.lightRed,
-          accentColor: Colors.white,
-          onPressed: _onDelete,
+          data: ActionButtonData(
+            title: HOMLocalizations(context).delete.toUpperCase(),
+            backgroundColor: LitColors.lightRed,
+            accentColor: Colors.white,
+            onPressed: _onDelete,
+          ),
         ),
       ],
     );

@@ -187,11 +187,11 @@ class _BookmarkEditingScreenState extends State<BookmarkEditingScreen>
     showDialog(
       context: context,
       builder: (_) => DiscardDraftDialog(
-        titleText: HOMLocalizations(context).unsaved,
-        infoDescription: HOMLocalizations(context).unsavedBookmarkDescr,
-        discardText: HOMLocalizations(context).discardChanges,
-        cancelButtonLabel: HOMLocalizations(context).cancel,
-        discardButtonLabel: HOMLocalizations(context).discard,
+        // titleText: HOMLocalizations(context).unsaved,
+        // infoDescription: HOMLocalizations(context).unsavedBookmarkDescr,
+        // discardText: HOMLocalizations(context).discardChanges,
+        // cancelButtonLabel: HOMLocalizations(context).cancel,
+        // discardButtonLabel: HOMLocalizations(context).discard,
         onDiscard: () {
           _routeController.closeDialog();
           _routeController.navigateBack();

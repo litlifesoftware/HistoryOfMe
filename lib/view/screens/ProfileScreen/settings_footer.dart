@@ -51,22 +51,27 @@ class _SettingsFooterState extends State<SettingsFooter> {
 
   void _openPrivacyPolicy() {
     LitRouteController(context).pushCupertinoWidget(LitPrivacyPolicyScreen(
-      title: HOMLocalizations(context).privacy,
+      //title: HOMLocalizations(context).privacy,
       onAgreeCallback: () => LitRouteController(context).pop(),
-      privacyText: HOMLocalizations(context).privacyDescr,
-      agreeLabel: HOMLocalizations(context).okay,
+      privacyBody: HOMLocalizations(context).privacyDescr,
+      //agreeLabel: HOMLocalizations(context).okay,
       art: HistoryOfMeLauncherIconArt(),
-      privacyTags: [
-        PrivacyTag(
-          text: HOMLocalizations(context).private,
-          isConform: true,
-        ),
-        PrivacyTag(
-          text: HOMLocalizations(context).offline,
-          isConform: true,
-        ),
-      ],
+      // privacyTags: [
+      //   PrivacyTag(
+      //     text: HOMLocalizations(context).private,
+      //     isConform: true,
+      //   ),
+      //   PrivacyTag(
+      //     text: HOMLocalizations(context).offline,
+      //     isConform: true,
+      //   ),
+      // ],
     ));
+  }
+
+  void _openLicenses() {
+    LitRouteController(context)
+        .pushCupertinoWidget(ApplicationLicensesScreen());
   }
 
   void _showDeleteDataDialog() {
@@ -105,10 +110,17 @@ class _SettingsFooterState extends State<SettingsFooter> {
                   )
                 ],
               ),
-              appTitle: "History Of Me",
-              subTitle: HOMLocalizations(context).yourOwnPersonalDiary,
-              screenTitle: HOMLocalizations(context).credits,
+              appName: "History Of Me",
+              appDescription: HOMLocalizations(context).yourOwnPersonalDiary,
+              //screenTitle: HOMLocalizations(context).credits,
               credits: [
+                //TODO:Localize
+                CreditData(
+                  role: "made by",
+                  names: [
+                    "LitLifeSoftware",
+                  ],
+                ),
                 CreditData(
                   role: HOMLocalizations(context).uxDesign,
                   names: [
@@ -173,14 +185,19 @@ class _SettingsFooterState extends State<SettingsFooter> {
             onPressed: _openPrivacyPolicy,
             textAlign: TextAlign.right,
           ),
-          LitPlainLabelButton(
-            label: HOMLocalizations(context).deleteAllData,
-            onPressed: _showDeleteDataDialog,
-            textAlign: TextAlign.right,
-          ),
+          // LitPlainLabelButton(
+          //   label: HOMLocalizations(context).deleteAllData,
+          //   onPressed: _showDeleteDataDialog,
+          //   textAlign: TextAlign.right,
+          // ),
           LitPlainLabelButton(
             label: HOMLocalizations(context).credits,
             onPressed: _openCredits,
+            textAlign: TextAlign.right,
+          ),
+          LitPlainLabelButton(
+            label: LeitmotifLocalizations.of(context).licensesLabel,
+            onPressed: _openLicenses,
             textAlign: TextAlign.right,
           ),
         ],

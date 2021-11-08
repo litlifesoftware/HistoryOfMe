@@ -29,9 +29,9 @@ class BackdropPhotoDetailScreen extends StatelessWidget {
           _Background(backdropPhoto: backdropPhoto),
           ScrollableColumn(
             children: [
-              SizedBox(
-                height: MinimalistAppBar.height,
-              ),
+              // SizedBox(
+              //   height: MinimalistAppBar.height,
+              // ),
               Align(
                 alignment: Alignment.topCenter,
                 child: Image(

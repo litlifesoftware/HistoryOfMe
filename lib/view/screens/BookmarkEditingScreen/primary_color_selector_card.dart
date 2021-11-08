@@ -89,10 +89,10 @@ class _PrimaryColorSelectorCardState extends State<PrimaryColorSelectorCard>
           _addColor(color);
         },
         initialColor: Color(widget.selectedColorValue),
-        applyLabel: HOMLocalizations(context).apply,
-        resetLabel: HOMLocalizations(context).reset,
-        titleText: HOMLocalizations(context).pickAColor,
-        transparentColorText: HOMLocalizations(context).colorIsTransparent,
+        // applyLabel: HOMLocalizations(context).apply,
+        // resetLabel: HOMLocalizations(context).reset,
+        // titleText: HOMLocalizations(context).pickAColor,
+        // transparentColorText: HOMLocalizations(context).colorIsTransparent,
       ),
     );
   }

@@ -121,6 +121,7 @@ class _AppState extends State<App> {
             supportedLanguages: ['en', 'de'],
             debug: true,
           ),
+          LeitmotifLocalizationsDelegate(),
           GlobalMaterialLocalizations.delegate,
           GlobalWidgetsLocalizations.delegate,
           GlobalCupertinoLocalizations.delegate,

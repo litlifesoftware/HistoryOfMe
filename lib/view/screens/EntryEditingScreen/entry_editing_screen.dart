@@ -117,11 +117,11 @@ class _EntryEditingScreenState extends State<EntryEditingScreen>
     showDialog(
       context: context,
       builder: (_) => DiscardDraftDialog(
-        titleText: HOMLocalizations(context).unsaved,
-        infoDescription: HOMLocalizations(context).unsavedEntryDescr,
-        discardText: HOMLocalizations(context).discardChanges,
-        cancelButtonLabel: HOMLocalizations(context).cancel,
-        discardButtonLabel: HOMLocalizations(context).discard,
+        // titleText: HOMLocalizations(context).unsaved,
+        // infoDescription: HOMLocalizations(context).unsavedEntryDescr,
+        // discardText: HOMLocalizations(context).discardChanges,
+        // cancelButtonLabel: HOMLocalizations(context).cancel,
+        // discardButtonLabel: HOMLocalizations(context).discard,
         onDiscard: () {
           _routeController.dicardAndExit();
         },

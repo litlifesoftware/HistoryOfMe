@@ -65,15 +65,19 @@ class _ChangeNameDialogState extends State<ChangeNameDialog> {
       titleText: HOMLocalizations(context).changeYourName,
       actionButtons: [
         DialogActionButton(
-          label: HOMLocalizations(context).cancel,
-          onPressed: _onCancel,
+          data: ActionButtonData(
+            title: HOMLocalizations(context).cancel,
+            onPressed: _onCancel,
+          ),
         ),
         DialogActionButton(
-          label: HOMLocalizations(context).apply,
-          accentColor: Color(0xFFEDDEC0),
-          backgroundColor: Color(0xFFEAEACA),
-          disabled: !_isChanged,
-          onPressed: _onSubmit,
+          data: ActionButtonData(
+            title: HOMLocalizations(context).apply,
+            accentColor: Color(0xFFEDDEC0),
+            backgroundColor: Color(0xFFEAEACA),
+            disabled: !_isChanged,
+            onPressed: _onSubmit,
+          ),
         ),
       ],
       child: CleanInkWell(

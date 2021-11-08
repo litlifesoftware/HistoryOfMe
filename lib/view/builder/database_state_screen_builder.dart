@@ -82,16 +82,16 @@ class _DatabaseStateScreenBuilderState
       RestoreDiaryScreen(
         onCreateNewInstance: () =>
             LitRouteController(context).pushCupertinoWidget(
-          LitConfirmAgeScreen(
+          LitVerifyAgeScreen(
             onSubmit: _onSubmitAge,
-            invalidAgeText: _localizationController.invalidAgeText,
-            submitLabel: _localizationController.submit,
-            subtitle: _localizationController.confirmYourAgeSubtitle,
-            setLabel: _localizationController.setAge,
-            title: _localizationController.confirmYourAge,
-            validLabel: _localizationController.valid,
-            chooseDateLabel: _localizationController.chooseDate,
-            yourAgeLabel: _localizationController.yourAge,
+            // invalidAgeText: _localizationController.invalidAgeText,
+            // submitLabel: _localizationController.submit,
+            // subtitle: _localizationController.confirmYourAgeSubtitle,
+            // setLabel: _localizationController.setAge,
+            // title: _localizationController.confirmYourAge,
+            // validLabel: _localizationController.valid,
+            // chooseDateLabel: _localizationController.chooseDate,
+            // yourAgeLabel: _localizationController.yourAge,
           ),
         ),
       ),
@@ -104,16 +104,16 @@ class _DatabaseStateScreenBuilderState
   void _onSubmitAge(DateTime date) {
     LitRouteController(context).replaceCurrentMaterialWidget(
       newWidget: LitSignUpScreen(
-        title: _localizationController.whatShallWeCallYou,
-        onSubmitButtonText: _localizationController.thatsMe,
+        // title: _localizationController.whatShallWeCallYou,
+        // onSubmitButtonText: _localizationController.thatsMe,
         onSubmit: _handleUserCreation,
-        inputFields: [
-          LitTextField(
-            label: _localizationController.yourName,
-            onChange: _setUsername,
-            icon: LitIcons.person,
-          ),
-        ],
+        // inputFields: [
+        //   LitTextField(
+        //     label: _localizationController.yourName,
+        //     onChange: _setUsername,
+        //     icon: LitIcons.person,
+        //   ),
+        // ],
       ),
     );
   }
@@ -176,11 +176,11 @@ class _DatabaseStateScreenBuilderState
                       animationDuration: _startupAnimationDuration,
                     );
                   } else {
-                    return LitOfflineAppDisclaimerScreen(
+                    return LitPrivacyDisclaimerScreen(
                       onConfirm: _onPrivacyConfirmed,
-                      titleText: _localizationController.yourDataIsSafe,
-                      descriptionText:
-                          _localizationController.offlineAppDescription,
+                      // titleText: _localizationController.yourDataIsSafe,
+                      // descriptionText:
+                      //     _localizationController.offlineAppDescription,
                       confirmButtonLabel: _localizationController.okay,
                     );
                   }

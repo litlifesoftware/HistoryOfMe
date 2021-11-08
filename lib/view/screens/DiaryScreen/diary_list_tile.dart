@@ -45,8 +45,22 @@ class _DiaryListTileState extends State<DiaryListTile> {
     /// The [List] of month labels provided by the [CalendarLocalizationService].
     List<String> monthLabels;
     print(widget.diaryEntry.date);
-    monthLabels = CalendarLocalizationService.getLocalizedCalendarMonths(
-        Localizations.localeOf(context));
+    // monthLabels = CalendarLocalizationService.getLocalizedCalendarMonths(
+    //     Localizations.localeOf(context));
+    monthLabels = [
+      LeitmotifLocalizations.of(context).january,
+      LeitmotifLocalizations.of(context).february,
+      LeitmotifLocalizations.of(context).march,
+      LeitmotifLocalizations.of(context).april,
+      LeitmotifLocalizations.of(context).may,
+      LeitmotifLocalizations.of(context).june,
+      LeitmotifLocalizations.of(context).july,
+      LeitmotifLocalizations.of(context).august,
+      LeitmotifLocalizations.of(context).september,
+      LeitmotifLocalizations.of(context).october,
+      LeitmotifLocalizations.of(context).november,
+      LeitmotifLocalizations.of(context).december,
+    ];
     return AnimatedBuilder(
       animation: widget.animationController!,
       builder: (context, _) {

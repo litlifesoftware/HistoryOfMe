@@ -43,6 +43,7 @@ class _EditableItemMetaInfoState extends State<EditableItemMetaInfo>
   @override
   Widget build(BuildContext context) {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
       children: [
         widget.showUnsavedBadge
             ? _AnimatedUnchangedBadge(

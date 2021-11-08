@@ -17,9 +17,9 @@ class UserIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     return LitUserIcon(
       size: size,
-      username: userData.name,
-      primaryColor: Color(userData.primaryColor),
-      contrastColor: Color(0xFFDDDDDD),
+      name: userData.name,
+      color: Color(userData.primaryColor),
+      accentColor: Color(0xFFDDDDDD),
       onPressed: onPressed,
     );
   }

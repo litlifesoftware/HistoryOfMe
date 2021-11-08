@@ -81,9 +81,15 @@ class _BackdropPhotoOverlayState extends State<BackdropPhotoOverlay>
                       0),
                   child: Align(
                     alignment: Alignment.topLeft,
-                    child: LitBackButton(
-                      backgroundColor: LitColors.mediumGrey.withOpacity(0.5),
-                      iconColor: Colors.white,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 16.0,
+                        horizontal: 16.0,
+                      ),
+                      child: LitBackButton(
+                        backgroundColor: LitColors.mediumGrey.withOpacity(0.5),
+                        iconColor: Colors.white,
+                      ),
                     ),
                   ),
                 ),

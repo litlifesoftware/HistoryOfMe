@@ -287,15 +287,7 @@ class _LoadingCard extends StatelessWidget {
             children: [
               SizedBox(height: 28.0),
               Center(
-                child: SizedBox(
-                  height: 64.0,
-                  width: 64.0,
-                  child: JugglingLoadingIndicator(
-                    indicatorColor: Colors.black,
-                    backgroundColor: Colors.white,
-                    shadowOpacity: 0.25,
-                  ),
-                ),
+                child: JugglingLoadingIndicator(),
               ),
             ],
           );

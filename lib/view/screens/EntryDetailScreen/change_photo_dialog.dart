@@ -81,9 +81,9 @@ class _ChangePhotoDialogState extends State<ChangePhotoDialog>
       ),
       titleText: HOMLocalizations(context).choosePhoto,
       minHeight: widget.minHeight,
-      leading: DialogBackButton(
-        onPressed: LitRouteController(context).closeDialog,
-      ),
+      // leading: DialogBackButton(
+      //   onPressed: LitRouteController(context).closeDialog,
+      // ),
       child: Builder(
         builder: (
           BuildContext context,
