@@ -79,31 +79,23 @@ class _DatabaseStateScreenBuilderState
   /// displayed.
   void _onPrivacyConfirmed() {
     LitRouteController(context).pushCupertinoWidget(
-      RestoreDiaryScreen(
-        onCreateNewInstance: () =>
-            LitRouteController(context).pushCupertinoWidget(
-          LitVerifyAgeScreen(
-            onSubmit: _onSubmitAge,
-            // invalidAgeText: _localizationController.invalidAgeText,
-            // submitLabel: _localizationController.submit,
-            // subtitle: _localizationController.confirmYourAgeSubtitle,
-            // setLabel: _localizationController.setAge,
-            // title: _localizationController.confirmYourAge,
-            // validLabel: _localizationController.valid,
-            // chooseDateLabel: _localizationController.chooseDate,
-            // yourAgeLabel: _localizationController.yourAge,
-          ),
-        ),
-      ),
-    );
-  }
-
-  /// Handles the actions once the user confirmes his age. To create the actual
-  /// user data entry, the user has to provide his name using the
-  /// [LitSignUpScreen].
-  void _onSubmitAge(DateTime date) {
-    LitRouteController(context).replaceCurrentMaterialWidget(
-      newWidget: LitSignUpScreen(
+      // RestoreDiaryScreen(
+      //   onCreateNewInstance: () =>
+      //       LitRouteController(context).pushCupertinoWidget(
+      //     LitVerifyAgeScreen(
+      //       onSubmit: _onSubmitAge,
+      //       // invalidAgeText: _localizationController.invalidAgeText,
+      //       // submitLabel: _localizationController.submit,
+      //       // subtitle: _localizationController.confirmYourAgeSubtitle,
+      //       // setLabel: _localizationController.setAge,
+      //       // title: _localizationController.confirmYourAge,
+      //       // validLabel: _localizationController.valid,
+      //       // chooseDateLabel: _localizationController.chooseDate,
+      //       // yourAgeLabel: _localizationController.yourAge,
+      //     ),
+      //   ),
+      // ),
+      LitSignUpScreen(
         // title: _localizationController.whatShallWeCallYou,
         // onSubmitButtonText: _localizationController.thatsMe,
         onSubmit: _handleUserCreation,
@@ -114,9 +106,36 @@ class _DatabaseStateScreenBuilderState
         //     icon: LitIcons.person,
         //   ),
         // ],
+        data: [
+          TextFieldData(
+            label: _localizationController.yourName,
+            onChange: _setUsername,
+            icon: LitIcons.person,
+          ),
+        ],
       ),
     );
   }
+
+  /// Handles the actions once the user confirmes his age. To create the actual
+  /// user data entry, the user has to provide his name using the
+  /// [LitSignUpScreen].
+  // void _onSubmitAge(DateTime date) {
+  //   LitRouteController(context).replaceCurrentMaterialWidget(
+  //     newWidget: LitSignUpScreen(
+  //       // title: _localizationController.whatShallWeCallYou,
+  //       // onSubmitButtonText: _localizationController.thatsMe,
+  //       onSubmit: _handleUserCreation,
+  //       // inputFields: [
+  //       //   LitTextField(
+  //       //     label: _localizationController.yourName,
+  //       //     onChange: _setUsername,
+  //       //     icon: LitIcons.person,
+  //       //   ),
+  //       // ],
+  //     ),
+  //   );
+  // }
 
   Future<int> _initData() async {
     await LitLocalizationController()
