@@ -28,57 +28,33 @@ class _StatisticsCardState extends State<StatisticsCard> {
         ? _StatisticsCardContent(
             queryController: queryController,
           )
-        : LitGradientCard(
-            margin: EdgeInsets.symmetric(
-              horizontal: 24.0,
-              vertical: 16.0,
+        : _NoEntriesCard();
+  }
+}
+
+class _NoEntriesCard extends StatelessWidget {
+  const _NoEntriesCard({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: LitEdgeInsets.card,
+      child: LitTitledActionCard(
+        title: HOMLocalizations(context).statistics,
+        subtitle: HOMLocalizations(context).noEntriesFound,
+        child: Column(
+          children: [
+            LitDescriptionTextBox(
+              text: HOMLocalizations(context).statisticsFallbackDescr,
             ),
-            padding: EdgeInsets.symmetric(
-              horizontal: 24.0,
-              vertical: 16.0,
+            Text(
+              HOMLocalizations(context).statisticsFallbackAdv,
+              style: LitSansSerifStyles.subtitle2,
             ),
-            borderRadius: BorderRadius.all(
-              Radius.circular(
-                15.0,
-              ),
-            ),
-            boxShadow: [
-              BoxShadow(
-                blurRadius: 8.0,
-                color: Colors.black26,
-                offset: Offset(
-                  2.0,
-                  2.0,
-                ),
-                spreadRadius: 1.0,
-              ),
-            ],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [
-              HexColor('#FFFBF4'),
-              HexColor('#FFFBFB'),
-            ],
-            child: ConstrainedBox(
-              constraints: BoxConstraints(
-                minHeight: 192.0,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  ScaledDownText(
-                    HOMLocalizations(context).statistics,
-                    textAlign: TextAlign.start,
-                    style: LitSansSerifStyles.h5,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 16.0),
-                    child: _NoDataAvailableInfo(),
-                  ),
-                ],
-              ),
-            ),
-          );
+          ],
+        ),
+      ),
+    );
   }
 }
 
@@ -198,7 +174,6 @@ class _StatisticsCardContent extends StatelessWidget {
                           ),
                         ],
                       ),
-
                       _StatisticsItemRow(
                         children: [
                           _StatisticsItemCard(
@@ -214,7 +189,6 @@ class _StatisticsCardContent extends StatelessWidget {
                           ),
                         ],
                       ),
-
                       _StatisticsItemRow(
                         children: [
                           _StatisticsItemCard(
@@ -245,24 +219,6 @@ class _StatisticsCardContent extends StatelessWidget {
                           ),
                         ],
                       ),
-
-                      // SizedBox(
-                      //   width: constraints.maxWidth / 2,
-                      //   child: Column(
-                      //     mainAxisAlignment: MainAxisAlignment.start,
-                      //     children: [
-                      //       _StatisticsItem(
-                      //         label: RemainingLifetimeLocalizations.of(context)!
-                      //             .monthsRemaining,
-                      //         value: "$_monthsRemaining",
-                      //       ),
-                      //       _StatisticsIndicator(
-                      //         relValue: _monthsRemainingRel,
-                      //         darkMode: widget.appSettings.darkMode!,
-                      //       )
-                      //     ],
-                      //   ),
-                      // )
                     ],
                   );
                 },
@@ -332,214 +288,6 @@ class _StatisticsHeaderItem extends StatelessWidget {
             ),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class _NoDataAvailableInfo extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        return Column(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Row(
-              children: [
-                ExclamationRectangle(
-                  width: constraints.maxWidth * 0.25,
-                  height: constraints.maxWidth * 0.25,
-                ),
-                SizedBox(
-                  width: constraints.maxWidth * 0.75,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 8.0,
-                      horizontal: 16.0,
-                    ),
-                    child: Text(
-                      HOMLocalizations(context).statisticsFallbackDescr,
-                      textAlign: TextAlign.left,
-                      style: LitSansSerifStyles.caption,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 16.0),
-              child: Text(
-                HOMLocalizations(context).statisticsFallbackAdv,
-                textAlign: TextAlign.left,
-                style: LitSansSerifStyles.subtitle2,
-              ),
-            ),
-          ],
-        );
-      },
-    );
-  }
-}
-
-// class _StatisticDataList extends StatelessWidget {
-//   final HiveQueryController queryController;
-
-//   const _StatisticDataList({
-//     Key? key,
-//     required this.queryController,
-//   }) : super(key: key);
-//   @override
-//   Widget build(BuildContext context) {
-//     return Column(
-//       children: [
-//         _EntryStatisticText(
-//           label: HOMLocalizations(context).diaryEntries,
-//           value: "${queryController.totalDiaryEntries}",
-//         ),
-//         _EntryStatisticText(
-//           label: HOMLocalizations(context).wordsWritten,
-//           value: "${queryController.totalWordsWritten}",
-//         ),
-//         _EntryStatisticText(
-//           label: HOMLocalizations(context).wordsPerEntry,
-//           value: "${queryController.avgWordWritten.toStringAsFixed(2)}",
-//         ),
-//         _EntryStatisticText(
-//           label: HOMLocalizations(context).mostWordsWrittenAtOnce,
-//           value: "${queryController.mostWordsWrittenAtOnce}",
-//         ),
-//         _EntryStatisticText(
-//           label: HOMLocalizations(context).fewestWordsAtOnce,
-//           value: "${queryController.leastWordsWrittenAtOnce}",
-//         ),
-//         _EntryStatisticRichText(
-//           label: HOMLocalizations(context).entriesThisWeek,
-//           value: "${queryController.entriesThisWeek}",
-//           maxValue: "7",
-//         ),
-//         _EntryStatisticRichText(
-//           label: HOMLocalizations(context).entriesThisMonth,
-//           value: "${queryController.entriesThisMonth}",
-//           maxValue: "${DateTime.now().lastDayOfMonth()}",
-//         ),
-//         _EntryStatisticText(
-//           label: HOMLocalizations(context).latestEntry,
-//           value: queryController.latestEntryDate.formatAsLocalizedDate(context),
-//         ),
-//         _EntryStatisticText(
-//           label: HOMLocalizations(context).firstEntry,
-//           value: queryController.firstEntryDate.formatAsLocalizedDate(context),
-//         ),
-//       ],
-//     );
-//   }
-// }
-
-class _EntryStatistic extends StatelessWidget {
-  final String label;
-  final Widget value;
-
-  const _EntryStatistic({
-    Key? key,
-    required this.label,
-    required this.value,
-  }) : super(key: key);
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(
-        vertical: 2.2,
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          ClippedText(
-            label,
-            textAlign: TextAlign.start,
-            style: LitTextStyles.sansSerif.copyWith(
-              fontSize: 16.0,
-              color: HexColor('#cccccc'),
-            ),
-          ),
-          value,
-        ],
-      ),
-    );
-  }
-}
-
-class _EntryStatisticText extends StatelessWidget {
-  final String label;
-  final String value;
-
-  const _EntryStatisticText({
-    Key? key,
-    required this.label,
-    required this.value,
-  }) : super(key: key);
-  @override
-  Widget build(BuildContext context) {
-    return _EntryStatistic(
-      label: label,
-      value: ClippedText(
-        value,
-        textAlign: TextAlign.start,
-        style: LitTextStyles.sansSerif.copyWith(
-          fontSize: 16.0,
-          color: HexColor('#878787'),
-        ),
-      ),
-    );
-  }
-}
-
-class _EntryStatisticRichText extends StatelessWidget {
-  final String label;
-  final String value;
-  final String maxValue;
-  const _EntryStatisticRichText({
-    Key? key,
-    required this.label,
-    required this.value,
-    required this.maxValue,
-  }) : super(key: key);
-  @override
-  Widget build(BuildContext context) {
-    return _EntryStatistic(
-      label: label,
-      value: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Text(
-            value,
-            style: LitTextStyles.sansSerif.copyWith(
-              fontSize: 16.0,
-              color: HexColor('#878787'),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 2.0,
-            ),
-            child: Text(
-              "/",
-              style: LitTextStyles.sansSerif.copyWith(
-                fontSize: 16.0,
-                fontWeight: FontWeight.w600,
-                color: HexColor('#CEC8CF'),
-              ),
-            ),
-          ),
-          Text(
-            maxValue,
-            style: LitTextStyles.sansSerif.copyWith(
-              fontSize: 16.0,
-              color: HexColor('#BEBABF'),
-            ),
-          ),
-        ],
       ),
     );
   }

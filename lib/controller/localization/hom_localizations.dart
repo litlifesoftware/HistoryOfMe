@@ -180,6 +180,10 @@ class HOMLocalizations {
     return getValue("alright");
   }
 
+  String get noEntriesFound {
+    return getValue("no_entries_found");
+  }
+
   String get noFavoritesAvailable {
     return getValue("no_favorites_available");
   }

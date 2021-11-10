@@ -6,8 +6,8 @@ import 'package:history_of_me/controller/localization/hom_localizations.dart';
 import 'package:history_of_me/controller/routes/hom_navigator.dart';
 import 'package:history_of_me/model/diary_entry.dart';
 import 'package:history_of_me/model/user_data.dart';
+import 'package:history_of_me/styles.dart';
 import 'package:history_of_me/view/shared/bookmark/bookmark_front_preview.dart';
-import 'package:history_of_me/view/shared/purple_pink_button.dart';
 import 'package:hive/hive.dart';
 import 'package:leitmotif/leitmotif.dart';
 import 'diary_list_view.dart';
@@ -16,14 +16,13 @@ import 'diary_list_view.dart';
 class DiaryScreen extends StatefulWidget {
   /// The bookmark's [AnimationController]
   final AnimationController bookmarkAnimation;
-  final Duration listViewAnimationDuration;
 
   /// Creates a [DiaryScreen].
   const DiaryScreen({
     Key? key,
     required this.bookmarkAnimation,
-    this.listViewAnimationDuration = const Duration(milliseconds: 500),
   }) : super(key: key);
+
   @override
   _DiaryScreenState createState() => _DiaryScreenState();
 }
@@ -63,7 +62,7 @@ class _DiaryScreenState extends State<DiaryScreen>
   void initState() {
     _scrollController = ScrollController();
     _listViewAnimation = AnimationController(
-      duration: widget.listViewAnimationDuration,
+      duration: LitAnimationDurations.appearAnimation,
       vsync: this,
     );
     _navigator = HOMNavigator(context);
@@ -97,7 +96,8 @@ class _DiaryScreenState extends State<DiaryScreen>
               valueListenable: HiveDBService().getDiaryEntries(),
               builder: (BuildContext context, Box<DiaryEntry> entriesBox,
                   Widget? _) {
-                return entriesBox.isNotEmpty
+                final showDiaryList = entriesBox.isNotEmpty;
+                return showDiaryList
                     ? DiaryListView(
                         animationController: _listViewAnimation,
                         bookmarkAnimation: widget.bookmarkAnimation,
@@ -108,10 +108,10 @@ class _DiaryScreenState extends State<DiaryScreen>
                         toggleShowFavoritesOnly: toggleShowFavoritesOnly,
                         userData: userData,
                       )
-                    : _CreateEntryCallToActionCard(
-                        bookmarkAnimation: widget.bookmarkAnimation,
+                    : _EmptyDiaryView(
+                        animationController: widget.bookmarkAnimation,
+                        handleCreateAction: _showCreateEntryDialog,
                         userData: userData,
-                        showCreateEntryDialog: _showCreateEntryDialog,
                       );
               },
             ),
@@ -122,17 +122,19 @@ class _DiaryScreenState extends State<DiaryScreen>
   }
 }
 
-/// A card containing informations how to create the first diary entry.
-class _CreateEntryCallToActionCard extends StatelessWidget {
-  final AnimationController bookmarkAnimation;
-  final UserData? userData;
-  final void Function() showCreateEntryDialog;
-  const _CreateEntryCallToActionCard({
+/// The fallback content, initially displayed as long as no entries have been
+/// created yet.
+class _EmptyDiaryView extends StatelessWidget {
+  final UserData userData;
+  final AnimationController animationController;
+  final void Function() handleCreateAction;
+  const _EmptyDiaryView({
     Key? key,
-    required this.bookmarkAnimation,
     required this.userData,
-    required this.showCreateEntryDialog,
+    required this.animationController,
+    required this.handleCreateAction,
   }) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -140,75 +142,50 @@ class _CreateEntryCallToActionCard extends StatelessWidget {
         minHeight: MediaQuery.of(context).size.height,
       ),
       child: ScrollableColumn(
-        mainAxisSize: MainAxisSize.max,
         children: [
           BookmarkFrontPreview(
             padding: const EdgeInsets.all(16),
             userData: userData,
-            animationController: bookmarkAnimation,
+            animationController: animationController,
           ),
-          Padding(
-            padding: const EdgeInsets.only(
-              top: 16.0,
-              bottom: 108.0,
+          _EmptyDiaryInfoCard(
+            userData: userData,
+            showCreateEntryDialog: handleCreateAction,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// A card containing informations how to create the first diary entry.
+class _EmptyDiaryInfoCard extends StatelessWidget {
+  final UserData? userData;
+  final void Function() showCreateEntryDialog;
+  const _EmptyDiaryInfoCard({
+    Key? key,
+    required this.userData,
+    required this.showCreateEntryDialog,
+  }) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: LitEdgeInsets.card,
+      child: LitTitledActionCard(
+        title: HOMLocalizations(context).createEntry,
+        subtitle: HOMLocalizations(context).noEntriesFound,
+        child: LitDescriptionTextBox(
+          text: HOMLocalizations(context).createFirstEntryDescr,
+        ),
+        actionButtonData: [
+          ActionButtonData(
+            title: HOMLocalizations(context).createEntry,
+            style: LitSansSerifStyles.button.copyWith(
+              color: LitColors.white,
             ),
-            child: LitConstrainedSizedBox(
-              landscapeWidthFactor: 0.55,
-              child: LitGradientCard(
-                padding: EdgeInsets.only(
-                    left: 32.0,
-                    right: 32.0,
-                    bottom: isPortraitMode(
-                      MediaQuery.of(context).size,
-                    )
-                        ? 16.0
-                        : 64.0,
-                    top: 16.0),
-                margin: EdgeInsets.symmetric(
-                  vertical: 24.0,
-                  horizontal: 24.0,
-                ),
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [
-                  HexColor('#FFFBF4'),
-                  HexColor('#FFFBFB'),
-                ],
-                borderRadius: BorderRadius.all(Radius.circular(15.0)),
-                child: Column(
-                  children: [
-                    Text(
-                      HOMLocalizations(context).createEntry,
-                      style: LitTextStyles.sansSerifHeader.copyWith(
-                        color: HexColor('#8A8A8A'),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(
-                        top: 16.0,
-                        bottom: 8.0,
-                      ),
-                      child: ExclamationRectangle(),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(
-                        top: 8.0,
-                        bottom: 16.0,
-                      ),
-                      child: Text(
-                        HOMLocalizations(context).createFirstEntryDescr,
-                        textAlign: TextAlign.center,
-                        style: LitSansSerifStyles.body2,
-                      ),
-                    ),
-                    PurplePinkButton(
-                      label: HOMLocalizations(context).createEntry,
-                      onPressed: showCreateEntryDialog,
-                    ),
-                  ],
-                ),
-              ),
-            ),
+            accentColor: AppColors.purple,
+            backgroundColor: AppColors.pink,
+            onPressed: showCreateEntryDialog,
           ),
         ],
       ),
