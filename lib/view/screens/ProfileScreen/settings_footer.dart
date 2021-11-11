@@ -6,7 +6,7 @@ import 'package:history_of_me/controller/localization/hom_localizations.dart';
 import 'package:history_of_me/model/app_settings.dart';
 import 'package:history_of_me/model/backdrop_photo.dart';
 import 'package:history_of_me/model/user_data.dart';
-import 'package:history_of_me/view/screens/HistoryOfMeIntroScreen/history_of_me_intro_screen.dart';
+import 'package:history_of_me/view/screens/screens.dart';
 import 'package:history_of_me/view/screens/ProfileScreen/diary_backup_dialog.dart';
 import 'package:history_of_me/view/shared/art/history_of_me_launcher_icon_art.dart';
 import 'package:leitmotif/leitmotif.dart';
@@ -147,9 +147,10 @@ class _SettingsFooterState extends State<SettingsFooter> {
         );
   }
 
-  void _takeTour() {
+  /// Show the app's onboarding screen.
+  void _showOnboardingScreen() {
     LitRouteController(context).pushMaterialWidget(
-      HistoryOfMeIntroScreen(),
+      AppOnboardingScreen(),
     );
   }
 
@@ -171,8 +172,8 @@ class _SettingsFooterState extends State<SettingsFooter> {
             textAlign: TextAlign.right,
           ),
           LitPlainLabelButton(
-            label: HOMLocalizations(context).takeTheTour,
-            onPressed: _takeTour,
+            label: HOMLocalizations(context).showOnboardingButtonLabel,
+            onPressed: _showOnboardingScreen,
             textAlign: TextAlign.right,
           ),
           LitPlainLabelButton(

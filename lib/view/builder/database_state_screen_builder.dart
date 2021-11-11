@@ -45,7 +45,7 @@ class _DatabaseStateScreenBuilderState
 
   /// Creates the initial entires on the database required for certain features
   /// on the app.
-  void _createInitialEntries() {
+  void _createDefaultData() {
     _dbService.addInitialColors();
   }
 
@@ -69,43 +69,26 @@ class _DatabaseStateScreenBuilderState
     App.restartApp(context);
   }
 
-  /// Handles the privacy confirmation.
-  ///
-  /// Pushes the [ConfirmAgeScreen] into the navigation stack to enable the
-  /// user to input his age.
-  ///
-  /// Ensure to always push a new Instance of the [ConfirmAgeScreen] to avoid
-  /// previous state objects to be unmounted while the widget is still being
-  /// displayed.
-  void _onPrivacyConfirmed() {
+  /// Shows the app's onboarding screen.
+  void _showOnboardingScreen() {
     LitRouteController(context).pushCupertinoWidget(
-      // RestoreDiaryScreen(
-      //   onCreateNewInstance: () =>
-      //       LitRouteController(context).pushCupertinoWidget(
-      //     LitVerifyAgeScreen(
-      //       onSubmit: _onSubmitAge,
-      //       // invalidAgeText: _localizationController.invalidAgeText,
-      //       // submitLabel: _localizationController.submit,
-      //       // subtitle: _localizationController.confirmYourAgeSubtitle,
-      //       // setLabel: _localizationController.setAge,
-      //       // title: _localizationController.confirmYourAge,
-      //       // validLabel: _localizationController.valid,
-      //       // chooseDateLabel: _localizationController.chooseDate,
-      //       // yourAgeLabel: _localizationController.yourAge,
-      //     ),
-      //   ),
-      // ),
+      AppOnboardingScreen(
+        localization: LitOnboardingScreenLocalization(
+          title: LeitmotifLocalizations.of(context).onboardingLabel,
+          nextLabel: LeitmotifLocalizations.of(context).dismissLabel,
+          dismissLabel: HOMLocalizations(context).continueLabel,
+        ),
+        onDismiss: _onDismissOnboarding,
+      ),
+    );
+  }
+
+  /// Dismisses the app's onboarding screen and forwards the user to the
+  /// sign up screen.
+  void _onDismissOnboarding() {
+    LitRouteController(context).pushCupertinoWidget(
       LitSignUpScreen(
-        // title: _localizationController.whatShallWeCallYou,
-        // onSubmitButtonText: _localizationController.thatsMe,
         onSubmit: _handleUserCreation,
-        // inputFields: [
-        //   LitTextField(
-        //     label: _localizationController.yourName,
-        //     onChange: _setUsername,
-        //     icon: LitIcons.person,
-        //   ),
-        // ],
         data: [
           TextFieldData(
             label: _localizationController.yourName,
@@ -116,26 +99,6 @@ class _DatabaseStateScreenBuilderState
       ),
     );
   }
-
-  /// Handles the actions once the user confirmes his age. To create the actual
-  /// user data entry, the user has to provide his name using the
-  /// [LitSignUpScreen].
-  // void _onSubmitAge(DateTime date) {
-  //   LitRouteController(context).replaceCurrentMaterialWidget(
-  //     newWidget: LitSignUpScreen(
-  //       // title: _localizationController.whatShallWeCallYou,
-  //       // onSubmitButtonText: _localizationController.thatsMe,
-  //       onSubmit: _handleUserCreation,
-  //       // inputFields: [
-  //       //   LitTextField(
-  //       //     label: _localizationController.yourName,
-  //       //     onChange: _setUsername,
-  //       //     icon: LitIcons.person,
-  //       //   ),
-  //       // ],
-  //     ),
-  //   );
-  // }
 
   Future<int> _initData() async {
     await LitLocalizationController()
@@ -153,11 +116,13 @@ class _DatabaseStateScreenBuilderState
     _toggleShouldShowStartupScreen();
     Future.delayed(
       _startupAnimationDuration,
-    ).then((_) {
-      if (_initalStartup & !DEBUG) {
-        _toggleShouldShowStartupScreen();
-      }
-    });
+    ).then(
+      (_) {
+        if (_initalStartup & !DEBUG) {
+          _toggleShouldShowStartupScreen();
+        }
+      },
+    );
   }
 
   @override
@@ -180,7 +145,7 @@ class _DatabaseStateScreenBuilderState
             if (snapshot.data == 0) {
               // Create the initial database entries,
               // but do nothing if there alredy are entires.
-              _createInitialEntries();
+              _createDefaultData();
             }
             // Ensure the user data has been set on the database, otherwise
             // return the privacy screen and sign up screen.
@@ -195,12 +160,8 @@ class _DatabaseStateScreenBuilderState
                       animationDuration: _startupAnimationDuration,
                     );
                   } else {
-                    return LitPrivacyDisclaimerScreen(
-                      onConfirm: _onPrivacyConfirmed,
-                      // titleText: _localizationController.yourDataIsSafe,
-                      // descriptionText:
-                      //     _localizationController.offlineAppDescription,
-                      confirmButtonLabel: _localizationController.okay,
+                    return RestoreDiaryScreen(
+                      onCreateNewInstance: _showOnboardingScreen,
                     );
                   }
                 } else {

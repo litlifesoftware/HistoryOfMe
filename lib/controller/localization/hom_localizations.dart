@@ -296,8 +296,8 @@ class HOMLocalizations {
     return getValue("settings");
   }
 
-  String get takeTheTour {
-    return getValue("take_the_tour");
+  String get showOnboardingButtonLabel {
+    return getValue("show_onboarding_button_label");
   }
 
   String get aboutThisApp {
@@ -574,6 +574,10 @@ class HOMLocalizations {
 
   String get weFoundYourDiary {
     return getValue("we_found_your_diary");
+  }
+
+  String get continueLabel {
+    return getValue("continue_label");
   }
 
   String get continueYourJourney {

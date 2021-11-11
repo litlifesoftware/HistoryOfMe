@@ -275,9 +275,9 @@
     "en": "Settings",
     "de": "Optionen"
   },
-  "take_the_tour": {
-    "en": "Take the tour",
-    "de": "Tour starten"
+  "show_onboarding_button_label": {
+    "en": "Start Tour",
+    "de": "Rundgang starten"
   },
   "about_this_app": {
     "en": "About this app",
@@ -554,6 +554,10 @@
   "we_found_your_diary": {
     "en": "We found your diary",
     "de": "Wir haben dein Tagebuch gefunden"
+  },
+  "continue_label": {
+    "en": "Continue",
+    "de": "Fortfahren"
   },
   "continue_your_journey": {
     "en": "Continue your journey",
