@@ -5,6 +5,7 @@ import 'package:history_of_me/controller/localization/hom_localizations.dart';
 import 'package:history_of_me/controller/mood_translation_controller.dart';
 import 'package:history_of_me/config/config.dart';
 import 'package:history_of_me/model/diary_entry.dart';
+import 'package:history_of_me/styles.dart';
 import 'package:history_of_me/view/shared/shared.dart';
 import 'package:history_of_me/view/shared/updated_label_text.dart';
 import 'package:leitmotif/leitmotif.dart';
@@ -97,6 +98,7 @@ class _EntryDetailCardState extends State<EntryDetailCard> {
             ),
             _TextPreview(
               diaryEntry: widget.diaryEntry,
+              onEdit: widget.onEditCallback,
             ),
           ],
         ),
@@ -409,8 +411,12 @@ class __FavoriteButtonState extends State<_FavoriteButton>
 
 class _TextPreview extends StatelessWidget {
   final DiaryEntry diaryEntry;
-
-  const _TextPreview({Key? key, required this.diaryEntry}) : super(key: key);
+  final void Function() onEdit;
+  const _TextPreview({
+    Key? key,
+    required this.diaryEntry,
+    required this.onEdit,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -456,7 +462,9 @@ class _TextPreview extends StatelessWidget {
                             color: HexColor('#939393'),
                           ),
                         )
-                      : _NoContentAvailableCard();
+                      : _NoContentAvailableCard(
+                          onEdit: onEdit,
+                        );
                 },
               ),
             ),
@@ -469,28 +477,38 @@ class _TextPreview extends StatelessWidget {
 
 /// A fallback card displayed if no content is available.
 class _NoContentAvailableCard extends StatelessWidget {
+  final void Function() onEdit;
+
+  const _NoContentAvailableCard({
+    Key? key,
+    required this.onEdit,
+  }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          HOMLocalizations(context).entryIsEmpty,
-          textAlign: TextAlign.left,
-          style: LitTextStyles.sansSerifStyles[body].copyWith(
-            fontSize: 14.0,
-            fontWeight: FontWeight.w500,
-            height: 1.7,
-            color: HexColor('#939393'),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 16.0),
+          child: LitDescriptionTextBox(
+            text: HOMLocalizations(context).entryIsEmpty,
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 24.0),
-          child: FeedbackDescriptionText(
-            text: HOMLocalizations(context).entryIsEmptyDescr,
+        LitTitledActionCard(
+          child: Text(
+            HOMLocalizations(context).entryIsEmptyDescr,
+            style: LitSansSerifStyles.subtitle2,
           ),
-        )
+          actionButtonData: [
+            ActionButtonData(
+              title: HOMLocalizations(context).edit,
+              onPressed: onEdit,
+              accentColor: AppColors.pastelPink,
+              backgroundColor: AppColors.pastelPurple,
+            )
+          ],
+        ),
       ],
     );
   }

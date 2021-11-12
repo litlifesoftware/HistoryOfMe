@@ -143,8 +143,11 @@ class _EmptyDiaryView extends StatelessWidget {
       ),
       child: ScrollableColumn(
         children: [
+          SizedBox(
+            height: LitEdgeInsets.spacingTop.top,
+          ),
           BookmarkFrontPreview(
-            padding: const EdgeInsets.all(16),
+            padding: LitEdgeInsets.card,
             userData: userData,
             animationController: animationController,
           ),

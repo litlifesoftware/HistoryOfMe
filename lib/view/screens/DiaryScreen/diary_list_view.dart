@@ -58,19 +58,14 @@ class DiaryListView extends StatelessWidget {
                           : diaryEntriesListSorted.length,
                       showFavoritesOnly: showFavoriteEntriesOnly,
                       toggleShowFavoritesOnly: toggleShowFavoritesOnly,
-                      accentTextStyle: LitTextStyles.sansSerif.copyWith(
-                        fontWeight: FontWeight.w700,
-                        fontSize: 15.0,
-                        color: HexColor('#999999'),
+                      accentTextStyle: LitSansSerifStyles.subtitle2.copyWith(
+                        color: LitColors.grey380,
                       ),
-                      textStyle: LitTextStyles.sansSerif.copyWith(
-                        fontSize: 15.0,
-                        fontWeight: FontWeight.w700,
-                      ),
+                      textStyle: LitSansSerifStyles.subtitle2,
                     ),
                   ];
                 },
-                body: _NestedScrollViewBody(
+                body: _DiaryListViewContent(
                   diaryEntriesListSorted: diaryEntriesListSorted,
                   showFavoritesOnly: showFavoriteEntriesOnly,
                   animationController: animationController,
@@ -84,11 +79,11 @@ class DiaryListView extends StatelessWidget {
   }
 }
 
-class _NestedScrollViewBody extends StatefulWidget {
+class _DiaryListViewContent extends StatefulWidget {
   final AnimationController? animationController;
   final List<dynamic> diaryEntriesListSorted;
   final bool? showFavoritesOnly;
-  const _NestedScrollViewBody({
+  const _DiaryListViewContent({
     Key? key,
     required this.animationController,
     required this.diaryEntriesListSorted,
@@ -96,10 +91,10 @@ class _NestedScrollViewBody extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  __NestedScrollViewBodyState createState() => __NestedScrollViewBodyState();
+  _DiaryListViewContentState createState() => _DiaryListViewContentState();
 }
 
-class __NestedScrollViewBodyState extends State<_NestedScrollViewBody> {
+class _DiaryListViewContentState extends State<_DiaryListViewContent> {
   bool get noFavoritesAvailable {
     return widget.diaryEntriesListSorted
         .where((element) => element.favorite)
@@ -121,7 +116,7 @@ class __NestedScrollViewBodyState extends State<_NestedScrollViewBody> {
       child: Builder(
         builder: (context) {
           return showInfoMessage
-              ? _NoFavoriteEntriesCard(
+              ? _NoFavoritesView(
                   animationController: widget.animationController,
                 )
               : ListView.builder(
@@ -154,55 +149,28 @@ class __NestedScrollViewBodyState extends State<_NestedScrollViewBody> {
   }
 }
 
-class _NoFavoriteEntriesCard extends StatelessWidget {
+/// A widget displaying a description text stating that no favorite entries
+/// have been found.
+class _NoFavoritesView extends StatelessWidget {
   final AnimationController? animationController;
 
-  const _NoFavoriteEntriesCard({
+  const _NoFavoritesView({
     Key? key,
     required this.animationController,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return AnimatedBuilder(
-      animation: animationController!,
-      builder: (context, _) {
-        return Transform(
-          transform: Matrix4.translationValues(
-            -30 + (30 * animationController!.value),
-            0,
-            0,
+    return ScrollableColumn(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: LitEdgeInsets.card,
+          child: LitDescriptionTextBox(
+            title: HOMLocalizations(context).noFavoritesAvailable,
+            text: HOMLocalizations(context).noFavoritesAvailableDescr,
           ),
-          child: FadeTransition(
-            opacity: animationController!,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(
-                vertical: 32.0,
-                horizontal: 30.0,
-              ),
-              child: LitConstrainedSizedBox(
-                landscapeWidthFactor: 0.45,
-                child: ScrollableColumn(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      HOMLocalizations(context).noFavoritesAvailable,
-                      textAlign: TextAlign.left,
-                      style: LitTextStyles.sansSerifStyles[header6].copyWith(
-                        color: HexColor('#8A8A8A'),
-                        letterSpacing: 1.0,
-                      ),
-                    ),
-                    SizedBox(height: 16.0),
-                    FeedbackDescriptionText(
-                      text: HOMLocalizations(context).noFavoritesAvailableDescr,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        );
-      },
+        )
+      ],
     );
   }
 }
