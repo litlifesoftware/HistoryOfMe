@@ -31,6 +31,7 @@ class BackdropPhotoOverlay extends StatefulWidget {
 class _BackdropPhotoOverlayState extends State<BackdropPhotoOverlay>
     with TickerProviderStateMixin {
   late AnimationOnScrollController _animationOnScrollController;
+  late BackdropPhotoController _backdropController;
 
   void _navigateDetailScreen() {
     BackdropPhoto backdropPhoto = BackdropPhotoController(
@@ -49,6 +50,10 @@ class _BackdropPhotoOverlayState extends State<BackdropPhotoOverlay>
       requiredScrollOffset: 16.0,
       vsync: this,
     );
+    _backdropController = BackdropPhotoController(
+      widget.backdropPhotos,
+      widget.diaryEntry,
+    );
   }
 
   @override
@@ -60,6 +65,16 @@ class _BackdropPhotoOverlayState extends State<BackdropPhotoOverlay>
   AnimationController get _onScrollAnimation {
     return _animationOnScrollController.animationController;
   }
+
+  /// Returns the screen width.
+  double get _screenWidth => MediaQuery.of(context).size.width;
+
+  /// Returns an animated transform matrix.
+  Matrix4 get _transform => Matrix4.translationValues(
+        -(_onScrollAnimation.value * _screenWidth),
+        0,
+        0,
+      );
 
   @override
   Widget build(BuildContext context) {
@@ -74,11 +89,7 @@ class _BackdropPhotoOverlayState extends State<BackdropPhotoOverlay>
               mainAxisSize: MainAxisSize.max,
               children: [
                 Transform(
-                  transform: Matrix4.translationValues(
-                      -(_onScrollAnimation.value *
-                          MediaQuery.of(context).size.width),
-                      0,
-                      0),
+                  transform: _transform,
                   child: Align(
                     alignment: Alignment.topLeft,
                     child: Padding(
@@ -108,63 +119,19 @@ class _BackdropPhotoOverlayState extends State<BackdropPhotoOverlay>
                         ),
                         widget.loading!
                             ? SizedBox()
-                            : Align(
-                                alignment: Alignment.bottomRight,
-                                child: Transform(
-                                  transform: Matrix4.translationValues(
-                                    (_animationOnScrollController
-                                            .animationController.value *
-                                        MediaQuery.of(context).size.width),
-                                    0,
-                                    0,
-                                  ),
-                                  child: CleanInkWell(
-                                    onTap: _navigateDetailScreen,
-                                    child: BluredBackgroundContainer(
-                                      blurRadius: 8.0,
-                                      borderRadius: BorderRadius.all(
-                                        Radius.circular(16.0),
-                                      ),
-                                      child: Container(
-                                        padding: const EdgeInsets.symmetric(
-                                          vertical: 3.0,
-                                          horizontal: 6.0,
-                                        ),
-                                        decoration: BoxDecoration(
-                                          color: Colors.white12,
-                                          borderRadius: BorderRadius.all(
-                                            Radius.circular(16.0),
-                                          ),
-                                        ),
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            _IconLabel(
-                                              text: BackdropPhotoController(
-                                                widget.backdropPhotos,
-                                                widget.diaryEntry,
-                                              ).findBackdropPhotoLocation(),
-                                              iconData: LitIcons.map_marker,
-                                              color: Colors.white,
-                                            ),
-                                            _IconLabel(
-                                              text: BackdropPhotoController(
-                                                widget.backdropPhotos,
-                                                widget.diaryEntry,
-                                              ).findBackdropPhotoPhotographer(),
-                                              iconData: LitIcons.person_solid,
-                                              color: Colors.white,
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
+                            : _PhotoDetailsButton(
+                                animationController:
+                                    _animationOnScrollController
+                                        .animationController,
+                                onPressed: _navigateDetailScreen,
+                                location: _backdropController
+                                    .findBackdropPhotoLocation()!,
+                                photographerName: BackdropPhotoController(
+                                  widget.backdropPhotos,
+                                  widget.diaryEntry,
+                                ).findBackdropPhotoPhotographer()!,
+                                offsetY: MediaQuery.of(context).size.width,
+                              )
                       ],
                     ),
                   ),
@@ -173,6 +140,79 @@ class _BackdropPhotoOverlayState extends State<BackdropPhotoOverlay>
             ),
           );
         },
+      ),
+    );
+  }
+}
+
+class _PhotoDetailsButton extends StatelessWidget {
+  final AnimationController animationController;
+  final void Function() onPressed;
+  final String location;
+  final String photographerName;
+  final double offsetY;
+  const _PhotoDetailsButton({
+    Key? key,
+    required this.animationController,
+    required this.onPressed,
+    required this.location,
+    required this.photographerName,
+    required this.offsetY,
+  }) : super(key: key);
+
+  /// Returns an animated transform matrix.
+  Matrix4 get _transform => Matrix4.translationValues(
+        (animationController.value * offsetY),
+        0,
+        0,
+      );
+
+  @override
+  Widget build(BuildContext context) {
+    return Align(
+      alignment: Alignment.bottomRight,
+      child: Transform(
+        transform: _transform,
+        child: LitPushedButton(
+          onPressed: onPressed,
+          child: BluredBackgroundContainer(
+            blurRadius: 2.0,
+            borderRadius: BorderRadius.all(
+              Radius.circular(
+                12.0,
+              ),
+            ),
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(
+                    12.0,
+                  ),
+                ),
+                color: Colors.white24,
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(4.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _IconLabel(
+                      text: location,
+                      iconData: LitIcons.map_marker,
+                      color: Colors.white,
+                    ),
+                    _IconLabel(
+                      text: photographerName,
+                      iconData: LitIcons.person_solid,
+                      color: Colors.white,
+                    )
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }
@@ -274,10 +314,8 @@ class _IconLabel extends StatelessWidget {
             ),
             child: Text(
               text!,
-              style: LitTextStyles.sansSerif.copyWith(
-                color: color,
-                fontSize: 11.0,
-                letterSpacing: 0.40,
+              style: LitSansSerifStyles.overline.copyWith(
+                color: Colors.white,
               ),
             ),
           ),
