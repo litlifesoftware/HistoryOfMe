@@ -129,7 +129,7 @@
   },
   "edit": {
     "en": "edit",
-    "de": "ändern"
+    "de": "bearbeiten"
   },
   "your_mood_was": {
     "en": "Your mood was:",
@@ -141,7 +141,7 @@
   },
   "entry_is_empty_descr": {
     "en": "Edit your diary entry by tapping on the pencil icon.",
-    "de": "Bearbeite deinen Tagebucheintrag durch Drücken auf den Ändern-Knopf oben rechts."
+    "de": "Bearbeite deinen Tagebucheintrag durch Drücken auf den Bearbeiten-Knopf oben rechts."
   },
   "options": {
     "en": "Options",

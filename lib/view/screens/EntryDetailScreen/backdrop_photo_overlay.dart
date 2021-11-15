@@ -5,6 +5,8 @@ import 'package:history_of_me/model/backdrop_photo.dart';
 import 'package:history_of_me/model/diary_entry.dart';
 import 'package:leitmotif/leitmotif.dart';
 
+import 'entry_detail_backdrop.dart';
+
 class BackdropPhotoOverlay extends StatefulWidget {
   final ScrollController? scrollController;
   final void Function() showChangePhotoDialogCallback;
@@ -12,7 +14,7 @@ class BackdropPhotoOverlay extends StatefulWidget {
   final bool? loading;
   //final int selectedPhotoIndex;
   final DiaryEntry diaryEntry;
-  final double height;
+
   const BackdropPhotoOverlay({
     Key? key,
     required this.scrollController,
@@ -21,7 +23,6 @@ class BackdropPhotoOverlay extends StatefulWidget {
     required this.loading,
     //@required this.selectedPhotoIndex,
     required this.diaryEntry,
-    required this.height,
   }) : super(key: key);
 
   @override
@@ -83,7 +84,7 @@ class _BackdropPhotoOverlayState extends State<BackdropPhotoOverlay>
         animation: _onScrollAnimation,
         builder: (BuildContext context, Widget? _) {
           return Container(
-            height: widget.height,
+            height: EntryDetailBackdrop.height,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               mainAxisSize: MainAxisSize.max,

@@ -25,12 +25,12 @@ class EntryDetailScreen extends StatefulWidget {
   final String? diaryEntryUid;
   // final double portraitPhotoHeight;
   // final double landscapePhotoHeight;
-  final double backdropPhotoHeight;
+
   const EntryDetailScreen({
     Key? key,
     required this.listIndex,
     required this.diaryEntryUid,
-    this.backdropPhotoHeight = 256.0,
+
     //@required this.index,
     //@required this.diaryEntry,
     // this.portraitPhotoHeight = 2.9,
@@ -121,25 +121,34 @@ class _EntryDetailScreenState extends State<EntryDetailScreen>
   }
 
   void _onNextPressed(DiaryEntry diaryEntry) {
-    LitRouteController(context).replaceCurrentCupertinoWidget(
-      newWidget: EntryDetailScreen(
-        // Decrease the index by one to artificially lower the total entries count
-        // and therefore increase the entries number on the label text.
-        listIndex: widget.listIndex,
-        diaryEntryUid: _hiveQueryController!.getNextDiaryEntry(diaryEntry).uid,
-      ),
+    Future.delayed(LitAnimationDurations.button).then(
+      (_) {
+        LitRouteController(context).replaceCurrentCupertinoWidget(
+          newWidget: EntryDetailScreen(
+            // Decrease the index by one to artificially lower the total entries count
+            // and therefore increase the entries number on the label text.
+            listIndex: widget.listIndex,
+            diaryEntryUid:
+                _hiveQueryController!.getNextDiaryEntry(diaryEntry).uid,
+          ),
+        );
+      },
     );
   }
 
   void _onPreviousPressed(DiaryEntry diaryEntry) {
-    LitRouteController(context).replaceCurrentCupertinoWidget(
-      newWidget: EntryDetailScreen(
-        // Increase the index by one to artificially higher the total entries count
-        // and therefore lower the entries number on the label text.
-        listIndex: widget.listIndex,
-        diaryEntryUid:
-            _hiveQueryController!.getPreviousDiaryEntry(diaryEntry).uid,
-      ),
+    Future.delayed(LitAnimationDurations.button).then(
+      (_) {
+        LitRouteController(context).replaceCurrentCupertinoWidget(
+          newWidget: EntryDetailScreen(
+            // Increase the index by one to artificially higher the total entries count
+            // and therefore lower the entries number on the label text.
+            listIndex: widget.listIndex,
+            diaryEntryUid:
+                _hiveQueryController!.getPreviousDiaryEntry(diaryEntry).uid,
+          ),
+        );
+      },
     );
   }
 
@@ -190,14 +199,18 @@ class _EntryDetailScreenState extends State<EntryDetailScreen>
               controller: _settingsPanelController,
               title: HOMLocalizations(context).options,
               children: [
-                LitPushedThroughButton(
-                  backgroundColor: LitColors.lightPink,
-                  child: ClippedText(
-                    HOMLocalizations(context).delete.toUpperCase(),
-                    style: LitTextStyles.sansSerifStyles[button].copyWith(
-                      color: Colors.white,
-                    ),
-                  ),
+                // LitPushedThroughButton(
+                //   accentColor: LitColors.red400,
+                //   backgroundColor: LitColors.red200,
+                //   child: ClippedText(
+                //     HOMLocalizations(context).delete.toUpperCase(),
+                //     style: LitTextStyles.sansSerifStyles[button].copyWith(
+                //       color: Colors.white,
+                //     ),
+                //   ),
+                //   onPressed: _showConfirmEntryDeletionCallback,
+                // ),
+                LitDeleteButton(
                   onPressed: _showConfirmEntryDeletionCallback,
                 ),
               ],
@@ -210,7 +223,6 @@ class _EntryDetailScreenState extends State<EntryDetailScreen>
                       backdropPhotos: backdropPhotos,
                       loading: backdropPhotosLoading,
                       diaryEntry: diaryEntry,
-                      height: widget.backdropPhotoHeight,
                     ),
                     LitScrollbar(
                       child: ScrollableColumn(
@@ -223,19 +235,17 @@ class _EntryDetailScreenState extends State<EntryDetailScreen>
                             backdropPhotos: backdropPhotos,
                             loading: backdropPhotosLoading,
                             diaryEntry: diaryEntry,
-                            height: widget.backdropPhotoHeight - 45.0,
                           ),
                           SizedBox(
                             height: 16.0,
                           ),
                           EntryDetailCard(
-                            backdropPhotoHeight: widget.backdropPhotoHeight,
                             boxLength: entriesBox.length,
                             listIndex: widget.listIndex,
                             isFirst: _isFirst,
                             isLast: _isLast,
                             diaryEntry: diaryEntry,
-                            onEditCallback: () => _onEdit(diaryEntry),
+                            onEdit: () => _onEdit(diaryEntry),
                             queryController: _hiveQueryController,
                           ),
                           _EntryDetailFooter(
@@ -343,23 +353,17 @@ class _EntryDetailFooter extends StatelessWidget {
                     : SizedBox()
               ],
             ),
-            LitGradientButton(
-              borderRadius: BorderRadius.all(
-                Radius.circular(
-                  15.0,
-                ),
-              ),
+            LitPushedThroughButton(
               boxShadow: buttonBoxShadow,
-              padding: const EdgeInsets.symmetric(
-                vertical: 12.0,
-                horizontal: 16.0,
-              ),
+
+              margin: LitEdgeInsets.button * 1.5,
               child: EllipseIcon(
                 animated: false,
                 dotColor: Colors.white,
               ),
-              accentColor: HexColor('#9B9B9B'),
-              color: HexColor('#CCCCCC'),
+              accentColor: LitColors.grey200,
+              //baackgroundColor: HexColor('#CCCCCC'),
+              backgroundColor: LitColors.grey100,
               onPressed: moreOptionsPressed,
             ),
           ],
@@ -385,19 +389,19 @@ class _BottomNavButton extends StatelessWidget {
       padding: const EdgeInsets.only(
         right: 8.0,
       ),
-      child: LitGradientButton(
-        boxShadow: const [
-          const BoxShadow(
-            blurRadius: 6.0,
-            color: Colors.black26,
-            offset: Offset(2, 2),
-            spreadRadius: -1.0,
-          )
-        ],
-        padding: const EdgeInsets.symmetric(
-          vertical: 12.0,
-          horizontal: 16.0,
-        ),
+      child: LitPushedThroughButton(
+        // boxShadow: const [
+        //   const BoxShadow(
+        //     blurRadius: 6.0,
+        //     color: Colors.black26,
+        //     offset: Offset(2, 2),
+        //     spreadRadius: -1.0,
+        //   )
+        // ],
+        // padding: const EdgeInsets.symmetric(
+        //   vertical: 12.0,
+        //   horizontal: 16.0,
+        // ),
         child: Row(
           children: [
             isPrevious
@@ -405,18 +409,15 @@ class _BottomNavButton extends StatelessWidget {
                     padding: const EdgeInsets.only(
                       right: 4.0,
                     ),
-                    child: Icon(
-                      LitIcons.chevron_left_solid,
-                      size: 14.0,
-                      color: LitTextStyles.sansSerifStyles[button].color,
+                    child: LinearNavigationIcon(
+                      mode: LitLinearNavigationMode.previous,
                     ),
                   )
                 : SizedBox(),
             Text(
-              (isPrevious
-                      ? HOMLocalizations(context).previous
-                      : HOMLocalizations(context).next)
-                  .toUpperCase(),
+              isPrevious
+                  ? HOMLocalizations(context).previous.toUpperCase()
+                  : HOMLocalizations(context).next.toUpperCase(),
               style: LitTextStyles.sansSerifStyles[button].copyWith(
                 fontSize: 13.0,
               ),
@@ -426,10 +427,8 @@ class _BottomNavButton extends StatelessWidget {
                     padding: const EdgeInsets.only(
                       left: 4.0,
                     ),
-                    child: Icon(
-                      LitIcons.chevron_right_solid,
-                      size: 14.0,
-                      color: LitTextStyles.sansSerifStyles[button].color,
+                    child: LinearNavigationIcon(
+                      mode: LitLinearNavigationMode.next,
                     ),
                   )
                 : SizedBox(),

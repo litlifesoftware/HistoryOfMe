@@ -10,24 +10,24 @@ import 'package:history_of_me/view/shared/shared.dart';
 import 'package:history_of_me/view/shared/updated_label_text.dart';
 import 'package:leitmotif/leitmotif.dart';
 
+import 'entry_detail_backdrop.dart';
+
 class EntryDetailCard extends StatefulWidget {
+  final DiaryEntry diaryEntry;
   final int listIndex;
   final int boxLength;
-  final DiaryEntry diaryEntry;
-  final void Function() onEditCallback;
-  final double backdropPhotoHeight;
   final BoxDecoration backgroundDecoration;
   final bool isFirst;
   final bool isLast;
   final HiveQueryController? queryController;
-  final double minHeight;
+
+  final void Function() onEdit;
   const EntryDetailCard({
     Key? key,
     required this.listIndex,
     required this.boxLength,
     required this.diaryEntry,
-    required this.onEditCallback,
-    required this.backdropPhotoHeight,
+    required this.onEdit,
     this.backgroundDecoration = const BoxDecoration(
       gradient: const LinearGradient(
         begin: Alignment.bottomLeft,
@@ -37,23 +37,29 @@ class EntryDetailCard extends StatefulWidget {
           1.00,
         ],
         colors: [
-          Color(0xFFf4f4f7),
-          Color(0xFFd1cdcd),
+          LitColors.white,
+          LitColors.grey300,
         ],
       ),
       borderRadius: BorderRadius.only(
-        topLeft: Radius.circular(22.0),
-        topRight: Radius.circular(22.0),
+        topLeft: Radius.circular(24.0),
+        topRight: Radius.circular(24.0),
       ),
     ),
     required this.isFirst,
     required this.isLast,
     required this.queryController,
-    this.minHeight = 574.0,
   }) : super(key: key);
 
   @override
   _EntryDetailCardState createState() => _EntryDetailCardState();
+
+  static const minHeight = 576.0;
+
+  static const margin = const EdgeInsets.symmetric(
+    vertical: 16.0,
+    horizontal: 22.0,
+  );
 }
 
 class _EntryDetailCardState extends State<EntryDetailCard> {
@@ -71,6 +77,10 @@ class _EntryDetailCardState extends State<EntryDetailCard> {
     HiveDBService().toggleDiaryEntryFavorite(widget.diaryEntry);
   }
 
+  void _onEdit() {
+    widget.onEdit();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -83,7 +93,8 @@ class _EntryDetailCardState extends State<EntryDetailCard> {
       ),
       child: ConstrainedBox(
         constraints: BoxConstraints(
-          minHeight: widget.minHeight,
+          minHeight:
+              MediaQuery.of(context).size.height - EntryDetailBackdrop.height,
         ),
         child: Column(
           children: [
@@ -94,11 +105,11 @@ class _EntryDetailCardState extends State<EntryDetailCard> {
               isFirst: widget.isFirst,
               isLast: widget.isLast,
               onToggleFavorite: _onToggleFavorite,
-              onEditCallback: widget.onEditCallback,
+              onEdit: _onEdit,
             ),
             _TextPreview(
               diaryEntry: widget.diaryEntry,
-              onEdit: widget.onEditCallback,
+              onEdit: _onEdit,
             ),
           ],
         ),
@@ -107,14 +118,16 @@ class _EntryDetailCardState extends State<EntryDetailCard> {
   }
 }
 
-class _Header extends StatefulWidget {
+/// The [EntryDetailCard]'s header element containing meta informations and
+/// the action buttons.
+class _Header extends StatelessWidget {
   final DiaryEntry diaryEntry;
   final BoxDecoration boxDecoration;
   final String diaryNumberLabel;
   final bool isFirst;
   final bool isLast;
   final void Function() onToggleFavorite;
-  final void Function() onEditCallback;
+  final void Function() onEdit;
   const _Header({
     Key? key,
     required this.diaryEntry,
@@ -123,130 +136,89 @@ class _Header extends StatefulWidget {
     required this.isFirst,
     required this.isLast,
     required this.onToggleFavorite,
-    required this.onEditCallback,
+    required this.onEdit,
   }) : super(key: key);
-
-  @override
-  __HeaderState createState() => __HeaderState();
-}
-
-class __HeaderState extends State<_Header> {
-  /// Returns the diary entry's title if available or return a fallback string
-  String get _title {
-    return widget.diaryEntry.title != initialDiaryEntryTitle
-        ? widget.diaryEntry.title
-        : HOMLocalizations(context).untitled;
-  }
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width,
-      decoration: widget.boxDecoration,
+      decoration: boxDecoration,
       child: Stack(
         children: [
           Column(
             children: [
               Padding(
-                padding: const EdgeInsets.only(
-                  top: 16.0,
-                  bottom: 4.0,
-                  left: 24.0,
-                  right: 16.0,
-                ),
+                padding: EntryDetailCard.margin,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
+                    LayoutBuilder(
+                      builder: (context, constraints) {
+                        return Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
-                              HOMLocalizations(context).entry,
-                              style:
-                                  LitTextStyles.sansSerifStyles[body].copyWith(
-                                fontSize: 16.5,
-                                letterSpacing: -0.22,
-                                fontWeight: FontWeight.w600,
-                                color: HexColor('#b2b2b2'),
-                              ),
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 8.0),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color: HexColor(
-                                    "#b2b2b2",
-                                  ),
-                                  borderRadius: BorderRadius.circular(
-                                    15.0,
-                                  ),
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                    vertical: 3.0,
-                                    horizontal: 12.0,
-                                  ),
-                                  child: Text(
-                                    //"${widget.index + 1}",
-                                    widget.diaryNumberLabel,
-                                    style: LitTextStyles.sansSerifStyles[body]
-                                        .copyWith(
-                                      fontWeight: black,
-                                      color: Colors.white,
+                            SizedBox(
+                              width: constraints.maxWidth / 2,
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    HOMLocalizations(context).entry,
+                                    style:
+                                        LitSansSerifStyles.subtitle1.copyWith(
+                                      fontWeight: FontWeight.bold,
+                                      color: LitColors.grey380,
                                     ),
                                   ),
-                                ),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 8.0),
+                                    child: LitBadge(
+                                      backgroundColor: LitColors.grey200,
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                          vertical: 1.0,
+                                          horizontal: 4.0,
+                                        ),
+                                        child: Text(
+                                          diaryNumberLabel,
+                                          style: LitSansSerifStyles.caption
+                                              .copyWith(
+                                            color: LitColors.white,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            ConstrainedBox(
+                              constraints: BoxConstraints(
+                                maxWidth: constraints.maxWidth / 2,
+                              ),
+                              child: _EditButton(
+                                constraints: constraints,
+                                onEdit: onEdit,
                               ),
                             ),
                           ],
-                        ),
-                        LitGlowingButton(
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(14.0)),
-                          padding: const EdgeInsets.symmetric(
-                            vertical: 8.0,
-                            horizontal: 18.0,
-                          ),
-                          onPressed: widget.onEditCallback,
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                  right: 4.0,
-                                ),
-                                child: Text(
-                                  HOMLocalizations(context).edit.toUpperCase(),
-                                  style: LitTextStyles.sansSerifStyles[button]
-                                      .copyWith(
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
-                              Icon(
-                                LitIcons.pencil,
-                                color: Colors.white,
-                                size: 16.0,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
+                        );
+                      },
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 4.0),
                       child: Text(
-                        _title,
-                        style: LitTextStyles.sansSerifStyles[body2].copyWith(
-                          letterSpacing: -0.52,
-                          fontWeight: FontWeight.w700,
-                          color: LitColors.darkGrey,
+                        diaryEntry.title != initialDiaryEntryTitle
+                            ? diaryEntry.title
+                            : HOMLocalizations(context).untitled,
+                        style: LitSansSerifStyles.subtitle1.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: LitColors.grey600,
                         ),
                       ),
                     ),
@@ -258,36 +230,36 @@ class __HeaderState extends State<_Header> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           UpdatedLabelText(
-                            lastUpdateTimestamp: widget.diaryEntry.lastUpdated,
+                            lastUpdateTimestamp: diaryEntry.lastUpdated,
                           ),
                           _FavoriteButton(
-                            onPressed: widget.onToggleFavorite,
-                            favorite: widget.diaryEntry.favorite,
+                            onPressed: onToggleFavorite,
+                            favorite: diaryEntry.favorite,
                           ),
                         ],
                       ),
                     ),
                     Row(
                       children: [
-                        widget.isLast
+                        isLast
                             ? Padding(
                                 padding: EdgeInsets.only(
                                   top: 4.0,
                                   bottom: 4.0,
                                   left: 0.0,
-                                  right: widget.isFirst ? 3.0 : 0,
+                                  right: isFirst ? 3.0 : 0,
                                 ),
                                 child: _MetaLabel(
                                   title: HOMLocalizations(context).latest,
                                 ),
                               )
                             : SizedBox(),
-                        widget.isFirst
+                        isFirst
                             ? Padding(
                                 padding: EdgeInsets.only(
                                   top: 4.0,
                                   bottom: 4.0,
-                                  left: widget.isLast ? 3.0 : 0.0,
+                                  left: isLast ? 3.0 : 0.0,
                                   right: 0.0,
                                 ),
                                 child: _MetaLabel(
@@ -301,9 +273,55 @@ class __HeaderState extends State<_Header> {
                 ),
               ),
               _MoodScoreIndicator(
-                moodScore: widget.diaryEntry.moodScore,
+                moodScore: diaryEntry.moodScore,
               ),
             ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _EditButton extends StatelessWidget {
+  final BoxConstraints constraints;
+  final void Function() onEdit;
+
+  const _EditButton({
+    Key? key,
+    required this.constraints,
+    required this.onEdit,
+  }) : super(key: key);
+
+  static const iconSize = 14.0;
+
+  static const spacing = 8.0;
+
+  /// Returns the text boxes' constraints.
+  BoxConstraints get _constraints => BoxConstraints(
+        maxWidth: (constraints.maxWidth / 2) - 44.0 - spacing - iconSize,
+      );
+  @override
+  Widget build(BuildContext context) {
+    return LitGlowingButton(
+      onPressed: onEdit,
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(
+            LitIcons.pencil,
+            color: Colors.white,
+            size: iconSize,
+          ),
+          SizedBox(width: spacing),
+          ConstrainedBox(
+            constraints: _constraints,
+            child: ClippedText(
+              HOMLocalizations(context).edit.toUpperCase(),
+              style: LitSansSerifStyles.button.copyWith(
+                color: Colors.white,
+              ),
+            ),
           ),
         ],
       ),
@@ -424,10 +442,7 @@ class _TextPreview extends StatelessWidget {
       //color: Colors.white,
       width: MediaQuery.of(context).size.width,
       child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 30.0,
-          vertical: 8.0,
-        ),
+        padding: EntryDetailCard.margin,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -580,7 +595,7 @@ class __MoodScoreIndicatorState extends State<_MoodScoreIndicator>
             ),
             child: Padding(
               padding: const EdgeInsets.symmetric(
-                horizontal: 30.0,
+                horizontal: 22.0,
                 vertical: 8.0,
               ),
               child: Row(
