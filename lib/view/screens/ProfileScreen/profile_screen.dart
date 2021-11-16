@@ -5,6 +5,7 @@ import 'package:history_of_me/model/user_data.dart';
 import 'package:history_of_me/view/provider/all_data_provider.dart';
 import 'package:history_of_me/view/shared/bookmark/bookmark_back_preview.dart';
 import 'package:history_of_me/view/shared/bookmark/bookmark_front_preview.dart';
+import 'package:history_of_me/view/shared/bookmark/bookmark_page_view.dart';
 import 'package:leitmotif/leitmotif.dart';
 
 import 'settings_footer.dart';
@@ -82,30 +83,9 @@ class _ProfileScreenState extends State<ProfileScreen>
                 children: [
                   Stack(
                     children: [
-                      IndexedPageView(
-                        height: 180.0,
-                        indicatorSpacingTop: 0.0,
-                        children: [
-                          BookmarkFrontPreview(
-                            userData: userData,
-                            animationController: widget.bookmarkAnimation,
-                            padding: const EdgeInsets.only(
-                              top: 16.0,
-                              left: 16.0,
-                              right: 32.0,
-                            ),
-                          ),
-                          BookmarkBackPreview(
-                            userData: userData,
-                            animationController: widget.bookmarkAnimation,
-                            padding: const EdgeInsets.only(
-                              top: 32.0,
-                              left: 32.0,
-                              right: 32.0,
-                            ),
-                          ),
-                        ],
-                        indicatorColor: LitColors.mediumGrey,
+                      BookmarkPageView(
+                        animationController: widget.bookmarkAnimation,
+                        userData: userData,
                       ),
                       _EditBookmarkButton(
                         onPressed: () => _onEditBookmark(userData),

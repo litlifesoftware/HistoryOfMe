@@ -7,7 +7,7 @@ import 'bookmark_preview_container.dart';
 class BookmarkFrontPreview extends StatelessWidget {
   final EdgeInsets padding;
   final bool transformed;
-  final UserData? userData;
+  final UserData userData;
   final AnimationController? animationController;
   const BookmarkFrontPreview({
     Key? key,

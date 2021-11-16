@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:history_of_me/model/user_data.dart';
-import 'package:history_of_me/view/shared/bookmark/bookmark_front_preview.dart';
+import 'package:history_of_me/view/shared/bookmark/bookmark_page_view.dart';
 
 class DiaryBookmarkHeader extends StatelessWidget {
-  final UserData? userData;
+  final UserData userData;
   final AnimationController bookmarkAnimation;
   const DiaryBookmarkHeader({
     Key? key,
@@ -21,19 +21,9 @@ class DiaryBookmarkHeader extends StatelessWidget {
                 color: Colors.white,
                 child: Stack(
                   children: [
-                    Align(
-                      alignment: Alignment.topCenter,
-                      child: Padding(
-                        padding: const EdgeInsets.only(
-                          left: 8.0,
-                          right: 8.0,
-                          top: 4.0,
-                        ),
-                        child: BookmarkFrontPreview(
-                          animationController: bookmarkAnimation,
-                          userData: userData,
-                        ),
-                      ),
+                    BookmarkPageView(
+                      animationController: bookmarkAnimation,
+                      userData: userData,
                     ),
                   ],
                 ),

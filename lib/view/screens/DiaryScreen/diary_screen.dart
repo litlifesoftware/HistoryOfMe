@@ -7,7 +7,7 @@ import 'package:history_of_me/controller/routes/hom_navigator.dart';
 import 'package:history_of_me/model/diary_entry.dart';
 import 'package:history_of_me/model/user_data.dart';
 import 'package:history_of_me/styles.dart';
-import 'package:history_of_me/view/shared/bookmark/bookmark_front_preview.dart';
+import 'package:history_of_me/view/shared/bookmark/bookmark_page_view.dart';
 import 'package:hive/hive.dart';
 import 'package:leitmotif/leitmotif.dart';
 import 'diary_list_view.dart';
@@ -146,10 +146,9 @@ class _EmptyDiaryView extends StatelessWidget {
           SizedBox(
             height: LitEdgeInsets.spacingTop.top,
           ),
-          BookmarkFrontPreview(
-            padding: LitEdgeInsets.card,
-            userData: userData,
+          BookmarkPageView(
             animationController: animationController,
+            userData: userData,
           ),
           _EmptyDiaryInfoCard(
             userData: userData,

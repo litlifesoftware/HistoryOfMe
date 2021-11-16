@@ -9,7 +9,7 @@ import 'dotted_design.dart';
 import 'striped_design.dart';
 
 class BookmarkFront extends StatelessWidget implements BookmarkCover {
-  final UserData? userData;
+  final UserData userData;
   final double maxWidth;
   final double radius;
   const BookmarkFront({
@@ -36,7 +36,7 @@ class BookmarkFront extends StatelessWidget implements BookmarkCover {
 }
 
 class _BookmarkFrontArt extends StatefulWidget {
-  final UserData? userData;
+  final UserData userData;
   final double radius;
   const _BookmarkFrontArt({
     Key? key,
@@ -85,7 +85,7 @@ class __BookmarkFrontArtState extends State<_BookmarkFrontArt>
             widget.radius,
           ))),
         ),
-        DesignType.values[widget.userData!.designPatternIndex] ==
+        DesignType.values[widget.userData.designPatternIndex] ==
                 DesignType.stiped
             ? StripedDesign(
                 radius: widget.radius,

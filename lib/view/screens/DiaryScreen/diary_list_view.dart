@@ -14,7 +14,7 @@ class DiaryListView extends StatelessWidget {
   final ScrollController scrollController;
   final AnimationController animationController;
   final AnimationController bookmarkAnimation;
-  final UserData? userData;
+  final UserData userData;
   final List<dynamic> diaryEntriesListSorted;
   final bool? showFavoriteEntriesOnly;
   final void Function() toggleShowFavoritesOnly;
