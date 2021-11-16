@@ -1,84 +1,92 @@
 import 'package:flutter/material.dart';
+import 'package:history_of_me/config/image_asset_names.dart';
 import 'package:history_of_me/model/user_data.dart';
 import 'package:leitmotif/leitmotif.dart';
 
-/// A container widget displaying the user's name alongside a stylized
-/// `History of` label on a color background.
-///
-/// The wrapping container will ensure no overflow will occur.
+/// A History of Me widget displaying the bookmark's title, which is derived
+/// by the provided username.
 class BookmarkTitle extends StatelessWidget {
   /// Creates a [BookmarkTitle].
-  const BookmarkTitle({
-    Key? key,
-    required this.userData,
-    this.borderRadius = const BorderRadius.only(
-      topLeft: Radius.circular(5.0),
-      bottomLeft: Radius.circular(5.0),
-    ),
-    this.alignment = Alignment.centerLeft,
-  }) : super(key: key);
 
   /// The [UserData] containing the username.
-  final UserData? userData;
+  final UserData userData;
 
   /// Specifies the surrounding [BorderRadius].
   final BorderRadiusGeometry borderRadius;
 
-  /// Specifies the alignment on the bookmark (defaults to
-  /// `Alignment.centerLeft`).
+  /// Specifies the alignment on the bookmark.
   final Alignment alignment;
+
+  const BookmarkTitle({
+    Key? key,
+    required this.userData,
+    this.borderRadius = const BorderRadius.only(
+      topLeft: Radius.circular(6.0),
+      bottomLeft: Radius.circular(6.0),
+    ),
+    this.alignment = Alignment.centerLeft,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Align(
-      alignment: alignment,
-      child: AspectRatio(
-        aspectRatio: 3 / 4,
-        child: Container(
-          decoration: BoxDecoration(
-            color: HexColor('#eae8e8'),
-            borderRadius: borderRadius,
-          ),
-          child: RotatedBox(
-            quarterTurns: 1,
-            child: Stack(
-              children: [
-                _KeyIcon(),
-                _HistoryOfLabel(userData: userData!),
-              ],
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return Align(
+          alignment: alignment,
+          child: AspectRatio(
+            aspectRatio: 3 / 4,
+            child: Container(
+              decoration: BoxDecoration(
+                color: LitColors.grey120,
+                borderRadius: borderRadius,
+              ),
+              child: Stack(
+                children: [
+                  _KeyIcon(constraints: constraints),
+                  _HistoryOfLabel(userData: userData),
+                ],
+              ),
             ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }
 
-/// A widget displaying the `History Of Me`'s key icon.
+/// A History of Me widget displaying the `History Of Me`'s key icon.
 class _KeyIcon extends StatelessWidget {
+  final BoxConstraints constraints;
+
   /// Creates a [_KeyIcon].
-  const _KeyIcon({Key? key}) : super(key: key);
+  const _KeyIcon({
+    Key? key,
+    required this.constraints,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 4.0, right: 52.0),
+      padding: const EdgeInsets.only(
+        left: 4.0,
+      ),
       child: Align(
         alignment: Alignment.center,
         child: Image(
+          color: LitColors.grey150,
           image: AssetImage(
-            "assets/images/History_Of_Me_Key_64px-01.png",
+            ImageAssetNames.keyLogo,
           ),
           fit: BoxFit.fitHeight,
           //color: Colors.black,
-          height: 24.0,
+          height: constraints.maxHeight * 0.8,
         ),
       ),
     );
   }
 }
 
-/// A widget displaying a stylized `History of [username]` label.
+/// A History of Me widget displaying a stylized `History of` label.
 class _HistoryOfLabel extends StatelessWidget {
   final UserData userData;
 
@@ -88,10 +96,18 @@ class _HistoryOfLabel extends StatelessWidget {
     required this.userData,
   }) : super(key: key);
 
+  /// A constant string stating `History` due to it being the same on all
+  /// locales.
+  static const historyLabel = "History";
+
+  /// A constant string stating `of` due to it being the same on all
+  /// locales.
+  static const ofLabel = "of";
+
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 16.0),
+    return RotatedBox(
+      quarterTurns: 1,
       child: Align(
         alignment: Alignment.centerRight,
         child: Column(
@@ -103,29 +119,29 @@ class _HistoryOfLabel extends StatelessWidget {
                 RotatedBox(
                   quarterTurns: 3,
                   child: ScaledDownText(
-                    "of",
-                    style: LitTextStyles.serif.copyWith(
+                    ofLabel,
+                    style: LitSerifStyles.caption.copyWith(
                       fontSize: 8.0,
-                      color: HexColor('#9b9b9b'),
                     ),
                     textAlign: TextAlign.center,
                   ),
                 ),
                 ScaledDownText(
-                  "History",
-                  style: LitTextStyles.serif.copyWith(
-                    fontSize: 10.0,
-                    color: HexColor('#9b9b9b'),
+                  historyLabel,
+                  style: LitSerifStyles.caption.copyWith(
+                    fontSize: 8.0,
                   ),
                   textAlign: TextAlign.center,
                 ),
               ],
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              padding: const EdgeInsets.symmetric(
+                horizontal: 8.0,
+              ),
               child: ClippedText(
-                "${userData.name}",
-                style: LitTextStyles.serif.copyWith(
+                userData.name,
+                style: LitSerifStyles.subtitle2.copyWith(
                   fontSize: 11.0,
                 ),
                 textAlign: TextAlign.center,

@@ -13,7 +13,7 @@ class BookmarkBack extends StatefulWidget implements BookmarkCover {
     Key? key,
     required this.userData,
     this.maxWidth = 400.0,
-    this.radius = 5.0,
+    this.radius = 6.0,
   }) : super(key: key);
 
   @override
