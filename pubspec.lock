@@ -315,7 +315,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "7f47c874b5f1df11f5bb3f4f85f75d68044dd14f"
+      resolved-ref: bcc8be7c3400bc10d69edbb435fa98f3e11aa208
       url: "https://github.com/litlifesoftware/leitmotif-flutter.git"
     source: git
     version: "2.0.0"
@@ -339,7 +339,7 @@ packages:
       name: lit_relative_date_time
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.1.0"
+    version: "1.2.0"
   logging:
     dependency: transitive
     description:
