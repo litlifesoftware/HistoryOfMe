@@ -38,69 +38,71 @@ class _QuoteCardState extends State<QuoteCard> {
 
   @override
   Widget build(BuildContext context) {
-    return LitElevatedCard(
+    return Padding(
+      padding: EdgeInsets.symmetric(
+        horizontal: 16.0,
+        vertical: 8.0,
+      ),
+      child: LitTitledActionCard(
+        title: HOMLocalizations(context).quote,
+        subtitle: HOMLocalizations(context).quoteSubtitleLabel,
         child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          HOMLocalizations(context).quote,
-          style: LitTextStyles.sansSerif.copyWith(
-            color: HexColor('#878787'),
-            fontSize: 22.0,
-          ),
-        ),
-        ConstrainedBox(
-          constraints: BoxConstraints(minHeight: 78.0),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(
-              vertical: 8.0,
-            ),
-            child: EditableText(
-              backgroundCursorColor: Colors.black,
-              cursorColor: LitColors.mediumGrey,
-              controller: _quoteEditingController,
-              maxLines: null,
-              focusNode: _quoteFocus,
-              style: LitTextStyles.sansSerif.copyWith(
-                height: 1.5,
-                letterSpacing: 0.32,
-              ),
-              onChanged: widget.onQuoteChanged,
-            ),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(
-            vertical: 8.0,
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                HOMLocalizations(context).by,
-                style: LitTextStyles.sansSerif.copyWith(
-                  fontSize: 13.0,
-                  fontWeight: FontWeight.w600,
-                  color: LitColors.mediumGrey.withOpacity(
-                    0.6,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            ConstrainedBox(
+              constraints: BoxConstraints(minHeight: 78.0),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  vertical: 8.0,
+                ),
+                child: EditableText(
+                  backgroundCursorColor: Colors.black,
+                  cursorColor: LitColors.mediumGrey,
+                  controller: _quoteEditingController,
+                  maxLines: null,
+                  focusNode: _quoteFocus,
+                  style: LitTextStyles.sansSerif.copyWith(
+                    height: 1.5,
+                    letterSpacing: 0.32,
                   ),
+                  onChanged: widget.onQuoteChanged,
                 ),
               ),
-              EditableText(
-                backgroundCursorColor: Colors.black,
-                cursorColor: LitColors.mediumGrey,
-                maxLines: 1,
-                controller: _authorEditingController,
-                focusNode: _authorFocus,
-                style: LitTextStyles.sansSerif.copyWith(
-                  fontWeight: FontWeight.w700,
-                ),
-                onChanged: widget.onAuthorChanged,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                vertical: 8.0,
               ),
-            ],
-          ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    HOMLocalizations(context).by,
+                    style: LitTextStyles.sansSerif.copyWith(
+                      fontSize: 13.0,
+                      fontWeight: FontWeight.w600,
+                      color: LitColors.mediumGrey.withOpacity(
+                        0.6,
+                      ),
+                    ),
+                  ),
+                  EditableText(
+                    backgroundCursorColor: Colors.black,
+                    cursorColor: LitColors.mediumGrey,
+                    maxLines: 1,
+                    controller: _authorEditingController,
+                    focusNode: _authorFocus,
+                    style: LitTextStyles.sansSerif.copyWith(
+                      fontWeight: FontWeight.w700,
+                    ),
+                    onChanged: widget.onAuthorChanged,
+                  ),
+                ],
+              ),
+            ),
+          ],
         ),
-      ],
-    ));
+      ),
+    );
   }
 }

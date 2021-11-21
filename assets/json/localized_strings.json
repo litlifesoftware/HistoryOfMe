@@ -626,5 +626,17 @@
   "diary_of": {
     "en": "Diary of",
     "de": "Tagebuch von"
+  },
+  "select_main_color_label": {
+    "en": "Select a main color",
+    "de": "Wähle eine Hauptfarbe"
+  },
+  "select_accent_color_label": {
+    "en": "Select an accent color",
+    "de": "Wähle eine Akzentfarbe"
+  },
+  "quote_subtitle_label": {
+    "en": "Express your favorite quote",
+    "de": "Wähle dein Lieblingszitat"
   }
 }

@@ -81,7 +81,7 @@ class _PrimaryColorSelectorCardState extends State<PrimaryColorSelectorCard>
   }
 
   /// Shows the [LitColorPickerDialog] to enable user input for color values.
-  void handleOnCreateColorPress() {
+  void handleCreateColor() {
     showDialog(
       context: context,
       builder: (_) => LitColorPickerDialog(
@@ -118,6 +118,22 @@ class _PrimaryColorSelectorCardState extends State<PrimaryColorSelectorCard>
     }
   }
 
+  /// Returns the `show all colors` button data.
+  ActionButtonData get showAllButtonData => ActionButtonData(
+        title: showAllColors
+            ? HOMLocalizations(context).less
+            : HOMLocalizations(context).more,
+        onPressed: toggleAllColors,
+      );
+
+  /// Returns the `toggle show all colors` button data.
+  ActionButtonData get createButtonData => ActionButtonData(
+        title: HOMLocalizations(context).create,
+        backgroundColor: LitColors.grey120,
+        accentColor: LitColors.grey120,
+        onPressed: handleCreateColor,
+      );
+
   @override
   void initState() {
     super.initState();
@@ -144,79 +160,41 @@ class _PrimaryColorSelectorCardState extends State<PrimaryColorSelectorCard>
 
   @override
   Widget build(BuildContext context) {
-    return LitElevatedCard(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            widget.cardTitle,
-            style: LitTextStyles.sansSerif.copyWith(
-              color: HexColor('#878787'),
-              fontSize: 22.0,
-            ),
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 8.0,
-                ),
-                child: UserCreatedColorGrid(
-                  additionalColorsAnimationController:
-                      _additionalColorsAnimationController,
-                  boxShadow: widget.buttonBoxShadow,
-                  onSelectColorCallback: widget.onSelectPrimaryColor,
-                  selectedColorValue: widget.selectedColorValue,
-                  showAllColors: showAllColors,
-                  userColors: widget.userCreatedColors,
-                ),
-              ),
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              LitRoundedElevatedButton(
-                color: LitColors.lightGrey,
-                boxShadow: widget.buttonBoxShadow,
-                padding: const EdgeInsets.symmetric(
-                  vertical: 6.0,
-                  horizontal: 12.0,
-                ),
-                child: Text(
-                  showAllColors
-                      ? HOMLocalizations(context).less.toUpperCase()
-                      : HOMLocalizations(context).more.toUpperCase(),
-                  style: LitSansSerifStyles.button.copyWith(
-                    color: Colors.white,
+    return Padding(
+      padding: EdgeInsets.symmetric(
+        horizontal: 16.0,
+        vertical: 8.0,
+      ),
+      child: LitTitledActionCard(
+        title: widget.cardTitle,
+        subtitle: HOMLocalizations(context).selectMainColorLabel,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 8.0,
+                  ),
+                  child: UserCreatedColorGrid(
+                    additionalColorsAnimationController:
+                        _additionalColorsAnimationController,
+                    boxShadow: widget.buttonBoxShadow,
+                    onSelectColorCallback: widget.onSelectPrimaryColor,
+                    selectedColorValue: widget.selectedColorValue,
+                    showAllColors: showAllColors,
+                    userColors: widget.userCreatedColors,
                   ),
                 ),
-                onPressed: toggleAllColors,
-              ),
-              showAllColors
-                  ? Align(
-                      alignment: Alignment.centerRight,
-                      child: LitRoundedElevatedButton(
-                        color: LitColors.lightPink,
-                        boxShadow: widget.buttonBoxShadow,
-                        padding: const EdgeInsets.symmetric(
-                          vertical: 6.0,
-                          horizontal: 12.0,
-                        ),
-                        child: Text(
-                          HOMLocalizations(context).create.toUpperCase(),
-                          style: LitSansSerifStyles.button.copyWith(
-                            color: Colors.white,
-                          ),
-                        ),
-                        onPressed: handleOnCreateColorPress,
-                      ),
-                    )
-                  : SizedBox(),
-            ],
-          )
-        ],
+              ],
+            ),
+          ],
+        ),
+        actionButtonData: showAllColors
+            ? [showAllButtonData, createButtonData]
+            : [showAllButtonData],
       ),
     );
   }

@@ -29,14 +29,20 @@ class _PatternConfigCardState extends State<PatternConfigCard> {
 
   @override
   Widget build(BuildContext context) {
-    return LitElevatedCard(
-      child: LitSlider(
-        displayValue: _showMetaData,
-        displayRangeBadges: _showMetaData,
-        max: widget.max.toDouble(),
-        min: widget.min.toDouble(),
-        onChanged: widget.onPatternSliderChange,
-        value: widget.patternValue!.toDouble(),
+    return Padding(
+      padding: EdgeInsets.symmetric(
+        horizontal: 16.0,
+        vertical: 8.0,
+      ),
+      child: LitTitledActionCard(
+        child: LitSlider(
+          displayValue: _showMetaData,
+          displayRangeBadges: _showMetaData,
+          max: widget.max.toDouble(),
+          min: widget.min.toDouble(),
+          onChanged: widget.onPatternSliderChange,
+          value: widget.patternValue!.toDouble(),
+        ),
       ),
     );
   }

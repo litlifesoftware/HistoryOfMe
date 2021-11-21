@@ -647,4 +647,16 @@ class HOMLocalizations {
   String get diaryOf {
     return getValue("diary_of");
   }
+
+  String get selectMainColorLabel {
+    return getValue("select_main_color_label");
+  }
+
+  String get selectAccentColorLabel {
+    return getValue("select_accent_color_label");
+  }
+
+  String get quoteSubtitleLabel {
+    return getValue("quote_subtitle_label");
+  }
 }

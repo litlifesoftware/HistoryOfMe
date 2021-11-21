@@ -332,6 +332,12 @@ class _BookmarkEditingScreenState extends State<BookmarkEditingScreen>
                                     onStripeSliderChange: onStripeSliderChange,
                                     onDotsSliderChange: onDotsSliderChange,
                                   ),
+                                  QuoteCard(
+                                    initialAuthor: _quoteAuthor,
+                                    initialQuote: _quote,
+                                    onAuthorChanged: setQuoteAuthor,
+                                    onQuoteChanged: setQuote,
+                                  ),
                                   PrimaryColorSelectorCard(
                                     selectedColorValue: _primaryColor,
                                     onSelectPrimaryColor: _setPrimaryColor,
@@ -340,15 +346,7 @@ class _BookmarkEditingScreenState extends State<BookmarkEditingScreen>
                                         HOMLocalizations(context).mainColor,
                                     onAddColorError: _onAddColorError,
                                   ),
-                                  QuoteCard(
-                                    initialAuthor: _quoteAuthor,
-                                    initialQuote: _quote,
-                                    onAuthorChanged: setQuoteAuthor,
-                                    onQuoteChanged: setQuote,
-                                  ),
                                   SecondaryColorSelectorCard(
-                                    cardTitle:
-                                        HOMLocalizations(context).accentColor,
                                     userCreatedColors: userColors,
                                     selectedSecondaryColorValue:
                                         _secondaryColor,
