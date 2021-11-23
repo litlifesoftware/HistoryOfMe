@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:history_of_me/controller/database/hive_db_service.dart';
 import 'package:history_of_me/controller/localization/hom_localizations.dart';
@@ -61,6 +63,10 @@ class _EntryEditingScreenState extends State<EntryEditingScreen>
 
   late LitRouteController _routeController;
 
+  late Timer _saveDraftTimer;
+
+  late LitSnackbarController _savedSnackbarContr;
+
   /// Syncs the editing controllers' text input with the corresponding state
   /// values to check for any changes made to the inital values.
   ///
@@ -93,7 +99,7 @@ class _EntryEditingScreenState extends State<EntryEditingScreen>
     return (_titleChanged || _contentChanged || _moodScoreChanged);
   }
 
-  void _saveChanges() {
+  Future<void> _saveChanges() async {
     // Verify the title has been modified (does not equal the localized string).
     String title =
         (_titleEditingController.text != HOMLocalizations(context).untitled)
@@ -111,6 +117,7 @@ class _EntryEditingScreenState extends State<EntryEditingScreen>
       backdropPhotoId: widget.diaryEntry.backdropPhotoId,
     );
     HiveDBService().updateDiaryEntry(updatedDiaryEntry);
+    if (DEBUG) print('Saved changes on current diary entry');
   }
 
   void _handleDiscardDraft() {
@@ -170,6 +177,13 @@ class _EntryEditingScreenState extends State<EntryEditingScreen>
     _fadeInAnimationController.forward();
     // Allow editing the entry at the start.
     _contentEditFocusNode.requestFocus();
+
+    _saveDraftTimer = Timer.periodic(
+      Duration(seconds: 180),
+      (_) => {_saveChanges(), _savedSnackbarContr.showSnackBar()},
+    );
+
+    _savedSnackbarContr = LitSnackbarController();
   }
 
   @override
@@ -183,7 +197,10 @@ class _EntryEditingScreenState extends State<EntryEditingScreen>
   @override
   void dispose() {
     _fadeInAnimationController.dispose();
-
+    _contentEditFocusNode.dispose();
+    _contentEditingController.dispose();
+    _scrollController.dispose();
+    _saveDraftTimer.cancel();
     super.dispose();
   }
 
@@ -204,6 +221,14 @@ class _EntryEditingScreenState extends State<EntryEditingScreen>
               showUnsavedBadge: _isChanged(dbDiaryEntry),
             ),
           ),
+          snackbars: [
+            LitIconSnackbar(
+              snackBarController: _savedSnackbarContr,
+              text: HOMLocalizations(context).diaryEntrySavedDescr,
+              title: HOMLocalizations(context).savedLabel,
+              iconData: LitIcons.check,
+            )
+          ],
           body: SafeArea(
             child: Stack(
               children: [

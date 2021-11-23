@@ -659,4 +659,12 @@ class HOMLocalizations {
   String get quoteSubtitleLabel {
     return getValue("quote_subtitle_label");
   }
+
+  String get diaryEntrySavedDescr {
+    return getValue("diary_entry_saved_descr");
+  }
+
+  String get savedLabel {
+    return getValue("saved_label");
+  }
 }

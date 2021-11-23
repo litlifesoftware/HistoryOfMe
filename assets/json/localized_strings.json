@@ -638,5 +638,13 @@
   "quote_subtitle_label": {
     "en": "Express your favorite quote",
     "de": "Wähle dein Lieblingszitat"
+  },
+  "diary_entry_saved_descr": {
+    "en": "Your diary entry has been saved.",
+    "de": "Dein Tagebucheintrag wurde gespeichert."
+  },
+  "saved_label": {
+    "en": "Saved",
+    "de": "Gespeichert"
   }
 }
