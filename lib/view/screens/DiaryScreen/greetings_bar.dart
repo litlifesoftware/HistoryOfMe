@@ -23,9 +23,8 @@ class GreetingsBar extends StatelessWidget {
         child: Text(
           HOMLocalizations(context).howAreYouToday,
           textAlign: TextAlign.center,
-          style: LitTextStyles.sansSerif.copyWith(
-            fontSize: 16.0,
-            fontWeight: FontWeight.w700,
+          style: LitSansSerifStyles.subtitle2.copyWith(
+            fontWeight: FontWeight.bold,
           ),
         ),
       ),
