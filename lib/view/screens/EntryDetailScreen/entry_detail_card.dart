@@ -451,12 +451,7 @@ class _TextPreview extends StatelessWidget {
               child: Text(
                 DateTime.parse(diaryEntry.date)
                     .formatAsLocalizedDateWithWeekday(context),
-                style: LitTextStyles.sansSerif.copyWith(
-                  fontSize: 15.4,
-                  letterSpacing: 0.15,
-                  fontWeight: FontWeight.w600,
-                  color: HexColor('#c6c6c6'),
-                ),
+                style: LitSansSerifStyles.subtitle2,
               ),
             ),
             Padding(
@@ -469,12 +464,9 @@ class _TextPreview extends StatelessWidget {
                   return diaryEntry.content.isNotEmpty
                       ? Text(
                           diaryEntry.content,
-                          style: LitTextStyles.sansSerif.copyWith(
-                            fontSize: 15.5,
-                            letterSpacing: -0.09,
-                            fontWeight: FontWeight.w600,
-                            height: 1.7,
-                            color: HexColor('#939393'),
+                          style: LitSansSerifStyles.body2.copyWith(
+                            height: 1.5,
+                            letterSpacing: 0.5,
                           ),
                         )
                       : _NoContentAvailableCard(
