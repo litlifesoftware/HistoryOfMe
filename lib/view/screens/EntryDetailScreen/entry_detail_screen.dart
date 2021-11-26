@@ -418,9 +418,7 @@ class _BottomNavButton extends StatelessWidget {
               isPrevious
                   ? HOMLocalizations(context).previous.toUpperCase()
                   : HOMLocalizations(context).next.toUpperCase(),
-              style: LitTextStyles.sansSerifStyles[button].copyWith(
-                fontSize: 13.0,
-              ),
+              style: LitSansSerifStyles.button,
             ),
             !isPrevious
                 ? Padding(

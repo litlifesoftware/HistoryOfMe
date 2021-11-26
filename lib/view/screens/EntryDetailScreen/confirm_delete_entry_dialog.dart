@@ -36,6 +36,7 @@ class _ConfirmDeleteEntryDialogState extends State<ConfirmDeleteEntryDialog> {
           vertical: 16.0,
           horizontal: 16.0,
         ),
+        //TODO: Implement LitDescriptionTextBox
         child: LayoutBuilder(
           builder: (context, constraints) {
             return Row(
