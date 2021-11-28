@@ -30,6 +30,8 @@
 .pub-cache/
 .pub/
 /build/
+# Production APK/bundle export directory
+/dist/
 
 # Web related
 lib/generated_plugin_registrant.dart
