@@ -91,7 +91,8 @@ class _EntryEditingScreenState extends State<EntryEditingScreen>
     });
   }
 
-  bool _isChanged(DiaryEntry databaseEntry) {
+  /// Checks whether the user has submitted any unsaved changes.
+  bool _isUnsaved(DiaryEntry databaseEntry) {
     bool _titleChanged =
         _title != databaseEntry.title && !(_title == initialDiaryEntryTitle);
     bool _contentChanged = _content != databaseEntry.content;
@@ -149,6 +150,15 @@ class _EntryEditingScreenState extends State<EntryEditingScreen>
         text: widget.diaryEntry.title != initialDiaryEntryTitle
             ? widget.diaryEntry.title
             : fallbackValue);
+  }
+
+  Future<bool> handlePopAction(bool isChanged) {
+    if (isChanged) {
+      _handleDiscardDraft();
+      return Future.value(false);
+    } else {
+      return Future.value(true);
+    }
   }
 
   @override
@@ -210,122 +220,126 @@ class _EntryEditingScreenState extends State<EntryEditingScreen>
       valueListenable: HiveDBService().getDiaryEntries(),
       builder: (BuildContext context, Box<DiaryEntry> entriesBox, Widget? _) {
         final DiaryEntry dbDiaryEntry = entriesBox.get(widget.diaryEntry.uid)!;
-        return LitScaffold(
-          appBar: FixedOnScrollAppbar(
-            scrollController: _scrollController,
-            backgroundColor: Colors.white,
-            shouldNavigateBack: !_isChanged(dbDiaryEntry),
-            onInvalidNavigation: _handleDiscardDraft,
-            child: EditableItemMetaInfo(
-              lastUpdateTimestamp: dbDiaryEntry.lastUpdated,
-              showUnsavedBadge: _isChanged(dbDiaryEntry),
+        return WillPopScope(
+          onWillPop: () => handlePopAction(_isUnsaved(dbDiaryEntry)),
+          child: LitScaffold(
+            appBar: FixedOnScrollAppbar(
+              scrollController: _scrollController,
+              backgroundColor: Colors.white,
+              shouldNavigateBack: !_isUnsaved(dbDiaryEntry),
+              onInvalidNavigation: _handleDiscardDraft,
+              child: EditableItemMetaInfo(
+                lastUpdateTimestamp: dbDiaryEntry.lastUpdated,
+                showUnsavedBadge: _isUnsaved(dbDiaryEntry),
+              ),
             ),
-          ),
-          snackbars: [
-            LitIconSnackbar(
-              snackBarController: _savedSnackbarContr,
-              text: HOMLocalizations(context).diaryEntrySavedDescr,
-              title: HOMLocalizations(context).savedLabel,
-              iconData: LitIcons.check,
-            )
-          ],
-          body: SafeArea(
-            child: Stack(
-              children: [
-                LitScrollbar(
-                  scrollController: _scrollController,
-                  child: ScrollableColumn(
-                    controller: _scrollController,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                          vertical: 16.0,
-                        ),
-                        child: Column(
-                          children: [
-                            AnimatedUpdatedLabel(
-                              lastUpdateTimestamp: dbDiaryEntry.lastUpdated,
-                            ),
-                            EditableTitleHeader(
-                              textEditingController: _titleEditingController,
-                              focusNode: _titleEditFocusNode,
-                              animationController: _fadeInAnimationController,
-                            ),
-                            _DiaryContentInput(
-                              contentEditController: _contentEditingController,
-                              contentEditFocusNode: _contentEditFocusNode,
-                              fadeInAnimationController:
-                                  _fadeInAnimationController,
-                            ),
-                          ],
-                        ),
-                      ),
-                      LitGradientCard(
-                        boxShadow: [
-                          BoxShadow(
-                            blurRadius: 8.0,
-                            color: Colors.black38,
-                            offset: Offset(-4.0, 2.0),
-                            spreadRadius: 1.0,
-                          )
-                        ],
-                        borderRadius: const BorderRadius.all(Radius.zero),
-                        child: Padding(
-                          padding: const EdgeInsets.only(
-                            bottom: 16.0,
-                            top: 4.0,
-                            left: 16.0,
-                            right: 16.0,
+            snackbars: [
+              LitIconSnackbar(
+                snackBarController: _savedSnackbarContr,
+                text: HOMLocalizations(context).diaryEntrySavedDescr,
+                title: HOMLocalizations(context).savedLabel,
+                iconData: LitIcons.check,
+              )
+            ],
+            body: SafeArea(
+              child: Stack(
+                children: [
+                  LitScrollbar(
+                    scrollController: _scrollController,
+                    child: ScrollableColumn(
+                      controller: _scrollController,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 16.0,
                           ),
                           child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                  bottom: 24.0,
-                                  top: 16.0,
-                                  left: 4.0,
-                                  right: 4.0,
-                                ),
-                                child: Text(
-                                  HOMLocalizations(context)
-                                      .yourMoodWas
-                                      .toUpperCase(),
-                                  style: LitSansSerifStyles.subtitle2,
-                                ),
+                              AnimatedUpdatedLabel(
+                                lastUpdateTimestamp: dbDiaryEntry.lastUpdated,
                               ),
-                              LitSliderCard(
-                                padding: const EdgeInsets.symmetric(),
-                                value: _moodScore,
-                                onChanged: _onMoodScoreChanged,
-                                activeTrackColor: Color.lerp(
-                                  LitColors.lightRed,
-                                  Color(0xFFbee5be),
-                                  _moodScore,
-                                )!,
-                                valueTitleText: MoodTranslationController(
-                                  moodScore: _moodScore,
-                                  context: context,
-                                ).uppercaseLabel,
-                                min: 0.0,
-                                max: 1.0,
+                              EditableTitleHeader(
+                                textEditingController: _titleEditingController,
+                                focusNode: _titleEditFocusNode,
+                                animationController: _fadeInAnimationController,
+                              ),
+                              _DiaryContentInput(
+                                contentEditController:
+                                    _contentEditingController,
+                                contentEditFocusNode: _contentEditFocusNode,
+                                fadeInAnimationController:
+                                    _fadeInAnimationController,
                               ),
                             ],
                           ),
                         ),
-                      )
-                    ],
+                        LitGradientCard(
+                          boxShadow: [
+                            BoxShadow(
+                              blurRadius: 8.0,
+                              color: Colors.black38,
+                              offset: Offset(-4.0, 2.0),
+                              spreadRadius: 1.0,
+                            )
+                          ],
+                          borderRadius: const BorderRadius.all(Radius.zero),
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                              bottom: 16.0,
+                              top: 4.0,
+                              left: 16.0,
+                              right: 16.0,
+                            ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                    bottom: 24.0,
+                                    top: 16.0,
+                                    left: 4.0,
+                                    right: 4.0,
+                                  ),
+                                  child: Text(
+                                    HOMLocalizations(context)
+                                        .yourMoodWas
+                                        .toUpperCase(),
+                                    style: LitSansSerifStyles.subtitle2,
+                                  ),
+                                ),
+                                LitSliderCard(
+                                  padding: const EdgeInsets.symmetric(),
+                                  value: _moodScore,
+                                  onChanged: _onMoodScoreChanged,
+                                  activeTrackColor: Color.lerp(
+                                    LitColors.lightRed,
+                                    Color(0xFFbee5be),
+                                    _moodScore,
+                                  )!,
+                                  valueTitleText: MoodTranslationController(
+                                    moodScore: _moodScore,
+                                    context: context,
+                                  ).uppercaseLabel,
+                                  min: 0.0,
+                                  max: 1.0,
+                                ),
+                              ],
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
                   ),
-                ),
-                PurplePinkSaveButton(
-                  disabled: !_isChanged(dbDiaryEntry),
-                  onSaveChanges: _saveChanges,
-                ),
-              ],
+                  PurplePinkSaveButton(
+                    disabled: !_isUnsaved(dbDiaryEntry),
+                    onSaveChanges: _saveChanges,
+                  ),
+                ],
+              ),
             ),
           ),
         );
