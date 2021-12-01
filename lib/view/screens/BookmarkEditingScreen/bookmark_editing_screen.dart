@@ -144,11 +144,8 @@ class _BookmarkEditingScreenState extends State<BookmarkEditingScreen>
     );
   }
 
-  /// Checks if there has been changes submitted by the user.
-  ///
-  /// Evaluates whether the state values are diffenent from the provided
-  /// [UserData] object.
-  bool _userDataChanged(UserData other) {
+  /// Checks whether the user submitted any unsaved changes.
+  bool _isUnsaved(UserData other) {
     if (_primaryColor != other.primaryColor) {
       return true;
     }
@@ -204,6 +201,15 @@ class _BookmarkEditingScreenState extends State<BookmarkEditingScreen>
     _snackbarController.showSnackBar();
   }
 
+  Future<bool> handlePopAction(bool isChanged) {
+    if (isChanged) {
+      _handleDiscardDraft();
+      return Future.value(false);
+    } else {
+      return Future.value(true);
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -237,137 +243,142 @@ class _BookmarkEditingScreenState extends State<BookmarkEditingScreen>
       valueListenable: HiveDBService().getUserData(),
       builder: (BuildContext context, Box<UserData> userDataBox, Widget? _) {
         UserData updatedUserData = userDataBox.getAt(0)!;
-        return LitScaffold(
-          appBar: FixedOnScrollAppbar(
-            scrollController: _scrollController,
-            backgroundColor: Colors.white,
-            child: EditableItemMetaInfo(
-              lastUpdateTimestamp: updatedUserData.lastUpdated,
-              showUnsavedBadge: _userDataChanged(updatedUserData),
+        return WillPopScope(
+          onWillPop: () => handlePopAction(_isUnsaved(updatedUserData)),
+          child: LitScaffold(
+            appBar: FixedOnScrollAppbar(
+              scrollController: _scrollController,
+              backgroundColor: Colors.white,
+              child: EditableItemMetaInfo(
+                lastUpdateTimestamp: updatedUserData.lastUpdated,
+                showUnsavedBadge: _isUnsaved(updatedUserData),
+              ),
+              shouldNavigateBack: !_isUnsaved(updatedUserData),
+              onInvalidNavigation: _handleDiscardDraft,
             ),
-            shouldNavigateBack: !_userDataChanged(updatedUserData),
-            onInvalidNavigation: _handleDiscardDraft,
-          ),
-          snackbars: [
-            LitIconSnackbar(
-              snackBarController: _snackbarController,
-              text: HOMLocalizations(context).colorAlreadyExists,
-              iconData: LitIcons.info,
-            ),
-          ],
-          body: LayoutBuilder(
-            builder: (context, constraints) {
-              return Stack(
-                children: [
-                  LitScrollbar(
-                    child: ScrollableColumn(
-                      controller: _scrollController,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(
-                            bottom: 16.0,
-                          ),
-                          child: Column(
-                            children: [
-                              IndexedPageView(
-                                height: 148.0,
-                                indicatorSpacingTop: 0.0,
-                                indicatorColor: LitColors.mediumGrey,
-                                children: [
-                                  BookmarkFrontPreview(
-                                    transformed: false,
-                                    userData: _mapUserData(
-                                        updatedUserData.lastUpdated),
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 16.0,
-                                      vertical: 4.0,
+            snackbars: [
+              LitIconSnackbar(
+                snackBarController: _snackbarController,
+                text: HOMLocalizations(context).colorAlreadyExists,
+                iconData: LitIcons.info,
+              ),
+            ],
+            body: LayoutBuilder(
+              builder: (context, constraints) {
+                return Stack(
+                  children: [
+                    LitScrollbar(
+                      child: ScrollableColumn(
+                        controller: _scrollController,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(
+                              bottom: 16.0,
+                            ),
+                            child: Column(
+                              children: [
+                                IndexedPageView(
+                                  height: 148.0,
+                                  indicatorSpacingTop: 0.0,
+                                  indicatorColor: LitColors.mediumGrey,
+                                  children: [
+                                    BookmarkFrontPreview(
+                                      transformed: false,
+                                      userData: _mapUserData(
+                                          updatedUserData.lastUpdated),
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 16.0,
+                                        vertical: 4.0,
+                                      ),
                                     ),
-                                  ),
-                                  BookmarkBackPreview(
-                                    transformed: false,
-                                    userData: _mapUserData(
-                                        updatedUserData.lastUpdated),
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 16.0,
-                                      vertical: 4.0,
+                                    BookmarkBackPreview(
+                                      transformed: false,
+                                      userData: _mapUserData(
+                                          updatedUserData.lastUpdated),
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 16.0,
+                                        vertical: 4.0,
+                                      ),
+                                    )
+                                  ],
+                                ),
+                                LitToggleButtonGroup(
+                                  selectedValue: _designPattern,
+                                  onSelectCallback: setDesignPattern,
+                                  items: [
+                                    LitToggleButtonGroupItemData(
+                                      label: HOMLocalizations(context).striped,
+                                      value: 0,
                                     ),
-                                  )
-                                ],
-                              ),
-                              LitToggleButtonGroup(
-                                selectedValue: _designPattern,
-                                onSelectCallback: setDesignPattern,
-                                items: [
-                                  LitToggleButtonGroupItemData(
-                                    label: HOMLocalizations(context).striped,
-                                    value: 0,
-                                  ),
-                                  LitToggleButtonGroupItemData(
-                                    label: HOMLocalizations(context).dotted,
-                                    value: 1,
-                                  ),
-                                ],
-                              ),
-                            ],
+                                    LitToggleButtonGroupItemData(
+                                      label: HOMLocalizations(context).dotted,
+                                      value: 1,
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                        ValueListenableBuilder(
-                          valueListenable:
-                              HiveDBService().getUserCreatedColors(),
-                          builder: (BuildContext context,
-                              Box<UserCreatedColor> colorsBox, Widget? _) {
-                            List<UserCreatedColor> userColors =
-                                colorsBox.values.toList();
+                          ValueListenableBuilder(
+                            valueListenable:
+                                HiveDBService().getUserCreatedColors(),
+                            builder: (BuildContext context,
+                                Box<UserCreatedColor> colorsBox, Widget? _) {
+                              List<UserCreatedColor> userColors =
+                                  colorsBox.values.toList();
 
-                            return ConstrainedBox(
-                              constraints: BoxConstraints(
-                                  minHeight:
-                                      MediaQuery.of(context).size.height),
-                              child: Column(
-                                children: [
-                                  _ConfigCardBuilder(
-                                    designPattern: _designPattern,
-                                    dotSize: _dotSize,
-                                    stripeCount: _stripeCount,
-                                    onStripeSliderChange: onStripeSliderChange,
-                                    onDotsSliderChange: onDotsSliderChange,
-                                  ),
-                                  QuoteCard(
-                                    initialAuthor: _quoteAuthor,
-                                    initialQuote: _quote,
-                                    onAuthorChanged: setQuoteAuthor,
-                                    onQuoteChanged: setQuote,
-                                  ),
-                                  PrimaryColorSelectorCard(
-                                    selectedColorValue: _primaryColor,
-                                    onSelectPrimaryColor: _setPrimaryColor,
-                                    userCreatedColors: userColors,
-                                    cardTitle:
-                                        HOMLocalizations(context).mainColor,
-                                    onAddColorError: _onAddColorError,
-                                  ),
-                                  SecondaryColorSelectorCard(
-                                    userCreatedColors: userColors,
-                                    selectedSecondaryColorValue:
-                                        _secondaryColor,
-                                    onSelectSecondaryColor: _setSecondaryColor,
-                                  ),
-                                  SizedBox(height: 32.0),
-                                ],
-                              ),
-                            );
-                          },
-                        )
-                      ],
+                              return ConstrainedBox(
+                                constraints: BoxConstraints(
+                                    minHeight:
+                                        MediaQuery.of(context).size.height),
+                                child: Column(
+                                  children: [
+                                    _ConfigCardBuilder(
+                                      designPattern: _designPattern,
+                                      dotSize: _dotSize,
+                                      stripeCount: _stripeCount,
+                                      onStripeSliderChange:
+                                          onStripeSliderChange,
+                                      onDotsSliderChange: onDotsSliderChange,
+                                    ),
+                                    QuoteCard(
+                                      initialAuthor: _quoteAuthor,
+                                      initialQuote: _quote,
+                                      onAuthorChanged: setQuoteAuthor,
+                                      onQuoteChanged: setQuote,
+                                    ),
+                                    PrimaryColorSelectorCard(
+                                      selectedColorValue: _primaryColor,
+                                      onSelectPrimaryColor: _setPrimaryColor,
+                                      userCreatedColors: userColors,
+                                      cardTitle:
+                                          HOMLocalizations(context).mainColor,
+                                      onAddColorError: _onAddColorError,
+                                    ),
+                                    SecondaryColorSelectorCard(
+                                      userCreatedColors: userColors,
+                                      selectedSecondaryColorValue:
+                                          _secondaryColor,
+                                      onSelectSecondaryColor:
+                                          _setSecondaryColor,
+                                    ),
+                                    SizedBox(height: 32.0),
+                                  ],
+                                ),
+                              );
+                            },
+                          )
+                        ],
+                      ),
                     ),
-                  ),
-                  PurplePinkSaveButton(
-                    disabled: !_userDataChanged(updatedUserData),
-                    onSaveChanges: _saveChanges,
-                  )
-                ],
-              );
-            },
+                    PurplePinkSaveButton(
+                      disabled: !_isUnsaved(updatedUserData),
+                      onSaveChanges: _saveChanges,
+                    )
+                  ],
+                );
+              },
+            ),
           ),
         );
       },
