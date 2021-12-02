@@ -218,7 +218,7 @@ class _Header extends StatelessWidget {
                             : HOMLocalizations(context).untitled,
                         style: LitSansSerifStyles.subtitle1.copyWith(
                           fontWeight: FontWeight.bold,
-                          color: LitColors.grey600,
+                          color: LitColors.grey400,
                         ),
                       ),
                     ),
