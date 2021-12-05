@@ -85,13 +85,21 @@ class _EntryDetailScreenState extends State<EntryDetailScreen>
     );
   }
 
-  void _showConfirmEntryDeletionCallback() {
+  void _onDeleteEntry() {
+    LitRouteController(context).clearNavigationStack();
+    HiveDBService().deleteDiaryEntry(widget.diaryEntryUid);
+  }
+
+  void _showConfirmDeleteDialog() {
     showDialog(
       context: context,
-      builder: (_) => ConfirmDeleteEntryDialog(
-        //index: widget.index,
-        diaryEntryUid: widget.diaryEntryUid,
+      builder: (_) => ConfirmDeleteDialog(
+        onDelete: _onDeleteEntry,
       ),
+      // ConfirmDeleteEntryDialog(
+      //   //index: widget.index,
+      //   diaryEntryUid: widget.diaryEntryUid,
+      // ),
     );
   }
 
@@ -211,7 +219,7 @@ class _EntryDetailScreenState extends State<EntryDetailScreen>
                 //   onPressed: _showConfirmEntryDeletionCallback,
                 // ),
                 LitDeleteButton(
-                  onPressed: _showConfirmEntryDeletionCallback,
+                  onPressed: _showConfirmDeleteDialog,
                 ),
               ],
             ),
