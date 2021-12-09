@@ -32,8 +32,20 @@ class AppLocalizations {
     AppLocalizationsDe.languageCode: AppLocalizationsDe.values,
   };
 
-  /// Returns the currently implemented languages as their two-letter code.
-  static List<String> languages() => _localizedValues.keys.toList();
+  /// Returns the currently implemented languages inside the localization map
+  /// as their key.
+  static List<String> get languages => _localizedValues.keys.toList();
+
+  /// Returns a list of all supported locales.
+  ///
+  /// This list can be provided to the root [MaterialApp] as `supportedLocales`
+  /// member value.
+  static const supportedLocales = const [
+    // English (no contry code)
+    const Locale(AppLocalizationsEn.languageCode),
+    // German (no contry code)
+    const Locale(AppLocalizationsDe.languageCode),
+  ];
 
   String localizeValue(String localizationKey) {
     return _localizedValues[locale.languageCode]![localizationKey]!;

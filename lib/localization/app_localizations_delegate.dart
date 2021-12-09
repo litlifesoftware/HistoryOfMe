@@ -9,7 +9,7 @@ class AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
 
   @override
   bool isSupported(Locale locale) =>
-      AppLocalizations.languages().contains(locale.languageCode);
+      AppLocalizations.languages.contains(locale.languageCode);
 
   @override
   Future<AppLocalizations> load(Locale locale) {
