@@ -9,6 +9,8 @@ import 'package:lit_localization_service/lit_localization_service.dart';
 import 'package:leitmotif/leitmotif.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
+import 'localization.dart';
+
 /// The main Flutter widget of `HistoryOfMe`.
 ///
 /// It's main purpose is to initialize the [MaterialApp] widget and to load the
@@ -30,6 +32,13 @@ class App extends StatefulWidget {
   /// The localization file's location.
   static const String localizationFilePath =
       "assets/json/localized_strings.json";
+
+  static const supportedLocales = AppLocalizations.supportedLocales;
+
+  static const supportedLanguages = const [
+    AppLocalizationsEn.languageCode,
+    AppLocalizationsDe.languageCode,
+  ];
 
   /// Restarts the whole application by creating a new [UniqueKey] on the
   /// uppermost widget ([MaterialApp]).
@@ -112,29 +121,25 @@ class _AppState extends State<App> {
           primaryColorBrightness: Brightness.light,
 
           //Sliver scroll physics color
-          accentColor: Colors.transparent,
-          accentColorBrightness: Brightness.light,
+          // accentColor: Colors.transparent,
+          // accentColorBrightness: Brightness.light,
         ),
-        localizationsDelegates: [
+        localizationsDelegates: const [
           LitLocalizationServiceDelegate(
             jsonAssetURL: App.localizationFilePath,
-            supportedLanguages: ['en', 'de'],
+            supportedLanguages: App.supportedLanguages,
             debug: true,
           ),
-          LeitmotifLocalizationsDelegate(),
+          AppLocalizations.delegate,
+          LeitmotifLocalizations.delegate,
           GlobalMaterialLocalizations.delegate,
           GlobalWidgetsLocalizations.delegate,
           GlobalCupertinoLocalizations.delegate,
         ],
 
         /// Supported languages
-        supportedLocales: [
-          // English (no contry code)
-          const Locale('en', ''),
-          // German (no contry code)
-          const Locale('de', ''),
-        ],
-        title: 'History of Me',
+        supportedLocales: App.supportedLocales,
+        title: App.appName,
         home: DatabaseStateScreenBuilder(
           localizationsAssetURL: App.localizationFilePath,
         ),
