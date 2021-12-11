@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:history_of_me/controller/database/hive_db_service.dart';
 import 'package:history_of_me/controller/database/hive_query_controller.dart';
-import 'package:history_of_me/controller/localization/hom_localizations.dart';
+import 'package:history_of_me/localization.dart';
 import 'package:history_of_me/controller/routes/hom_navigator.dart';
 import 'package:history_of_me/model/diary_entry.dart';
 import 'package:history_of_me/model/user_data.dart';
@@ -87,7 +87,8 @@ class _DiaryScreenState extends State<DiaryScreen>
             backgroundColor: Color(userData!.primaryColor),
             onPressed: _showCreateEntryDialog,
             scrollController: _scrollController,
-            label: HOMLocalizations(context).compose.toUpperCase(),
+            label:
+                AppLocalizations.of(context).composeButtonLabel.toUpperCase(),
             icon: LitIcons.plus,
             blurred: false,
           ),
@@ -174,14 +175,14 @@ class _EmptyDiaryInfoCard extends StatelessWidget {
     return Padding(
       padding: LitEdgeInsets.card,
       child: LitTitledActionCard(
-        title: HOMLocalizations(context).createEntry,
-        subtitle: HOMLocalizations(context).noEntriesFound,
+        title: AppLocalizations.of(context).createEntryButtonLabel,
+        subtitle: AppLocalizations.of(context).emptyDiarySubtitle,
         child: LitDescriptionTextBox(
-          text: HOMLocalizations(context).createFirstEntryDescr,
+          text: AppLocalizations.of(context).emptyDiaryBody,
         ),
         actionButtonData: [
           ActionButtonData(
-            title: HOMLocalizations(context).createEntry,
+            title: AppLocalizations.of(context).createEntryButtonLabel,
             style: LitSansSerifStyles.button.copyWith(
               color: LitColors.white,
             ),
