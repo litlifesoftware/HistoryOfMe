@@ -70,4 +70,52 @@ class AppLocalizations {
   String get emptyDiarySubtitle {
     return localizeValue(AppLocalizationsKeys.emptyDiarySubtitle);
   }
+
+  String get personalizeLabel {
+    return localizeValue(AppLocalizationsKeys.personalizeLabel);
+  }
+
+  String get organizeLabel {
+    return localizeValue(AppLocalizationsKeys.organizeLabel);
+  }
+
+  String get browseDiaryTitle {
+    return localizeValue(AppLocalizationsKeys.browseDiaryTitle);
+  }
+
+  String get browseDiaryDescr {
+    return localizeValue(AppLocalizationsKeys.browseDiaryDesc);
+  }
+
+  String get reliveLabel {
+    return localizeValue(AppLocalizationsKeys.reliveLabel);
+  }
+
+  String get privateLabel {
+    return localizeValue(AppLocalizationsKeys.privateLabel);
+  }
+
+  String get readDiaryTitle {
+    return localizeValue(AppLocalizationsKeys.readDiaryTitle);
+  }
+
+  String get readDiaryDescr {
+    return localizeValue(AppLocalizationsKeys.readDiaryDescr);
+  }
+
+  String get privacyLabel {
+    return localizeValue(AppLocalizationsKeys.privacyLabel);
+  }
+
+  String get privacyDescr {
+    return localizeValue(AppLocalizationsKeys.privacyDescr);
+  }
+
+  String get customizeBookmarkDescr {
+    return localizeValue(AppLocalizationsKeys.customizeBookmarkDescr);
+  }
+
+  String get customizeBookmarkTitle {
+    return localizeValue(AppLocalizationsKeys.customizeBookmarkTitle);
+  }
 }

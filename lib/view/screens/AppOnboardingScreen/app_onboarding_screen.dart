@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:history_of_me/controller/localization/hom_localizations.dart';
+import 'package:history_of_me/localization.dart';
 import 'package:history_of_me/view/shared/shared.dart';
 import 'package:leitmotif/leitmotif.dart';
 
@@ -60,24 +60,24 @@ class _AppOnboardingScreenState extends State<AppOnboardingScreen> {
       ),
       textItems: [
         TextPageContent(
-          subtitle: HOMLocalizations(context).organize,
-          title: HOMLocalizations(context).browseDiaryTitle,
-          text: HOMLocalizations(context).browseDiaryDescr,
+          subtitle: AppLocalizations.of(context).organizeLabel,
+          title: AppLocalizations.of(context).browseDiaryTitle,
+          text: AppLocalizations.of(context).browseDiaryDescr,
         ),
         TextPageContent(
-          subtitle: HOMLocalizations(context).relive,
-          title: HOMLocalizations(context).readYourDiaryEntriesTitle,
-          text: HOMLocalizations(context).readYourDiaryEntriesDescr,
+          subtitle: AppLocalizations.of(context).reliveLabel,
+          title: AppLocalizations.of(context).readDiaryTitle,
+          text: AppLocalizations.of(context).readDiaryDescr,
         ),
         TextPageContent(
-          subtitle: HOMLocalizations(context).personalize,
-          title: HOMLocalizations(context).customizeBookmarkTitle,
-          text: HOMLocalizations(context).customizeBookmarkDescr,
+          subtitle: AppLocalizations.of(context).personalizeLabel,
+          title: AppLocalizations.of(context).customizeBookmarkTitle,
+          text: AppLocalizations.of(context).customizeBookmarkDescr,
         ),
         TextPageContent(
-          subtitle: HOMLocalizations(context).private,
-          title: HOMLocalizations(context).privacy,
-          text: HOMLocalizations(context).privacyDescr,
+          subtitle: AppLocalizations.of(context).privateLabel,
+          title: AppLocalizations.of(context).privacyLabel,
+          text: AppLocalizations.of(context).privacyDescr,
         ),
       ],
       onDismiss: _onDismiss,
