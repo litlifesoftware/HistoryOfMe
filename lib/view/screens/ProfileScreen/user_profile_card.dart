@@ -107,7 +107,7 @@ class _UserProfileCardState extends State<UserProfileCard> {
               ),
               child: Align(
                 alignment: Alignment.center,
-                child: LitRoundedElevatedButton(
+                child: LitPushedThroughButton(
                   padding: const EdgeInsets.symmetric(
                     vertical: 6.0,
                     horizontal: 12.0,
@@ -120,7 +120,8 @@ class _UserProfileCardState extends State<UserProfileCard> {
                       spreadRadius: 1.0,
                     )
                   ],
-                  color: LitColors.mintGreen,
+                  backgroundColor: LitColors.green100,
+                  accentColor: LitColors.green200,
                   child: ClippedText(
                     HOMLocalizations(context).changeName.toUpperCase(),
                     textAlign: TextAlign.center,
