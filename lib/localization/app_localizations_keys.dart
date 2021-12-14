@@ -20,4 +20,13 @@ class AppLocalizationsKeys {
   static const String privacyDescr = 'privacyDescr';
   static const String customizeBookmarkTitle = 'customizeBookmarkTitle';
   static const String customizeBookmarkDescr = 'customizeBookmarkDescr';
+  static const String aboutAppLabel = 'aboutAppLabel';
+  static const String aboutAppDescr = 'aboutAppDescr';
+  static const String userExpericenceDesignLabel = 'uxDesignLabel';
+  static const String developmentLabel = 'developmentLabel';
+  static const String photographyLabel = 'photosLabel';
+  static const String inspiredByLabel = 'inspiredByLabel';
+  static const String manageBackupLabel = 'manageBackupLabel';
+  static const String startTourLabel = 'startTourLabel';
+  static const String creditsLabel = 'creditsLabel';
 }

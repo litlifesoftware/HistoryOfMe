@@ -118,4 +118,40 @@ class AppLocalizations {
   String get customizeBookmarkTitle {
     return localizeValue(AppLocalizationsKeys.customizeBookmarkTitle);
   }
+
+  String get aboutAppLabel {
+    return localizeValue(AppLocalizationsKeys.aboutAppLabel);
+  }
+
+  String get aboutAppDescr {
+    return localizeValue(AppLocalizationsKeys.aboutAppDescr);
+  }
+
+  String get userExpericenceDesignLabel {
+    return localizeValue(AppLocalizationsKeys.userExpericenceDesignLabel);
+  }
+
+  String get developmentLabel {
+    return localizeValue(AppLocalizationsKeys.developmentLabel);
+  }
+
+  String get photographyLabel {
+    return localizeValue(AppLocalizationsKeys.photographyLabel);
+  }
+
+  String get inspiredByLabel {
+    return localizeValue(AppLocalizationsKeys.inspiredByLabel);
+  }
+
+  String get manageBackupLabel {
+    return localizeValue(AppLocalizationsKeys.manageBackupLabel);
+  }
+
+  String get startTourLabel {
+    return localizeValue(AppLocalizationsKeys.startTourLabel);
+  }
+
+  String get creditsLabel {
+    return localizeValue(AppLocalizationsKeys.creditsLabel);
+  }
 }

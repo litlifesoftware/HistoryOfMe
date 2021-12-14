@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:history_of_me/controller/localization/hom_localizations.dart';
+import 'package:history_of_me/localization.dart';
 import 'package:history_of_me/model/app_settings.dart';
 import 'package:history_of_me/model/backdrop_photo.dart';
 import 'package:history_of_me/model/user_data.dart';
@@ -33,10 +33,10 @@ class _SettingsFooterState extends State<SettingsFooter> {
   void _showAboutThisAppDialog() {
     LitRouteController(context).showDialogWidget(
       LitAboutDialog(
-        title: HOMLocalizations(context).aboutThisApp,
+        title: AppLocalizations.of(context).aboutAppLabel,
         appName: "History of Me",
         art: HistoryOfMeLauncherIconArt(),
-        infoDescription: HOMLocalizations(context).yourOwnPersonalDiary,
+        infoDescription: AppLocalizations.of(context).aboutAppDescr,
       ),
     );
   }
@@ -53,7 +53,7 @@ class _SettingsFooterState extends State<SettingsFooter> {
     LitRouteController(context).pushCupertinoWidget(LitPrivacyPolicyScreen(
       //title: HOMLocalizations(context).privacy,
       onAgreeCallback: () => LitRouteController(context).pop(),
-      privacyBody: HOMLocalizations(context).privacyDescr,
+      privacyBody: AppLocalizations.of(context).privacyDescr,
       //agreeLabel: HOMLocalizations(context).okay,
       art: HistoryOfMeLauncherIconArt(),
       // privacyTags: [
@@ -111,7 +111,7 @@ class _SettingsFooterState extends State<SettingsFooter> {
                 ],
               ),
               appName: "History Of Me",
-              appDescription: HOMLocalizations(context).yourOwnPersonalDiary,
+              appDescription: AppLocalizations.of(context).aboutAppDescr,
               //screenTitle: HOMLocalizations(context).credits,
               credits: [
                 //TODO:Localize
@@ -122,23 +122,23 @@ class _SettingsFooterState extends State<SettingsFooter> {
                   ],
                 ),
                 CreditData(
-                  role: HOMLocalizations(context).uxDesign,
+                  role: AppLocalizations.of(context).userExpericenceDesignLabel,
                   names: [
                     "Michael Grigorenko",
                   ],
                 ),
                 CreditData(
-                  role: HOMLocalizations(context).development,
+                  role: AppLocalizations.of(context).developmentLabel,
                   names: [
                     "Michael Grigorenko",
                   ],
                 ),
                 CreditData(
-                  role: HOMLocalizations(context).photos,
+                  role: AppLocalizations.of(context).photographyLabel,
                   names: backdropPhotoPhotographers,
                 ),
                 CreditData(
-                  role: HOMLocalizations(context).inspiredBy,
+                  role: AppLocalizations.of(context).inspiredByLabel,
                   names: ["Your Name. (2016)"],
                 ),
               ],
@@ -161,48 +161,44 @@ class _SettingsFooterState extends State<SettingsFooter> {
 
   @override
   Widget build(BuildContext context) {
-    return LitFooter(
-      title: HOMLocalizations(context).settings,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          LitPlainLabelButton(
-            label: HOMLocalizations(context).manageBackup,
-            onPressed: _showBackupDialog,
-            textAlign: TextAlign.right,
-          ),
-          LitPlainLabelButton(
-            label: HOMLocalizations(context).showOnboardingButtonLabel,
-            onPressed: _showOnboardingScreen,
-            textAlign: TextAlign.right,
-          ),
-          LitPlainLabelButton(
-            label: HOMLocalizations(context).aboutThisApp,
-            onPressed: _showAboutThisAppDialog,
-            textAlign: TextAlign.right,
-          ),
-          LitPlainLabelButton(
-            label: HOMLocalizations(context).viewPrivacy,
-            onPressed: _openPrivacyPolicy,
-            textAlign: TextAlign.right,
-          ),
-          // LitPlainLabelButton(
-          //   label: HOMLocalizations(context).deleteAllData,
-          //   onPressed: _showDeleteDataDialog,
-          //   textAlign: TextAlign.right,
-          // ),
-          LitPlainLabelButton(
-            label: HOMLocalizations(context).credits,
-            onPressed: _openCredits,
-            textAlign: TextAlign.right,
-          ),
-          LitPlainLabelButton(
-            label: LeitmotifLocalizations.of(context).licensesLabel,
-            onPressed: _openLicenses,
-            textAlign: TextAlign.right,
-          ),
-        ],
-      ),
+    return LitSettingsFooter(
+      children: [
+        LitPlainLabelButton(
+          label: AppLocalizations.of(context).manageBackupLabel,
+          onPressed: _showBackupDialog,
+          textAlign: TextAlign.right,
+        ),
+        LitPlainLabelButton(
+          label: AppLocalizations.of(context).startTourLabel,
+          onPressed: _showOnboardingScreen,
+          textAlign: TextAlign.right,
+        ),
+        LitPlainLabelButton(
+          label: AppLocalizations.of(context).aboutAppLabel,
+          onPressed: _showAboutThisAppDialog,
+          textAlign: TextAlign.right,
+        ),
+        LitPlainLabelButton(
+          label: AppLocalizations.of(context).privacyLabel,
+          onPressed: _openPrivacyPolicy,
+          textAlign: TextAlign.right,
+        ),
+        // LitPlainLabelButton(
+        //   label: HOMLocalizations(context).deleteAllData,
+        //   onPressed: _showDeleteDataDialog,
+        //   textAlign: TextAlign.right,
+        // ),
+        LitPlainLabelButton(
+          label: AppLocalizations.of(context).creditsLabel,
+          onPressed: _openCredits,
+          textAlign: TextAlign.right,
+        ),
+        LitPlainLabelButton(
+          label: LeitmotifLocalizations.of(context).licensesLabel,
+          onPressed: _openLicenses,
+          textAlign: TextAlign.right,
+        ),
+      ],
     );
   }
 }

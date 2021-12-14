@@ -28,6 +28,15 @@ class AppLocalizationsDe {
         'History of Me möchte dir die höchste Datenschutzsicherheit bieten. Deine Daten verbleiben nur auf deinem Gerät. Weder der Ersteller der App noch eine andere Person können auf deine Inhalte zugreifen. Es wird keine Übertragung über das Internet stattfinden, alle Daten bleiben offline.',
     AppLocalizationsKeys.customizeBookmarkTitle: 'Passe dein Lesezeichen an',
     AppLocalizationsKeys.customizeBookmarkDescr:
-        'Kannst du das Lesezeichen oben über deinem Tagebuch sehen? Diesen kannst du anpassen. Gehe hierfür zu deinem Profil und tippe auf das Stift-Symbol unter dem Lesezeichen. Bei der Bearbeitung kann du deine Lieblingsfarben auswählen und auch das Muster festlegen. Aber vergiss bitte nicht die Änderungen zu speichern!'
+        'Kannst du das Lesezeichen oben über deinem Tagebuch sehen? Diesen kannst du anpassen. Gehe hierfür zu deinem Profil und tippe auf das Stift-Symbol unter dem Lesezeichen. Bei der Bearbeitung kann du deine Lieblingsfarben auswählen und auch das Muster festlegen. Aber vergiss bitte nicht die Änderungen zu speichern!',
+    AppLocalizationsKeys.aboutAppLabel: 'Über diese App',
+    AppLocalizationsKeys.aboutAppDescr: 'Dein eigenes, persönliches Tagebuch.',
+    AppLocalizationsKeys.userExpericenceDesignLabel: 'User Experience Design',
+    AppLocalizationsKeys.developmentLabel: 'Entwicklung',
+    AppLocalizationsKeys.photographyLabel: 'Fotos',
+    AppLocalizationsKeys.inspiredByLabel: 'Inspired by',
+    AppLocalizationsKeys.manageBackupLabel: 'Sicherung verwalten',
+    AppLocalizationsKeys.startTourLabel: 'Rundgang starten',
+    AppLocalizationsKeys.creditsLabel: 'Mitwirkende',
   };
 }

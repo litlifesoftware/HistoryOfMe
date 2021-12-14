@@ -28,6 +28,15 @@ class AppLocalizationsEn {
         'History of Me\'s goal is to provide the most private experience available on mobile devices. Your data will always remain on your device. The creator of the app nor any third party will be able to view your content. There is no connection to the internet, all required data to use the app will be stored offline.',
     AppLocalizationsKeys.customizeBookmarkTitle: 'Customize your bookmark',
     AppLocalizationsKeys.customizeBookmarkDescr:
-        'Can you see the bookmark on top of your diary? You can customize it. Go to your profile and tap on the pencil under your bookmark to edit it. Set your favorite color pallet and a nice pattern. Don\'t forget to save your changes!'
+        'Can you see the bookmark on top of your diary? You can customize it. Go to your profile and tap on the pencil under your bookmark to edit it. Set your favorite color pallet and a nice pattern. Don\'t forget to save your changes!',
+    AppLocalizationsKeys.aboutAppLabel: 'About this app',
+    AppLocalizationsKeys.aboutAppDescr: 'Your own personal diary.',
+    AppLocalizationsKeys.userExpericenceDesignLabel: 'User Experience Design',
+    AppLocalizationsKeys.developmentLabel: 'Development',
+    AppLocalizationsKeys.photographyLabel: 'Photography',
+    AppLocalizationsKeys.inspiredByLabel: 'Inspire',
+    AppLocalizationsKeys.manageBackupLabel: 'Manage Backup',
+    AppLocalizationsKeys.startTourLabel: 'Start tour',
+    AppLocalizationsKeys.creditsLabel: 'Credits',
   };
 }
