@@ -154,4 +154,48 @@ class AppLocalizations {
   String get creditsLabel {
     return localizeValue(AppLocalizationsKeys.creditsLabel);
   }
+
+  String get noFavoritesAvailLabel {
+    return localizeValue(AppLocalizationsKeys.noFavoritesAvailLabel);
+  }
+
+  String get noFavoritesAvailDescr {
+    return localizeValue(AppLocalizationsKeys.noFavoritesAvailDescr);
+  }
+
+  String get greetingLabel {
+    return localizeValue(AppLocalizationsKeys.greetingLabel);
+  }
+
+  String get welcomeBackLabel {
+    return localizeValue(AppLocalizationsKeys.welcomeBackLabel);
+  }
+
+  String get changeNameLabel {
+    return localizeValue(AppLocalizationsKeys.changeNameLabel);
+  }
+
+  String get changeYourNameLabel {
+    return localizeValue(AppLocalizationsKeys.changeYourNameLabel);
+  }
+
+  String get creatorLabel {
+    return localizeValue(AppLocalizationsKeys.creatorLabel);
+  }
+
+  String get creatorDescr {
+    return localizeValue(AppLocalizationsKeys.creatorDescr);
+  }
+
+  String get detailsLabel {
+    return localizeValue(AppLocalizationsKeys.detailsLabel);
+  }
+
+  String get locationLabel {
+    return localizeValue(AppLocalizationsKeys.locationLabel);
+  }
+
+  String get publishedLabel {
+    return localizeValue(AppLocalizationsKeys.publishedLabel);
+  }
 }

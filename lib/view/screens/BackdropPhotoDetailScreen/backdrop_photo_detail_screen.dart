@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:history_of_me/controller/localization/hom_localizations.dart';
+import 'package:history_of_me/localization.dart';
 import 'package:history_of_me/model/backdrop_photo.dart';
 import 'package:leitmotif/leitmotif.dart';
 
@@ -35,9 +35,7 @@ class BackdropPhotoDetailScreen extends StatelessWidget {
               Align(
                 alignment: Alignment.topCenter,
                 child: Image(
-                  image: AssetImage(
-                    "${backdropPhoto.assetUrl}",
-                  ),
+                  image: AssetImage(backdropPhoto.assetUrl!),
                   fit: BoxFit.scaleDown,
 
                   //color: Colors.black,
@@ -82,26 +80,28 @@ class _DetailsCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                HOMLocalizations(context).details,
+                AppLocalizations.of(context).detailsLabel,
                 textAlign: TextAlign.left,
                 style: LitTextStyles.sansSerifHeader,
               ),
               _BackdropCardDetailItem(
                 icon: LitIcons.person,
-                detailLabel: HOMLocalizations(context).creator,
+                detailLabel: AppLocalizations.of(context).creatorLabel,
                 detailValue: "${backdropPhoto.photographer}",
                 constraints: constraints,
               ),
               _BackdropCardDetailItem(
                 icon: LitIcons.map_marker,
-                detailLabel: HOMLocalizations(context).location,
+                detailLabel: AppLocalizations.of(context).locationLabel,
                 detailValue: "${backdropPhoto.location}",
                 constraints: constraints,
               ),
               _BackdropCardDetailItem(
-                detailLabel: HOMLocalizations(context).published.capitalize(),
-                detailValue: DateTime.parse(backdropPhoto.published!)
-                    .formatAsLocalizedDateWithWeekday(context),
+                detailLabel:
+                    AppLocalizations.of(context).publishedLabel.capitalize(),
+                detailValue: DateTime.parse(
+                  backdropPhoto.published!,
+                ).formatAsLocalizedDateWithWeekday(context),
                 constraints: constraints,
               ),
               backdropPhoto.description != null
@@ -118,7 +118,7 @@ class _DetailsCard extends StatelessWidget {
                               bottom: 8.0,
                             ),
                             child: Text(
-                              HOMLocalizations(context).backdropPhotoDesc,
+                              AppLocalizations.of(context).creatorDescr,
                               style: LitTextStyles.sansSerifSmallHeader,
                             ),
                           ),

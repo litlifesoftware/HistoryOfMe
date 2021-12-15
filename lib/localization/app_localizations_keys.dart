@@ -29,4 +29,15 @@ class AppLocalizationsKeys {
   static const String manageBackupLabel = 'manageBackupLabel';
   static const String startTourLabel = 'startTourLabel';
   static const String creditsLabel = 'creditsLabel';
+  static const String noFavoritesAvailLabel = 'noFavoritesAvailLabel';
+  static const String noFavoritesAvailDescr = 'noFavoritesAvailDescr';
+  static const String greetingLabel = 'greetingLabel';
+  static const String welcomeBackLabel = 'welcomeBackLabel';
+  static const String changeNameLabel = 'changeNameLabel';
+  static const String changeYourNameLabel = 'changeYourNameLabel';
+  static const String creatorLabel = 'creatorLabel';
+  static const String creatorDescr = 'creatorDescr';
+  static const String detailsLabel = 'detailsLabel';
+  static const String locationLabel = 'locationLabel';
+  static const String publishedLabel = 'publishedLabel';
 }

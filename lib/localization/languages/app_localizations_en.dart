@@ -38,5 +38,18 @@ class AppLocalizationsEn {
     AppLocalizationsKeys.manageBackupLabel: 'Manage Backup',
     AppLocalizationsKeys.startTourLabel: 'Start tour',
     AppLocalizationsKeys.creditsLabel: 'Credits',
+    AppLocalizationsKeys.noFavoritesAvailLabel: 'No favorites available',
+    AppLocalizationsKeys.noFavoritesAvailDescr:
+        'Add an entry to your favorites on your diary entry.',
+    AppLocalizationsKeys.greetingLabel: 'How are you today?',
+    AppLocalizationsKeys.welcomeBackLabel: 'Welcome back',
+    AppLocalizationsKeys.changeNameLabel: 'Change name',
+    AppLocalizationsKeys.changeYourNameLabel: 'Change your name',
+    AppLocalizationsKeys.creatorLabel: 'Creator',
+    AppLocalizationsKeys.creatorDescr:
+        'What the creator is telling us about this photo',
+    AppLocalizationsKeys.detailsLabel: 'Details',
+    AppLocalizationsKeys.locationLabel: 'Location',
+    AppLocalizationsKeys.publishedLabel: 'published',
   };
 }

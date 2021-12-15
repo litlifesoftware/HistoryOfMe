@@ -38,5 +38,18 @@ class AppLocalizationsDe {
     AppLocalizationsKeys.manageBackupLabel: 'Sicherung verwalten',
     AppLocalizationsKeys.startTourLabel: 'Rundgang starten',
     AppLocalizationsKeys.creditsLabel: 'Mitwirkende',
+    AppLocalizationsKeys.noFavoritesAvailLabel: 'Keine Favoriten verfügbar',
+    AppLocalizationsKeys.noFavoritesAvailDescr:
+        'Auf der Lese-Ansicht kannst du Tagebucheinträge zu deinen Lieblingseinträge hinzufügen.',
+    AppLocalizationsKeys.greetingLabel: 'Wie geht es dir heute?',
+    AppLocalizationsKeys.welcomeBackLabel: 'Willkommen zurück',
+    AppLocalizationsKeys.changeNameLabel: 'Namen ändern',
+    AppLocalizationsKeys.changeYourNameLabel: 'Deinen Namen ändern',
+    AppLocalizationsKeys.creatorLabel: 'Ersteller',
+    AppLocalizationsKeys.creatorDescr:
+        'Was der Ersteller uns über das Foto erzählt',
+    AppLocalizationsKeys.detailsLabel: 'Details',
+    AppLocalizationsKeys.locationLabel: 'Ort',
+    AppLocalizationsKeys.publishedLabel: 'Veröffentlicht',
   };
 }
