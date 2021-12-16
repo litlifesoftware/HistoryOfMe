@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:history_of_me/controller/localization/hom_localizations.dart';
 import 'package:history_of_me/controller/routes/hom_navigator.dart';
+import 'package:history_of_me/localization.dart';
 import 'package:history_of_me/model/user_data.dart';
 import 'package:history_of_me/view/provider/all_data_provider.dart';
-import 'package:history_of_me/view/shared/bookmark/bookmark_back_preview.dart';
-import 'package:history_of_me/view/shared/bookmark/bookmark_front_preview.dart';
 import 'package:history_of_me/view/shared/bookmark/bookmark_page_view.dart';
 import 'package:leitmotif/leitmotif.dart';
 
@@ -62,14 +60,14 @@ class _ProfileScreenState extends State<ProfileScreen>
           appBar: FixedOnScrollTitledAppbar(
             scrollController: _scrollController,
             backgroundColor: Colors.white,
-            title: HOMLocalizations(context).howAreYouToday,
+            title: AppLocalizations.of(context).greetingLabel,
             //displayBackButton: false,
           ),
           snackbars: [
             LitIconSnackbar(
               snackBarController: _snackbarController,
               title: userData.name,
-              text: HOMLocalizations(context).welcomeBack +
+              text: AppLocalizations.of(context).welcomeBackLabel +
                   ", " +
                   userData.name +
                   "!",
