@@ -27,7 +27,7 @@ class SettingsFooter extends StatefulWidget {
 }
 
 class _SettingsFooterState extends State<SettingsFooter> {
-  bool loading = false;
+  // bool loading = false;
 
   //late LitRouteController _routeController;
   void _showAboutThisAppDialog() {
