@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:history_of_me/controller/localization/hom_localizations.dart';
+import 'package:history_of_me/localization.dart';
+//import 'package:history_of_me/controller/localization/hom_localizations.dart';
 import 'package:history_of_me/model/diary_entry.dart';
 import 'package:history_of_me/model/user_data.dart';
-import 'package:history_of_me/view/shared/shared.dart';
+//import 'package:history_of_me/view/shared/shared.dart';
 import 'package:leitmotif/leitmotif.dart';
 
 import 'diary_bookmark_header.dart';
@@ -166,8 +167,8 @@ class _NoFavoritesView extends StatelessWidget {
         Padding(
           padding: LitEdgeInsets.card,
           child: LitDescriptionTextBox(
-            title: HOMLocalizations(context).noFavoritesAvailable,
-            text: HOMLocalizations(context).noFavoritesAvailableDescr,
+            title: AppLocalizations.of(context).noFavoritesAvailLabel,
+            text: AppLocalizations.of(context).noFavoritesAvailDescr,
           ),
         )
       ],
