@@ -51,5 +51,10 @@ class AppLocalizationsDe {
     AppLocalizationsKeys.detailsLabel: 'Details',
     AppLocalizationsKeys.locationLabel: 'Ort',
     AppLocalizationsKeys.publishedLabel: 'Veröffentlicht',
+    AppLocalizationsKeys.entrySavedDescr:
+        'Dein Tagebucheintrag wurde gespeichert.',
+    AppLocalizationsKeys.savedLabel: 'Gespeichert',
+    AppLocalizationsKeys.untitledLabel: 'Ohne Titel',
+    AppLocalizationsKeys.yourMoodLabel: 'Deine Stimmung'
   };
 }

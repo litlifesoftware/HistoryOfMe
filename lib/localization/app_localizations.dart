@@ -198,4 +198,20 @@ class AppLocalizations {
   String get publishedLabel {
     return localizeValue(AppLocalizationsKeys.publishedLabel);
   }
+
+  String get entrySavedDescr {
+    return localizeValue(AppLocalizationsKeys.entrySavedDescr);
+  }
+
+  String get savedLabel {
+    return localizeValue(AppLocalizationsKeys.savedLabel);
+  }
+
+  String get untitledLabel {
+    return localizeValue(AppLocalizationsKeys.untitledLabel);
+  }
+
+  String get yourMoodLabel {
+    return localizeValue(AppLocalizationsKeys.yourMoodLabel);
+  }
 }

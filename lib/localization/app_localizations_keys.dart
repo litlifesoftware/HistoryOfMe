@@ -40,4 +40,8 @@ class AppLocalizationsKeys {
   static const String detailsLabel = 'detailsLabel';
   static const String locationLabel = 'locationLabel';
   static const String publishedLabel = 'publishedLabel';
+  static const String entrySavedDescr = 'entrySavedDescr';
+  static const String savedLabel = 'savedLabel';
+  static const String untitledLabel = 'untitledLabel';
+  static const String yourMoodLabel = 'yourMoodLabel';
 }

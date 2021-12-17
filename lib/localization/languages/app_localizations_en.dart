@@ -51,5 +51,9 @@ class AppLocalizationsEn {
     AppLocalizationsKeys.detailsLabel: 'Details',
     AppLocalizationsKeys.locationLabel: 'Location',
     AppLocalizationsKeys.publishedLabel: 'published',
+    AppLocalizationsKeys.entrySavedDescr: 'Your diary entry has been saved.',
+    AppLocalizationsKeys.savedLabel: 'Saved',
+    AppLocalizationsKeys.untitledLabel: 'Untitled',
+    AppLocalizationsKeys.yourMoodLabel: 'Deine Stimmung'
   };
 }

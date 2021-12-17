@@ -2,9 +2,10 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:history_of_me/controller/database/hive_db_service.dart';
-import 'package:history_of_me/controller/localization/hom_localizations.dart';
+//import 'package:history_of_me/controller/localization/hom_localizations.dart';
 import 'package:history_of_me/controller/mood_translation_controller.dart';
 import 'package:history_of_me/config/config.dart';
+import 'package:history_of_me/localization.dart';
 import 'package:history_of_me/model/diary_entry.dart';
 import 'package:history_of_me/view/shared/animated_updated_label.dart';
 import 'package:history_of_me/view/shared/editable_item_meta_info.dart';
@@ -102,10 +103,10 @@ class _EntryEditingScreenState extends State<EntryEditingScreen>
 
   Future<void> _saveChanges() async {
     // Verify the title has been modified (does not equal the localized string).
-    String title =
-        (_titleEditingController.text != HOMLocalizations(context).untitled)
-            ? _titleEditingController.text
-            : "";
+    String title = (_titleEditingController.text !=
+            AppLocalizations.of(context).untitledLabel)
+        ? _titleEditingController.text
+        : "";
     DiaryEntry updatedDiaryEntry = DiaryEntry(
       uid: widget.diaryEntry.uid,
       date: widget.diaryEntry.date,
@@ -199,7 +200,7 @@ class _EntryEditingScreenState extends State<EntryEditingScreen>
   @override
   void didChangeDependencies() {
     // Reinitalized using localized string.
-    _initTitleEditingController(HOMLocalizations(context).untitled);
+    _initTitleEditingController(AppLocalizations.of(context).untitledLabel);
     _syncTextEditingControllerChanges();
     super.didChangeDependencies();
   }
@@ -236,8 +237,8 @@ class _EntryEditingScreenState extends State<EntryEditingScreen>
             snackbars: [
               LitIconSnackbar(
                 snackBarController: _savedSnackbarContr,
-                text: HOMLocalizations(context).diaryEntrySavedDescr,
-                title: HOMLocalizations(context).savedLabel,
+                text: AppLocalizations.of(context).entrySavedDescr,
+                title: AppLocalizations.of(context).savedLabel,
                 iconData: LitIcons.check,
               )
             ],
@@ -305,8 +306,8 @@ class _EntryEditingScreenState extends State<EntryEditingScreen>
                                     right: 4.0,
                                   ),
                                   child: Text(
-                                    HOMLocalizations(context)
-                                        .yourMoodWas
+                                    AppLocalizations.of(context)
+                                        .yourMoodLabel
                                         .toUpperCase(),
                                     style: LitSansSerifStyles.subtitle2,
                                   ),
@@ -366,39 +367,40 @@ class _DiaryContentInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
-        animation: fadeInAnimationController,
-        builder: (context, snapshot) {
-          return FadeInTransformContainer(
-            animationController: fadeInAnimationController,
-            transform: Matrix4.translationValues(
-              MediaQuery.of(context).size.width / 3 +
-                  (-MediaQuery.of(context).size.width /
-                      3 *
-                      fadeInAnimationController.value),
-              0,
-              0,
+      animation: fadeInAnimationController,
+      builder: (context, snapshot) {
+        return FadeInTransformContainer(
+          animationController: fadeInAnimationController,
+          transform: Matrix4.translationValues(
+            MediaQuery.of(context).size.width / 3 +
+                (-MediaQuery.of(context).size.width /
+                    3 *
+                    fadeInAnimationController.value),
+            0,
+            0,
+          ),
+          child: ConstrainedBox(
+            constraints: BoxConstraints(
+              minHeight: MediaQuery.of(context).size.height - 164.0,
             ),
-            child: ConstrainedBox(
-              constraints: BoxConstraints(
-                minHeight: MediaQuery.of(context).size.height - 164.0,
-              ),
-              child: Padding(
-                padding: padding,
-                child: EditableText(
-                  controller: contentEditController!,
-                  focusNode: contentEditFocusNode!,
-                  style: LitSansSerifStyles.body2.copyWith(
-                    height: 1.65,
-                    color: Color(0xFF939393),
-                  ),
-                  cursorColor: HexColor('#b7b7b7'),
-                  backgroundCursorColor: Colors.black,
-                  selectionColor: HexColor('#b7b7b7'),
-                  maxLines: null,
+            child: Padding(
+              padding: padding,
+              child: EditableText(
+                controller: contentEditController!,
+                focusNode: contentEditFocusNode!,
+                style: LitSansSerifStyles.body2.copyWith(
+                  height: 1.65,
+                  color: Color(0xFF939393),
                 ),
+                cursorColor: HexColor('#b7b7b7'),
+                backgroundCursorColor: Colors.black,
+                selectionColor: HexColor('#b7b7b7'),
+                maxLines: null,
               ),
             ),
-          );
-        });
+          ),
+        );
+      },
+    );
   }
 }
