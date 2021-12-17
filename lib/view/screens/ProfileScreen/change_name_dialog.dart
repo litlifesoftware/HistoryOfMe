@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:history_of_me/controller/database/hive_db_service.dart';
-import 'package:history_of_me/controller/localization/hom_localizations.dart';
+import 'package:history_of_me/localization.dart';
 import 'package:history_of_me/model/user_data.dart';
 import 'package:leitmotif/leitmotif.dart';
 
@@ -60,19 +60,17 @@ class _ChangeNameDialogState extends State<ChangeNameDialog> {
   @override
   Widget build(BuildContext context) {
     return LitTitledDialog(
-      margin: const EdgeInsets.all(0.0),
-      minHeight: 220.0,
-      titleText: HOMLocalizations(context).changeYourName,
+      titleText: AppLocalizations.of(context).changeYourNameLabel,
       actionButtons: [
         DialogActionButton(
           data: ActionButtonData(
-            title: HOMLocalizations(context).cancel,
+            title: LeitmotifLocalizations.of(context).cancelLabel,
             onPressed: _onCancel,
           ),
         ),
         DialogActionButton(
           data: ActionButtonData(
-            title: HOMLocalizations(context).apply,
+            title: LeitmotifLocalizations.of(context).applyLabel,
             accentColor: Color(0xFFEDDEC0),
             backgroundColor: Color(0xFFEAEACA),
             disabled: !_isChanged,
