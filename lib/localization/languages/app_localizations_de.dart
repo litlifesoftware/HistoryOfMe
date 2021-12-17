@@ -55,6 +55,25 @@ class AppLocalizationsDe {
         'Dein Tagebucheintrag wurde gespeichert.',
     AppLocalizationsKeys.savedLabel: 'Gespeichert',
     AppLocalizationsKeys.untitledLabel: 'Ohne Titel',
-    AppLocalizationsKeys.yourMoodLabel: 'Deine Stimmung'
+    AppLocalizationsKeys.yourMoodLabel: 'Deine Stimmung',
+    AppLocalizationsKeys.statisticsLabel: 'Statistiken',
+    AppLocalizationsKeys.noEntriesAvailLabel:
+        'Keine Tagebucheinträge verfügbar.',
+    AppLocalizationsKeys.diaryFallbackDescr:
+        'Es sind keine Einträge verfügbar. Möchtest du deinen ersten Tagebucheintrag erstellen?',
+    AppLocalizationsKeys.statisticsFallbackDescr:
+        'Um deine Statistiken zu sehen, solltest du mindestens einen Eintrag erstellen.',
+    AppLocalizationsKeys.statisticsFallbackActionLabel:
+        'Gehe zurück zu deinem Tagebuch, um deinen ersten Eintrag zu erstellen.',
+    AppLocalizationsKeys.diaryEntriesLabel: 'Tagebucheinträge',
+    AppLocalizationsKeys.avgMoodLabel: 'Durchschnittliche Stimmung',
+    AppLocalizationsKeys.wordsWrittenLabel: 'Verfasste Wörter',
+    AppLocalizationsKeys.wordsPerEntryLabel: 'Wörter pro Eintrag',
+    AppLocalizationsKeys.mostWordsAtOnceLabel: 'Meiste Wörter zugleich',
+    AppLocalizationsKeys.fewestWordsAtOnceLabel: 'Wenigste Wörter zugleich',
+    AppLocalizationsKeys.entriesThisWeekLabel: 'Enträge diese Woche',
+    AppLocalizationsKeys.entriesThisMonthLabel: 'Enträge diesen Monat',
+    AppLocalizationsKeys.lastestEntryLabel: 'Letzter Eintrag',
+    AppLocalizationsKeys.firstEntryLabel: 'Erster Eintrag',
   };
 }

@@ -44,4 +44,20 @@ class AppLocalizationsKeys {
   static const String savedLabel = 'savedLabel';
   static const String untitledLabel = 'untitledLabel';
   static const String yourMoodLabel = 'yourMoodLabel';
+  static const String statisticsLabel = 'statisticsLabel';
+  static const String noEntriesAvailLabel = 'noEntriesAvail';
+  static const String diaryFallbackDescr = 'noEntriesAvailDescr';
+  static const String statisticsFallbackDescr = 'statisticsFallbackDescr';
+  static const String statisticsFallbackActionLabel =
+      'statisticsFallbackActionLabel';
+  static const String diaryEntriesLabel = 'diaryEntriesLabel';
+  static const String avgMoodLabel = 'avgMoodLabel';
+  static const String wordsWrittenLabel = 'wordsWrittenLabel';
+  static const String wordsPerEntryLabel = 'wordsPerEntryLabel';
+  static const String mostWordsAtOnceLabel = 'mostWordsAtOnceLabel';
+  static const String fewestWordsAtOnceLabel = 'fewestWordsAtOnceLabel';
+  static const String entriesThisWeekLabel = 'entriesThisWeekLabel';
+  static const String entriesThisMonthLabel = 'entriesThisMonthLabel';
+  static const String lastestEntryLabel = 'lastestEntryLabel';
+  static const String firstEntryLabel = 'firstEntryLabel';
 }

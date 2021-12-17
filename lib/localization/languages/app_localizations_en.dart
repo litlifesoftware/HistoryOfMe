@@ -54,6 +54,24 @@ class AppLocalizationsEn {
     AppLocalizationsKeys.entrySavedDescr: 'Your diary entry has been saved.',
     AppLocalizationsKeys.savedLabel: 'Saved',
     AppLocalizationsKeys.untitledLabel: 'Untitled',
-    AppLocalizationsKeys.yourMoodLabel: 'Deine Stimmung'
+    AppLocalizationsKeys.yourMoodLabel: 'Deine Stimmung',
+    AppLocalizationsKeys.statisticsLabel: 'Statistics',
+    AppLocalizationsKeys.noEntriesAvailLabel: 'No entries available',
+    AppLocalizationsKeys.statisticsFallbackDescr:
+        'In order to show your statistics, you should have atleast one entry created.',
+    AppLocalizationsKeys.statisticsFallbackActionLabel:
+        'Go back to your diary to create your first entry.',
+    AppLocalizationsKeys.diaryFallbackDescr:
+        'There are no entries available. Would you like to create your first entry now?',
+    AppLocalizationsKeys.diaryEntriesLabel: 'Diary entries',
+    AppLocalizationsKeys.avgMoodLabel: 'Average mood',
+    AppLocalizationsKeys.wordsWrittenLabel: 'Words written',
+    AppLocalizationsKeys.wordsPerEntryLabel: 'Words per entry',
+    AppLocalizationsKeys.mostWordsAtOnceLabel: 'Most words at once',
+    AppLocalizationsKeys.fewestWordsAtOnceLabel: 'Fewest words at once',
+    AppLocalizationsKeys.entriesThisWeekLabel: 'Entries this week',
+    AppLocalizationsKeys.entriesThisMonthLabel: 'Entries this month',
+    AppLocalizationsKeys.lastestEntryLabel: 'Latest entry',
+    AppLocalizationsKeys.firstEntryLabel: 'First entry',
   };
 }

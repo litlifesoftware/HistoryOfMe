@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:history_of_me/controller/database/hive_query_controller.dart';
-import 'package:history_of_me/controller/localization/hom_localizations.dart';
 import 'package:history_of_me/controller/mood_translation_controller.dart';
+import 'package:history_of_me/localization.dart';
 import 'package:leitmotif/leitmotif.dart';
 
 class StatisticsCard extends StatefulWidget {
@@ -40,15 +40,15 @@ class _NoEntriesCard extends StatelessWidget {
     return Padding(
       padding: LitEdgeInsets.card,
       child: LitTitledActionCard(
-        title: HOMLocalizations(context).statistics,
-        subtitle: HOMLocalizations(context).noEntriesFound,
+        title: AppLocalizations.of(context).statisticsLabel,
+        subtitle: AppLocalizations.of(context).noEntriesAvailLabel,
         child: Column(
           children: [
             LitDescriptionTextBox(
-              text: HOMLocalizations(context).statisticsFallbackDescr,
+              text: AppLocalizations.of(context).statisticsFallbackDescr,
             ),
             Text(
-              HOMLocalizations(context).statisticsFallbackAdv,
+              AppLocalizations.of(context).statisticsFallbackActionLabel,
               style: LitSansSerifStyles.subtitle2,
             ),
           ],
@@ -145,12 +145,13 @@ class _StatisticsCardContent extends StatelessWidget {
                       _StatisticsItemRow(
                         children: [
                           _StatisticsHeaderItem(
-                            label: HOMLocalizations(context).diaryEntries,
+                            label:
+                                AppLocalizations.of(context).diaryEntriesLabel,
                             value: queryController.totalDiaryEntries.toString(),
                             constraints: constraints,
                           ),
                           _StatisticsHeaderItem(
-                            label: HOMLocalizations(context).averageMood,
+                            label: AppLocalizations.of(context).avgMoodLabel,
                             value: MoodTranslationController(
                               moodScore: queryController.avgMood,
                               context: context,
@@ -162,12 +163,14 @@ class _StatisticsCardContent extends StatelessWidget {
                       _StatisticsItemRow(
                         children: [
                           _StatisticsItemCard(
-                            label: HOMLocalizations(context).wordsWritten,
+                            label:
+                                AppLocalizations.of(context).wordsWrittenLabel,
                             value: queryController.totalWordsWritten.toString(),
                             constraints: constraints,
                           ),
                           _StatisticsItemCard(
-                            label: HOMLocalizations(context).wordsPerEntry,
+                            label:
+                                AppLocalizations.of(context).wordsPerEntryLabel,
                             value: queryController.avgWordWritten
                                 .toStringAsFixed(2),
                             constraints: constraints,
@@ -178,14 +181,17 @@ class _StatisticsCardContent extends StatelessWidget {
                         children: [
                           _StatisticsItemCard(
                             constraints: constraints,
-                            label: HOMLocalizations(context)
-                                .mostWordsWrittenAtOnce,
-                            value: "${queryController.mostWordsWrittenAtOnce}",
+                            label: AppLocalizations.of(context)
+                                .mostWordsAtOnceLabel,
+                            value: queryController.mostWordsWrittenAtOnce
+                                .toString(),
                           ),
                           _StatisticsItemCard(
                             constraints: constraints,
-                            label: HOMLocalizations(context).fewestWordsAtOnce,
-                            value: "${queryController.leastWordsWrittenAtOnce}",
+                            label: AppLocalizations.of(context)
+                                .fewestWordsAtOnceLabel,
+                            value: queryController.leastWordsWrittenAtOnce
+                                .toString(),
                           ),
                         ],
                       ),
@@ -193,26 +199,29 @@ class _StatisticsCardContent extends StatelessWidget {
                         children: [
                           _StatisticsItemCard(
                             constraints: constraints,
-                            label: HOMLocalizations(context).entriesThisWeek,
-                            value: "${queryController.entriesThisWeek}",
+                            label: AppLocalizations.of(context)
+                                .entriesThisWeekLabel,
+                            value: queryController.entriesThisWeek.toString(),
                           ),
                           _StatisticsItemCard(
                             constraints: constraints,
-                            label: HOMLocalizations(context).entriesThisMonth,
-                            value: "${queryController.entriesThisMonth}",
+                            label: AppLocalizations.of(context)
+                                .entriesThisMonthLabel,
+                            value: queryController.entriesThisMonth.toString(),
                           ),
                         ],
                       ),
                       _StatisticsItemRow(
                         children: [
                           _StatisticsItemCard(
-                            label: HOMLocalizations(context).latestEntry,
+                            label:
+                                AppLocalizations.of(context).lastestEntryLabel,
                             value: queryController.latestEntryDate
                                 .formatAsLocalizedDate(context),
                             constraints: constraints,
                           ),
                           _StatisticsItemCard(
-                            label: HOMLocalizations(context).firstEntry,
+                            label: AppLocalizations.of(context).firstEntryLabel,
                             value: queryController.firstEntryDate
                                 .formatAsLocalizedDate(context),
                             constraints: constraints,

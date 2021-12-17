@@ -214,4 +214,64 @@ class AppLocalizations {
   String get yourMoodLabel {
     return localizeValue(AppLocalizationsKeys.yourMoodLabel);
   }
+
+  String get statisticsLabel {
+    return localizeValue(AppLocalizationsKeys.statisticsLabel);
+  }
+
+  String get noEntriesAvailLabel {
+    return localizeValue(AppLocalizationsKeys.noEntriesAvailLabel);
+  }
+
+  String get noEntriesAvailDescr {
+    return localizeValue(AppLocalizationsKeys.diaryFallbackDescr);
+  }
+
+  String get statisticsFallbackDescr {
+    return localizeValue(AppLocalizationsKeys.statisticsFallbackDescr);
+  }
+
+  String get statisticsFallbackActionLabel {
+    return localizeValue(AppLocalizationsKeys.statisticsFallbackActionLabel);
+  }
+
+  String get diaryEntriesLabel {
+    return localizeValue(AppLocalizationsKeys.diaryEntriesLabel);
+  }
+
+  String get avgMoodLabel {
+    return localizeValue(AppLocalizationsKeys.avgMoodLabel);
+  }
+
+  String get wordsWrittenLabel {
+    return localizeValue(AppLocalizationsKeys.wordsWrittenLabel);
+  }
+
+  String get wordsPerEntryLabel {
+    return localizeValue(AppLocalizationsKeys.wordsPerEntryLabel);
+  }
+
+  String get mostWordsAtOnceLabel {
+    return localizeValue(AppLocalizationsKeys.mostWordsAtOnceLabel);
+  }
+
+  String get fewestWordsAtOnceLabel {
+    return localizeValue(AppLocalizationsKeys.fewestWordsAtOnceLabel);
+  }
+
+  String get entriesThisWeekLabel {
+    return localizeValue(AppLocalizationsKeys.entriesThisWeekLabel);
+  }
+
+  String get entriesThisMonthLabel {
+    return localizeValue(AppLocalizationsKeys.entriesThisMonthLabel);
+  }
+
+  String get lastestEntryLabel {
+    return localizeValue(AppLocalizationsKeys.lastestEntryLabel);
+  }
+
+  String get firstEntryLabel {
+    return localizeValue(AppLocalizationsKeys.firstEntryLabel);
+  }
 }
