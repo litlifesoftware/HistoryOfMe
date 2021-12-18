@@ -60,4 +60,9 @@ class AppLocalizationsKeys {
   static const String entriesThisMonthLabel = 'entriesThisMonthLabel';
   static const String lastestEntryLabel = 'lastestEntryLabel';
   static const String firstEntryLabel = 'firstEntryLabel';
+  static const String lessLabel = 'lessLabel';
+  static const String moreLabel = 'moreLabel';
+  static const String selectMainColorLabel = 'selectMainColorLabel';
+  static const String selectAccentColorLabel = 'selectAccentColorLabel';
+  static const String createLabel = 'createLabel';
 }

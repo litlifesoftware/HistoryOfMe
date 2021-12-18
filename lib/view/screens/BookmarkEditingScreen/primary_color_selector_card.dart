@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:history_of_me/controller/database/hive_db_service.dart';
 import 'package:history_of_me/config/config.dart';
-import 'package:history_of_me/controller/localization/hom_localizations.dart';
+import 'package:history_of_me/localization.dart';
 import 'package:history_of_me/model/user_created_color.dart';
 import 'package:leitmotif/leitmotif.dart';
 
@@ -121,14 +121,14 @@ class _PrimaryColorSelectorCardState extends State<PrimaryColorSelectorCard>
   /// Returns the `show all colors` button data.
   ActionButtonData get showAllButtonData => ActionButtonData(
         title: showAllColors
-            ? HOMLocalizations(context).less
-            : HOMLocalizations(context).more,
+            ? AppLocalizations.of(context).lessLabel
+            : AppLocalizations.of(context).moreLabel,
         onPressed: toggleAllColors,
       );
 
   /// Returns the `toggle show all colors` button data.
   ActionButtonData get createButtonData => ActionButtonData(
-        title: HOMLocalizations(context).create,
+        title: AppLocalizations.of(context).createLabel,
         backgroundColor: LitColors.grey120,
         accentColor: LitColors.grey120,
         onPressed: handleCreateColor,
@@ -167,7 +167,7 @@ class _PrimaryColorSelectorCardState extends State<PrimaryColorSelectorCard>
       ),
       child: LitTitledActionCard(
         title: widget.cardTitle,
-        subtitle: HOMLocalizations(context).selectMainColorLabel,
+        subtitle: AppLocalizations.of(context).selectMainColorLabel,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

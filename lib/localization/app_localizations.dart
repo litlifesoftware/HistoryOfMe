@@ -274,4 +274,24 @@ class AppLocalizations {
   String get firstEntryLabel {
     return localizeValue(AppLocalizationsKeys.firstEntryLabel);
   }
+
+  String get lessLabel {
+    return localizeValue(AppLocalizationsKeys.lessLabel);
+  }
+
+  String get moreLabel {
+    return localizeValue(AppLocalizationsKeys.moreLabel);
+  }
+
+  String get selectMainColorLabel {
+    return localizeValue(AppLocalizationsKeys.selectMainColorLabel);
+  }
+
+  String get selectAccentColorLabel {
+    return localizeValue(AppLocalizationsKeys.selectAccentColorLabel);
+  }
+
+  String get createLabel {
+    return localizeValue(AppLocalizationsKeys.createLabel);
+  }
 }

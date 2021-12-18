@@ -75,5 +75,10 @@ class AppLocalizationsDe {
     AppLocalizationsKeys.entriesThisMonthLabel: 'Enträge diesen Monat',
     AppLocalizationsKeys.lastestEntryLabel: 'Letzter Eintrag',
     AppLocalizationsKeys.firstEntryLabel: 'Erster Eintrag',
+    AppLocalizationsKeys.lessLabel: 'Weniger',
+    AppLocalizationsKeys.moreLabel: 'Mehr',
+    AppLocalizationsKeys.selectMainColorLabel: 'Wähle eine Hauptfarbe',
+    AppLocalizationsKeys.selectAccentColorLabel: 'Wähle eine Akzentfarbe',
+    AppLocalizationsKeys.createLabel: 'Erstellen',
   };
 }

@@ -73,5 +73,10 @@ class AppLocalizationsEn {
     AppLocalizationsKeys.entriesThisMonthLabel: 'Entries this month',
     AppLocalizationsKeys.lastestEntryLabel: 'Latest entry',
     AppLocalizationsKeys.firstEntryLabel: 'First entry',
+    AppLocalizationsKeys.lessLabel: 'less',
+    AppLocalizationsKeys.moreLabel: 'more',
+    AppLocalizationsKeys.selectMainColorLabel: 'Select a main color',
+    AppLocalizationsKeys.selectAccentColorLabel: 'Select an accent color',
+    AppLocalizationsKeys.createLabel: 'create',
   };
 }
