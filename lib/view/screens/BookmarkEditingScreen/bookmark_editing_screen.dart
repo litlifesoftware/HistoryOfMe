@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:history_of_me/controller/localization/hom_localizations.dart';
+import 'package:history_of_me/localization.dart';
 import 'package:history_of_me/view/shared/shared.dart';
 import 'package:leitmotif/leitmotif.dart';
 import 'package:history_of_me/controller/database/hive_db_service.dart';
@@ -259,7 +259,7 @@ class _BookmarkEditingScreenState extends State<BookmarkEditingScreen>
             snackbars: [
               LitIconSnackbar(
                 snackBarController: _snackbarController,
-                text: HOMLocalizations(context).colorAlreadyExists,
+                text: AppLocalizations.of(context).duplicateColorDescr,
                 iconData: LitIcons.info,
               ),
             ],
@@ -307,11 +307,13 @@ class _BookmarkEditingScreenState extends State<BookmarkEditingScreen>
                                   onSelectCallback: setDesignPattern,
                                   items: [
                                     LitToggleButtonGroupItemData(
-                                      label: HOMLocalizations(context).striped,
+                                      label: AppLocalizations.of(context)
+                                          .stripesLabel,
                                       value: 0,
                                     ),
                                     LitToggleButtonGroupItemData(
-                                      label: HOMLocalizations(context).dotted,
+                                      label: AppLocalizations.of(context)
+                                          .dotsLabel,
                                       value: 1,
                                     ),
                                   ],
@@ -351,8 +353,8 @@ class _BookmarkEditingScreenState extends State<BookmarkEditingScreen>
                                       selectedColorValue: _primaryColor,
                                       onSelectPrimaryColor: _setPrimaryColor,
                                       userCreatedColors: userColors,
-                                      cardTitle:
-                                          HOMLocalizations(context).mainColor,
+                                      cardTitle: AppLocalizations.of(context)
+                                          .mainColorLabel,
                                       onAddColorError: _onAddColorError,
                                     ),
                                     SecondaryColorSelectorCard(
@@ -409,7 +411,7 @@ class _ConfigCardBuilder extends StatelessWidget {
       case 0:
         return PatternConfigCard(
           designPattern: designPattern,
-          patternLabel: HOMLocalizations(context).striped,
+          //patternLabel: HOMLocalizations(context).striped,
           patternValue: stripeCount,
           onPatternSliderChange: onStripeSliderChange,
           min: 1,
@@ -418,7 +420,7 @@ class _ConfigCardBuilder extends StatelessWidget {
       case 1:
         return PatternConfigCard(
           designPattern: designPattern,
-          patternLabel: HOMLocalizations(context).dotted,
+          //patternLabel: HOMLocalizations(context).dotted,
           patternValue: dotSize,
           onPatternSliderChange: onDotsSliderChange,
           min: 12,
@@ -427,7 +429,7 @@ class _ConfigCardBuilder extends StatelessWidget {
       default:
         return PatternConfigCard(
           designPattern: designPattern,
-          patternLabel: HOMLocalizations(context).striped,
+          //patternLabel: HOMLocalizations(context).striped,
           patternValue: stripeCount,
           onPatternSliderChange: onStripeSliderChange,
           min: 1,

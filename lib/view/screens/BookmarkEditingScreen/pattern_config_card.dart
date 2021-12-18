@@ -3,7 +3,7 @@ import 'package:leitmotif/leitmotif.dart';
 
 class PatternConfigCard extends StatefulWidget {
   final int designPattern;
-  final String patternLabel;
+  //final String patternLabel;
   final int? patternValue;
   final void Function(double) onPatternSliderChange;
   final int min;
@@ -11,7 +11,7 @@ class PatternConfigCard extends StatefulWidget {
   const PatternConfigCard({
     Key? key,
     required this.designPattern,
-    required this.patternLabel,
+    //required this.patternLabel,
     required this.patternValue,
     required this.onPatternSliderChange,
     required this.min,

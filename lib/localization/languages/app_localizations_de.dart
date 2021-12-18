@@ -80,5 +80,10 @@ class AppLocalizationsDe {
     AppLocalizationsKeys.selectMainColorLabel: 'Wähle eine Hauptfarbe',
     AppLocalizationsKeys.selectAccentColorLabel: 'Wähle eine Akzentfarbe',
     AppLocalizationsKeys.createLabel: 'Erstellen',
+    AppLocalizationsKeys.stripesLabel: 'Streifen',
+    AppLocalizationsKeys.dotsLabel: 'Punkte',
+    AppLocalizationsKeys.mainColorLabel: 'Hauptfarbe',
+    AppLocalizationsKeys.duplicateColorDescr:
+        'Diese Farbe ist bereits vorhanden.',
   };
 }

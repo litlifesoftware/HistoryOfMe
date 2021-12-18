@@ -294,4 +294,20 @@ class AppLocalizations {
   String get createLabel {
     return localizeValue(AppLocalizationsKeys.createLabel);
   }
+
+  String get stripesLabel {
+    return localizeValue(AppLocalizationsKeys.stripesLabel);
+  }
+
+  String get dotsLabel {
+    return localizeValue(AppLocalizationsKeys.dotsLabel);
+  }
+
+  String get mainColorLabel {
+    return localizeValue(AppLocalizationsKeys.mainColorLabel);
+  }
+
+  String get duplicateColorDescr {
+    return localizeValue(AppLocalizationsKeys.duplicateColorDescr);
+  }
 }

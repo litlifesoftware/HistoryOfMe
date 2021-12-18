@@ -78,5 +78,10 @@ class AppLocalizationsEn {
     AppLocalizationsKeys.selectMainColorLabel: 'Select a main color',
     AppLocalizationsKeys.selectAccentColorLabel: 'Select an accent color',
     AppLocalizationsKeys.createLabel: 'create',
+    AppLocalizationsKeys.dotsLabel: 'Dots',
+    AppLocalizationsKeys.stripesLabel: 'Stripes',
+    AppLocalizationsKeys.mainColorLabel: 'Main Color',
+    AppLocalizationsKeys.duplicateColorDescr:
+        'This color is already available.',
   };
 }

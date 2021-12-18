@@ -65,4 +65,8 @@ class AppLocalizationsKeys {
   static const String selectMainColorLabel = 'selectMainColorLabel';
   static const String selectAccentColorLabel = 'selectAccentColorLabel';
   static const String createLabel = 'createLabel';
+  static const String stripesLabel = 'stripesLabel';
+  static const String dotsLabel = 'dotsLabel';
+  static const String mainColorLabel = 'mainColorLabel';
+  static const String duplicateColorDescr = 'colorExistsDescr';
 }
