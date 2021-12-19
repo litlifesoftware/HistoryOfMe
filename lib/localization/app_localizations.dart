@@ -310,4 +310,28 @@ class AppLocalizations {
   String get duplicateColorDescr {
     return localizeValue(AppLocalizationsKeys.duplicateColorDescr);
   }
+
+  String get entryLabel {
+    return localizeValue(AppLocalizationsKeys.entryLabel);
+  }
+
+  String get entriesLabel {
+    return localizeValue(AppLocalizationsKeys.entriesLabel);
+  }
+
+  String get favoriteEntryLabel {
+    return localizeValue(AppLocalizationsKeys.favoriteEntryLabel);
+  }
+
+  String get favoriteEntriesLabel {
+    return localizeValue(AppLocalizationsKeys.favoriteEntriesLabel);
+  }
+
+  String get allLabel {
+    return localizeValue(AppLocalizationsKeys.allLabel);
+  }
+
+  String get latestLabel {
+    return localizeValue(AppLocalizationsKeys.latestLabel);
+  }
 }

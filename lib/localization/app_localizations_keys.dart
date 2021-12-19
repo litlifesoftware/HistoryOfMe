@@ -69,4 +69,10 @@ class AppLocalizationsKeys {
   static const String dotsLabel = 'dotsLabel';
   static const String mainColorLabel = 'mainColorLabel';
   static const String duplicateColorDescr = 'colorExistsDescr';
+  static const String entryLabel = 'entryLabel';
+  static const String entriesLabel = 'entriesLabel';
+  static const String favoriteEntryLabel = 'favoriteEntryLabel';
+  static const String favoriteEntriesLabel = 'favoriteEntriesLabel';
+  static const String allLabel = 'allLabel';
+  static const String latestLabel = 'latestLabel';
 }

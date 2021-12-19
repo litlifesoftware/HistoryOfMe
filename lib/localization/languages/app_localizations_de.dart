@@ -73,7 +73,7 @@ class AppLocalizationsDe {
     AppLocalizationsKeys.fewestWordsAtOnceLabel: 'Wenigste Wörter zugleich',
     AppLocalizationsKeys.entriesThisWeekLabel: 'Enträge diese Woche',
     AppLocalizationsKeys.entriesThisMonthLabel: 'Enträge diesen Monat',
-    AppLocalizationsKeys.lastestEntryLabel: 'Letzter Eintrag',
+    AppLocalizationsKeys.lastestEntryLabel: 'Aktuellster Eintrag',
     AppLocalizationsKeys.firstEntryLabel: 'Erster Eintrag',
     AppLocalizationsKeys.lessLabel: 'Weniger',
     AppLocalizationsKeys.moreLabel: 'Mehr',
@@ -85,5 +85,11 @@ class AppLocalizationsDe {
     AppLocalizationsKeys.mainColorLabel: 'Hauptfarbe',
     AppLocalizationsKeys.duplicateColorDescr:
         'Diese Farbe ist bereits vorhanden.',
+    AppLocalizationsKeys.entryLabel: 'Eintrag',
+    AppLocalizationsKeys.entriesLabel: 'Einträge',
+    AppLocalizationsKeys.favoriteEntryLabel: 'Lieblingseintrag',
+    AppLocalizationsKeys.favoriteEntriesLabel: 'Lieblingseinträge',
+    AppLocalizationsKeys.allLabel: 'alle',
+    AppLocalizationsKeys.latestLabel: 'aktuell',
   };
 }

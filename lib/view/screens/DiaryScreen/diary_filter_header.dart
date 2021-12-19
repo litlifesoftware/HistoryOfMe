@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:history_of_me/controller/localization/hom_localizations.dart';
+import 'package:history_of_me/localization.dart';
 import 'package:leitmotif/leitmotif.dart';
 
 import 'diary_filter_header_delegate.dart';
@@ -39,24 +39,20 @@ class _DiaryFilterHeaderState extends State<DiaryFilterHeader>
 
   /// Returns the amount of filted entires in human-readable format.
   String get _entriesLabel {
-    final String entry = HOMLocalizations(context).entry;
-    final String entires = HOMLocalizations(context).entires;
-    final String favorite = HOMLocalizations(context).favorite;
-
     final bool plural =
         (widget.filteredLength > 1) || (widget.filteredLength == 0);
 
     if (widget.showFavoritesOnly!) {
       if (plural) {
-        return " " + favorite.capitalize() + " " + entires.capitalize();
+        return AppLocalizations.of(context).favoriteEntriesLabel;
       } else {
-        return " " + favorite.capitalize() + " " + entry.capitalize();
+        return AppLocalizations.of(context).favoriteEntryLabel;
       }
     } else {
       if (plural) {
-        return " " + entires.capitalize();
+        return AppLocalizations.of(context).entriesLabel;
       } else {
-        return " " + entry.capitalize();
+        return AppLocalizations.of(context).entryLabel;
       }
     }
   }
@@ -119,10 +115,14 @@ class _DiaryFilterHeaderState extends State<DiaryFilterHeader>
                             text: TextSpan(
                               style: widget.textStyle,
                               children: [
-                                TextSpan(text: "${widget.filteredLength}"),
                                 TextSpan(
-                                    text: _entriesLabel,
-                                    style: widget.accentTextStyle),
+                                  text: widget.filteredLength.toString(),
+                                ),
+                                TextSpan(text: ' '),
+                                TextSpan(
+                                  text: _entriesLabel,
+                                  style: widget.accentTextStyle,
+                                ),
                               ],
                             ),
                           ),
@@ -147,7 +147,7 @@ class _DiaryFilterHeaderState extends State<DiaryFilterHeader>
                             : widget.textStyle.color,
                       ),
                       disabledTitle: ClippedText(
-                        HOMLocalizations(context).all,
+                        AppLocalizations.of(context).allLabel,
                         style: widget.textStyle.copyWith(
                           color: widget.showFavoritesOnly!
                               ? widget.textStyle.color

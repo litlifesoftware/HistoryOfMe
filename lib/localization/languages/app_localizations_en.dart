@@ -83,5 +83,11 @@ class AppLocalizationsEn {
     AppLocalizationsKeys.mainColorLabel: 'Main Color',
     AppLocalizationsKeys.duplicateColorDescr:
         'This color is already available.',
+    AppLocalizationsKeys.entryLabel: 'entry',
+    AppLocalizationsKeys.entriesLabel: 'entries',
+    AppLocalizationsKeys.favoriteEntryLabel: 'favorite entry',
+    AppLocalizationsKeys.favoriteEntriesLabel: 'favorite entries',
+    AppLocalizationsKeys.allLabel: 'all',
+    AppLocalizationsKeys.latestLabel: 'latest',
   };
 }
