@@ -89,5 +89,20 @@ class AppLocalizationsEn {
     AppLocalizationsKeys.favoriteEntriesLabel: 'favorite entries',
     AppLocalizationsKeys.allLabel: 'all',
     AppLocalizationsKeys.latestLabel: 'latest',
+    AppLocalizationsKeys.unsavedLabel: 'unsaved',
+    AppLocalizationsKeys.newDiaryTitle: 'New Diary',
+    AppLocalizationsKeys.newDiarySubtitle: 'Create new Diary',
+    AppLocalizationsKeys.startJourneyTitle: 'Start a new journey',
+    AppLocalizationsKeys.diaryOfLabel: 'Diary of',
+    AppLocalizationsKeys.restoreDiaryTitle: 'Restore your diary',
+    AppLocalizationsKeys.continueJourneyTitle: 'Continue your journey',
+    AppLocalizationsKeys.restoreLabel: 'Restore',
+    AppLocalizationsKeys.cancelRestoreDescr:
+        'Do you want to create a new diary instead of restoring your previous one?',
+    AppLocalizationsKeys.createdLabel: 'Created',
+    AppLocalizationsKeys.selectBackupTitle: 'Select Backup',
+    AppLocalizationsKeys.restoreFromBackupTitle: 'Restore from Backup',
+    AppLocalizationsKeys.unsupportedFileTitle: 'Not supported',
+    AppLocalizationsKeys.unsupportedFileDescr: 'This file is not supported.',
   };
 }

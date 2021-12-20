@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:history_of_me/controller/controllers.dart';
+import 'package:history_of_me/localization.dart';
 import 'package:history_of_me/styles.dart';
 import 'package:history_of_me/view/screens/SelectBackupScreen/select_backup_screen.dart';
 import 'package:history_of_me/view/shared/shared.dart';
@@ -48,7 +48,7 @@ class _RestoreDiaryScreenState extends State<RestoreDiaryScreen> {
     return LitScaffold(
       appBar: FixedOnScrollTitledAppbar(
         scrollController: _scrollController,
-        title: HOMLocalizations(context).newDiary,
+        title: AppLocalizations.of(context).newDiaryTitle,
       ),
       body: Container(
         height: MediaQuery.of(context).size.height,
@@ -65,8 +65,8 @@ class _RestoreDiaryScreenState extends State<RestoreDiaryScreen> {
           ),
           children: [
             LitScreenTitle(
-              title: HOMLocalizations(context).newDiary,
-              subtitle: HOMLocalizations(context).createNewDiary,
+              title: AppLocalizations.of(context).newDiaryTitle,
+              subtitle: AppLocalizations.of(context).newDiarySubtitle,
             ),
             Padding(
               padding: const EdgeInsets.symmetric(
@@ -102,11 +102,11 @@ class _RestoreBackupActionCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LitTitledActionCard(
-      title: HOMLocalizations(context).restoreYourDiary,
-      subtitle: HOMLocalizations(context).continueYourJourney,
+      title: AppLocalizations.of(context).restoreDiaryTitle,
+      subtitle: AppLocalizations.of(context).continueJourneyTitle,
       actionButtonData: [
         ActionButtonData(
-          title: HOMLocalizations(context).restore,
+          title: AppLocalizations.of(context).restoreLabel,
           onPressed: onRestore,
           backgroundColor: AppColors.pastelGreen,
           accentColor: AppColors.pastelBlue,

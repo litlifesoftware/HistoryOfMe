@@ -334,4 +334,60 @@ class AppLocalizations {
   String get latestLabel {
     return localizeValue(AppLocalizationsKeys.latestLabel);
   }
+
+  String get unsavedLabel {
+    return localizeValue(AppLocalizationsKeys.unsavedLabel);
+  }
+
+  String get newDiaryTitle {
+    return localizeValue(AppLocalizationsKeys.newDiaryTitle);
+  }
+
+  String get newDiarySubtitle {
+    return localizeValue(AppLocalizationsKeys.newDiarySubtitle);
+  }
+
+  String get startJourneyTitle {
+    return localizeValue(AppLocalizationsKeys.startJourneyTitle);
+  }
+
+  String get diaryOfLabel {
+    return localizeValue(AppLocalizationsKeys.diaryOfLabel);
+  }
+
+  String get restoreDiaryTitle {
+    return localizeValue(AppLocalizationsKeys.restoreDiaryTitle);
+  }
+
+  String get continueJourneyTitle {
+    return localizeValue(AppLocalizationsKeys.continueJourneyTitle);
+  }
+
+  String get restoreLabel {
+    return localizeValue(AppLocalizationsKeys.restoreLabel);
+  }
+
+  String get cancelRestoreDescr {
+    return localizeValue(AppLocalizationsKeys.cancelRestoreDescr);
+  }
+
+  String get createdLabel {
+    return localizeValue(AppLocalizationsKeys.createdLabel);
+  }
+
+  String get selectBackupTitle {
+    return localizeValue(AppLocalizationsKeys.selectBackupTitle);
+  }
+
+  String get restoreFromBackupTitle {
+    return localizeValue(AppLocalizationsKeys.restoreFromBackupTitle);
+  }
+
+  String get unsupportedFileTitle {
+    return localizeValue(AppLocalizationsKeys.unsupportedFileTitle);
+  }
+
+  String get unsupportedFileDescr {
+    return localizeValue(AppLocalizationsKeys.unsupportedFileDescr);
+  }
 }

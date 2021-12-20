@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:history_of_me/app.dart';
 import 'package:history_of_me/controller/controllers.dart';
+import 'package:history_of_me/localization.dart';
 import 'package:history_of_me/model/models.dart';
 import 'package:history_of_me/view/shared/shared.dart';
 import 'package:leitmotif/leitmotif.dart';
@@ -137,12 +138,13 @@ class _SelectBackupScreenState extends State<SelectBackupScreen> {
     return LitScaffold(
       appBar: FixedOnScrollTitledAppbar(
         scrollController: _scrollController,
-        title: HOMLocalizations(context).selectYourBackup,
+        title: AppLocalizations.of(context).selectBackupTitle,
       ),
       snackbars: [
         LitIconSnackbar(
           snackBarController: _snackbarController,
-          text: HOMLocalizations(context).thisFileIsNotSupported,
+          title: AppLocalizations.of(context).unsupportedFileTitle,
+          text: AppLocalizations.of(context).unsupportedFileDescr,
           iconData: LitIcons.info,
         )
       ],
@@ -161,8 +163,8 @@ class _SelectBackupScreenState extends State<SelectBackupScreen> {
           ),
           children: [
             LitScreenTitle(
-              subtitle: HOMLocalizations(context).restoreFromBackup,
-              title: HOMLocalizations(context).selectYourBackup,
+              subtitle: AppLocalizations.of(context).restoreFromBackupTitle,
+              title: AppLocalizations.of(context).selectBackupTitle,
             ),
             Padding(
               padding: const EdgeInsets.symmetric(

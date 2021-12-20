@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:history_of_me/controller/controllers.dart';
+import 'package:history_of_me/localization.dart';
 import 'package:leitmotif/leitmotif.dart';
 
 /// A Flutter widget allowing the user to confirm the creation of a new diary
@@ -23,15 +23,15 @@ class CancelRestoringDialog extends StatelessWidget {
           horizontal: 16.0,
           vertical: 8.0,
         ),
-        text: HOMLocalizations(context).cancelRestoreDescr,
+        text: AppLocalizations.of(context).cancelRestoreDescr,
       ),
-      titleText: HOMLocalizations(context).createNewDiary + "?",
+      titleText: LeitmotifLocalizations.of(context).cancelLabel + "?",
       actionButtons: [
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8.0),
           child: LitPushedThroughButton(
             child: Text(
-              HOMLocalizations(context).create.toUpperCase(),
+              AppLocalizations.of(context).createLabel.toUpperCase(),
               style: LitSansSerifStyles.button,
               textAlign: TextAlign.center,
             ),

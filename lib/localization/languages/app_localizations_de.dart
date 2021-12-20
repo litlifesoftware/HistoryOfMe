@@ -91,5 +91,22 @@ class AppLocalizationsDe {
     AppLocalizationsKeys.favoriteEntriesLabel: 'Lieblingseinträge',
     AppLocalizationsKeys.allLabel: 'alle',
     AppLocalizationsKeys.latestLabel: 'aktuell',
+    AppLocalizationsKeys.unsavedLabel: 'ungespeichert',
+    AppLocalizationsKeys.newDiaryTitle: 'Neues Tagebuch',
+    AppLocalizationsKeys.newDiarySubtitle: 'Neues Tagebuch erstellen',
+    AppLocalizationsKeys.startJourneyTitle: 'Beginne eine neue Reise',
+    AppLocalizationsKeys.diaryOfLabel: 'Tagebuch von',
+    AppLocalizationsKeys.restoreDiaryTitle: 'Stelle dein Tagebuch wieder her',
+    AppLocalizationsKeys.continueJourneyTitle: 'Führe deine Reise fort',
+    AppLocalizationsKeys.restoreLabel: 'Wiederherstellen',
+    AppLocalizationsKeys.cancelRestoreDescr:
+        'Möchtest du ein neues Tagebuch erstellen, anstelle dein vorheriges Tagebuch wiederherzustellen?',
+    AppLocalizationsKeys.createdLabel: 'Erstellt',
+    AppLocalizationsKeys.selectBackupTitle: 'Backup auswählen',
+    AppLocalizationsKeys.restoreFromBackupTitle:
+        'Von Sicherung wiederherstellen',
+    AppLocalizationsKeys.unsupportedFileTitle: 'Nicht unterstützt',
+    AppLocalizationsKeys.unsupportedFileDescr:
+        'Diese Datei wird nicht unterstützt.',
   };
 }

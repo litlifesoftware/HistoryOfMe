@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:history_of_me/controller/controllers.dart';
+import 'package:history_of_me/localization.dart';
 import 'package:history_of_me/view/styles/app_colors.dart';
 import 'package:leitmotif/leitmotif.dart';
 
@@ -18,11 +18,11 @@ class CreateNewActionCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LitTitledActionCard(
-      title: HOMLocalizations(context).createNewDiary,
-      subtitle: HOMLocalizations(context).startNewJourney,
+      title: AppLocalizations.of(context).newDiaryTitle,
+      subtitle: AppLocalizations.of(context).startJourneyTitle,
       actionButtonData: [
         ActionButtonData(
-          title: HOMLocalizations(context).create,
+          title: AppLocalizations.of(context).createLabel,
           onPressed: onCreate,
           backgroundColor: AppColors.pastelPink,
           accentColor: AppColors.pastelPurple,

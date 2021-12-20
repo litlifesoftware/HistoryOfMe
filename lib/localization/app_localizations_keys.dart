@@ -75,4 +75,18 @@ class AppLocalizationsKeys {
   static const String favoriteEntriesLabel = 'favoriteEntriesLabel';
   static const String allLabel = 'allLabel';
   static const String latestLabel = 'latestLabel';
+  static const String unsavedLabel = 'unsavedLabel';
+  static const String newDiaryTitle = 'newDiaryTitle';
+  static const String newDiarySubtitle = 'newDiarySubtitle';
+  static const String startJourneyTitle = 'startJourneyTitle';
+  static const String diaryOfLabel = 'diaryOfLabel';
+  static const String restoreDiaryTitle = 'restoreDiaryTitle';
+  static const String continueJourneyTitle = 'continueJourneyTitle';
+  static const String restoreLabel = 'restoreLabel';
+  static const String cancelRestoreDescr = 'cancelRestoreDescr';
+  static const String createdLabel = 'createdLabel';
+  static const String selectBackupTitle = 'selectBackupTitle';
+  static const String restoreFromBackupTitle = 'restoreFromBackupTitle';
+  static const String unsupportedFileTitle = 'unsupportedFileTitle';
+  static const String unsupportedFileDescr = 'unsupportedFileDescr';
 }
