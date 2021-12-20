@@ -390,4 +390,28 @@ class AppLocalizations {
   String get unsupportedFileDescr {
     return localizeValue(AppLocalizationsKeys.unsupportedFileDescr);
   }
+
+  String get backupFileRequiredTitle {
+    return localizeValue(AppLocalizationsKeys.backupFileRequiredTitle);
+  }
+
+  String get backupFileRequiredDescr {
+    return localizeValue(AppLocalizationsKeys.backupFileRequiredDescr);
+  }
+
+  String get pickFileLabel {
+    return localizeValue(AppLocalizationsKeys.pickFileLabel);
+  }
+
+  String get storagePermissionDeniedTitle {
+    return localizeValue(AppLocalizationsKeys.storagePermissionDeniedTitle);
+  }
+
+  String get storagePermissionDeniedDescr {
+    return localizeValue(AppLocalizationsKeys.storagePermissionDeniedDescr);
+  }
+
+  String get requestPermissionLabel {
+    return localizeValue(AppLocalizationsKeys.requestPermissionLabel);
+  }
 }

@@ -104,5 +104,13 @@ class AppLocalizationsEn {
     AppLocalizationsKeys.restoreFromBackupTitle: 'Restore from Backup',
     AppLocalizationsKeys.unsupportedFileTitle: 'Not supported',
     AppLocalizationsKeys.unsupportedFileDescr: 'This file is not supported.',
+    AppLocalizationsKeys.backupFileRequiredTitle: 'We need your backup file',
+    AppLocalizationsKeys.backupFileRequiredDescr:
+        "Please provide your History of Me backup file. Backup files have a unique file name and are usually stored in your 'Download' folder on this location:",
+    AppLocalizationsKeys.pickFileLabel: 'Select file',
+    AppLocalizationsKeys.storagePermissionDeniedTitle: 'Reading backup denied',
+    AppLocalizationsKeys.storagePermissionDeniedDescr:
+        'History of Me needs additional permissions in order to access your storage. This will be required to read your diary backup',
+    AppLocalizationsKeys.requestPermissionLabel: 'Request permissions',
   };
 }

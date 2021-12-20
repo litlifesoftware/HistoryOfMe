@@ -89,4 +89,12 @@ class AppLocalizationsKeys {
   static const String restoreFromBackupTitle = 'restoreFromBackupTitle';
   static const String unsupportedFileTitle = 'unsupportedFileTitle';
   static const String unsupportedFileDescr = 'unsupportedFileDescr';
+  static const String backupFileRequiredTitle = 'backupFileRequiredTitle';
+  static const String backupFileRequiredDescr = 'backupFileRequiredDescr';
+  static const String pickFileLabel = 'pickFileLabel';
+  static const String storagePermissionDeniedTitle =
+      'storagePermissionDeniedTitle';
+  static const String storagePermissionDeniedDescr =
+      'storagePermissionDeniedDescr';
+  static const String requestPermissionLabel = 'requestPermissionLabel';
 }

@@ -226,12 +226,14 @@ class _BackupBuilder extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        HOMLocalizations(context).readingBackupDenied,
+                        AppLocalizations.of(context)
+                            .storagePermissionDeniedTitle,
                         style: LitSansSerifStyles.h6,
                       ),
                       SizedBox(height: 8.0),
                       Text(
-                        HOMLocalizations(context).readingBackupDeniedDescr,
+                        AppLocalizations.of(context)
+                            .storagePermissionDeniedDescr,
                         style: LitSansSerifStyles.body2,
                       ),
                       SizedBox(height: 8.0),
@@ -244,8 +246,8 @@ class _BackupBuilder extends StatelessWidget {
                               backgroundColor: Color(0xFFC7EBD3),
                               accentColor: Color(0xFFD7ECF4),
                               child: Text(
-                                HOMLocalizations(context)
-                                    .requestPermissions
+                                AppLocalizations.of(context)
+                                    .requestPermissionLabel
                                     .toUpperCase(),
                                 textAlign: TextAlign.center,
                                 style: LitSansSerifStyles.button,
@@ -311,15 +313,15 @@ class _BackupNotFoundCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LitTitledActionCard(
-      title: HOMLocalizations(context).restoreFromFile,
-      subtitle: HOMLocalizations(context).weNeedYourBackupFile,
+      title: AppLocalizations.of(context).restoreFromBackupTitle,
+      subtitle: AppLocalizations.of(context).backupFileRequiredTitle,
       child: LayoutBuilder(
         builder: (context, constraints) {
           return Column(
             children: [
               SizedBox(height: 16.0),
               Text(
-                HOMLocalizations(context).pickFileDescr + ":",
+                AppLocalizations.of(context).backupFileRequiredDescr,
                 style: LitSansSerifStyles.body2,
               ),
               SizedBox(height: 8.0),
@@ -337,7 +339,7 @@ class _BackupNotFoundCard extends StatelessWidget {
       ),
       actionButtonData: [
         ActionButtonData(
-          title: HOMLocalizations(context).pickFile,
+          title: AppLocalizations.of(context).pickFileLabel,
           onPressed: onPickFile,
           backgroundColor: Colors.white,
           accentColor: Colors.white,

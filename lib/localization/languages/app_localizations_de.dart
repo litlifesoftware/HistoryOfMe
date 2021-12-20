@@ -103,10 +103,18 @@ class AppLocalizationsDe {
         'Möchtest du ein neues Tagebuch erstellen, anstelle dein vorheriges Tagebuch wiederherzustellen?',
     AppLocalizationsKeys.createdLabel: 'Erstellt',
     AppLocalizationsKeys.selectBackupTitle: 'Backup auswählen',
-    AppLocalizationsKeys.restoreFromBackupTitle:
-        'Von Sicherung wiederherstellen',
+    AppLocalizationsKeys.restoreFromBackupTitle: 'Sicherung wiederherstellen',
     AppLocalizationsKeys.unsupportedFileTitle: 'Nicht unterstützt',
     AppLocalizationsKeys.unsupportedFileDescr:
         'Diese Datei wird nicht unterstützt.',
+    AppLocalizationsKeys.backupFileRequiredTitle:
+        "Wir benötigen deine Backup Datei",
+    AppLocalizationsKeys.backupFileRequiredDescr:
+        "Bitte stelle deine 'History of Me'-Backupdatei zur Verfügung. Backup-Datein haben einen eindeutigen Dateinamen und befinden sich üblicherweise in deinem 'Download'-Ordner unter folgendem Pfad:",
+    AppLocalizationsKeys.pickFileLabel: 'Auswählen',
+    AppLocalizationsKeys.storagePermissionDeniedTitle: 'Auslesen verweigert',
+    AppLocalizationsKeys.storagePermissionDeniedDescr:
+        'History of Me benötigt zusätzliche Rechte, um auf deinen Speicher zuzugreifen. Dies ist notwendig, damit Backup-Datein ausgelesen werden können.',
+    AppLocalizationsKeys.requestPermissionLabel: 'Zulassen',
   };
 }
