@@ -112,5 +112,7 @@ class AppLocalizationsEn {
     AppLocalizationsKeys.storagePermissionDeniedDescr:
         'History of Me needs additional permissions in order to access your storage. This will be required to read your diary backup',
     AppLocalizationsKeys.requestPermissionLabel: 'Request permissions',
+    AppLocalizationsKeys.foundDiaryTitle: 'We found your diary',
+    AppLocalizationsKeys.lastEditedLabel: 'Last updated',
   };
 }

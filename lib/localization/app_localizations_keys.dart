@@ -97,4 +97,6 @@ class AppLocalizationsKeys {
   static const String storagePermissionDeniedDescr =
       'storagePermissionDeniedDescr';
   static const String requestPermissionLabel = 'requestPermissionLabel';
+  static const String foundDiaryTitle = 'foundDiaryTitle';
+  static const String lastEditedLabel = 'lastEditedLabel';
 }

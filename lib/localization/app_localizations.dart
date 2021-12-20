@@ -414,4 +414,12 @@ class AppLocalizations {
   String get requestPermissionLabel {
     return localizeValue(AppLocalizationsKeys.requestPermissionLabel);
   }
+
+  String get foundDiaryTitle {
+    return localizeValue(AppLocalizationsKeys.foundDiaryTitle);
+  }
+
+  String get lastEditedLabel {
+    return localizeValue(AppLocalizationsKeys.lastEditedLabel);
+  }
 }

@@ -116,5 +116,7 @@ class AppLocalizationsDe {
     AppLocalizationsKeys.storagePermissionDeniedDescr:
         'History of Me benötigt zusätzliche Rechte, um auf deinen Speicher zuzugreifen. Dies ist notwendig, damit Backup-Datein ausgelesen werden können.',
     AppLocalizationsKeys.requestPermissionLabel: 'Zulassen',
+    AppLocalizationsKeys.foundDiaryTitle: 'Wir haben dein Tagebuch gefunden',
+    AppLocalizationsKeys.lastEditedLabel: 'Zuletzt geändert',
   };
 }

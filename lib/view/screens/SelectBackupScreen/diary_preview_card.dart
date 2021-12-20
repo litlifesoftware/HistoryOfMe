@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:history_of_me/app.dart';
-import 'package:history_of_me/controller/localization/hom_localizations.dart';
+import 'package:history_of_me/localization.dart';
 import 'package:history_of_me/model/models.dart';
 import 'package:history_of_me/styles.dart';
 import 'package:history_of_me/view/shared/shared.dart';
@@ -30,8 +30,8 @@ class DiaryPreviewCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LitTitledActionCard(
-      title: HOMLocalizations(context).weFoundYourDiary,
-      subtitle: HOMLocalizations(context).continueYourJourney,
+      title: AppLocalizations.of(context).foundDiaryTitle,
+      subtitle: AppLocalizations.of(context).continueJourneyTitle,
       child: LayoutBuilder(
         builder: (context, constraints) {
           return Column(
@@ -83,7 +83,7 @@ class DiaryPreviewCard extends StatelessWidget {
       ),
       actionButtonData: [
         ActionButtonData(
-          title: HOMLocalizations(context).restore.toUpperCase(),
+          title: AppLocalizations.of(context).restoreLabel.toUpperCase(),
           onPressed: rebuildDatabase,
           backgroundColor: AppColors.pastelGreen,
           accentColor: AppColors.pastelBlue,
@@ -108,7 +108,9 @@ class _BackupPreviewTitle extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         ClippedText(
-          HOMLocalizations(context).diaryOf + " " + diaryBackup.userData.name,
+          AppLocalizations.of(context).diaryOfLabel +
+              " " +
+              diaryBackup.userData.name,
           style: LitSansSerifStyles.subtitle2,
         ),
         RichText(
@@ -154,7 +156,7 @@ class _MetaDataPreview extends StatelessWidget {
                 SizedBox(
                   width: _labelWidth,
                   child: Text(
-                    HOMLocalizations(context).entires.capitalize() + ": ",
+                    AppLocalizations.of(context).entriesLabel.capitalize(),
                     style: LitSansSerifStyles.body2,
                   ),
                 ),
@@ -179,7 +181,7 @@ class _MetaDataPreview extends StatelessWidget {
                 SizedBox(
                   width: _labelWidth,
                   child: Text(
-                    HOMLocalizations(context).lastUpdated + ": ",
+                    AppLocalizations.of(context).lastEditedLabel,
                     style: LitSansSerifStyles.body2,
                   ),
                 ),
