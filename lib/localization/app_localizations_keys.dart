@@ -99,4 +99,8 @@ class AppLocalizationsKeys {
   static const String requestPermissionLabel = 'requestPermissionLabel';
   static const String foundDiaryTitle = 'foundDiaryTitle';
   static const String lastEditedLabel = 'lastEditedLabel';
+  static const String nextLabel = 'nextLabel';
+  static const String previousLabel = 'previousLabel';
+  static const String optionsLabel = 'optionsLabel';
+  static const String firstLabel = 'firstLabel';
 }

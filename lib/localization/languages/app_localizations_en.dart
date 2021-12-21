@@ -114,5 +114,9 @@ class AppLocalizationsEn {
     AppLocalizationsKeys.requestPermissionLabel: 'Request permissions',
     AppLocalizationsKeys.foundDiaryTitle: 'We found your diary',
     AppLocalizationsKeys.lastEditedLabel: 'Last updated',
+    AppLocalizationsKeys.nextLabel: 'next',
+    AppLocalizationsKeys.previousLabel: 'previous',
+    AppLocalizationsKeys.optionsLabel: 'options',
+    AppLocalizationsKeys.firstLabel: 'first',
   };
 }

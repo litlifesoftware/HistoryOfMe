@@ -422,4 +422,20 @@ class AppLocalizations {
   String get lastEditedLabel {
     return localizeValue(AppLocalizationsKeys.lastEditedLabel);
   }
+
+  String get nextLabel {
+    return localizeValue(AppLocalizationsKeys.nextLabel);
+  }
+
+  String get previousLabel {
+    return localizeValue(AppLocalizationsKeys.previousLabel);
+  }
+
+  String get optionsLabel {
+    return localizeValue(AppLocalizationsKeys.optionsLabel);
+  }
+
+  String get firstLabel {
+    return localizeValue(AppLocalizationsKeys.firstLabel);
+  }
 }

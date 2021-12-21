@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:history_of_me/controller/database/hive_db_service.dart';
 import 'package:history_of_me/controller/database/hive_query_controller.dart';
-import 'package:history_of_me/controller/localization/hom_localizations.dart';
 import 'package:history_of_me/controller/routes/hom_navigator.dart';
+import 'package:history_of_me/localization.dart';
 import 'package:history_of_me/model/backdrop_photo.dart';
 import 'package:history_of_me/model/diary_entry.dart';
 import 'package:history_of_me/view/shared/art/ellipse_icon.dart';
@@ -14,7 +14,6 @@ import 'package:leitmotif/leitmotif.dart';
 
 import 'backdrop_photo_overlay.dart';
 import 'change_photo_dialog.dart';
-import 'confirm_delete_entry_dialog.dart';
 import 'entry_detail_backdrop.dart';
 import 'entry_detail_card.dart';
 
@@ -200,12 +199,12 @@ class _EntryDetailScreenState extends State<EntryDetailScreen>
               scrollController: _scrollController,
               title: diaryEntry.title != ""
                   ? diaryEntry.title
-                  : HOMLocalizations(context).untitled,
+                  : AppLocalizations.of(context).untitledLabel,
             ),
             settingsPanel: LitSettingsPanel(
               height: 128.0,
               controller: _settingsPanelController,
-              title: HOMLocalizations(context).options,
+              title: AppLocalizations.of(context).optionsLabel,
               children: [
                 // LitPushedThroughButton(
                 //   accentColor: LitColors.red400,
@@ -424,8 +423,8 @@ class _BottomNavButton extends StatelessWidget {
                 : SizedBox(),
             Text(
               isPrevious
-                  ? HOMLocalizations(context).previous.toUpperCase()
-                  : HOMLocalizations(context).next.toUpperCase(),
+                  ? AppLocalizations.of(context).previousLabel.toUpperCase()
+                  : AppLocalizations.of(context).nextLabel.toUpperCase(),
               style: LitSansSerifStyles.button,
             ),
             !isPrevious

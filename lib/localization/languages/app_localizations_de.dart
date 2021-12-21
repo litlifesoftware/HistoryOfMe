@@ -118,5 +118,9 @@ class AppLocalizationsDe {
     AppLocalizationsKeys.requestPermissionLabel: 'Zulassen',
     AppLocalizationsKeys.foundDiaryTitle: 'Wir haben dein Tagebuch gefunden',
     AppLocalizationsKeys.lastEditedLabel: 'Zuletzt geändert',
+    AppLocalizationsKeys.nextLabel: 'nächste',
+    AppLocalizationsKeys.previousLabel: 'vorherige',
+    AppLocalizationsKeys.optionsLabel: 'Optionen',
+    AppLocalizationsKeys.firstLabel: 'erster',
   };
 }
