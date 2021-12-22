@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:history_of_me/controller/database/hive_db_service.dart';
 import 'package:history_of_me/controller/database/hive_query_controller.dart';
-import 'package:history_of_me/controller/localization/hom_localizations.dart';
 import 'package:history_of_me/controller/mood_translation_controller.dart';
 import 'package:history_of_me/config/config.dart';
+import 'package:history_of_me/localization.dart';
 import 'package:history_of_me/model/diary_entry.dart';
 import 'package:history_of_me/styles.dart';
 import 'package:history_of_me/view/shared/shared.dart';
@@ -166,7 +166,9 @@ class _Header extends StatelessWidget {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   Text(
-                                    HOMLocalizations(context).entry,
+                                    AppLocalizations.of(context)
+                                        .entryLabel
+                                        .capitalize(),
                                     style:
                                         LitSansSerifStyles.subtitle1.copyWith(
                                       fontWeight: FontWeight.bold,
@@ -215,7 +217,7 @@ class _Header extends StatelessWidget {
                       child: Text(
                         diaryEntry.title != initialDiaryEntryTitle
                             ? diaryEntry.title
-                            : HOMLocalizations(context).untitled,
+                            : AppLocalizations.of(context).untitledLabel,
                         style: LitSansSerifStyles.subtitle1.copyWith(
                           fontWeight: FontWeight.bold,
                           color: LitColors.grey400,
@@ -250,7 +252,8 @@ class _Header extends StatelessWidget {
                                   right: isFirst ? 3.0 : 0,
                                 ),
                                 child: _MetaLabel(
-                                  title: HOMLocalizations(context).latest,
+                                  title:
+                                      AppLocalizations.of(context).latestLabel,
                                 ),
                               )
                             : SizedBox(),
@@ -263,7 +266,8 @@ class _Header extends StatelessWidget {
                                   right: 0.0,
                                 ),
                                 child: _MetaLabel(
-                                  title: HOMLocalizations(context).first,
+                                  title:
+                                      AppLocalizations.of(context).firstLabel,
                                 ),
                               )
                             : SizedBox(),
@@ -317,7 +321,7 @@ class _EditButton extends StatelessWidget {
           ConstrainedBox(
             constraints: _constraints,
             child: ClippedText(
-              HOMLocalizations(context).edit.toUpperCase(),
+              AppLocalizations.of(context).editLabel.toUpperCase(),
               style: LitSansSerifStyles.button.copyWith(
                 color: Colors.white,
               ),
@@ -499,17 +503,18 @@ class _NoContentAvailableCard extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 16.0),
           child: LitDescriptionTextBox(
-            text: HOMLocalizations(context).entryIsEmpty,
+            title: AppLocalizations.of(context).emptyEntryTitle,
+            text: AppLocalizations.of(context).emptyEntryDescr,
           ),
         ),
         LitTitledActionCard(
           child: Text(
-            HOMLocalizations(context).entryIsEmptyDescr,
+            AppLocalizations.of(context).emptyEntryActionDescr,
             style: LitSansSerifStyles.subtitle2,
           ),
           actionButtonData: [
             ActionButtonData(
-              title: HOMLocalizations(context).edit,
+              title: AppLocalizations.of(context).editLabel,
               onPressed: onEdit,
               accentColor: AppColors.pastelPink,
               backgroundColor: AppColors.pastelPurple,
@@ -595,7 +600,7 @@ class __MoodScoreIndicatorState extends State<_MoodScoreIndicator>
                 mainAxisSize: MainAxisSize.max,
                 children: [
                   Text(
-                    HOMLocalizations(context).yourMoodWas,
+                    AppLocalizations.of(context).yourMoodLabel,
                     style: LitTextStyles.sansSerif.copyWith(
                       fontSize: 13.0,
                       letterSpacing: 0.25,

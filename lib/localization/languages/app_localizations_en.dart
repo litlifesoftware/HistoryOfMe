@@ -99,7 +99,7 @@ class AppLocalizationsEn {
     AppLocalizationsKeys.restoreLabel: 'Restore',
     AppLocalizationsKeys.cancelRestoreDescr:
         'Do you want to create a new diary instead of restoring your previous one?',
-    AppLocalizationsKeys.createdLabel: 'Created',
+    AppLocalizationsKeys.createdOnLabel: 'Created on',
     AppLocalizationsKeys.selectBackupTitle: 'Select Backup',
     AppLocalizationsKeys.restoreFromBackupTitle: 'Restore from Backup',
     AppLocalizationsKeys.unsupportedFileTitle: 'Not supported',
@@ -118,5 +118,10 @@ class AppLocalizationsEn {
     AppLocalizationsKeys.previousLabel: 'previous',
     AppLocalizationsKeys.optionsLabel: 'options',
     AppLocalizationsKeys.firstLabel: 'first',
+    AppLocalizationsKeys.emptyEntryTitle: 'Empty entry',
+    AppLocalizationsKeys.emptyEntryDescr: 'This diary entry is empty.',
+    AppLocalizationsKeys.editLabel: 'edit',
+    AppLocalizationsKeys.emptyEntryActionDescr:
+        'Edit your diary entry by tapping on the pencil icon.',
   };
 }

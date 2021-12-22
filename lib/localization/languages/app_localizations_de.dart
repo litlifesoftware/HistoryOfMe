@@ -101,7 +101,7 @@ class AppLocalizationsDe {
     AppLocalizationsKeys.restoreLabel: 'Wiederherstellen',
     AppLocalizationsKeys.cancelRestoreDescr:
         'Möchtest du ein neues Tagebuch erstellen, anstelle dein vorheriges Tagebuch wiederherzustellen?',
-    AppLocalizationsKeys.createdLabel: 'Erstellt',
+    AppLocalizationsKeys.createdOnLabel: 'Erstellt am',
     AppLocalizationsKeys.selectBackupTitle: 'Backup auswählen',
     AppLocalizationsKeys.restoreFromBackupTitle: 'Sicherung wiederherstellen',
     AppLocalizationsKeys.unsupportedFileTitle: 'Nicht unterstützt',
@@ -122,5 +122,10 @@ class AppLocalizationsDe {
     AppLocalizationsKeys.previousLabel: 'vorherige',
     AppLocalizationsKeys.optionsLabel: 'Optionen',
     AppLocalizationsKeys.firstLabel: 'erster',
+    AppLocalizationsKeys.emptyEntryTitle: 'Leerer Eintrag',
+    AppLocalizationsKeys.emptyEntryDescr: 'Dieser Tagebucheintrag ist leer.',
+    AppLocalizationsKeys.editLabel: 'bearbeiten',
+    AppLocalizationsKeys.emptyEntryActionDescr:
+        'Bearbeite deinen Tagebucheintrag durch Drücken auf den Bearbeiten-Knopf oben rechts.',
   };
 }

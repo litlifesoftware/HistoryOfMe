@@ -371,8 +371,8 @@ class AppLocalizations {
     return localizeValue(AppLocalizationsKeys.cancelRestoreDescr);
   }
 
-  String get createdLabel {
-    return localizeValue(AppLocalizationsKeys.createdLabel);
+  String get createdOnLabel {
+    return localizeValue(AppLocalizationsKeys.createdOnLabel);
   }
 
   String get selectBackupTitle {
@@ -437,5 +437,21 @@ class AppLocalizations {
 
   String get firstLabel {
     return localizeValue(AppLocalizationsKeys.firstLabel);
+  }
+
+  String get emptyEntryTitle {
+    return localizeValue(AppLocalizationsKeys.emptyEntryTitle);
+  }
+
+  String get emptyEntryDescr {
+    return localizeValue(AppLocalizationsKeys.emptyEntryDescr);
+  }
+
+  String get editLabel {
+    return localizeValue(AppLocalizationsKeys.editLabel);
+  }
+
+  String get emptyEntryActionDescr {
+    return localizeValue(AppLocalizationsKeys.emptyEntryActionDescr);
   }
 }

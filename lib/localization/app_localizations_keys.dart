@@ -84,7 +84,7 @@ class AppLocalizationsKeys {
   static const String continueJourneyTitle = 'continueJourneyTitle';
   static const String restoreLabel = 'restoreLabel';
   static const String cancelRestoreDescr = 'cancelRestoreDescr';
-  static const String createdLabel = 'createdLabel';
+  static const String createdOnLabel = 'createdLabel';
   static const String selectBackupTitle = 'selectBackupTitle';
   static const String restoreFromBackupTitle = 'restoreFromBackupTitle';
   static const String unsupportedFileTitle = 'unsupportedFileTitle';
@@ -103,4 +103,8 @@ class AppLocalizationsKeys {
   static const String previousLabel = 'previousLabel';
   static const String optionsLabel = 'optionsLabel';
   static const String firstLabel = 'firstLabel';
+  static const String emptyEntryTitle = 'emptyEntryTitle';
+  static const String emptyEntryDescr = 'emptyEntryDescr';
+  static const String editLabel = 'editLabel';
+  static const String emptyEntryActionDescr = 'emptyEntryActionDescr';
 }
