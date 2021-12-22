@@ -172,7 +172,7 @@ class _CreateEntryDialogState extends State<CreateEntryDialog>
                   setCreateEntryType: setCreateEntryType,
                 )
               : LitDatePickerDialog(
-                  title: HOMLocalizations(context).chooseDate,
+                  //title: HOMLocalizations(context).chooseDate,
                   // excludedMonthErrorMessage:
                   //     HOMLocalizations(context).dateNotIncludedDescr,
                   // futureDateErrorMessage:

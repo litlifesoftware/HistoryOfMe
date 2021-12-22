@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:history_of_me/controller/localization/hom_localizations.dart';
+import 'package:history_of_me/localization.dart';
 import 'package:leitmotif/leitmotif.dart';
 
 import 'animated_updated_label.dart';
@@ -78,7 +78,7 @@ class _AnimatedUnchangedBadge extends StatelessWidget {
             backgroundColor: Color.lerp(LitColors.mediumGrey, Colors.white,
                     0.8 * animation!.value) ??
                 LitColors.mediumGrey,
-            label: HOMLocalizations(context).unsaved,
+            label: AppLocalizations.of(context).unsavedLabel,
             textColor: Color.lerp(
                   Colors.white,
                   LitColors.mediumGrey,

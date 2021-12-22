@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:history_of_me/controller/localization/hom_localizations.dart';
+import 'package:history_of_me/localization.dart';
 import 'package:history_of_me/model/user_data.dart';
 import 'package:history_of_me/view/shared/shared.dart';
 import 'package:leitmotif/leitmotif.dart';
@@ -78,7 +78,7 @@ class _UserProfileCardState extends State<UserProfileCard> {
                               padding:
                                   const EdgeInsets.symmetric(vertical: 4.0),
                               child: ClippedText(
-                                HOMLocalizations(context).diaryCreated + ":",
+                                AppLocalizations.of(context).createdOnLabel,
                                 style: LitSansSerifStyles.caption,
                               ),
                             ),
@@ -123,7 +123,7 @@ class _UserProfileCardState extends State<UserProfileCard> {
                   backgroundColor: LitColors.green100,
                   accentColor: LitColors.green200,
                   child: ClippedText(
-                    HOMLocalizations(context).changeName.toUpperCase(),
+                    AppLocalizations.of(context).changeNameLabel.toUpperCase(),
                     textAlign: TextAlign.center,
                     style: LitSansSerifStyles.button,
                   ),

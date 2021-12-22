@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:history_of_me/controller/localization/hom_localizations.dart';
 import 'package:history_of_me/controller/routes/hom_navigator.dart';
 import 'package:history_of_me/config/config.dart';
+import 'package:history_of_me/localization.dart';
 import 'package:history_of_me/model/diary_entry.dart';
 import 'package:leitmotif/leitmotif.dart';
 import 'package:lit_relative_date_time/lit_relative_date_time.dart';
@@ -253,7 +253,7 @@ class __EntryCardState extends State<_EntryCard> {
   String get _title {
     return _titleAvailable
         ? widget.diaryEntry.title
-        : HOMLocalizations(context).untitled;
+        : AppLocalizations.of(context).untitledLabel;
   }
 
   double get _portraitWidth {
