@@ -24,7 +24,7 @@ class AppLocalizationsKeys {
   static const String aboutAppDescr = 'aboutAppDescr';
   static const String userExpericenceDesignLabel = 'uxDesignLabel';
   static const String developmentLabel = 'developmentLabel';
-  static const String photographyLabel = 'photosLabel';
+  static const String photographyLabel = 'photographyLabel';
   static const String inspiredByLabel = 'inspiredByLabel';
   static const String manageBackupLabel = 'manageBackupLabel';
   static const String startTourLabel = 'startTourLabel';
@@ -114,4 +114,6 @@ class AppLocalizationsKeys {
   static const String quoteSubtitle = 'quoteSubtitle';
   static const String byLabel = 'byLabel';
   static const String accentColorLabel = 'accentColor';
+  static const String choosePhotoLabel = 'choosePhotoLabel';
+  static const String selectedLabel = 'selectedLabel';
 }

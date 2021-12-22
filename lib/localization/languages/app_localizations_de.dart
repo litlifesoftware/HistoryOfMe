@@ -134,5 +134,7 @@ class AppLocalizationsDe {
     AppLocalizationsKeys.quoteSubtitle: 'zeige uns dein Lieblingszitat',
     AppLocalizationsKeys.byLabel: 'von',
     AppLocalizationsKeys.accentColorLabel: 'Akzentfarbe',
+    AppLocalizationsKeys.choosePhotoLabel: 'Foto auswählen',
+    AppLocalizationsKeys.selectedLabel: 'ausgewählt',
   };
 }

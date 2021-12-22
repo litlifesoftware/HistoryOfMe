@@ -80,7 +80,7 @@ class AppLocalizationsEn {
     AppLocalizationsKeys.createLabel: 'create',
     AppLocalizationsKeys.dotsLabel: 'Dots',
     AppLocalizationsKeys.stripesLabel: 'Stripes',
-    AppLocalizationsKeys.mainColorLabel: 'Main Color',
+    AppLocalizationsKeys.mainColorLabel: 'main color',
     AppLocalizationsKeys.duplicateColorDescr:
         'This color is already available.',
     AppLocalizationsKeys.entryLabel: 'entry',
@@ -130,5 +130,7 @@ class AppLocalizationsEn {
     AppLocalizationsKeys.quoteSubtitle: 'express your favorite quote',
     AppLocalizationsKeys.byLabel: 'by',
     AppLocalizationsKeys.accentColorLabel: 'accent color',
+    AppLocalizationsKeys.choosePhotoLabel: 'choose photo',
+    AppLocalizationsKeys.selectedLabel: 'selected',
   };
 }

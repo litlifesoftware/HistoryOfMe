@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:history_of_me/controller/database/hive_db_service.dart';
 import 'package:history_of_me/config/config.dart';
-import 'package:history_of_me/controller/localization/hom_localizations.dart';
+import 'package:history_of_me/localization.dart';
 import 'package:history_of_me/model/backdrop_photo.dart';
 import 'package:history_of_me/model/diary_entry.dart';
 import 'package:leitmotif/leitmotif.dart';
@@ -79,7 +79,7 @@ class _ChangePhotoDialogState extends State<ChangePhotoDialog>
         topLeft: const Radius.circular(24.0),
         topRight: const Radius.circular(24.0),
       ),
-      titleText: HOMLocalizations(context).choosePhoto,
+      titleText: AppLocalizations.of(context).choosePhotoLabel,
       minHeight: widget.minHeight,
       // leading: DialogBackButton(
       //   onPressed: LitRouteController(context).closeDialog,
@@ -225,7 +225,9 @@ class _SelectedPhotoOverlay extends StatelessWidget {
                         ),
                         child: LitBadge(
                           child: ScaledDownText(
-                            HOMLocalizations(context).selected.capitalize(),
+                            AppLocalizations.of(context)
+                                .selectedLabel
+                                .capitalize(),
                             style: LitTextStyles.sansSerif.copyWith(
                               fontSize: 15,
                               letterSpacing: -0.22,

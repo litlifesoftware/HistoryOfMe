@@ -482,4 +482,12 @@ class AppLocalizations {
   String get accentColorLabel {
     return localizeValue(AppLocalizationsKeys.accentColorLabel);
   }
+
+  String get choosePhotoLabel {
+    return localizeValue(AppLocalizationsKeys.choosePhotoLabel);
+  }
+
+  String get selectedLabel {
+    return localizeValue(AppLocalizationsKeys.selectedLabel);
+  }
 }
