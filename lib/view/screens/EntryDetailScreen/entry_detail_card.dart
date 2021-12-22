@@ -600,7 +600,7 @@ class __MoodScoreIndicatorState extends State<_MoodScoreIndicator>
                 mainAxisSize: MainAxisSize.max,
                 children: [
                   Text(
-                    AppLocalizations.of(context).yourMoodLabel,
+                    AppLocalizations.of(context).yourMoodLabel.capitalize(),
                     style: LitTextStyles.sansSerif.copyWith(
                       fontSize: 13.0,
                       letterSpacing: 0.25,

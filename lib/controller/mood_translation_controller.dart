@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:history_of_me/controller/localization/hom_localizations.dart';
+import 'package:history_of_me/localization.dart';
 
 class MoodTranslationController {
   final double? moodScore;
@@ -12,15 +12,15 @@ class MoodTranslationController {
   /// Returns a [String] describing the [moodScore] in a human readable label.
   String get translatedLabelText {
     if ((moodScore! > 0) & (moodScore! < 0.33)) {
-      return HOMLocalizations(context).bad;
+      return AppLocalizations.of(context).badLabel;
     }
     if ((moodScore! > 0.33) & (moodScore! < 0.66)) {
-      return HOMLocalizations(context).alright;
+      return AppLocalizations.of(context).alrightLabel;
     }
     if ((moodScore! > 0.66)) {
-      return HOMLocalizations(context).good;
+      return AppLocalizations.of(context).goodLabel;
     }
-    return HOMLocalizations(context).bad;
+    return AppLocalizations.of(context).badLabel;
   }
 
   /// Returns a label in 	in upper case.

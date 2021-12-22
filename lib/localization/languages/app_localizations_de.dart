@@ -127,5 +127,12 @@ class AppLocalizationsDe {
     AppLocalizationsKeys.editLabel: 'bearbeiten',
     AppLocalizationsKeys.emptyEntryActionDescr:
         'Bearbeite deinen Tagebucheintrag durch Drücken auf den Bearbeiten-Knopf oben rechts.',
+    AppLocalizationsKeys.goodLabel: 'gut',
+    AppLocalizationsKeys.badLabel: 'schlecht',
+    AppLocalizationsKeys.alrightLabel: 'in Ordnung',
+    AppLocalizationsKeys.quoteLabel: 'Zitat',
+    AppLocalizationsKeys.quoteSubtitle: 'zeige uns dein Lieblingszitat',
+    AppLocalizationsKeys.byLabel: 'von',
+    AppLocalizationsKeys.accentColorLabel: 'Akzentfarbe',
   };
 }

@@ -54,7 +54,7 @@ class AppLocalizationsEn {
     AppLocalizationsKeys.entrySavedDescr: 'Your diary entry has been saved.',
     AppLocalizationsKeys.savedLabel: 'Saved',
     AppLocalizationsKeys.untitledLabel: 'Untitled',
-    AppLocalizationsKeys.yourMoodLabel: 'Deine Stimmung',
+    AppLocalizationsKeys.yourMoodLabel: 'your mood',
     AppLocalizationsKeys.statisticsLabel: 'Statistics',
     AppLocalizationsKeys.noEntriesAvailLabel: 'No entries available',
     AppLocalizationsKeys.statisticsFallbackDescr:
@@ -123,5 +123,12 @@ class AppLocalizationsEn {
     AppLocalizationsKeys.editLabel: 'edit',
     AppLocalizationsKeys.emptyEntryActionDescr:
         'Edit your diary entry by tapping on the pencil icon.',
+    AppLocalizationsKeys.goodLabel: 'good',
+    AppLocalizationsKeys.badLabel: 'bad',
+    AppLocalizationsKeys.alrightLabel: 'alright',
+    AppLocalizationsKeys.quoteLabel: 'quote',
+    AppLocalizationsKeys.quoteSubtitle: 'express your favorite quote',
+    AppLocalizationsKeys.byLabel: 'by',
+    AppLocalizationsKeys.accentColorLabel: 'accent color',
   };
 }

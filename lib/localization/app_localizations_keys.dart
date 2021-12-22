@@ -107,4 +107,11 @@ class AppLocalizationsKeys {
   static const String emptyEntryDescr = 'emptyEntryDescr';
   static const String editLabel = 'editLabel';
   static const String emptyEntryActionDescr = 'emptyEntryActionDescr';
+  static const String goodLabel = 'goodLabel';
+  static const String badLabel = 'badLabel';
+  static const String alrightLabel = 'alrightLabel';
+  static const String quoteLabel = 'quoteLabel';
+  static const String quoteSubtitle = 'quoteSubtitle';
+  static const String byLabel = 'byLabel';
+  static const String accentColorLabel = 'accentColor';
 }

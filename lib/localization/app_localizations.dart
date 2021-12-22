@@ -454,4 +454,32 @@ class AppLocalizations {
   String get emptyEntryActionDescr {
     return localizeValue(AppLocalizationsKeys.emptyEntryActionDescr);
   }
+
+  String get badLabel {
+    return localizeValue(AppLocalizationsKeys.badLabel);
+  }
+
+  String get goodLabel {
+    return localizeValue(AppLocalizationsKeys.goodLabel);
+  }
+
+  String get alrightLabel {
+    return localizeValue(AppLocalizationsKeys.alrightLabel);
+  }
+
+  String get quoteLabel {
+    return localizeValue(AppLocalizationsKeys.quoteLabel);
+  }
+
+  String get quoteSubtitle {
+    return localizeValue(AppLocalizationsKeys.quoteSubtitle);
+  }
+
+  String get byLabel {
+    return localizeValue(AppLocalizationsKeys.byLabel);
+  }
+
+  String get accentColorLabel {
+    return localizeValue(AppLocalizationsKeys.accentColorLabel);
+  }
 }
