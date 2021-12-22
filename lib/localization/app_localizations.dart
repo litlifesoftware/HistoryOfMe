@@ -56,11 +56,11 @@ class AppLocalizations {
   }
 
   String get composeButtonLabel {
-    return localizeValue(AppLocalizationsKeys.composeButtonLabel);
+    return localizeValue(AppLocalizationsKeys.composeLabel);
   }
 
-  String get createEntryButtonLabel {
-    return localizeValue(AppLocalizationsKeys.createEntryButtonLabel);
+  String get createEntryLabel {
+    return localizeValue(AppLocalizationsKeys.createEntryLabel);
   }
 
   String get emptyDiaryBody {
@@ -489,5 +489,25 @@ class AppLocalizations {
 
   String get selectedLabel {
     return localizeValue(AppLocalizationsKeys.selectedLabel);
+  }
+
+  String get todayLabel {
+    return localizeValue(AppLocalizationsKeys.todayLabel);
+  }
+
+  String get anotherDayLabel {
+    return localizeValue(AppLocalizationsKeys.anotherDayLabel);
+  }
+
+  String get alreadyAvailableLabel {
+    return localizeValue(AppLocalizationsKeys.alreadyAvailableLabel);
+  }
+
+  String get duplicateEntryDescr {
+    return localizeValue(AppLocalizationsKeys.duplicateEntryDescr);
+  }
+
+  String get duplicateEntryTodayDescr {
+    return localizeValue(AppLocalizationsKeys.duplicateEntryTodayDescr);
   }
 }

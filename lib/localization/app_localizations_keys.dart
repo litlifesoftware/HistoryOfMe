@@ -4,8 +4,8 @@
 /// [AppLocalizationsKeys] property to enforce integrity.
 class AppLocalizationsKeys {
   static const String usernameLabel = 'usernameLabel';
-  static const String composeButtonLabel = 'composeButtonLabel';
-  static const String createEntryButtonLabel = 'createEntryButtonLabel';
+  static const String composeLabel = 'composeLabel';
+  static const String createEntryLabel = 'createEntryLabel';
   static const String emptyDiarySubtitle = 'emptyDiarySubtitle';
   static const String emptyDiaryBody = 'emptyDiaryBody';
   static const String personalizeLabel = 'personalizeLabel';
@@ -116,4 +116,9 @@ class AppLocalizationsKeys {
   static const String accentColorLabel = 'accentColor';
   static const String choosePhotoLabel = 'choosePhotoLabel';
   static const String selectedLabel = 'selectedLabel';
+  static const String todayLabel = 'todayLabel';
+  static const String anotherDayLabel = 'anotherDayLabel';
+  static const String alreadyAvailableLabel = 'alreadyAvailableLabel';
+  static const String duplicateEntryDescr = 'duplicateEntryDescr';
+  static const String duplicateEntryTodayDescr = 'duplicateEntryTodayDescr';
 }

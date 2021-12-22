@@ -7,8 +7,8 @@ class AppLocalizationsEn {
 
   /// The localized values.
   static const values = const {
-    AppLocalizationsKeys.composeButtonLabel: 'Compose',
-    AppLocalizationsKeys.createEntryButtonLabel: 'Create Entry',
+    AppLocalizationsKeys.composeLabel: 'Compose',
+    AppLocalizationsKeys.createEntryLabel: 'Create Entry',
     AppLocalizationsKeys.usernameLabel: 'Your name',
     AppLocalizationsKeys.emptyDiarySubtitle: 'No entires available',
     AppLocalizationsKeys.emptyDiaryBody:
@@ -132,5 +132,12 @@ class AppLocalizationsEn {
     AppLocalizationsKeys.accentColorLabel: 'accent color',
     AppLocalizationsKeys.choosePhotoLabel: 'choose photo',
     AppLocalizationsKeys.selectedLabel: 'selected',
+    AppLocalizationsKeys.todayLabel: 'today',
+    AppLocalizationsKeys.anotherDayLabel: 'another day',
+    AppLocalizationsKeys.alreadyAvailableLabel: 'already available',
+    AppLocalizationsKeys.duplicateEntryDescr:
+        'There already is a diary entry available for this date.',
+    AppLocalizationsKeys.duplicateEntryTodayDescr:
+        'There already is a diary entry available for today.',
   };
 }

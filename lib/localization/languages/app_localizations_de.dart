@@ -7,8 +7,8 @@ class AppLocalizationsDe {
 
   /// The localized values.
   static const values = const {
-    AppLocalizationsKeys.composeButtonLabel: 'Erstellen',
-    AppLocalizationsKeys.createEntryButtonLabel: 'Eintrag erstellen',
+    AppLocalizationsKeys.composeLabel: 'Erstellen',
+    AppLocalizationsKeys.createEntryLabel: 'Eintrag erstellen',
     AppLocalizationsKeys.usernameLabel: 'Dein Name',
     AppLocalizationsKeys.emptyDiarySubtitle: 'Keine Einträge',
     AppLocalizationsKeys.emptyDiaryBody:
@@ -136,5 +136,12 @@ class AppLocalizationsDe {
     AppLocalizationsKeys.accentColorLabel: 'Akzentfarbe',
     AppLocalizationsKeys.choosePhotoLabel: 'Foto auswählen',
     AppLocalizationsKeys.selectedLabel: 'ausgewählt',
+    AppLocalizationsKeys.todayLabel: 'heute',
+    AppLocalizationsKeys.anotherDayLabel: 'anderer Tag',
+    AppLocalizationsKeys.alreadyAvailableLabel: 'bereits vorhanden',
+    AppLocalizationsKeys.duplicateEntryDescr:
+        'Für diesen Tag ist bereits ein Tagebucheintrag verfügbar.',
+    AppLocalizationsKeys.duplicateEntryTodayDescr:
+        'Für heute ist bereits ein Tagebucheintrag verfügbar.',
   };
 }

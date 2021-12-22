@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:history_of_me/controller/database/hive_db_service.dart';
-import 'package:history_of_me/controller/localization/hom_localizations.dart';
 import 'package:history_of_me/controller/routes/hom_navigator.dart';
+import 'package:history_of_me/localization.dart';
 import 'package:history_of_me/view/shared/lit_toggle_button_group.dart';
 import 'package:history_of_me/model/diary_entry.dart';
 import 'package:intl/intl.dart';
@@ -123,9 +123,9 @@ class _CreateEntryDialogState extends State<CreateEntryDialog>
   String get _snackbarText {
     switch (createEntryType) {
       case TODAY:
-        return HOMLocalizations(context).existingEntryTodayDescr;
+        return AppLocalizations.of(context).duplicateEntryTodayDescr;
       case PREVIOUS_DAY:
-        return HOMLocalizations(context).existingEntrySelectedDayDescr;
+        return AppLocalizations.of(context).duplicateEntryDescr;
       default:
         return "";
     }
@@ -183,6 +183,7 @@ class _CreateEntryDialogState extends State<CreateEntryDialog>
                 ),
           LitIconSnackbar(
             iconData: LitIcons.info,
+            title: AppLocalizations.of(context).alreadyAvailableLabel,
             text: _snackbarText,
             snackBarController: _duplicateSnackBarController,
             alignment: Alignment.topRight,
@@ -217,7 +218,7 @@ class _DefaultCreateEntryDialogState extends State<DefaultCreateEntryDialog> {
   @override
   Widget build(BuildContext context) {
     return LitTitledDialog(
-      titleText: HOMLocalizations(context).addDiaryEntry,
+      titleText: AppLocalizations.of(context).createEntryLabel.capitalize(),
       child: AnimatedBuilder(
         animation: widget.animationController,
         builder: (BuildContext context, Widget? _) {
@@ -235,11 +236,14 @@ class _DefaultCreateEntryDialogState extends State<DefaultCreateEntryDialog> {
                   showDividersOnVerticalAxis: true,
                   items: [
                     LitToggleButtonGroupItemData(
-                      label: HOMLocalizations(context).forToday,
+                      label:
+                          AppLocalizations.of(context).todayLabel.capitalize(),
                       value: TODAY,
                     ),
                     LitToggleButtonGroupItemData(
-                      label: HOMLocalizations(context).forPreviousDay,
+                      label: AppLocalizations.of(context)
+                          .anotherDayLabel
+                          .capitalize(),
                       value: PREVIOUS_DAY,
                     ),
                   ],
@@ -251,17 +255,14 @@ class _DefaultCreateEntryDialogState extends State<DefaultCreateEntryDialog> {
                 child: Padding(
                   padding: const EdgeInsets.only(top: 4.0, bottom: 16.0),
                   child: LitRoundedElevatedButton(
-                    color: HexColor("#8e8e8e"),
+                    color: LitColors.grey200,
                     padding: const EdgeInsets.symmetric(
                       vertical: 8.0,
                       horizontal: 32.0,
                     ),
                     child: Text(
-                      HOMLocalizations(context).create.toUpperCase(),
-                      style: LitTextStyles.sansSerif.copyWith(
-                          fontSize: 15.0,
-                          color: Colors.white,
-                          fontWeight: FontWeight.w700),
+                      AppLocalizations.of(context).createLabel.toUpperCase(),
+                      style: LitSansSerifStyles.button,
                     ),
                     onPressed: widget.onCreate,
                   ),

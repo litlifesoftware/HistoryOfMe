@@ -175,14 +175,14 @@ class _EmptyDiaryInfoCard extends StatelessWidget {
     return Padding(
       padding: LitEdgeInsets.card,
       child: LitTitledActionCard(
-        title: AppLocalizations.of(context).createEntryButtonLabel,
+        title: AppLocalizations.of(context).createEntryLabel,
         subtitle: AppLocalizations.of(context).emptyDiarySubtitle,
         child: LitDescriptionTextBox(
           text: AppLocalizations.of(context).emptyDiaryBody,
         ),
         actionButtonData: [
           ActionButtonData(
-            title: AppLocalizations.of(context).createEntryButtonLabel,
+            title: AppLocalizations.of(context).createEntryLabel,
             style: LitSansSerifStyles.button.copyWith(
               color: LitColors.white,
             ),
