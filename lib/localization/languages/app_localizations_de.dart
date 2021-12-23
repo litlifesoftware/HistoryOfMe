@@ -143,5 +143,7 @@ class AppLocalizationsDe {
         'Für diesen Tag ist bereits ein Tagebucheintrag verfügbar.',
     AppLocalizationsKeys.duplicateEntryTodayDescr:
         'Für heute ist bereits ein Tagebucheintrag verfügbar.',
+    AppLocalizationsKeys.continueLabel: 'fortfahren',
+    AppLocalizationsKeys.yourNameLabel: 'dein Name',
   };
 }

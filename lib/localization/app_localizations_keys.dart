@@ -121,4 +121,6 @@ class AppLocalizationsKeys {
   static const String alreadyAvailableLabel = 'alreadyAvailableLabel';
   static const String duplicateEntryDescr = 'duplicateEntryDescr';
   static const String duplicateEntryTodayDescr = 'duplicateEntryTodayDescr';
+  static const String continueLabel = 'continueLabel';
+  static const String yourNameLabel = 'yourNameLabel';
 }

@@ -139,5 +139,7 @@ class AppLocalizationsEn {
         'There already is a diary entry available for this date.',
     AppLocalizationsKeys.duplicateEntryTodayDescr:
         'There already is a diary entry available for today.',
+    AppLocalizationsKeys.continueLabel: 'continue',
+    AppLocalizationsKeys.yourNameLabel: 'your name',
   };
 }

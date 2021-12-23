@@ -510,4 +510,12 @@ class AppLocalizations {
   String get duplicateEntryTodayDescr {
     return localizeValue(AppLocalizationsKeys.duplicateEntryTodayDescr);
   }
+
+  String get continueLabel {
+    return localizeValue(AppLocalizationsKeys.continueLabel);
+  }
+
+  String get yourNameLabel {
+    return localizeValue(AppLocalizationsKeys.yourNameLabel);
+  }
 }
