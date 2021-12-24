@@ -72,12 +72,7 @@ class _DatabaseStateScreenBuilderState
   /// Shows the app's onboarding screen.
   void _showOnboardingScreen() {
     LitRouteController(context).pushCupertinoWidget(
-      AppOnboardingScreen(
-        localization: LitOnboardingScreenLocalization(
-          title: LeitmotifLocalizations.of(context).onboardingLabel,
-          nextLabel: LeitmotifLocalizations.of(context).dismissLabel,
-          dismissLabel: AppLocalizations.of(context).continueLabel,
-        ),
+      _OnboardingScreen(
         onDismiss: _onDismissOnboarding,
       ),
     );
@@ -87,15 +82,9 @@ class _DatabaseStateScreenBuilderState
   /// sign up screen.
   void _onDismissOnboarding() {
     LitRouteController(context).pushCupertinoWidget(
-      LitSignUpScreen(
-        onSubmit: _handleUserCreation,
-        data: [
-          TextFieldData(
-            label: AppLocalizations.of(context).yourNameLabel,
-            onChange: _setUsername,
-            icon: LitIcons.person,
-          ),
-        ],
+      _SignInScreen(
+        handleUserCreation: _handleUserCreation,
+        setUsername: _setUsername,
       ),
     );
   }
@@ -175,6 +164,50 @@ class _DatabaseStateScreenBuilderState
           return SplashScreen();
         }
       },
+    );
+  }
+}
+
+class _OnboardingScreen extends StatelessWidget {
+  final void Function() onDismiss;
+  const _OnboardingScreen({
+    Key? key,
+    required this.onDismiss,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return AppOnboardingScreen(
+      localization: LitOnboardingScreenLocalization(
+        title: LeitmotifLocalizations.of(context).onboardingLabel,
+        nextLabel: LeitmotifLocalizations.of(context).dismissLabel,
+        dismissLabel: AppLocalizations.of(context).continueLabel,
+      ),
+      onDismiss: onDismiss,
+    );
+  }
+}
+
+class _SignInScreen extends StatelessWidget {
+  final void Function() handleUserCreation;
+  final void Function(String) setUsername;
+  const _SignInScreen({
+    Key? key,
+    required this.handleUserCreation,
+    required this.setUsername,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return LitSignUpScreen(
+      onSubmit: handleUserCreation,
+      data: [
+        TextFieldData(
+          label: AppLocalizations.of(context).yourNameLabel,
+          onChange: setUsername,
+          icon: LitIcons.person,
+        ),
+      ],
     );
   }
 }
