@@ -1,3 +1,4 @@
+import 'package:history_of_me/app.dart';
 import 'package:history_of_me/localization.dart';
 
 /// The `en` language implementation of the [AppLocalizations].
@@ -141,5 +142,20 @@ class AppLocalizationsEn {
         'There already is a diary entry available for today.',
     AppLocalizationsKeys.continueLabel: 'continue',
     AppLocalizationsKeys.yourNameLabel: 'your name',
+    AppLocalizationsKeys.permissionsRequiredDescr:
+        'This app requires additional permissions in order to backup your diary on your local device. Without these permissions accessing data on your device will not be possible. You can always remove these permissions on your device settings or by deleting this app. Please keep in mind, that your data is only stored locally.',
+    AppLocalizationsKeys.backupInfoDescr:
+        'Backups help you to restore your diary after you deleted this app.',
+    AppLocalizationsKeys.readingLabel: 'reading',
+    AppLocalizationsKeys.noBackupFoundTitle: 'no backup found',
+    AppLocalizationsKeys.noBackupFoundDescr:
+        'We did not find any backups. Backup your diary to prevent possible data loss.',
+    AppLocalizationsKeys.backupLabel: 'backup',
+    AppLocalizationsKeys.backupIdLabel: 'Backup-ID',
+    AppLocalizationsKeys.lastestBackupLabel: 'Last Backup',
+    AppLocalizationsKeys.upToDateLabel: 'Up to date',
+    AppLocalizationsKeys.upToDateDescr: 'Your backup is up to date!',
+    AppLocalizationsKeys.deprecatedBackupDescr:
+        'Your backup is older than two days. We recommend to backup your diary regularly to prevent data loss.',
   };
 }

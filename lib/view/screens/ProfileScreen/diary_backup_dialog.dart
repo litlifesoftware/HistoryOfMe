@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:history_of_me/controller/controllers.dart';
+import 'package:history_of_me/localization.dart';
 import 'package:history_of_me/model/models.dart';
 import 'package:history_of_me/view/provider/providers.dart';
 import 'package:leitmotif/leitmotif.dart';
@@ -11,8 +12,8 @@ import 'package:package_info_plus/package_info_plus.dart';
 
 /// A Flutter dialog widget allowing the user to create and manage backup files.
 ///
-/// Each backup file is specific to one [installationID], due to it being used
-/// in the backup file name.
+/// Each backup file is named differently depending on the timestamp of the
+/// last app installation.
 class DiaryBackupDialog extends StatefulWidget {
   /// The current installation's id.
   ///
@@ -208,7 +209,7 @@ class _LoadingBackupDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LitTitledDialog(
-      titleText: HOMLocalizations(context).loadingBackup,
+      titleText: AppLocalizations.of(context).readingLabel.capitalize(),
       child: Center(
         child: ConstrainedBox(
           constraints: BoxConstraints(minHeight: 192.0),
@@ -230,11 +231,11 @@ class _PermissionDeniedDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LitTitledDialog(
-      titleText: HOMLocalizations(context).permissionsRequired,
+      titleText: AppLocalizations.of(context).storagePermissionDeniedTitle,
       actionButtons: [
         DialogActionButton(
           data: ActionButtonData(
-            title: HOMLocalizations(context).addPermissions,
+            title: AppLocalizations.of(context).requestPermissionLabel,
             onPressed: onGrant,
           ),
         )
@@ -255,7 +256,7 @@ class _PermissionDeniedDialog extends StatelessWidget {
               top: 16.0,
             ),
             child: Text(
-              HOMLocalizations(context).permissionsRequiredDesc,
+              AppLocalizations.of(context).permissionsRequiredDescr,
               style: LitSansSerifStyles.caption,
             ),
           ),
@@ -277,11 +278,11 @@ class _CreateBackupDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LitTitledDialog(
-      titleText: HOMLocalizations(context).noBackupFound,
+      titleText: AppLocalizations.of(context).noBackupFoundTitle.capitalize(),
       actionButtons: [
         DialogActionButton(
           data: ActionButtonData(
-            title: HOMLocalizations(context).backupNow.toUpperCase(),
+            title: AppLocalizations.of(context).backupLabel.toUpperCase(),
             onPressed: writeBackup,
           ),
         )
@@ -296,22 +297,13 @@ class _CreateBackupDialog extends StatelessWidget {
           horizontal: 16.0,
         ),
         children: [
-          Padding(
-            padding: const EdgeInsets.only(
-              bottom: 16.0,
-            ),
-            child: Text(
-              HOMLocalizations(context).noBackupTitle,
-              style: LitSansSerifStyles.body2,
-            ),
-          ),
           _InfoDescription(),
           Padding(
             padding: const EdgeInsets.only(
               top: 16.0,
             ),
             child: Text(
-              HOMLocalizations(context).noBackupDescr,
+              AppLocalizations.of(context).noBackupFoundDescr,
               style: LitSansSerifStyles.caption,
             ),
           ),
@@ -339,7 +331,7 @@ class _ManageBackupDialog extends StatelessWidget {
       actionButtons: [
         DialogActionButton(
           data: ActionButtonData(
-            title: HOMLocalizations(context).delete,
+            title: LeitmotifLocalizations.of(context).deleteLabel,
             onPressed: deleteBackup,
             backgroundColor: LitColors.lightPink,
             accentColor: Colors.white,
@@ -347,7 +339,7 @@ class _ManageBackupDialog extends StatelessWidget {
         ),
         DialogActionButton(
           data: ActionButtonData(
-            title: HOMLocalizations(context).backupNowShort,
+            title: AppLocalizations.of(context).backupLabel,
             onPressed: writeBackup,
           ),
         ),
@@ -365,7 +357,7 @@ class _ManageBackupDialog extends StatelessWidget {
           );
         },
       ),
-      titleText: HOMLocalizations(context).backupYourDiary,
+      titleText: AppLocalizations.of(context).manageBackupLabel.capitalize(),
     );
   }
 }
@@ -398,15 +390,15 @@ class __BackupPreviewState extends State<_BackupPreview> {
         _InfoDescription(),
         SizedBox(height: 16.0),
         _MetaDataItem(
-          keyText: HOMLocalizations(context).installationID + ":",
+          keyText: AppLocalizations.of(context).backupIdLabel,
           valueText: widget.diaryBackup.appSettings.installationID.toString(),
         ),
         _MetaDataItem(
-          keyText: (HOMLocalizations(context).entires.capitalize()) + ":",
+          keyText: AppLocalizations.of(context).entriesLabel.capitalize(),
           valueText: widget.diaryBackup.diaryEntries.length.toString(),
         ),
         _MetaDataItem(
-          keyText: (HOMLocalizations(context).lastBackup) + ":",
+          keyText: AppLocalizations.of(context).lastestBackupLabel,
           valueText: DateTime.parse(widget.diaryBackup.backupDate)
               .formatAsLocalizedDate(context),
         ),
@@ -439,7 +431,7 @@ class _InfoDescription extends StatelessWidget {
   Widget build(BuildContext context) {
     return LitDescriptionTextBox(
       padding: const EdgeInsets.all(0),
-      text: HOMLocalizations(context).generalBackupDescr,
+      text: AppLocalizations.of(context).backupInfoDescr,
     );
   }
 }
@@ -492,7 +484,7 @@ class __UpToDateIndicatorState extends State<_UpToDateIndicator> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                HOMLocalizations(context).upToDate,
+                AppLocalizations.of(context).upToDateLabel,
                 style: LitSansSerifStyles.subtitle2,
               ),
               Container(
@@ -519,11 +511,11 @@ class __UpToDateIndicatorState extends State<_UpToDateIndicator> {
             padding: const EdgeInsets.only(top: 4.0),
             child: _isUpToDate
                 ? Text(
-                    HOMLocalizations(context).upToDateDescr,
+                    AppLocalizations.of(context).upToDateDescr,
                     style: LitSansSerifStyles.caption,
                   )
                 : Text(
-                    HOMLocalizations(context).notUpToDateDescr,
+                    AppLocalizations.of(context).deprecatedBackupDescr,
                     style: LitSansSerifStyles.caption.copyWith(
                       color: LitColors.darkRed,
                     ),

@@ -123,4 +123,15 @@ class AppLocalizationsKeys {
   static const String duplicateEntryTodayDescr = 'duplicateEntryTodayDescr';
   static const String continueLabel = 'continueLabel';
   static const String yourNameLabel = 'yourNameLabel';
+  static const String permissionsRequiredDescr = 'permissionsRequiredDescr';
+  static const String backupInfoDescr = 'backupInfoDescr';
+  static const String readingLabel = 'readingLabel';
+  static const String noBackupFoundTitle = 'noBackupFoundTitle';
+  static const String backupLabel = 'backupLabel';
+  static const String noBackupFoundDescr = 'noBackupFoundDescr';
+  static const String backupIdLabel = 'backupIdLabel';
+  static const String lastestBackupLabel = 'lastestBackupLabel';
+  static const String upToDateLabel = 'upToDateLabel';
+  static const String upToDateDescr = 'upToDateDescr';
+  static const String deprecatedBackupDescr = 'deprecatedBackupDescr';
 }

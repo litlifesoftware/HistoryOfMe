@@ -518,4 +518,48 @@ class AppLocalizations {
   String get yourNameLabel {
     return localizeValue(AppLocalizationsKeys.yourNameLabel);
   }
+
+  String get permissionsRequiredDescr {
+    return localizeValue(AppLocalizationsKeys.permissionsRequiredDescr);
+  }
+
+  String get backupInfoDescr {
+    return localizeValue(AppLocalizationsKeys.backupInfoDescr);
+  }
+
+  String get readingLabel {
+    return localizeValue(AppLocalizationsKeys.readingLabel);
+  }
+
+  String get noBackupFoundTitle {
+    return localizeValue(AppLocalizationsKeys.noBackupFoundTitle);
+  }
+
+  String get noBackupFoundDescr {
+    return localizeValue(AppLocalizationsKeys.noBackupFoundDescr);
+  }
+
+  String get backupLabel {
+    return localizeValue(AppLocalizationsKeys.backupLabel);
+  }
+
+  String get backupIdLabel {
+    return localizeValue(AppLocalizationsKeys.backupIdLabel);
+  }
+
+  String get lastestBackupLabel {
+    return localizeValue(AppLocalizationsKeys.lastestBackupLabel);
+  }
+
+  String get upToDateLabel {
+    return localizeValue(AppLocalizationsKeys.upToDateLabel);
+  }
+
+  String get upToDateDescr {
+    return localizeValue(AppLocalizationsKeys.upToDateDescr);
+  }
+
+  String get deprecatedBackupDescr {
+    return localizeValue(AppLocalizationsKeys.deprecatedBackupDescr);
+  }
 }

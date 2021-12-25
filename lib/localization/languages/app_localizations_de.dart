@@ -145,5 +145,20 @@ class AppLocalizationsDe {
         'Für heute ist bereits ein Tagebucheintrag verfügbar.',
     AppLocalizationsKeys.continueLabel: 'fortfahren',
     AppLocalizationsKeys.yourNameLabel: 'dein Name',
+    AppLocalizationsKeys.permissionsRequiredDescr:
+        'Diese App benötigt zusätzliche Berechtigungen, um Backups deines Tagebuchs zu erstellen. Ohne diese Berechtigungen ist das Auslesen der Datein auf deinem Gerät nicht möglich. Du kannst jederzeit die Berechtigungen widerrufen. Hierfür kannst du die Berechtigungs-Verwaltung in deinen Geräte-Einstellungen aufrufen oder diese App deinstallieren. Bitte beachte, dass deine Daten nur lokal gespeichert werden.',
+    AppLocalizationsKeys.backupInfoDescr:
+        'Backups ermöglichen das Wiederherstellen deines Tagebuchs, auch nachdem du diese App entfernt hast.',
+    AppLocalizationsKeys.readingLabel: 'lesen',
+    AppLocalizationsKeys.noBackupFoundTitle: 'keine Sicherung gefunden',
+    AppLocalizationsKeys.noBackupFoundDescr:
+        'Wir haben keine Sicherungen gefunden. Sichere dein Tagebuch, um einen Datenverlust zu vermeiden.',
+    AppLocalizationsKeys.backupLabel: 'sichern',
+    AppLocalizationsKeys.backupIdLabel: 'Sicherungs-ID',
+    AppLocalizationsKeys.lastestBackupLabel: 'Letzte Sicherung',
+    AppLocalizationsKeys.upToDateLabel: 'Aktuell',
+    AppLocalizationsKeys.upToDateDescr: 'Deine Sicherung ist aktuell!',
+    AppLocalizationsKeys.deprecatedBackupDescr:
+        'Dein Backup ist älter als zwei Tage. Wir empfehlen dein Tagebuch regelmäßig zu sichern, um einen Datenverlust zu vermeiden.',
   };
 }
