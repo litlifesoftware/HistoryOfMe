@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:history_of_me/controller/controllers.dart';
+import 'package:history_of_me/localization.dart';
 import 'package:history_of_me/model/user_created_color.dart';
 import 'package:leitmotif/leitmotif.dart';
 
@@ -67,8 +68,8 @@ class _SecondaryColorSelectorCardState
         vertical: 8.0,
       ),
       child: LitTitledActionCard(
-        title: HOMLocalizations(context).accentColor,
-        subtitle: HOMLocalizations(context).selectAccentColorLabel,
+        title: AppLocalizations.of(context).accentColorLabel.capitalize(),
+        subtitle: AppLocalizations.of(context).selectAccentColorLabel,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

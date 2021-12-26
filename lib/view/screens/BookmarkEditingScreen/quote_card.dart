@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:history_of_me/controller/localization/hom_localizations.dart';
+import 'package:history_of_me/localization.dart';
 import 'package:leitmotif/leitmotif.dart';
 
 class QuoteCard extends StatefulWidget {
@@ -44,8 +44,8 @@ class _QuoteCardState extends State<QuoteCard> {
         vertical: 8.0,
       ),
       child: LitTitledActionCard(
-        title: HOMLocalizations(context).quote,
-        subtitle: HOMLocalizations(context).quoteSubtitleLabel,
+        title: AppLocalizations.of(context).quoteLabel.capitalize(),
+        subtitle: AppLocalizations.of(context).quoteSubtitle,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -77,7 +77,7 @@ class _QuoteCardState extends State<QuoteCard> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    HOMLocalizations(context).by,
+                    AppLocalizations.of(context).byLabel,
                     style: LitTextStyles.sansSerif.copyWith(
                       fontSize: 13.0,
                       fontWeight: FontWeight.w600,

@@ -354,7 +354,8 @@ class _BookmarkEditingScreenState extends State<BookmarkEditingScreen>
                                       onSelectPrimaryColor: _setPrimaryColor,
                                       userCreatedColors: userColors,
                                       cardTitle: AppLocalizations.of(context)
-                                          .mainColorLabel,
+                                          .mainColorLabel
+                                          .capitalize(),
                                       onAddColorError: _onAddColorError,
                                     ),
                                     SecondaryColorSelectorCard(
