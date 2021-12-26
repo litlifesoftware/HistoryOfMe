@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:history_of_me/config/config.dart';
 import 'package:history_of_me/model/backdrop_photo.dart';
 import 'package:history_of_me/view/builder/builder.dart';
-import 'package:lit_localization_service/lit_localization_service.dart';
 import 'package:leitmotif/leitmotif.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
@@ -125,11 +124,11 @@ class _AppState extends State<App> {
           // accentColorBrightness: Brightness.light,
         ),
         localizationsDelegates: const [
-          LitLocalizationServiceDelegate(
-            jsonAssetURL: App.localizationFilePath,
-            supportedLanguages: App.supportedLanguages,
-            debug: true,
-          ),
+          // LitLocalizationServiceDelegate(
+          //   jsonAssetURL: App.localizationFilePath,
+          //   supportedLanguages: App.supportedLanguages,
+          //   debug: true,
+          // ),
           AppLocalizations.delegate,
           LeitmotifLocalizations.delegate,
           GlobalMaterialLocalizations.delegate,

@@ -7,7 +7,6 @@ import 'package:history_of_me/model/models.dart';
 import 'package:history_of_me/view/screens/RestoreDiaryScreen/restore_diary_screen.dart';
 import 'package:history_of_me/view/screens/screens.dart';
 import 'package:hive/hive.dart';
-import 'package:lit_localization_service/lit_localization_service.dart';
 import 'package:leitmotif/leitmotif.dart';
 
 /// A builder widget to return the appropriate screen considering the current
@@ -90,8 +89,8 @@ class _DatabaseStateScreenBuilderState
   }
 
   Future<int> _initData() async {
-    await LitLocalizationController()
-        .initLocalizations(widget.localizationsAssetURL);
+    // await LitLocalizationController()
+    //     .initLocalizations(widget.localizationsAssetURL);
     return await _dbService.openBoxes();
   }
 
@@ -117,7 +116,7 @@ class _DatabaseStateScreenBuilderState
   @override
   void initState() {
     super.initState();
-    //_localizationController = HOMLocalizations(context);
+    // _localizationController = HOMLocalizations(context);
     _showStartupScreen();
   }
 

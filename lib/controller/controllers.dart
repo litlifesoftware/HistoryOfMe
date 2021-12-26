@@ -5,5 +5,4 @@ library controllers;
 export 'database/database_state_validator.dart';
 export 'database/hive_db_service.dart';
 export 'database/hive_query_controller.dart';
-export 'localization/hom_localizations.dart';
 export 'routes/hom_navigator.dart';
