@@ -1,8 +1,7 @@
-import 'package:history_of_me/app.dart';
 import 'package:history_of_me/localization.dart';
 
 /// The `en` language implementation of the [AppLocalizations].
-class AppLocalizationsEn {
+class EN {
   /// The language code of English-speaking locales.
   static const languageCode = 'en';
 

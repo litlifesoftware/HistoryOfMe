@@ -1,7 +1,7 @@
 import 'package:history_of_me/localization.dart';
 
 /// The `de` language implementation of the [AppLocalizations].
-class AppLocalizationsDe {
+class DE {
   /// The language code of German-speaking locales.
   static const languageCode = 'de';
 

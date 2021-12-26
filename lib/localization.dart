@@ -6,5 +6,5 @@ library localization;
 export 'localization/app_localizations.dart';
 export 'localization/app_localizations_delegate.dart';
 export 'localization/app_localizations_keys.dart';
-export 'localization/languages/app_localizations_de.dart';
-export 'localization/languages/app_localizations_en.dart';
+export 'localization/languages/de.dart';
+export 'localization/languages/en.dart';

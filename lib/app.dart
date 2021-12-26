@@ -36,8 +36,8 @@ class App extends StatefulWidget {
   static const supportedLocales = AppLocalizations.supportedLocales;
 
   static const supportedLanguages = const [
-    AppLocalizationsEn.languageCode,
-    AppLocalizationsDe.languageCode,
+    EN.languageCode,
+    DE.languageCode,
   ];
 
   /// Restarts the whole application by creating a new [UniqueKey] on the
