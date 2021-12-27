@@ -86,19 +86,20 @@ class _DetailsCard extends StatelessWidget {
               ),
               _BackdropCardDetailItem(
                 icon: LitIcons.person,
-                detailLabel: AppLocalizations.of(context).creatorLabel,
+                detailLabel: LeitmotifLocalizations.of(context).creatorLabel,
                 detailValue: "${backdropPhoto.photographer}",
                 constraints: constraints,
               ),
               _BackdropCardDetailItem(
                 icon: LitIcons.map_marker,
-                detailLabel: AppLocalizations.of(context).locationLabel,
+                detailLabel: LeitmotifLocalizations.of(context).locationLabel,
                 detailValue: "${backdropPhoto.location}",
                 constraints: constraints,
               ),
               _BackdropCardDetailItem(
-                detailLabel:
-                    AppLocalizations.of(context).publishedLabel.capitalize(),
+                detailLabel: LeitmotifLocalizations.of(context)
+                    .publishedLabel
+                    .capitalize(),
                 detailValue: DateTime.parse(
                   backdropPhoto.published!,
                 ).formatAsLocalizedDateWithWeekday(context),

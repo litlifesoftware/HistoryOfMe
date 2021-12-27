@@ -225,7 +225,7 @@ class _SelectedPhotoOverlay extends StatelessWidget {
                         ),
                         child: LitBadge(
                           child: ScaledDownText(
-                            AppLocalizations.of(context)
+                            LeitmotifLocalizations.of(context)
                                 .selectedLabel
                                 .capitalize(),
                             style: LitTextStyles.sansSerif.copyWith(

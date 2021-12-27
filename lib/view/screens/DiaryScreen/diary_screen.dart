@@ -88,7 +88,7 @@ class _DiaryScreenState extends State<DiaryScreen>
             onPressed: _showCreateEntryDialog,
             scrollController: _scrollController,
             label:
-                AppLocalizations.of(context).composeButtonLabel.toUpperCase(),
+                LeitmotifLocalizations.of(context).composeLabel.toUpperCase(),
             icon: LitIcons.plus,
             blurred: false,
           ),

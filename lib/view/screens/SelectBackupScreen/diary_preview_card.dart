@@ -83,7 +83,7 @@ class DiaryPreviewCard extends StatelessWidget {
       ),
       actionButtonData: [
         ActionButtonData(
-          title: AppLocalizations.of(context).restoreLabel.toUpperCase(),
+          title: LeitmotifLocalizations.of(context).restoreLabel.toUpperCase(),
           onPressed: rebuildDatabase,
           backgroundColor: AppColors.pastelGreen,
           accentColor: AppColors.pastelBlue,

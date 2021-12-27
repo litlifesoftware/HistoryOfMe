@@ -138,13 +138,13 @@ class _SelectBackupScreenState extends State<SelectBackupScreen> {
     return LitScaffold(
       appBar: FixedOnScrollTitledAppbar(
         scrollController: _scrollController,
-        title: AppLocalizations.of(context).selectBackupTitle,
+        title: LeitmotifLocalizations.of(context).selectBackupTitle,
       ),
       snackbars: [
         LitIconSnackbar(
           snackBarController: _snackbarController,
-          title: AppLocalizations.of(context).unsupportedFileTitle,
-          text: AppLocalizations.of(context).unsupportedFileDescr,
+          title: LeitmotifLocalizations.of(context).unsupportedFileTitle,
+          text: LeitmotifLocalizations.of(context).unsupportedFileDescr,
           iconData: LitIcons.info,
         )
       ],
@@ -163,8 +163,9 @@ class _SelectBackupScreenState extends State<SelectBackupScreen> {
           ),
           children: [
             LitScreenTitle(
-              subtitle: AppLocalizations.of(context).restoreFromBackupTitle,
-              title: AppLocalizations.of(context).selectBackupTitle,
+              subtitle:
+                  LeitmotifLocalizations.of(context).restoreFromBackupTitle,
+              title: LeitmotifLocalizations.of(context).selectBackupTitle,
             ),
             Padding(
               padding: const EdgeInsets.symmetric(
@@ -313,7 +314,7 @@ class _BackupNotFoundCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LitTitledActionCard(
-      title: AppLocalizations.of(context).restoreFromBackupTitle,
+      title: LeitmotifLocalizations.of(context).restoreFromBackupTitle,
       subtitle: AppLocalizations.of(context).backupFileRequiredTitle,
       child: LayoutBuilder(
         builder: (context, constraints) {
@@ -339,7 +340,7 @@ class _BackupNotFoundCard extends StatelessWidget {
       ),
       actionButtonData: [
         ActionButtonData(
-          title: AppLocalizations.of(context).pickFileLabel,
+          title: LeitmotifLocalizations.of(context).pickFileLabel,
           onPressed: onPickFile,
           backgroundColor: Colors.white,
           accentColor: Colors.white,

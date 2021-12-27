@@ -106,7 +106,7 @@ class _RestoreBackupActionCard extends StatelessWidget {
       subtitle: AppLocalizations.of(context).continueJourneyTitle,
       actionButtonData: [
         ActionButtonData(
-          title: AppLocalizations.of(context).restoreLabel,
+          title: LeitmotifLocalizations.of(context).restoreLabel,
           onPressed: onRestore,
           backgroundColor: AppColors.pastelGreen,
           accentColor: AppColors.pastelBlue,

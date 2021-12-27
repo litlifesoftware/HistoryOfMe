@@ -121,14 +121,14 @@ class _PrimaryColorSelectorCardState extends State<PrimaryColorSelectorCard>
   /// Returns the `show all colors` button data.
   ActionButtonData get showAllButtonData => ActionButtonData(
         title: showAllColors
-            ? AppLocalizations.of(context).lessLabel
-            : AppLocalizations.of(context).moreLabel,
+            ? LeitmotifLocalizations.of(context).lessLabel
+            : LeitmotifLocalizations.of(context).moreLabel,
         onPressed: toggleAllColors,
       );
 
   /// Returns the `toggle show all colors` button data.
   ActionButtonData get createButtonData => ActionButtonData(
-        title: AppLocalizations.of(context).createLabel,
+        title: LeitmotifLocalizations.of(context).createLabel,
         backgroundColor: LitColors.grey120,
         accentColor: LitColors.grey120,
         onPressed: handleCreateColor,

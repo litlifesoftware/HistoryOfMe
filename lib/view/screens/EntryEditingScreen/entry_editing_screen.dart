@@ -238,7 +238,7 @@ class _EntryEditingScreenState extends State<EntryEditingScreen>
               LitIconSnackbar(
                 snackBarController: _savedSnackbarContr,
                 text: AppLocalizations.of(context).entrySavedDescr,
-                title: AppLocalizations.of(context).savedLabel,
+                title: LeitmotifLocalizations.of(context).savedLabel,
                 iconData: LitIcons.check,
               )
             ],

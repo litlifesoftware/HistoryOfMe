@@ -315,7 +315,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "09e539865f6417881a6e048a4cc6d380ed111551"
+      resolved-ref: "0bd5738e36ce787f8a71b70a9cf96ace15325033"
       url: "https://github.com/litlifesoftware/leitmotif-flutter.git"
     source: git
     version: "2.0.1"

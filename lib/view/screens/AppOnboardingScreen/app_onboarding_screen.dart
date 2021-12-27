@@ -76,7 +76,7 @@ class _AppOnboardingScreenState extends State<AppOnboardingScreen> {
         ),
         TextPageContent(
           subtitle: AppLocalizations.of(context).privateLabel,
-          title: AppLocalizations.of(context).privacyLabel,
+          title: LeitmotifLocalizations.of(context).privacyLabel,
           text: AppLocalizations.of(context).privacyDescr,
         ),
       ],

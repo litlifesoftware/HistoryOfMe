@@ -11,7 +11,7 @@ import 'package:history_of_me/view/screens/ProfileScreen/diary_backup_dialog.dar
 import 'package:history_of_me/view/shared/art/history_of_me_launcher_icon_art.dart';
 import 'package:leitmotif/leitmotif.dart';
 
-import 'delete_data_dialog.dart';
+//import 'delete_data_dialog.dart';
 
 class SettingsFooter extends StatefulWidget {
   final AppSettings appSettings;
@@ -33,7 +33,7 @@ class _SettingsFooterState extends State<SettingsFooter> {
   void _showAboutThisAppDialog() {
     LitRouteController(context).showDialogWidget(
       LitAboutDialog(
-        title: AppLocalizations.of(context).aboutAppLabel,
+        title: LeitmotifLocalizations.of(context).aboutAppLabel,
         appName: "History of Me",
         art: HistoryOfMeLauncherIconArt(),
         infoDescription: AppLocalizations.of(context).aboutAppDescr,
@@ -74,11 +74,11 @@ class _SettingsFooterState extends State<SettingsFooter> {
         .pushCupertinoWidget(ApplicationLicensesScreen());
   }
 
-  void _showDeleteDataDialog() {
-    LitRouteController(context).showDialogWidget(
-      DeleteDataDialog(),
-    );
-  }
+  // void _showDeleteDataDialog() {
+  //   LitRouteController(context).showDialogWidget(
+  //     DeleteDataDialog(),
+  //   );
+  // }
 
   void _openCredits() async {
     dynamic parsed;
@@ -114,27 +114,27 @@ class _SettingsFooterState extends State<SettingsFooter> {
               appDescription: AppLocalizations.of(context).aboutAppDescr,
               //screenTitle: HOMLocalizations(context).credits,
               credits: [
-                //TODO:Localize
                 CreditData(
-                  role: "made by",
+                  role: LeitmotifLocalizations.of(context).creatorLabel,
                   names: [
                     "LitLifeSoftware",
                   ],
                 ),
                 CreditData(
-                  role: AppLocalizations.of(context).userExpericenceDesignLabel,
+                  role: LeitmotifLocalizations.of(context)
+                      .userExpericenceDesignLabel,
                   names: [
                     "Michael Grigorenko",
                   ],
                 ),
                 CreditData(
-                  role: AppLocalizations.of(context).developmentLabel,
+                  role: LeitmotifLocalizations.of(context).developmentLabel,
                   names: [
                     "Michael Grigorenko",
                   ],
                 ),
                 CreditData(
-                  role: AppLocalizations.of(context).photographyLabel,
+                  role: LeitmotifLocalizations.of(context).photographyLabel,
                   names: backdropPhotoPhotographers,
                 ),
                 CreditData(
@@ -164,22 +164,22 @@ class _SettingsFooterState extends State<SettingsFooter> {
     return LitSettingsFooter(
       children: [
         LitPlainLabelButton(
-          label: AppLocalizations.of(context).manageBackupLabel,
+          label: LeitmotifLocalizations.of(context).manageBackupLabel,
           onPressed: _showBackupDialog,
           textAlign: TextAlign.right,
         ),
         LitPlainLabelButton(
-          label: AppLocalizations.of(context).startTourLabel,
+          label: LeitmotifLocalizations.of(context).startTourLabel,
           onPressed: _showOnboardingScreen,
           textAlign: TextAlign.right,
         ),
         LitPlainLabelButton(
-          label: AppLocalizations.of(context).aboutAppLabel,
+          label: LeitmotifLocalizations.of(context).aboutAppLabel,
           onPressed: _showAboutThisAppDialog,
           textAlign: TextAlign.right,
         ),
         LitPlainLabelButton(
-          label: AppLocalizations.of(context).privacyLabel,
+          label: LeitmotifLocalizations.of(context).privacyLabel,
           onPressed: _openPrivacyPolicy,
           textAlign: TextAlign.right,
         ),
@@ -189,7 +189,7 @@ class _SettingsFooterState extends State<SettingsFooter> {
         //   textAlign: TextAlign.right,
         // ),
         LitPlainLabelButton(
-          label: AppLocalizations.of(context).creditsLabel,
+          label: LeitmotifLocalizations.of(context).creditsLabel,
           onPressed: _openCredits,
           textAlign: TextAlign.right,
         ),

@@ -78,7 +78,8 @@ class _UserProfileCardState extends State<UserProfileCard> {
                               padding:
                                   const EdgeInsets.symmetric(vertical: 4.0),
                               child: ClippedText(
-                                AppLocalizations.of(context).createdOnLabel,
+                                LeitmotifLocalizations.of(context)
+                                    .createdOnLabel,
                                 style: LitSansSerifStyles.caption,
                               ),
                             ),

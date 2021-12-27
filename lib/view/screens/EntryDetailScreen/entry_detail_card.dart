@@ -252,8 +252,8 @@ class _Header extends StatelessWidget {
                                   right: isFirst ? 3.0 : 0,
                                 ),
                                 child: _MetaLabel(
-                                  title:
-                                      AppLocalizations.of(context).latestLabel,
+                                  title: LeitmotifLocalizations.of(context)
+                                      .latestLabel,
                                 ),
                               )
                             : SizedBox(),

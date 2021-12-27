@@ -357,7 +357,8 @@ class _ManageBackupDialog extends StatelessWidget {
           );
         },
       ),
-      titleText: AppLocalizations.of(context).manageBackupLabel.capitalize(),
+      titleText:
+          LeitmotifLocalizations.of(context).manageBackupLabel.capitalize(),
     );
   }
 }
@@ -484,7 +485,7 @@ class __UpToDateIndicatorState extends State<_UpToDateIndicator> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                AppLocalizations.of(context).upToDateLabel,
+                LeitmotifLocalizations.of(context).upToDateLabel,
                 style: LitSansSerifStyles.subtitle2,
               ),
               Container(

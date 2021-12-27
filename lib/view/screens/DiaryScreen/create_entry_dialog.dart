@@ -236,12 +236,13 @@ class _DefaultCreateEntryDialogState extends State<DefaultCreateEntryDialog> {
                   showDividersOnVerticalAxis: true,
                   items: [
                     LitToggleButtonGroupItemData(
-                      label:
-                          AppLocalizations.of(context).todayLabel.capitalize(),
+                      label: LeitmotifLocalizations.of(context)
+                          .todayLabel
+                          .capitalize(),
                       value: TODAY,
                     ),
                     LitToggleButtonGroupItemData(
-                      label: AppLocalizations.of(context)
+                      label: LeitmotifLocalizations.of(context)
                           .anotherDayLabel
                           .capitalize(),
                       value: PREVIOUS_DAY,

@@ -147,7 +147,7 @@ class _DiaryFilterHeaderState extends State<DiaryFilterHeader>
                             : widget.textStyle.color,
                       ),
                       disabledTitle: ClippedText(
-                        AppLocalizations.of(context).allLabel,
+                        LeitmotifLocalizations.of(context).allLabel,
                         style: widget.textStyle.copyWith(
                           color: widget.showFavoritesOnly!
                               ? widget.textStyle.color

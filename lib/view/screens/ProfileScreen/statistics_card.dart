@@ -40,7 +40,7 @@ class _NoEntriesCard extends StatelessWidget {
     return Padding(
       padding: LitEdgeInsets.card,
       child: LitTitledActionCard(
-        title: AppLocalizations.of(context).statisticsLabel,
+        title: LeitmotifLocalizations.of(context).statisticsLabel,
         subtitle: AppLocalizations.of(context).noEntriesAvailLabel,
         child: Column(
           children: [
