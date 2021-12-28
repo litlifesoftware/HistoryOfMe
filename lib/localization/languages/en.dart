@@ -7,7 +7,6 @@ class EN {
 
   /// The localized values.
   static const values = const {
-    AppLocalizationsKeys.composeLabel: 'Compose',
     AppLocalizationsKeys.createEntryLabel: 'Create Entry',
     AppLocalizationsKeys.usernameLabel: 'Your name',
     AppLocalizationsKeys.emptyDiarySubtitle: 'No entires available',
@@ -23,21 +22,13 @@ class EN {
     AppLocalizationsKeys.readDiaryTitle: 'Read your diary entries',
     AppLocalizationsKeys.readDiaryDescr:
         'Tap on one of the entires on your diary in order to read an entry and to relive your memories.',
-    AppLocalizationsKeys.privacyLabel: 'Privacy',
     AppLocalizationsKeys.privacyDescr:
         'History of Me\'s goal is to provide the most private experience available on mobile devices. Your data will always remain on your device. The creator of the app nor any third party will be able to view your content. There is no connection to the internet, all required data to use the app will be stored offline.',
     AppLocalizationsKeys.customizeBookmarkTitle: 'Customize your bookmark',
     AppLocalizationsKeys.customizeBookmarkDescr:
         'Can you see the bookmark on top of your diary? You can customize it. Go to your profile and tap on the pencil under your bookmark to edit it. Set your favorite color pallet and a nice pattern. Don\'t forget to save your changes!',
-    AppLocalizationsKeys.aboutAppLabel: 'About this app',
     AppLocalizationsKeys.aboutAppDescr: 'Your own personal diary.',
-    AppLocalizationsKeys.userExpericenceDesignLabel: 'User Experience Design',
-    AppLocalizationsKeys.developmentLabel: 'Development',
-    AppLocalizationsKeys.photographyLabel: 'Photography',
-    AppLocalizationsKeys.inspiredByLabel: 'Inspire',
-    AppLocalizationsKeys.manageBackupLabel: 'Manage Backup',
-    AppLocalizationsKeys.startTourLabel: 'Start tour',
-    AppLocalizationsKeys.creditsLabel: 'Credits',
+    AppLocalizationsKeys.inspiredByLabel: 'Inspired by',
     AppLocalizationsKeys.noFavoritesAvailLabel: 'No favorites available',
     AppLocalizationsKeys.noFavoritesAvailDescr:
         'Add an entry to your favorites on your diary entry.',
@@ -45,17 +36,12 @@ class EN {
     AppLocalizationsKeys.welcomeBackLabel: 'Welcome back',
     AppLocalizationsKeys.changeNameLabel: 'Change name',
     AppLocalizationsKeys.changeYourNameLabel: 'Change your name',
-    AppLocalizationsKeys.creatorLabel: 'Creator',
     AppLocalizationsKeys.creatorDescr:
         'What the creator is telling us about this photo',
     AppLocalizationsKeys.detailsLabel: 'Details',
-    AppLocalizationsKeys.locationLabel: 'Location',
-    AppLocalizationsKeys.publishedLabel: 'published',
     AppLocalizationsKeys.entrySavedDescr: 'Your diary entry has been saved.',
-    AppLocalizationsKeys.savedLabel: 'Saved',
     AppLocalizationsKeys.untitledLabel: 'Untitled',
     AppLocalizationsKeys.yourMoodLabel: 'your mood',
-    AppLocalizationsKeys.statisticsLabel: 'Statistics',
     AppLocalizationsKeys.noEntriesAvailLabel: 'No entries available',
     AppLocalizationsKeys.statisticsFallbackDescr:
         'In order to show your statistics, you should have atleast one entry created.',
@@ -73,8 +59,6 @@ class EN {
     AppLocalizationsKeys.entriesThisMonthLabel: 'Entries this month',
     AppLocalizationsKeys.lastestEntryLabel: 'Latest entry',
     AppLocalizationsKeys.firstEntryLabel: 'First entry',
-    AppLocalizationsKeys.lessLabel: 'less',
-    AppLocalizationsKeys.moreLabel: 'more',
     AppLocalizationsKeys.selectMainColorLabel: 'Select a main color',
     AppLocalizationsKeys.selectAccentColorLabel: 'Select an accent color',
     AppLocalizationsKeys.createLabel: 'create',
@@ -87,27 +71,17 @@ class EN {
     AppLocalizationsKeys.entriesLabel: 'entries',
     AppLocalizationsKeys.favoriteEntryLabel: 'favorite entry',
     AppLocalizationsKeys.favoriteEntriesLabel: 'favorite entries',
-    AppLocalizationsKeys.allLabel: 'all',
-    AppLocalizationsKeys.latestLabel: 'latest',
-    AppLocalizationsKeys.unsavedLabel: 'unsaved',
     AppLocalizationsKeys.newDiaryTitle: 'New Diary',
     AppLocalizationsKeys.newDiarySubtitle: 'Create new Diary',
     AppLocalizationsKeys.startJourneyTitle: 'Start a new journey',
     AppLocalizationsKeys.diaryOfLabel: 'Diary of',
     AppLocalizationsKeys.restoreDiaryTitle: 'Restore your diary',
     AppLocalizationsKeys.continueJourneyTitle: 'Continue your journey',
-    AppLocalizationsKeys.restoreLabel: 'Restore',
     AppLocalizationsKeys.cancelRestoreDescr:
         'Do you want to create a new diary instead of restoring your previous one?',
-    AppLocalizationsKeys.createdOnLabel: 'Created on',
-    AppLocalizationsKeys.selectBackupTitle: 'Select Backup',
-    AppLocalizationsKeys.restoreFromBackupTitle: 'Restore from Backup',
-    AppLocalizationsKeys.unsupportedFileTitle: 'Not supported',
-    AppLocalizationsKeys.unsupportedFileDescr: 'This file is not supported.',
     AppLocalizationsKeys.backupFileRequiredTitle: 'We need your backup file',
     AppLocalizationsKeys.backupFileRequiredDescr:
         "Please provide your History of Me backup file. Backup files have a unique file name and are usually stored in your 'Download' folder on this location:",
-    AppLocalizationsKeys.pickFileLabel: 'Select file',
     AppLocalizationsKeys.storagePermissionDeniedTitle: 'Reading backup denied',
     AppLocalizationsKeys.storagePermissionDeniedDescr:
         'History of Me needs additional permissions in order to access your storage. This will be required to read your diary backup',
@@ -131,9 +105,6 @@ class EN {
     AppLocalizationsKeys.byLabel: 'by',
     AppLocalizationsKeys.accentColorLabel: 'accent color',
     AppLocalizationsKeys.choosePhotoLabel: 'choose photo',
-    AppLocalizationsKeys.selectedLabel: 'selected',
-    AppLocalizationsKeys.todayLabel: 'today',
-    AppLocalizationsKeys.anotherDayLabel: 'another day',
     AppLocalizationsKeys.alreadyAvailableLabel: 'already available',
     AppLocalizationsKeys.duplicateEntryDescr:
         'There already is a diary entry available for this date.',
@@ -152,8 +123,7 @@ class EN {
     AppLocalizationsKeys.backupLabel: 'backup',
     AppLocalizationsKeys.backupIdLabel: 'Backup-ID',
     AppLocalizationsKeys.lastestBackupLabel: 'Last Backup',
-    AppLocalizationsKeys.upToDateLabel: 'Up to date',
-    AppLocalizationsKeys.upToDateDescr: 'Your backup is up to date!',
+    AppLocalizationsKeys.upToDateBackupDescr: 'Your backup is up to date!',
     AppLocalizationsKeys.deprecatedBackupDescr:
         'Your backup is older than two days. We recommend to backup your diary regularly to prevent data loss.',
   };

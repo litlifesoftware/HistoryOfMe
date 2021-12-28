@@ -54,12 +54,6 @@ class AppLocalizations {
     return localizeValue(AppLocalizationsKeys.usernameLabel);
   }
 
-  // TODO: Move to Leitmotif
-  String get composeButtonLabel {
-    return localizeValue(AppLocalizationsKeys.composeLabel);
-  }
-  // TODO: Move to Leitmotif
-
   String get createEntryLabel {
     return localizeValue(AppLocalizationsKeys.createEntryLabel);
   }
@@ -104,10 +98,6 @@ class AppLocalizations {
     return localizeValue(AppLocalizationsKeys.readDiaryDescr);
   }
 
-  String get privacyLabel {
-    return localizeValue(AppLocalizationsKeys.privacyLabel);
-  }
-
   String get privacyDescr {
     return localizeValue(AppLocalizationsKeys.privacyDescr);
   }
@@ -119,48 +109,13 @@ class AppLocalizations {
   String get customizeBookmarkTitle {
     return localizeValue(AppLocalizationsKeys.customizeBookmarkTitle);
   }
-  // TODO: Move to Leitmotif
-
-  String get aboutAppLabel {
-    return localizeValue(AppLocalizationsKeys.aboutAppLabel);
-  }
 
   String get aboutAppDescr {
     return localizeValue(AppLocalizationsKeys.aboutAppDescr);
   }
-  // TODO: Move to Leitmotif
-
-  String get userExpericenceDesignLabel {
-    return localizeValue(AppLocalizationsKeys.userExpericenceDesignLabel);
-  }
-  // TODO: Move to Leitmotif
-
-  String get developmentLabel {
-    return localizeValue(AppLocalizationsKeys.developmentLabel);
-  }
-  // TODO: Move to Leitmotif
-
-  String get photographyLabel {
-    return localizeValue(AppLocalizationsKeys.photographyLabel);
-  }
 
   String get inspiredByLabel {
     return localizeValue(AppLocalizationsKeys.inspiredByLabel);
-  }
-  // TODO: Move to Leitmotif
-
-  String get manageBackupLabel {
-    return localizeValue(AppLocalizationsKeys.manageBackupLabel);
-  }
-  // TODO: Move to Leitmotif
-
-  String get startTourLabel {
-    return localizeValue(AppLocalizationsKeys.startTourLabel);
-  }
-  // TODO: Move to Leitmotif
-
-  String get creditsLabel {
-    return localizeValue(AppLocalizationsKeys.creditsLabel);
   }
 
   String get noFavoritesAvailLabel {
@@ -186,11 +141,6 @@ class AppLocalizations {
   String get changeYourNameLabel {
     return localizeValue(AppLocalizationsKeys.changeYourNameLabel);
   }
-  // TODO: Move to Leitmotif
-
-  String get creatorLabel {
-    return localizeValue(AppLocalizationsKeys.creatorLabel);
-  }
 
   String get creatorDescr {
     return localizeValue(AppLocalizationsKeys.creatorDescr);
@@ -199,23 +149,9 @@ class AppLocalizations {
   String get detailsLabel {
     return localizeValue(AppLocalizationsKeys.detailsLabel);
   }
-  // TODO: Move to Leitmotif
-
-  String get locationLabel {
-    return localizeValue(AppLocalizationsKeys.locationLabel);
-  }
-  // TODO: Move to Leitmotif
-
-  String get publishedLabel {
-    return localizeValue(AppLocalizationsKeys.publishedLabel);
-  }
 
   String get entrySavedDescr {
     return localizeValue(AppLocalizationsKeys.entrySavedDescr);
-  }
-
-  String get savedLabel {
-    return localizeValue(AppLocalizationsKeys.savedLabel);
   }
 
   String get untitledLabel {
@@ -224,11 +160,6 @@ class AppLocalizations {
 
   String get yourMoodLabel {
     return localizeValue(AppLocalizationsKeys.yourMoodLabel);
-  }
-  // TODO: Move to Leitmotif
-
-  String get statisticsLabel {
-    return localizeValue(AppLocalizationsKeys.statisticsLabel);
   }
 
   String get noEntriesAvailLabel {
@@ -286,27 +217,14 @@ class AppLocalizations {
   String get firstEntryLabel {
     return localizeValue(AppLocalizationsKeys.firstEntryLabel);
   }
-  // TODO: Move to Leitmotif
-
-  String get lessLabel {
-    return localizeValue(AppLocalizationsKeys.lessLabel);
-  }
-  // TODO: Move to Leitmotif
-
-  String get moreLabel {
-    return localizeValue(AppLocalizationsKeys.moreLabel);
-  }
-  // TODO: Move to Leitmotif
 
   String get selectMainColorLabel {
     return localizeValue(AppLocalizationsKeys.selectMainColorLabel);
   }
-  // TODO: Move to Leitmotif
 
   String get selectAccentColorLabel {
     return localizeValue(AppLocalizationsKeys.selectAccentColorLabel);
   }
-  // TODO: Move to Leitmotif
 
   String get createLabel {
     return localizeValue(AppLocalizationsKeys.createLabel);
@@ -319,12 +237,10 @@ class AppLocalizations {
   String get dotsLabel {
     return localizeValue(AppLocalizationsKeys.dotsLabel);
   }
-  // TODO: Move to Leitmotif
 
   String get mainColorLabel {
     return localizeValue(AppLocalizationsKeys.mainColorLabel);
   }
-  // TODO: Move to Leitmotif
 
   String get duplicateColorDescr {
     return localizeValue(AppLocalizationsKeys.duplicateColorDescr);
@@ -344,21 +260,6 @@ class AppLocalizations {
 
   String get favoriteEntriesLabel {
     return localizeValue(AppLocalizationsKeys.favoriteEntriesLabel);
-  }
-  // TODO: Move to Leitmotif
-
-  String get allLabel {
-    return localizeValue(AppLocalizationsKeys.allLabel);
-  }
-  // TODO: Move to Leitmotif
-
-  String get latestLabel {
-    return localizeValue(AppLocalizationsKeys.latestLabel);
-  }
-  // TODO: Move to Leitmotif
-
-  String get unsavedLabel {
-    return localizeValue(AppLocalizationsKeys.unsavedLabel);
   }
 
   String get newDiaryTitle {
@@ -384,67 +285,26 @@ class AppLocalizations {
   String get continueJourneyTitle {
     return localizeValue(AppLocalizationsKeys.continueJourneyTitle);
   }
-  // TODO: Move to Leitmotif
-
-  String get restoreLabel {
-    return localizeValue(AppLocalizationsKeys.restoreLabel);
-  }
-  // TODO: Move to Leitmotif
 
   String get cancelRestoreDescr {
     return localizeValue(AppLocalizationsKeys.cancelRestoreDescr);
   }
-  // TODO: Move to Leitmotif
-
-  String get createdOnLabel {
-    return localizeValue(AppLocalizationsKeys.createdOnLabel);
-  }
-  // TODO: Move to Leitmotif
-
-  String get selectBackupTitle {
-    return localizeValue(AppLocalizationsKeys.selectBackupTitle);
-  }
-  // TODO: Move to Leitmotif
-
-  String get restoreFromBackupTitle {
-    return localizeValue(AppLocalizationsKeys.restoreFromBackupTitle);
-  }
-  // TODO: Move to Leitmotif
-
-  String get unsupportedFileTitle {
-    return localizeValue(AppLocalizationsKeys.unsupportedFileTitle);
-  }
-  // TODO: Move to Leitmotif
-
-  String get unsupportedFileDescr {
-    return localizeValue(AppLocalizationsKeys.unsupportedFileDescr);
-  }
-  // TODO: Move to Leitmotif
 
   String get backupFileRequiredTitle {
     return localizeValue(AppLocalizationsKeys.backupFileRequiredTitle);
   }
-  // TODO: Move to Leitmotif
 
   String get backupFileRequiredDescr {
     return localizeValue(AppLocalizationsKeys.backupFileRequiredDescr);
   }
-  // TODO: Move to Leitmotif
-
-  String get pickFileLabel {
-    return localizeValue(AppLocalizationsKeys.pickFileLabel);
-  }
-  // TODO: Move to Leitmotif
 
   String get storagePermissionDeniedTitle {
     return localizeValue(AppLocalizationsKeys.storagePermissionDeniedTitle);
   }
-  // TODO: Move to Leitmotif
 
   String get storagePermissionDeniedDescr {
     return localizeValue(AppLocalizationsKeys.storagePermissionDeniedDescr);
   }
-  // TODO: Move to Leitmotif
 
   String get requestPermissionLabel {
     return localizeValue(AppLocalizationsKeys.requestPermissionLabel);
@@ -453,27 +313,22 @@ class AppLocalizations {
   String get foundDiaryTitle {
     return localizeValue(AppLocalizationsKeys.foundDiaryTitle);
   }
-  // TODO: Move to Leitmotif
 
   String get lastEditedLabel {
     return localizeValue(AppLocalizationsKeys.lastEditedLabel);
   }
-  // TODO: Move to Leitmotif
 
   String get nextLabel {
     return localizeValue(AppLocalizationsKeys.nextLabel);
   }
-  // TODO: Move to Leitmotif
 
   String get previousLabel {
     return localizeValue(AppLocalizationsKeys.previousLabel);
   }
-  // TODO: Move to Leitmotif
 
   String get optionsLabel {
     return localizeValue(AppLocalizationsKeys.optionsLabel);
   }
-  // TODO: Move to Leitmotif
 
   String get firstLabel {
     return localizeValue(AppLocalizationsKeys.firstLabel);
@@ -486,7 +341,6 @@ class AppLocalizations {
   String get emptyEntryDescr {
     return localizeValue(AppLocalizationsKeys.emptyEntryDescr);
   }
-  // TODO: Move to Leitmotif
 
   String get editLabel {
     return localizeValue(AppLocalizationsKeys.editLabel);
@@ -519,29 +373,13 @@ class AppLocalizations {
   String get byLabel {
     return localizeValue(AppLocalizationsKeys.byLabel);
   }
-  // TODO: Move to Leitmotif
 
   String get accentColorLabel {
     return localizeValue(AppLocalizationsKeys.accentColorLabel);
   }
-  // TODO: Move to Leitmotif
 
   String get choosePhotoLabel {
     return localizeValue(AppLocalizationsKeys.choosePhotoLabel);
-  }
-  // TODO: Move to Leitmotif
-
-  String get selectedLabel {
-    return localizeValue(AppLocalizationsKeys.selectedLabel);
-  }
-  // TODO: Move to Leitmotif
-
-  String get todayLabel {
-    return localizeValue(AppLocalizationsKeys.todayLabel);
-  }
-
-  String get anotherDayLabel {
-    return localizeValue(AppLocalizationsKeys.anotherDayLabel);
   }
 
   String get alreadyAvailableLabel {
@@ -583,29 +421,21 @@ class AppLocalizations {
   String get noBackupFoundDescr {
     return localizeValue(AppLocalizationsKeys.noBackupFoundDescr);
   }
-  // TODO: Move to Leitmotif
 
   String get backupLabel {
     return localizeValue(AppLocalizationsKeys.backupLabel);
   }
-  // TODO: Move to Leitmotif
 
   String get backupIdLabel {
     return localizeValue(AppLocalizationsKeys.backupIdLabel);
   }
-  // TODO: Move to Leitmotif
 
   String get lastestBackupLabel {
     return localizeValue(AppLocalizationsKeys.lastestBackupLabel);
   }
-  // TODO: Move to Leitmotif
-
-  String get upToDateLabel {
-    return localizeValue(AppLocalizationsKeys.upToDateLabel);
-  }
 
   String get upToDateDescr {
-    return localizeValue(AppLocalizationsKeys.upToDateDescr);
+    return localizeValue(AppLocalizationsKeys.upToDateBackupDescr);
   }
 
   String get deprecatedBackupDescr {

@@ -4,7 +4,6 @@
 /// [AppLocalizationsKeys] property to enforce integrity.
 class AppLocalizationsKeys {
   static const String usernameLabel = 'usernameLabel';
-  static const String composeLabel = 'composeLabel';
   static const String createEntryLabel = 'createEntryLabel';
   static const String emptyDiarySubtitle = 'emptyDiarySubtitle';
   static const String emptyDiaryBody = 'emptyDiaryBody';
@@ -16,35 +15,22 @@ class AppLocalizationsKeys {
   static const String privateLabel = 'privateLabel';
   static const String readDiaryTitle = 'readDiaryTitle';
   static const String readDiaryDescr = 'readDiaryDescr';
-  static const String privacyLabel = 'privacyLabel';
   static const String privacyDescr = 'privacyDescr';
   static const String customizeBookmarkTitle = 'customizeBookmarkTitle';
   static const String customizeBookmarkDescr = 'customizeBookmarkDescr';
-  static const String aboutAppLabel = 'aboutAppLabel';
   static const String aboutAppDescr = 'aboutAppDescr';
-  static const String userExpericenceDesignLabel = 'uxDesignLabel';
-  static const String developmentLabel = 'developmentLabel';
-  static const String photographyLabel = 'photographyLabel';
   static const String inspiredByLabel = 'inspiredByLabel';
-  static const String manageBackupLabel = 'manageBackupLabel';
-  static const String startTourLabel = 'startTourLabel';
-  static const String creditsLabel = 'creditsLabel';
   static const String noFavoritesAvailLabel = 'noFavoritesAvailLabel';
   static const String noFavoritesAvailDescr = 'noFavoritesAvailDescr';
   static const String greetingLabel = 'greetingLabel';
   static const String welcomeBackLabel = 'welcomeBackLabel';
   static const String changeNameLabel = 'changeNameLabel';
   static const String changeYourNameLabel = 'changeYourNameLabel';
-  static const String creatorLabel = 'creatorLabel';
   static const String creatorDescr = 'creatorDescr';
   static const String detailsLabel = 'detailsLabel';
-  static const String locationLabel = 'locationLabel';
-  static const String publishedLabel = 'publishedLabel';
   static const String entrySavedDescr = 'entrySavedDescr';
-  static const String savedLabel = 'savedLabel';
   static const String untitledLabel = 'untitledLabel';
   static const String yourMoodLabel = 'yourMoodLabel';
-  static const String statisticsLabel = 'statisticsLabel';
   static const String noEntriesAvailLabel = 'noEntriesAvail';
   static const String diaryFallbackDescr = 'noEntriesAvailDescr';
   static const String statisticsFallbackDescr = 'statisticsFallbackDescr';
@@ -60,8 +46,6 @@ class AppLocalizationsKeys {
   static const String entriesThisMonthLabel = 'entriesThisMonthLabel';
   static const String lastestEntryLabel = 'lastestEntryLabel';
   static const String firstEntryLabel = 'firstEntryLabel';
-  static const String lessLabel = 'lessLabel';
-  static const String moreLabel = 'moreLabel';
   static const String selectMainColorLabel = 'selectMainColorLabel';
   static const String selectAccentColorLabel = 'selectAccentColorLabel';
   static const String createLabel = 'createLabel';
@@ -73,25 +57,15 @@ class AppLocalizationsKeys {
   static const String entriesLabel = 'entriesLabel';
   static const String favoriteEntryLabel = 'favoriteEntryLabel';
   static const String favoriteEntriesLabel = 'favoriteEntriesLabel';
-  static const String allLabel = 'allLabel';
-  static const String latestLabel = 'latestLabel';
-  static const String unsavedLabel = 'unsavedLabel';
   static const String newDiaryTitle = 'newDiaryTitle';
   static const String newDiarySubtitle = 'newDiarySubtitle';
   static const String startJourneyTitle = 'startJourneyTitle';
   static const String diaryOfLabel = 'diaryOfLabel';
   static const String restoreDiaryTitle = 'restoreDiaryTitle';
   static const String continueJourneyTitle = 'continueJourneyTitle';
-  static const String restoreLabel = 'restoreLabel';
   static const String cancelRestoreDescr = 'cancelRestoreDescr';
-  static const String createdOnLabel = 'createdLabel';
-  static const String selectBackupTitle = 'selectBackupTitle';
-  static const String restoreFromBackupTitle = 'restoreFromBackupTitle';
-  static const String unsupportedFileTitle = 'unsupportedFileTitle';
-  static const String unsupportedFileDescr = 'unsupportedFileDescr';
   static const String backupFileRequiredTitle = 'backupFileRequiredTitle';
   static const String backupFileRequiredDescr = 'backupFileRequiredDescr';
-  static const String pickFileLabel = 'pickFileLabel';
   static const String storagePermissionDeniedTitle =
       'storagePermissionDeniedTitle';
   static const String storagePermissionDeniedDescr =
@@ -115,9 +89,6 @@ class AppLocalizationsKeys {
   static const String byLabel = 'byLabel';
   static const String accentColorLabel = 'accentColor';
   static const String choosePhotoLabel = 'choosePhotoLabel';
-  static const String selectedLabel = 'selectedLabel';
-  static const String todayLabel = 'todayLabel';
-  static const String anotherDayLabel = 'anotherDayLabel';
   static const String alreadyAvailableLabel = 'alreadyAvailableLabel';
   static const String duplicateEntryDescr = 'duplicateEntryDescr';
   static const String duplicateEntryTodayDescr = 'duplicateEntryTodayDescr';
@@ -131,7 +102,6 @@ class AppLocalizationsKeys {
   static const String noBackupFoundDescr = 'noBackupFoundDescr';
   static const String backupIdLabel = 'backupIdLabel';
   static const String lastestBackupLabel = 'lastestBackupLabel';
-  static const String upToDateLabel = 'upToDateLabel';
-  static const String upToDateDescr = 'upToDateDescr';
+  static const String upToDateBackupDescr = 'upToDateBackupDescr';
   static const String deprecatedBackupDescr = 'deprecatedBackupDescr';
 }
