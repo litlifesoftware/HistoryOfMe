@@ -129,5 +129,7 @@ class DE {
     AppLocalizationsKeys.upToDateBackupDescr: 'Deine Sicherung ist aktuell!',
     AppLocalizationsKeys.deprecatedBackupDescr:
         'Dein Backup ist älter als zwei Tage. Wir empfehlen dein Tagebuch regelmäßig zu sichern, um einen Datenverlust zu vermeiden.',
+    AppLocalizationsKeys.bookmarkSavedDescr:
+        'Dein Lesezeichen wurde gespeichert.',
   };
 }

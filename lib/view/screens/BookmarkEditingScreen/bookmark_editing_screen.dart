@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:history_of_me/controller/controllers.dart';
 import 'package:history_of_me/localization.dart';
 import 'package:history_of_me/view/shared/shared.dart';
 import 'package:leitmotif/leitmotif.dart';
@@ -64,11 +65,14 @@ class _BookmarkEditingScreenState extends State<BookmarkEditingScreen>
 
   late AnimationController _appearAnimation;
 
-  late LitSnackbarController _snackbarController;
+  late LitSnackbarController _colorErrorSnackbar;
+  late LitSnackbarController _autosaveSnackbar;
 
   late ScrollController _scrollController;
 
   late LitRouteController _routeController;
+
+  late AutosaveController _autosaveController;
 
   /// Sets the [_designPattern] using the setState method.
   void setDesignPattern(int value) {
@@ -175,8 +179,14 @@ class _BookmarkEditingScreenState extends State<BookmarkEditingScreen>
 
   /// Updates the Hive database using the latest changes.
   void _saveChanges() {
-    HiveDBService(debug: DEBUG)
-        .updateUserData(_mapUserData(DateTime.now().millisecondsSinceEpoch));
+    final data = _mapUserData(DateTime.now().millisecondsSinceEpoch);
+    HiveDBService(debug: DEBUG).updateUserData(data);
+  }
+
+  /// Updates the Hive database using the latest changes.
+  void _onAutosave() {
+    _saveChanges();
+    _autosaveSnackbar.showSnackBar();
   }
 
   /// Shows the [DiscardDraftDialog].
@@ -198,7 +208,7 @@ class _BookmarkEditingScreenState extends State<BookmarkEditingScreen>
   }
 
   void _onAddColorError() {
-    _snackbarController.showSnackBar();
+    _colorErrorSnackbar.showSnackBar();
   }
 
   Future<bool> handlePopAction(bool isChanged) {
@@ -214,7 +224,8 @@ class _BookmarkEditingScreenState extends State<BookmarkEditingScreen>
   void initState() {
     super.initState();
     // Initialize all controllers.
-    _snackbarController = LitSnackbarController();
+    _colorErrorSnackbar = LitSnackbarController();
+    _autosaveSnackbar = LitSnackbarController();
     _scrollController = ScrollController();
     _routeController = LitRouteController(context);
     _appearAnimation = AnimationController(
@@ -222,6 +233,10 @@ class _BookmarkEditingScreenState extends State<BookmarkEditingScreen>
         milliseconds: 230,
       ),
       vsync: this,
+    );
+    _autosaveController = AutosaveController(
+      _onAutosave,
+      duration: Duration(seconds: 180),
     );
     // Inital state variables using the provided user data object.
     _name = widget.initialUserDataModel!.name;
@@ -238,13 +253,25 @@ class _BookmarkEditingScreenState extends State<BookmarkEditingScreen>
   }
 
   @override
+  void dispose() {
+    _appearAnimation.dispose();
+    _colorErrorSnackbar.dispose();
+    _autosaveSnackbar.dispose();
+    _scrollController.dispose();
+    _autosaveController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
       valueListenable: HiveDBService().getUserData(),
       builder: (BuildContext context, Box<UserData> userDataBox, Widget? _) {
         UserData updatedUserData = userDataBox.getAt(0)!;
         return WillPopScope(
-          onWillPop: () => handlePopAction(_isUnsaved(updatedUserData)),
+          onWillPop: () => handlePopAction(
+            _isUnsaved(updatedUserData),
+          ),
           child: LitScaffold(
             appBar: FixedOnScrollAppbar(
               scrollController: _scrollController,
@@ -258,8 +285,13 @@ class _BookmarkEditingScreenState extends State<BookmarkEditingScreen>
             ),
             snackbars: [
               LitIconSnackbar(
-                snackBarController: _snackbarController,
+                snackBarController: _colorErrorSnackbar,
                 text: AppLocalizations.of(context).duplicateColorDescr,
+                iconData: LitIcons.info,
+              ),
+              LitIconSnackbar(
+                snackBarController: _autosaveSnackbar,
+                text: AppLocalizations.of(context).bookmarkSavedDescr,
                 iconData: LitIcons.info,
               ),
             ],

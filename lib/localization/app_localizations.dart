@@ -441,4 +441,8 @@ class AppLocalizations {
   String get deprecatedBackupDescr {
     return localizeValue(AppLocalizationsKeys.deprecatedBackupDescr);
   }
+
+  String get bookmarkSavedDescr {
+    return localizeValue(AppLocalizationsKeys.bookmarkSavedDescr);
+  }
 }

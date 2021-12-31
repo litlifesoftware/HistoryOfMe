@@ -104,4 +104,5 @@ class AppLocalizationsKeys {
   static const String lastestBackupLabel = 'lastestBackupLabel';
   static const String upToDateBackupDescr = 'upToDateBackupDescr';
   static const String deprecatedBackupDescr = 'deprecatedBackupDescr';
+  static const String bookmarkSavedDescr = 'bookmarkSavedDescr';
 }
