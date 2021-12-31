@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:history_of_me/controller/controllers.dart';
 import 'package:history_of_me/controller/database/hive_db_service.dart';
 //import 'package:history_of_me/controller/localization/hom_localizations.dart';
 import 'package:history_of_me/controller/mood_translation_controller.dart';
@@ -64,9 +65,11 @@ class _EntryEditingScreenState extends State<EntryEditingScreen>
 
   late LitRouteController _routeController;
 
-  late Timer _saveDraftTimer;
+  //late Timer _saveDraftTimer;
 
   late LitSnackbarController _savedSnackbarContr;
+
+  late AutosaveController _autosaveController;
 
   /// Syncs the editing controllers' text input with the corresponding state
   /// values to check for any changes made to the inital values.
@@ -162,6 +165,13 @@ class _EntryEditingScreenState extends State<EntryEditingScreen>
     }
   }
 
+  /// Handles the `autosave` event by saving all changes and showing the
+  /// corresponding snackbar.
+  void _onAutosave() {
+    _saveChanges();
+    _savedSnackbarContr.showSnackBar();
+  }
+
   @override
   void initState() {
     super.initState();
@@ -189,10 +199,12 @@ class _EntryEditingScreenState extends State<EntryEditingScreen>
     // Allow editing the entry at the start.
     _contentEditFocusNode.requestFocus();
 
-    _saveDraftTimer = Timer.periodic(
-      Duration(seconds: 180),
-      (_) => {_saveChanges(), _savedSnackbarContr.showSnackBar()},
-    );
+    // _saveDraftTimer = Timer.periodic(
+    //   Duration(seconds: 180),
+    //   (_) => {_saveChanges(), _savedSnackbarContr.showSnackBar()},
+    // );
+
+    _autosaveController = AutosaveController(_onAutosave);
 
     _savedSnackbarContr = LitSnackbarController();
   }
@@ -211,7 +223,8 @@ class _EntryEditingScreenState extends State<EntryEditingScreen>
     _contentEditFocusNode.dispose();
     _contentEditingController.dispose();
     _scrollController.dispose();
-    _saveDraftTimer.cancel();
+    //_saveDraftTimer.cancel();
+    _autosaveController.dispose();
     super.dispose();
   }
 
