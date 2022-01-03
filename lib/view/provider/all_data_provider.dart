@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:history_of_me/controller/controllers.dart';
+import 'package:history_of_me/api.dart';
 import 'package:history_of_me/model/models.dart';
 import 'package:hive/hive.dart';
 
@@ -30,7 +30,7 @@ class AllDataProvider extends StatefulWidget {
 }
 
 class _AllDataProviderState extends State<AllDataProvider> {
-  final HiveDBService _service = HiveDBService();
+  final AppAPI _api = AppAPI();
 
   late DatabaseStateValidator _validator;
 
@@ -69,24 +69,24 @@ class _AllDataProviderState extends State<AllDataProvider> {
 
   @override
   void initState() {
-    _validator = DatabaseStateValidator(dbService: _service);
+    _validator = DatabaseStateValidator(api: _api);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
-      valueListenable: _service.getAppSettings(),
+      valueListenable: _api.getAppSettings(),
       builder: (context, Box<AppSettings> appSettingsBox, _) {
         _validateAppSettings(appSettingsBox);
         return ValueListenableBuilder(
-          valueListenable: _service.getUserData(),
+          valueListenable: _api.getUserData(),
           builder: (context, Box<UserData> userDataBox, _) {
             return ValueListenableBuilder(
-              valueListenable: _service.getDiaryEntries(),
+              valueListenable: _api.getDiaryEntries(),
               builder: (context, Box<DiaryEntry> diaryEntryBox, _) {
                 return ValueListenableBuilder(
-                  valueListenable: _service.getUserCreatedColors(),
+                  valueListenable: _api.getUserCreatedColors(),
                   builder:
                       (context, Box<UserCreatedColor> userCreatedColorBox, _) {
                     final UserData userData = _getUserData(userDataBox);
