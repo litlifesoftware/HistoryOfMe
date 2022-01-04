@@ -29,8 +29,10 @@ class App extends StatefulWidget {
   static const String appDeveloper = "LitLifeSoftware";
 
   /// The localization file's location.
-  static const String localizationFilePath =
-      "assets/json/localized_strings.json";
+  // static const String localizationFilePath =
+  //     "assets/json/localized_strings.json";
+
+  static const imageCollectionPath = 'assets/json/image_collection_data.json';
 
   static const supportedLocales = AppLocalizations.supportedLocales;
 
@@ -79,8 +81,7 @@ class _AppState extends State<App> {
 
   /// Loads the `JSON` file content and initiates the parsing process.
   Future<void> loadPhotosFromJson() async {
-    String data =
-        await rootBundle.loadString('assets/json/image_collection_data.json');
+    String data = await rootBundle.loadString(App.imageCollectionPath);
     return parseBackdropPhotos(data);
   }
 
@@ -140,8 +141,8 @@ class _AppState extends State<App> {
         supportedLocales: App.supportedLocales,
         title: App.appName,
         home: DatabaseStateScreenBuilder(
-          localizationsAssetURL: App.localizationFilePath,
-        ),
+            //  localizationsAssetURL: App.localizationFilePath,
+            ),
       ),
     );
   }
