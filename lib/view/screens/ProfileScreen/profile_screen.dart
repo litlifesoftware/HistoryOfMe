@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:history_of_me/controller/routes/hom_navigator.dart';
 import 'package:history_of_me/localization.dart';
 import 'package:history_of_me/model/user_data.dart';
-import 'package:history_of_me/view/provider/all_data_provider.dart';
+import 'package:history_of_me/api.dart';
 import 'package:history_of_me/view/shared/bookmark/bookmark_page_view.dart';
 import 'package:leitmotif/leitmotif.dart';
 
