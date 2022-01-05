@@ -3,23 +3,30 @@ import 'package:history_of_me/localization.dart';
 import 'package:history_of_me/view/shared/shared.dart';
 import 'package:leitmotif/leitmotif.dart';
 
-/// A screen widget displaying a modified version of the [LitOnboardingScreen].
+/// A `screen` widget returning a customized [LitOnboardingScreen].
 ///
 /// The screen will display all main features of `History of Me` on a card
 /// view.
 class AppOnboardingScreen extends StatefulWidget {
-  final LitOnboardingScreenLocalization? localization;
   final void Function()? onDismiss;
   const AppOnboardingScreen({
     Key? key,
     this.onDismiss,
-    this.localization,
   }) : super(key: key);
   @override
   _AppOnboardingScreenState createState() => _AppOnboardingScreenState();
 }
 
 class _AppOnboardingScreenState extends State<AppOnboardingScreen> {
+  /// Returns customized localizations for the onboarding screen.
+  LitOnboardingScreenLocalization get localizations =>
+      LitOnboardingScreenLocalization(
+        title: LeitmotifLocalizations.of(context).onboardingLabel,
+        nextLabel: LeitmotifLocalizations.of(context).nextLabel,
+        dismissLabel: AppLocalizations.of(context).continueLabel,
+      );
+
+  /// Handles the `dismiss` action.
   void _onDismiss() {
     if (widget.onDismiss != null) {
       widget.onDismiss!();
@@ -31,9 +38,8 @@ class _AppOnboardingScreenState extends State<AppOnboardingScreen> {
   @override
   Widget build(BuildContext context) {
     return LitOnboardingScreen(
-      //title: HOMLocalizations(context).introduction,
-      //nextButtonLabel: HOMLocalizations(context).next,
-      localization: widget.localization,
+      localization: localizations,
+      showButtonIcon: false,
       art: Padding(
         padding: const EdgeInsets.symmetric(vertical: 16.0),
         child: SizedBox(
