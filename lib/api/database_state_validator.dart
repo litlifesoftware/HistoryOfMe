@@ -15,6 +15,9 @@ class DatabaseStateValidator {
     required this.api,
   });
 
+  /// Validates the current app settings box state.
+  ///
+  /// Updates the app settings box according to current requirements.
   void validateAppSettings(AppSettings appSettings) {
     if (appSettings.installationID == null) {
       print("`InstallationID` missing.");
@@ -22,7 +25,7 @@ class DatabaseStateValidator {
         privacyPolicyAgreed: appSettings.privacyPolicyAgreed,
         darkMode: appSettings.darkMode,
         tabIndex: appSettings.tabIndex,
-        installationID: AppAPI.createInstallationID(),
+        installationID: AppAPI.generateInstallationID(),
         lastBackup: appSettings.lastBackup,
       );
       api.updateAppSettings(_appSettings);

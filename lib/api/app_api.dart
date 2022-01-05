@@ -22,13 +22,19 @@ class AppAPI {
   ///
   /// * [debug] states whether to show console output to log current activity.
   const AppAPI({this.debug = false});
-  Future<void> initHiveDB() async {
+
+  /// Initializes the local `Hive` database.
+  Future<void> init() async {
     await Hive.initFlutter();
     Hive.registerAdapter(UserDataAdapter());
     Hive.registerAdapter(UserCreatedColorAdapter());
     Hive.registerAdapter(DiaryEntryAdapter());
     Hive.registerAdapter(AppSettingsAdapter());
   }
+
+  /// The default index on a box where single objects are stored (such as the
+  /// [AppSettings]).
+  static const defaultEntryIndex = 0;
 
   /// The key to access the [AppSettings] Box.
   ///
@@ -119,22 +125,25 @@ class AppAPI {
     return Hive.box<AppSettings>(_appSettingsKey).listenable();
   }
 
+  /// Returns the default app settings.
   AppSettings get _defaultAppSettings {
     return AppSettings(
       privacyPolicyAgreed: initialAgreedPrivacy,
       darkMode: initialDarkMode,
       tabIndex: initialTabIndex,
-      installationID: createInstallationID(),
+      installationID: generateInstallationID(),
       lastBackup: "",
     );
   }
 
+  /// Returns cleaned app settings. This should be used to transfer backed up
+  /// data to the database.
   AppSettings _createClearnAppSettings(AppSettings appSettings) {
     return AppSettings(
       privacyPolicyAgreed: appSettings.privacyPolicyAgreed,
       darkMode: appSettings.darkMode,
       tabIndex: 0,
-      installationID: createInstallationID(),
+      installationID: generateInstallationID(),
       lastBackup: "",
     );
   }
@@ -148,6 +157,7 @@ class AppAPI {
     }
   }
 
+  /// Restores the app settings box using the provided object.
   void restoreAppSettings(AppSettings appSettings) {
     if (Hive.box<AppSettings>(_appSettingsKey).isEmpty) {
       Hive.box<AppSettings>(_appSettingsKey)
@@ -273,7 +283,7 @@ class AppAPI {
   }) {
     final DateTime now = DateTime.now();
     final DiaryEntry diaryEntry = DiaryEntry(
-      uid: _createUniqueID(),
+      uid: _generateUniqueID(),
       date: date.toIso8601String(),
       created: now.millisecondsSinceEpoch,
       lastUpdated: now.millisecondsSinceEpoch,
@@ -288,6 +298,7 @@ class AppAPI {
     return diaryEntry;
   }
 
+  /// Restores the diary entry box using the provided diary entry list.
   Future<void> addDiaryEntryBatch({
     required List<DiaryEntry> diaryEntries,
   }) async {
@@ -381,7 +392,7 @@ class AppAPI {
   /// existing entry, the color will not be added and an Exception is thrown.
   void addUserCreatedColor(int alpha, int red, int green, int blue) {
     UserCreatedColor userCreatedColor = UserCreatedColor(
-      uid: _createUniqueID(),
+      uid: _generateUniqueID(),
       alpha: alpha,
       red: red,
       green: green,
@@ -428,7 +439,8 @@ class AppAPI {
     }
   }
 
-  String _createUniqueID() {
+  /// Generates a unique id.
+  String _generateUniqueID() {
     int timestamp = DateTime.now().millisecondsSinceEpoch;
     int salt = Random().nextInt(1024);
     String timestampHash = timestamp.toRadixString(16);
@@ -436,11 +448,13 @@ class AppAPI {
     return "$timestampHash$saltHash";
   }
 
-  static String createInstallationID() {
+  /// Generates a installation id.
+  static String generateInstallationID() {
     int timestamp = DateTime.now().millisecondsSinceEpoch;
     return timestamp.toRadixString(16);
   }
 
+  /// Rebuilds the `Hive` database using the provided backup object.
   Future<void> rebuildDatabase(DiaryBackup backup) async {
     restoreAppSettings(backup.appSettings);
     print("'AppSettings' restored from Backup.");
