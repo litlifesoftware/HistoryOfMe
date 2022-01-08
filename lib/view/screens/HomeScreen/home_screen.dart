@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:history_of_me/config/config.dart';
 import 'package:history_of_me/controller/controllers.dart';
-import 'package:history_of_me/model/models.dart';
+import 'package:history_of_me/models.dart';
 import 'package:hive/hive.dart';
 import 'package:leitmotif/leitmotif.dart';
 

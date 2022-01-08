@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:history_of_me/model/models.dart';
+import 'package:history_of_me/models.dart';
 import 'package:lit_backup_service/lit_backup_service.dart';
 
 /// A `model` class including all required data to create and read backups of

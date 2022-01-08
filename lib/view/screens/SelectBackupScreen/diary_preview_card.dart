@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:history_of_me/app.dart';
 import 'package:history_of_me/localization.dart';
-import 'package:history_of_me/model/models.dart';
+import 'package:history_of_me/models.dart';
 import 'package:history_of_me/styles.dart';
 import 'package:history_of_me/view/shared/shared.dart';
 import 'package:leitmotif/leitmotif.dart';

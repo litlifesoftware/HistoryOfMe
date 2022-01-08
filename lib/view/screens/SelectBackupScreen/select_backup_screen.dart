@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:history_of_me/app.dart';
 import 'package:history_of_me/controller/controllers.dart';
 import 'package:history_of_me/localization.dart';
-import 'package:history_of_me/model/models.dart';
+import 'package:history_of_me/models.dart';
 import 'package:history_of_me/view/shared/shared.dart';
 import 'package:leitmotif/leitmotif.dart';
 import 'package:lit_backup_service/lit_backup_service.dart';

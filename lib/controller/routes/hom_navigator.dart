@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:history_of_me/model/models.dart';
+import 'package:history_of_me/models.dart';
 import 'package:history_of_me/view/screens/DiaryScreen/create_entry_dialog.dart';
 import 'package:history_of_me/view/screens/screens.dart';
 import 'package:leitmotif/leitmotif.dart';

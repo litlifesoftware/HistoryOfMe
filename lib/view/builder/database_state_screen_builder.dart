@@ -3,7 +3,7 @@ import 'package:history_of_me/api.dart';
 import 'package:history_of_me/app.dart';
 import 'package:history_of_me/config/config.dart';
 import 'package:history_of_me/localization.dart';
-import 'package:history_of_me/model/models.dart';
+import 'package:history_of_me/models.dart';
 import 'package:history_of_me/view/screens/RestoreDiaryScreen/restore_diary_screen.dart';
 import 'package:history_of_me/view/screens/screens.dart';
 import 'package:hive/hive.dart';

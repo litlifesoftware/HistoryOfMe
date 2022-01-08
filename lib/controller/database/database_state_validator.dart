@@ -1,5 +1,5 @@
 import 'package:history_of_me/controller/controllers.dart';
-import 'package:history_of_me/model/models.dart';
+import 'package:history_of_me/models.dart';
 
 /// A `controller` class allowing to validate and correct the current database
 /// content to inconsistency or missing values.
