@@ -1,6 +1,4 @@
-import 'package:history_of_me/api.dart';
-import 'package:history_of_me/model/diary_entry.dart';
-import 'package:leitmotif/leitmotif.dart';
+part of api;
 
 class QueryController {
   /// The [AppAPI] instance to query the database.

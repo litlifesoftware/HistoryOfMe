@@ -1,15 +1,4 @@
-import 'dart:math';
-
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
-import 'package:history_of_me/model/app_settings.dart';
-import 'package:history_of_me/config/config.dart';
-import 'package:history_of_me/model/diary_backup.dart';
-import 'package:history_of_me/model/user_data.dart';
-import 'package:history_of_me/model/diary_entry.dart';
-import 'package:history_of_me/model/user_created_color.dart';
-import 'package:hive/hive.dart';
-import 'package:hive_flutter/hive_flutter.dart';
+part of api;
 
 /// A controller class to access the [Hive] database API.
 ///
@@ -126,7 +115,7 @@ class AppAPI {
   }
 
   /// Returns the default app settings.
-  AppSettings get _defaultAppSettings {
+  AppSettings get defaultAppSettings {
     return AppSettings(
       privacyPolicyAgreed: initialAgreedPrivacy,
       darkMode: initialDarkMode,
@@ -151,7 +140,7 @@ class AppAPI {
   /// Creates an initial [AppSettings] instance using the default values.
   void createAppSettings() {
     if (Hive.box<AppSettings>(_appSettingsKey).isEmpty) {
-      Hive.box<AppSettings>(_appSettingsKey).add(_defaultAppSettings);
+      Hive.box<AppSettings>(_appSettingsKey).add(defaultAppSettings);
     } else {
       print("AppSettings object already created");
     }

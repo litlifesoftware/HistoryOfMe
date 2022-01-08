@@ -1,8 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:history_of_me/api.dart';
-import 'package:history_of_me/api/app_api.dart';
-import 'package:history_of_me/model/models.dart';
-import 'package:hive/hive.dart';
+part of api;
 
 /// An `api` widget allowing to pass all data stored on the `Hive` database
 /// into a child widget using the [builder] method.

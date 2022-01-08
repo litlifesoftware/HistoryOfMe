@@ -1,5 +1,4 @@
-import 'package:history_of_me/api.dart';
-import 'package:history_of_me/model/models.dart';
+part of api;
 
 /// A `controller` class allowing to validate and correct the current database
 /// content to inconsistency or missing values.
