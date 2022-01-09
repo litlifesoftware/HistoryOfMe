@@ -27,39 +27,11 @@ class AllDataProvider extends StatefulWidget {
 }
 
 class _AllDataProviderState extends State<AllDataProvider> {
+  /// The app api instance.
   final AppAPI _api = AppAPI();
 
+  /// The database validator instance.
   late DatabaseStateValidator _validator;
-
-  /// Extract the main object used from the [AppSettings]'s `Box`.
-  AppSettings _getAppSettings(Box<AppSettings> appSettingsBox) {
-    return appSettingsBox.getAt(AppAPI.defaultEntryIndex)!;
-  }
-
-  /// Extract the main object used from the [UserData]'s `Box`.
-  UserData _getUserData(Box<UserData> userDataBox) {
-    return userDataBox.getAt(AppAPI.defaultEntryIndex)!;
-  }
-
-  /// Extracts the [DiaryEntry]'s `Box` content into a `List`.
-  List<DiaryEntry> _getEntries(Box<DiaryEntry> diaryEntryBox) {
-    return diaryEntryBox.values.toList();
-  }
-
-  /// Extracts the [UserCreatedColor]'s `Box` content into a `List`.
-  List<UserCreatedColor> _getCreatedColors(
-    Box<UserCreatedColor> userCreatedColorBox,
-  ) {
-    return userCreatedColorBox.values.toList();
-  }
-
-  /// Validates the [AppSettings].
-  void _validateAppSettings(Box<AppSettings> appSettingsBox) {
-    final appSettings = appSettingsBox.getAt(AppAPI.defaultEntryIndex);
-    if (appSettings != null) {
-      _validator.validateAppSettings(appSettings);
-    }
-  }
 
   @override
   void initState() {
@@ -69,26 +41,21 @@ class _AllDataProviderState extends State<AllDataProvider> {
 
   @override
   Widget build(BuildContext context) {
-    return ValueListenableBuilder(
-      valueListenable: _api.getAppSettings(),
-      builder: (context, Box<AppSettings> appSettingsBox, _) {
-        _validateAppSettings(appSettingsBox);
-        return ValueListenableBuilder(
-          valueListenable: _api.getUserData(),
-          builder: (context, Box<UserData> userDataBox, _) {
-            return ValueListenableBuilder(
-              valueListenable: _api.getDiaryEntries(),
-              builder: (context, Box<DiaryEntry> diaryEntryBox, _) {
-                return ValueListenableBuilder(
-                  valueListenable: _api.getUserCreatedColors(),
-                  builder:
-                      (context, Box<UserCreatedColor> userCreatedColorBox, _) {
+    return AppSettingsProvider(
+      validator: _validator,
+      builder: (context, appSettings) {
+        return UserDataProvider(
+          builder: (context, userData) {
+            return DiaryEntryProvider(
+              builder: (context, diaryEntries) {
+                return UserCreatedColorProvider(
+                  builder: (context, userCreatedColors) {
                     return widget.builder(
                       context,
-                      _getAppSettings(appSettingsBox),
-                      _getUserData(userDataBox),
-                      _getEntries(diaryEntryBox),
-                      _getCreatedColors(userCreatedColorBox),
+                      appSettings,
+                      userData,
+                      diaryEntries,
+                      userCreatedColors,
                     );
                   },
                 );
