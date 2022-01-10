@@ -6,10 +6,12 @@ part of api;
 /// Accessing the user data using this provider should only be done once the
 /// user data is already present in the `Hive` database.
 class UserDataProvider extends StatelessWidget {
-  /// The builder method providing access to [AppSettings] object.
+  /// The builder method providing access to the [UserData] object.
+  ///
+  /// The [isEmpty] values states whether the corresponding box is empty.
   final Widget Function(
     BuildContext context,
-    UserData userData,
+    UserData? userData,
   ) builder;
 
   /// The [AppAPI] instance.
@@ -24,15 +26,7 @@ class UserDataProvider extends StatelessWidget {
 
   /// Extracts the content stored inside the `Hive` box.
   UserData? extractContent(Box<UserData> box) {
-    // Try to retrieve the `AppSettings` instance
-    try {
-      final appSettings = box.getAt(0)!;
-      return appSettings;
-    } catch (e) {
-      print(
-          'Error while accessing the UserData object. Box content not found.');
-      throw Exception(e);
-    }
+    return box.isEmpty ? null : box.getAt(0);
   }
 
   @override
@@ -42,7 +36,7 @@ class UserDataProvider extends StatelessWidget {
       builder: (context, Box<UserData> userDataBox, _) {
         return builder(
           context,
-          extractContent(userDataBox)!,
+          extractContent(userDataBox),
         );
       },
     );

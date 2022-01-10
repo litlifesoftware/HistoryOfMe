@@ -66,7 +66,7 @@ class _ProfileScreenState extends State<ProfileScreen>
           snackbars: [
             LitIconSnackbar(
               snackBarController: _snackbarController,
-              title: userData.name,
+              title: userData!.name,
               text: AppLocalizations.of(context).welcomeBackLabel +
                   ", " +
                   userData.name +

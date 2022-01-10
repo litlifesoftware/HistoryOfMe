@@ -10,7 +10,7 @@ class AllDataProvider extends StatefulWidget {
   final Widget Function(
     BuildContext context,
     AppSettings appSettings,
-    UserData userData,
+    UserData? userData,
     List<DiaryEntry> diaryEntries,
     List<UserCreatedColor> userCreatedColors,
   ) builder;
