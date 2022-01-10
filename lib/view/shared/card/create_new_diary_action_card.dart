@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:history_of_me/localization.dart';
-import 'package:history_of_me/view/styles/app_colors.dart';
+import 'package:history_of_me/styles.dart';
 import 'package:leitmotif/leitmotif.dart';
 
 /// A Flutter widget displaying an action card to allow the user to create a

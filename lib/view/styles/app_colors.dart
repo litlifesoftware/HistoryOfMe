@@ -1,4 +1,4 @@
-import 'package:flutter/painting.dart';
+part of styles;
 
 /// A collection of [Color] objects used in `History of Me`.
 class AppColors {

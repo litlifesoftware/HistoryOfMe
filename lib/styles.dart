@@ -1,3 +1,9 @@
-/// A library of all `style` classes used on `HistoryOfMe`.
+/// A collection of styling components and elements applied on History of me.
+///
+/// To use, import `package:history_of_me/styles.dart`
 
-export 'view/styles/app_colors.dart';
+library styles;
+
+import 'package:flutter/material.dart';
+
+part 'view/styles/app_colors.dart';
