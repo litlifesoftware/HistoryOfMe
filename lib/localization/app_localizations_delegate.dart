@@ -1,7 +1,4 @@
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
-
-import '../localization.dart';
+part of localization;
 
 /// A Leitmotif delegate class initializing the [AppLocalizations].
 class AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

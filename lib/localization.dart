@@ -3,8 +3,11 @@
 /// To use, import `package:history_of_me/localization.dart`.
 library localization;
 
-export 'localization/app_localizations.dart';
-export 'localization/app_localizations_delegate.dart';
-export 'localization/app_localizations_keys.dart';
-export 'localization/languages/de.dart';
-export 'localization/languages/en.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+
+part 'localization/app_localizations.dart';
+part 'localization/app_localizations_delegate.dart';
+part 'localization/app_localizations_keys.dart';
+part 'localization/languages/de.dart';
+part 'localization/languages/en.dart';

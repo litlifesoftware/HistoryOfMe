@@ -1,3 +1,5 @@
+part of localization;
+
 /// Contains all keys that map to a localized value.
 ///
 /// The keys on the localization map are accessed using it's corresponding

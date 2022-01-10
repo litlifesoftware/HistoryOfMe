@@ -1,4 +1,4 @@
-import 'package:history_of_me/localization.dart';
+part of localization;
 
 /// The `de` language implementation of the [AppLocalizations].
 class DE {

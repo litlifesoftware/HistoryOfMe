@@ -1,5 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:history_of_me/localization.dart';
+part of localization;
 
 /// A History of Me `localization` class providing localized strings to
 /// widgets.
