@@ -20,5 +20,6 @@ part 'api/app_settings_provider.dart';
 part 'api/database_state_validator.dart';
 part 'api/diary_entry_provider.dart';
 part 'api/query_controller.dart';
+part 'api/query_diary_entry_provider.dart';
 part 'api/user_created_color_provider.dart';
 part 'api/user_data_provider.dart';
