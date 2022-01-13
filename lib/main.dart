@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:history_of_me/app.dart';
-import 'package:history_of_me/controller/database/hive_db_service.dart';
+import 'package:history_of_me/api.dart';
 
 void main() async {
-  await HiveDBService().initHiveDB();
+  await AppAPI().init();
   runApp(App());
 }
