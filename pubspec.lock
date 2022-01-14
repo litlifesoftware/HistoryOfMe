@@ -98,7 +98,7 @@ packages:
       name: characters
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.1.0"
+    version: "1.2.0"
   charcode:
     dependency: transitive
     description:
@@ -182,7 +182,7 @@ packages:
       name: file_picker
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.3.0"
+    version: "4.3.1"
   fixnum:
     dependency: transitive
     description:
@@ -241,7 +241,7 @@ packages:
     source: hosted
     version: "2.1.0"
   hive:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: hive
       url: "https://pub.dartlang.org"
@@ -329,12 +329,10 @@ packages:
   lit_backup_service:
     dependency: "direct main"
     description:
-      path: "."
-      ref: HEAD
-      resolved-ref: "98c80463a133e87bff25beecf43ddc16deeab082"
-      url: "https://github.com/litlifesoftware/lit_backup_service.git"
-    source: git
-    version: "1.0.0"
+      name: lit_backup_service
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.1"
   lit_relative_date_time:
     dependency: "direct main"
     description:
@@ -633,7 +631,7 @@ packages:
       name: vector_math
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.0"
+    version: "2.1.1"
   watcher:
     dependency: transitive
     description:
