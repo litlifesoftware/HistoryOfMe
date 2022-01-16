@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:history_of_me/controller/database/hive_query_controller.dart';
+import 'package:history_of_me/api.dart';
 import 'package:history_of_me/controller/mood_translation_controller.dart';
 import 'package:history_of_me/localization.dart';
 import 'package:leitmotif/leitmotif.dart';
@@ -10,7 +10,7 @@ class StatisticsCard extends StatefulWidget {
 }
 
 class _StatisticsCardState extends State<StatisticsCard> {
-  late HiveQueryController queryController;
+  late QueryController queryController;
 
   bool get _isAvailable {
     return queryController.totalDiaryEntries > 0;
@@ -18,7 +18,7 @@ class _StatisticsCardState extends State<StatisticsCard> {
 
   @override
   void initState() {
-    queryController = HiveQueryController();
+    queryController = QueryController();
     super.initState();
   }
 
@@ -119,7 +119,7 @@ class _StatisticsItemCard extends StatelessWidget {
 }
 
 class _StatisticsCardContent extends StatelessWidget {
-  final HiveQueryController queryController;
+  final QueryController queryController;
   const _StatisticsCardContent({
     Key? key,
     required this.queryController,

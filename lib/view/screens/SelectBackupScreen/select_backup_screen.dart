@@ -1,8 +1,8 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:history_of_me/api.dart';
 import 'package:history_of_me/app.dart';
-import 'package:history_of_me/controller/controllers.dart';
 import 'package:history_of_me/localization.dart';
 import 'package:history_of_me/models.dart';
 import 'package:history_of_me/view/shared/shared.dart';
@@ -105,7 +105,7 @@ class _SelectBackupScreenState extends State<SelectBackupScreen> {
   /// Restarts the app after successful rebuilding.
   Future<void> _rebuildDatabase(DiaryBackup backup) {
     _toggleIsBuildingDatabase();
-    return HiveDBService()
+    return AppAPI()
         .rebuildDatabase(backup)
         .then((_) => _toggleIsBuildingDatabase())
         .then((_) => _routeController.clearNavigationStack())

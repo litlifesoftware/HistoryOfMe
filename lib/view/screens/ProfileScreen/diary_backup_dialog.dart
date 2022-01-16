@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:history_of_me/api.dart';
-import 'package:history_of_me/controller/controllers.dart';
 import 'package:history_of_me/localization.dart';
 import 'package:history_of_me/models.dart';
 import 'package:leitmotif/leitmotif.dart';
@@ -29,7 +28,7 @@ class DiaryBackupDialog extends StatefulWidget {
 }
 
 class _DiaryBackupDialogState extends State<DiaryBackupDialog> {
-  final HiveDBService _dbService = HiveDBService();
+  final AppAPI _api = AppAPI();
   late BackupStorage _backupStorage;
   late PackageInfo _packageInfo;
 
@@ -63,7 +62,7 @@ class _DiaryBackupDialogState extends State<DiaryBackupDialog> {
         _backupStorage.writeBackup(backup),
       },
     );
-    _dbService.updateLastBackup(appSettings, now);
+    _api.updateLastBackup(appSettings, now);
   }
 
   /// Deletes the currently maintained backup file.

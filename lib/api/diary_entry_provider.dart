@@ -28,11 +28,7 @@ class DiaryEntryProvider extends StatelessWidget {
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
       valueListenable: api.getDiaryEntries(),
-      builder: (
-        BuildContext context,
-        Box<DiaryEntry> box,
-        Widget? _,
-      ) {
+      builder: (BuildContext context, Box<DiaryEntry> box, Widget? _) {
         return builder(
           context,
           extractContent(box),

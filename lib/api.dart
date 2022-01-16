@@ -10,7 +10,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:history_of_me/config/config.dart';
 import 'package:history_of_me/models.dart';
-import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:leitmotif/leitmotif.dart';
 

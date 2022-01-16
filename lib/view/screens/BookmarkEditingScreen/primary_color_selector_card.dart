@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:history_of_me/controller/database/hive_db_service.dart';
+import 'package:history_of_me/api.dart';
 import 'package:history_of_me/config/config.dart';
 import 'package:history_of_me/localization.dart';
 import 'package:history_of_me/model/user_created_color.dart';
@@ -101,7 +101,7 @@ class _PrimaryColorSelectorCardState extends State<PrimaryColorSelectorCard>
   /// color has failed.
   void _addColor(Color color) {
     try {
-      HiveDBService(debug: DEBUG).addUserCreatedColor(
+      AppAPI(debug: DEBUG).addUserCreatedColor(
         color.alpha,
         color.red,
         color.green,
@@ -357,7 +357,7 @@ class _DeletableColorGridItemState extends State<_DeletableColorGridItem> {
 
   /// Deletes the color permanently.
   void _onDelete() {
-    HiveDBService().deleteUserCreatedColor(widget.index);
+    AppAPI().deleteUserCreatedColor(widget.index);
   }
 
   @override

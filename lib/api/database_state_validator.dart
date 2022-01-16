@@ -1,6 +1,6 @@
 part of api;
 
-/// A `controller` class allowing to validate and correct the current database
+/// A `api` class allowing to validate and correct the current database
 /// content to inconsistency or missing values.
 ///
 /// Incorrect data could be creating whenever the `model` classes are altered
