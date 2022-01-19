@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:history_of_me/controller/database/hive_db_service.dart';
-import 'package:history_of_me/controller/database/hive_query_controller.dart';
+import 'package:history_of_me/api.dart';
 import 'package:history_of_me/controller/mood_translation_controller.dart';
 import 'package:history_of_me/config/config.dart';
 import 'package:history_of_me/localization.dart';
@@ -19,7 +18,7 @@ class EntryDetailCard extends StatefulWidget {
   final BoxDecoration backgroundDecoration;
   final bool isFirst;
   final bool isLast;
-  final HiveQueryController? queryController;
+  final QueryController? queryController;
 
   final void Function() onEdit;
   const EntryDetailCard({
@@ -74,7 +73,7 @@ class _EntryDetailCardState extends State<EntryDetailCard> {
 
   /// Toggles the 'favorite' state by updating the diary entry.
   void _onToggleFavorite() {
-    HiveDBService().toggleDiaryEntryFavorite(widget.diaryEntry);
+    AppAPI().toggleDiaryEntryFavorite(widget.diaryEntry);
   }
 
   void _onEdit() {
@@ -466,7 +465,7 @@ class _TextPreview extends StatelessWidget {
               child: Builder(
                 builder: (context) {
                   return diaryEntry.content.isNotEmpty
-                      ? Text(
+                      ? SelectableText(
                           diaryEntry.content,
                           style: LitSansSerifStyles.body2.copyWith(
                             height: 1.5,
