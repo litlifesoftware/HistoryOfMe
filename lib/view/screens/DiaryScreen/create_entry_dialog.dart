@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:history_of_me/controller/database/hive_db_service.dart';
+import 'package:history_of_me/api.dart';
 import 'package:history_of_me/controller/routes/hom_navigator.dart';
 import 'package:history_of_me/localization.dart';
 import 'package:history_of_me/view/shared/lit_toggle_button_group.dart';
@@ -74,10 +74,10 @@ class _CreateEntryDialogState extends State<CreateEntryDialog>
   /// stating that the creation was not successful.
   void _createTodaysEntry() {
     DateTime now = DateTime.now();
-    HiveDBService service = HiveDBService();
+    AppAPI api = AppAPI();
 
-    if (!service.entryWithDateDoesExist(now)) {
-      DiaryEntry createdEntry = service.addDiaryEntry(
+    if (!api.entryWithDateDoesExist(now)) {
+      DiaryEntry createdEntry = api.addDiaryEntry(
         date: DateTime(
           now.year,
           now.month,
@@ -95,10 +95,10 @@ class _CreateEntryDialogState extends State<CreateEntryDialog>
 
   /// Creates a diary entry for the provided date.
   void _createPreviousDayEntry(DateTime date) {
-    HiveDBService service = HiveDBService();
+    AppAPI api = AppAPI();
 
-    if (!service.entryWithDateDoesExist(date)) {
-      DiaryEntry createdEntry = service.addDiaryEntry(
+    if (!api.entryWithDateDoesExist(date)) {
+      DiaryEntry createdEntry = api.addDiaryEntry(
         date: date,
       );
       _closeDialog();
