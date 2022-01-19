@@ -2,14 +2,12 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:history_of_me/controller/database/hive_db_service.dart';
-import 'package:history_of_me/controller/database/hive_query_controller.dart';
-import 'package:history_of_me/controller/routes/hom_navigator.dart';
+import 'package:history_of_me/api.dart';
+import 'package:history_of_me/app.dart';
+import 'package:history_of_me/controller/controllers.dart';
 import 'package:history_of_me/localization.dart';
-import 'package:history_of_me/model/backdrop_photo.dart';
-import 'package:history_of_me/model/diary_entry.dart';
+import 'package:history_of_me/models.dart';
 import 'package:history_of_me/view/shared/art/ellipse_icon.dart';
-import 'package:hive/hive.dart';
 import 'package:leitmotif/leitmotif.dart';
 
 import 'backdrop_photo_overlay.dart';
@@ -17,23 +15,17 @@ import 'change_photo_dialog.dart';
 import 'entry_detail_backdrop.dart';
 import 'entry_detail_card.dart';
 
+/// A `screen` widget showing details and properties of a single [DiaryEntry]
+/// object while providing options to e.g. edit the entry.
 class EntryDetailScreen extends StatefulWidget {
-  //final int index;
-  //final DiaryEntry diaryEntry;
   final int listIndex;
   final String? diaryEntryUid;
-  // final double portraitPhotoHeight;
-  // final double landscapePhotoHeight;
 
+  /// Creates a [EntryDetailScreen].
   const EntryDetailScreen({
     Key? key,
     required this.listIndex,
     required this.diaryEntryUid,
-
-    //@required this.index,
-    //@required this.diaryEntry,
-    // this.portraitPhotoHeight = 2.9,
-    // this.landscapePhotoHeight = 1.5,
   }) : super(key: key);
 
   @override
@@ -42,42 +34,44 @@ class EntryDetailScreen extends StatefulWidget {
 
 class _EntryDetailScreenState extends State<EntryDetailScreen>
     with TickerProviderStateMixin {
-  bool? backdropPhotosLoading;
-  List<BackdropPhoto> backdropPhotos = [];
+  List<BackdropPhoto> _photoAssets = [];
+  late QueryController _queryController;
   ScrollController? _scrollController;
-  late LitSettingsPanelController _settingsPanelController;
-  HiveQueryController? _hiveQueryController;
+  bool _assetsLoading = false;
   late HOMNavigator _screenRouter;
+  late LitSettingsPanelController _settingsPanelController;
 
-  // final List<String> imageNames = [
-  //   "assets/images/niilo-isotalo--BZc9Ee1qo0-unsplash.jpg",
-  //   "assets/images/peiwen-yu-Etpd8Le6b8E-unsplash.jpg"
-  // ];
-
-  void parseBackdropPhotos(String assetData) {
-    final parsed = jsonDecode(assetData).cast<Map<String, dynamic>>();
-    parsed.forEach((json) =>
-        setState(() => backdropPhotos.add(BackdropPhoto.fromJson(json))));
-    print(backdropPhotos.length);
+  /// Toggles the [_assetsLoading] value.
+  void _toggleAssetsLoading() {
     setState(() {
-      backdropPhotosLoading = false;
+      _assetsLoading = !_assetsLoading;
     });
-    // return parsed
-    //     .map<void>((json) => backdropPhotos.add(BackdropPhoto.fromJson(json)));
   }
 
-  Future<void> loadPhotosFromJson() async {
-    String data =
-        await rootBundle.loadString('assets/json/image_collection_data.json');
+  /// Adds the provided object to the [_photoAssets] list.
+  void _addAsset(dynamic json) {
+    setState(() => _photoAssets.add(BackdropPhoto.fromJson(json)));
+  }
 
-    return parseBackdropPhotos(data);
+  /// Decodes the json provided string data.
+  void _decode(String assetData) {
+    final parsed = jsonDecode(assetData).cast<Map<String, dynamic>>();
+    parsed.forEach((json) => _addAsset(json));
+    _toggleAssetsLoading();
+  }
+
+  /// Loads the json assets from storage into memory.
+  Future<void> _loadAssets() async {
+    String data = await rootBundle.loadString(App.imageCollectionPath);
+
+    return _decode(data);
   }
 
   void _showChangePhotoDialog(DiaryEntry diaryEntry) {
     showDialog(
       context: context,
       builder: (_) => ChangePhotoDialog(
-        backdropPhotos: backdropPhotos,
+        backdropPhotos: _photoAssets,
         diaryEntry: diaryEntry,
         // imageNames: imageNames,
       ),
@@ -86,7 +80,7 @@ class _EntryDetailScreenState extends State<EntryDetailScreen>
 
   void _onDeleteEntry() {
     LitRouteController(context).clearNavigationStack();
-    HiveDBService().deleteDiaryEntry(widget.diaryEntryUid);
+    AppAPI().deleteDiaryEntry(widget.diaryEntryUid);
   }
 
   void _showConfirmDeleteDialog() {
@@ -95,35 +89,18 @@ class _EntryDetailScreenState extends State<EntryDetailScreen>
       builder: (_) => ConfirmDeleteDialog(
         onDelete: _onDeleteEntry,
       ),
-      // ConfirmDeleteEntryDialog(
-      //   //index: widget.index,
-      //   diaryEntryUid: widget.diaryEntryUid,
-      // ),
     );
   }
 
   bool _shouldShowNextButton(DiaryEntry diaryEntry) {
-    return _hiveQueryController!.nextEntryExistsByUID(diaryEntry.uid);
+    return _queryController.nextEntryExistsByUID(diaryEntry.uid);
   }
 
   bool _shouldShowPreviousButton(DiaryEntry diaryEntry) {
-    return _hiveQueryController!.previousEntryExistsByUID(diaryEntry.uid);
+    return _queryController.previousEntryExistsByUID(diaryEntry.uid);
   }
 
   void _onEdit(DiaryEntry diaryEntry) {
-    // Navigator.of(context).push(
-    //   MaterialPageRoute(
-    //     builder: (_) => EntryEditingScreen(
-    //       diaryEntry: diaryEntry,
-    //       //index: widget.index,
-    //     ),
-    //   ),
-    // );
-    // Widget widget = EntryEditingScreen(
-    //   diaryEntry: diaryEntry,
-    //   //index: widget.index,
-    // );
-    // _routeController.pushWidgetToStack(widget);
     _screenRouter.toEntryEditingScreen(diaryEntry: diaryEntry);
   }
 
@@ -135,8 +112,7 @@ class _EntryDetailScreenState extends State<EntryDetailScreen>
             // Decrease the index by one to artificially lower the total entries count
             // and therefore increase the entries number on the label text.
             listIndex: widget.listIndex,
-            diaryEntryUid:
-                _hiveQueryController!.getNextDiaryEntry(diaryEntry).uid,
+            diaryEntryUid: _queryController.getNextDiaryEntry(diaryEntry).uid,
           ),
         );
       },
@@ -152,7 +128,7 @@ class _EntryDetailScreenState extends State<EntryDetailScreen>
             // and therefore lower the entries number on the label text.
             listIndex: widget.listIndex,
             diaryEntryUid:
-                _hiveQueryController!.getPreviousDiaryEntry(diaryEntry).uid,
+                _queryController.getPreviousDiaryEntry(diaryEntry).uid,
           ),
         );
       },
@@ -162,12 +138,12 @@ class _EntryDetailScreenState extends State<EntryDetailScreen>
   @override
   void initState() {
     super.initState();
-    backdropPhotosLoading = true;
-    loadPhotosFromJson();
+    _toggleAssetsLoading();
+    _loadAssets();
 
     _scrollController = ScrollController();
     _settingsPanelController = LitSettingsPanelController();
-    _hiveQueryController = HiveQueryController();
+    _queryController = QueryController();
     _screenRouter = HOMNavigator(context);
   }
 
@@ -179,22 +155,12 @@ class _EntryDetailScreenState extends State<EntryDetailScreen>
 
   @override
   Widget build(BuildContext context) {
-    print(backdropPhotosLoading);
-    return ValueListenableBuilder(
-      valueListenable: HiveDBService().getDiaryEntries(),
-      builder: (BuildContext context, Box<DiaryEntry> entriesBox, Widget? _) {
-        final DiaryEntry? diaryEntry = entriesBox.get(widget.diaryEntryUid);
-
+    return QueryDiaryEntryProvider(
+      diaryEntryUid: widget.diaryEntryUid!,
+      builder: (context, diaryEntry, isFirst, isLast, boxLength) {
         /// Verify the entry has not been deleted yet.
         if (diaryEntry != null) {
-          final int lastIndex = (entriesBox.length - 1);
-
-          final bool _isFirst = entriesBox.getAt(0)!.uid == diaryEntry.uid;
-          final bool _isLast =
-              entriesBox.getAt(lastIndex)!.uid == diaryEntry.uid;
-
           return LitScaffold(
-            // wrapInSafeArea: false,
             appBar: FixedOnScrollTitledAppbar(
               scrollController: _scrollController,
               title: diaryEntry.title != ""
@@ -206,17 +172,6 @@ class _EntryDetailScreenState extends State<EntryDetailScreen>
               controller: _settingsPanelController,
               title: AppLocalizations.of(context).optionsLabel,
               children: [
-                // LitPushedThroughButton(
-                //   accentColor: LitColors.red400,
-                //   backgroundColor: LitColors.red200,
-                //   child: ClippedText(
-                //     HOMLocalizations(context).delete.toUpperCase(),
-                //     style: LitTextStyles.sansSerifStyles[button].copyWith(
-                //       color: Colors.white,
-                //     ),
-                //   ),
-                //   onPressed: _showConfirmEntryDeletionCallback,
-                // ),
                 LitDeleteButton(
                   onPressed: _showConfirmDeleteDialog,
                 ),
@@ -227,8 +182,8 @@ class _EntryDetailScreenState extends State<EntryDetailScreen>
                 child: Stack(
                   children: [
                     EntryDetailBackdrop(
-                      backdropPhotos: backdropPhotos,
-                      loading: backdropPhotosLoading,
+                      backdropPhotos: _photoAssets,
+                      loading: _assetsLoading,
                       diaryEntry: diaryEntry,
                     ),
                     LitScrollbar(
@@ -239,21 +194,21 @@ class _EntryDetailScreenState extends State<EntryDetailScreen>
                             scrollController: _scrollController,
                             showChangePhotoDialogCallback: () =>
                                 _showChangePhotoDialog(diaryEntry),
-                            backdropPhotos: backdropPhotos,
-                            loading: backdropPhotosLoading,
+                            backdropPhotos: _photoAssets,
+                            loading: _assetsLoading,
                             diaryEntry: diaryEntry,
                           ),
                           SizedBox(
                             height: 16.0,
                           ),
                           EntryDetailCard(
-                            boxLength: entriesBox.length,
+                            boxLength: boxLength,
                             listIndex: widget.listIndex,
-                            isFirst: _isFirst,
-                            isLast: _isLast,
+                            isFirst: isFirst,
+                            isLast: isLast,
                             diaryEntry: diaryEntry,
                             onEdit: () => _onEdit(diaryEntry),
-                            queryController: _hiveQueryController,
+                            queryController: _queryController,
                           ),
                           _EntryDetailFooter(
                             showNextButton: _shouldShowNextButton(diaryEntry),
@@ -273,9 +228,8 @@ class _EntryDetailScreenState extends State<EntryDetailScreen>
               );
             }),
           );
-        } else {
-          return SizedBox();
         }
+        return SizedBox();
       },
     );
   }
@@ -397,18 +351,6 @@ class _BottomNavButton extends StatelessWidget {
         right: 8.0,
       ),
       child: LitPushedThroughButton(
-        // boxShadow: const [
-        //   const BoxShadow(
-        //     blurRadius: 6.0,
-        //     color: Colors.black26,
-        //     offset: Offset(2, 2),
-        //     spreadRadius: -1.0,
-        //   )
-        // ],
-        // padding: const EdgeInsets.symmetric(
-        //   vertical: 12.0,
-        //   horizontal: 16.0,
-        // ),
         child: Row(
           children: [
             isPrevious
