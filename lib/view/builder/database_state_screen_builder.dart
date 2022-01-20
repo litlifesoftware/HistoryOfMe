@@ -4,9 +4,7 @@ import 'package:history_of_me/app.dart';
 import 'package:history_of_me/config/config.dart';
 import 'package:history_of_me/localization.dart';
 import 'package:history_of_me/models.dart';
-import 'package:history_of_me/view/screens/RestoreDiaryScreen/restore_diary_screen.dart';
-import 'package:history_of_me/view/screens/screens.dart';
-import 'package:hive/hive.dart';
+import 'package:history_of_me/screens.dart';
 import 'package:leitmotif/leitmotif.dart';
 
 /// A builder widget returning the appropriate screen considering the current
@@ -22,7 +20,7 @@ class DatabaseStateScreenBuilder extends StatefulWidget {
 
 class _DatabaseStateScreenBuilderState
     extends State<DatabaseStateScreenBuilder> {
-  bool _shouldShowStartupScreen = false;
+  bool _showSplashScreen = false;
   bool _initalStartup = false;
 
   /// The currently inputed username.
@@ -83,7 +81,7 @@ class _DatabaseStateScreenBuilderState
 
   void _toggleShouldShowStartupScreen() {
     setState(() {
-      _shouldShowStartupScreen = !_shouldShowStartupScreen;
+      _showSplashScreen = !_showSplashScreen;
     });
   }
 
@@ -98,6 +96,28 @@ class _DatabaseStateScreenBuilderState
         }
       },
     );
+  }
+
+  /// Returns the corresponding screen widget according to the current state
+  /// on the database.
+  Widget _buildScreens(BuildContext context, UserData? userData) {
+    // If user data not present (first app startup)
+    if (userData == null) {
+      _initalStartup = true;
+
+      if (_showSplashScreen && !DEBUG) {
+        // Show the startup screen
+        return _StartupScreen();
+      }
+
+      // Otherwise initiate the restore process.
+      return RestoreDiaryScreen(
+        onCreateNewInstance: _showOnboardingScreen,
+      );
+    }
+
+    /// Show the home screen by default (user data present)
+    return HomeScreen();
   }
 
   @override
@@ -131,23 +151,8 @@ class _DatabaseStateScreenBuilderState
 
         // Ensure the user data has been set on the database, otherwise
         // return the privacy screen and sign up screen.
-        return ValueListenableBuilder(
-          valueListenable: _api.getUserData(),
-          child: HomeScreen(),
-          builder: (BuildContext context, Box<UserData> userData, child) {
-            if (userData.isEmpty) {
-              _initalStartup = true;
-              // Show the startup screen only on the first app start.
-              return _shouldShowStartupScreen && !DEBUG
-                  ? _StartupScreen()
-                  : RestoreDiaryScreen(
-                      onCreateNewInstance: _showOnboardingScreen,
-                    );
-            }
-
-            /// Show the home screen by default
-            return child ?? Scaffold();
-          },
+        return UserDataProvider(
+          builder: _buildScreens,
         );
       },
     );
