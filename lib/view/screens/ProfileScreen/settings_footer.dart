@@ -2,21 +2,26 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:history_of_me/app.dart';
 import 'package:history_of_me/localization.dart';
 import 'package:history_of_me/model/app_settings.dart';
 import 'package:history_of_me/model/backdrop_photo.dart';
 import 'package:history_of_me/model/user_data.dart';
-import 'package:history_of_me/view/screens/screens.dart';
+import 'package:history_of_me/screens.dart';
 import 'package:history_of_me/view/screens/ProfileScreen/diary_backup_dialog.dart';
 import 'package:history_of_me/view/shared/art/history_of_me_launcher_icon_art.dart';
 import 'package:leitmotif/leitmotif.dart';
 
-//import 'delete_data_dialog.dart';
-
+/// A footer widget allowing to navigate various secondary screens and dialogs
+/// to e.g. manage certain settings.
 class SettingsFooter extends StatefulWidget {
+  /// The latest [AppSettings] object.
   final AppSettings appSettings;
+
+  /// The latest [UserData] object.
   final UserData? userData;
 
+  /// Creates a [SettingsFooter].
   const SettingsFooter({
     Key? key,
     required this.appSettings,
@@ -27,131 +32,57 @@ class SettingsFooter extends StatefulWidget {
 }
 
 class _SettingsFooterState extends State<SettingsFooter> {
-  // bool loading = false;
-
-  //late LitRouteController _routeController;
+  /// Shows the about dialog.
   void _showAboutThisAppDialog() {
-    LitRouteController(context).showDialogWidget(
-      LitAboutDialog(
-        title: LeitmotifLocalizations.of(context).aboutAppLabel,
-        appName: "History of Me",
-        art: HistoryOfMeLauncherIconArt(),
-        infoDescription: AppLocalizations.of(context).aboutAppDescr,
-      ),
-    );
+    LitRouteController(context).showDialogWidget(_AboutDialog());
   }
 
+  /// Shows the backup dialog.
   void _showBackupDialog() {
     LitRouteController(context).showDialogWidget(
       DiaryBackupDialog(
-        installationID: widget.appSettings.installationID ?? "",
-      ),
+          installationID: widget.appSettings.installationID ?? ""),
     );
   }
 
-  void _openPrivacyPolicy() {
-    LitRouteController(context).pushCupertinoWidget(LitPrivacyPolicyScreen(
-      //title: HOMLocalizations(context).privacy,
-      onAgreeCallback: () => LitRouteController(context).pop(),
-      privacyBody: AppLocalizations.of(context).privacyDescr,
-      //agreeLabel: HOMLocalizations(context).okay,
-      art: HistoryOfMeLauncherIconArt(),
-      // privacyTags: [
-      //   PrivacyTag(
-      //     text: HOMLocalizations(context).private,
-      //     isConform: true,
-      //   ),
-      //   PrivacyTag(
-      //     text: HOMLocalizations(context).offline,
-      //     isConform: true,
-      //   ),
-      // ],
-    ));
+  /// Navigates to the privacy policy screen.
+  void _showPrivacyPolicy() {
+    LitRouteController(context).pushCupertinoWidget(_PrivacyScreen());
   }
 
-  void _openLicenses() {
+  /// Navigates to the licenses screen.
+  void _showLicenses() {
     LitRouteController(context)
         .pushCupertinoWidget(ApplicationLicensesScreen());
   }
 
-  // void _showDeleteDataDialog() {
-  //   LitRouteController(context).showDialogWidget(
-  //     DeleteDataDialog(),
-  //   );
-  // }
-
-  void _openCredits() async {
+  /// Navigates to the credits screen.
+  ///
+  /// Extracts the photographer names from the local json file.
+  void _showCredits() async {
     dynamic parsed;
-    List<String> backdropPhotoPhotographers = [];
+    List<String> photographerNames = [];
     await rootBundle
-        .loadString('assets/json/image_collection_data.json')
+        .loadString(App.imageCollectionPath)
         .then(
           (value) => parsed = jsonDecode(value).cast<Map<String, dynamic>>(),
         )
         .then(
           (_) => parsed.forEach(
-            (json) => backdropPhotoPhotographers
+            (json) => photographerNames
                 .add(BackdropPhoto.fromJson(json).photographer!),
           ),
         )
         .then(
           (value) => LitRouteController(context).pushMaterialWidget(
-            LitCreditsScreen(
-              art: HistoryOfMeLauncherIconArt(
-                boxShadow: [
-                  BoxShadow(
-                    blurRadius: 3.0,
-                    color: Colors.black12,
-                    offset: Offset(
-                      -2,
-                      2,
-                    ),
-                    spreadRadius: -1,
-                  )
-                ],
-              ),
-              appName: "History Of Me",
-              appDescription: AppLocalizations.of(context).aboutAppDescr,
-              //screenTitle: HOMLocalizations(context).credits,
-              credits: [
-                CreditData(
-                  role: LeitmotifLocalizations.of(context).creatorLabel,
-                  names: [
-                    "LitLifeSoftware",
-                  ],
-                ),
-                CreditData(
-                  role: LeitmotifLocalizations.of(context)
-                      .userExpericenceDesignLabel,
-                  names: [
-                    "Michael Grigorenko",
-                  ],
-                ),
-                CreditData(
-                  role: LeitmotifLocalizations.of(context).developmentLabel,
-                  names: [
-                    "Michael Grigorenko",
-                  ],
-                ),
-                CreditData(
-                  role: LeitmotifLocalizations.of(context).photographyLabel,
-                  names: backdropPhotoPhotographers,
-                ),
-                CreditData(
-                  role: AppLocalizations.of(context).inspiredByLabel,
-                  names: ["Your Name. (2016)"],
-                ),
-              ],
-            ),
+            _CreditsScreen(photographerNames: photographerNames),
           ),
         );
   }
 
   /// Show the app's onboarding screen.
   void _showOnboardingScreen() {
-    LitRouteController(context).pushMaterialWidget(
-      AppOnboardingScreen(),
-    );
+    LitRouteController(context).pushMaterialWidget(AppOnboardingScreen());
   }
 
   @override
@@ -180,23 +111,100 @@ class _SettingsFooterState extends State<SettingsFooter> {
         ),
         LitPlainLabelButton(
           label: LeitmotifLocalizations.of(context).privacyLabel,
-          onPressed: _openPrivacyPolicy,
+          onPressed: _showPrivacyPolicy,
           textAlign: TextAlign.right,
         ),
-        // LitPlainLabelButton(
-        //   label: HOMLocalizations(context).deleteAllData,
-        //   onPressed: _showDeleteDataDialog,
-        //   textAlign: TextAlign.right,
-        // ),
         LitPlainLabelButton(
           label: LeitmotifLocalizations.of(context).creditsLabel,
-          onPressed: _openCredits,
+          onPressed: _showCredits,
           textAlign: TextAlign.right,
         ),
         LitPlainLabelButton(
           label: LeitmotifLocalizations.of(context).licensesLabel,
-          onPressed: _openLicenses,
+          onPressed: _showLicenses,
           textAlign: TextAlign.right,
+        ),
+      ],
+    );
+  }
+}
+
+/// A customized [LitPrivacyPolicyScreen] widget displaying the app's
+/// privacy policy.
+class _PrivacyScreen extends StatelessWidget {
+  /// Creates a [_PrivacyScreen].
+  const _PrivacyScreen({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return LitPrivacyPolicyScreen(
+      onAgreeCallback: () => LitRouteController(context).pop(),
+      privacyBody: AppLocalizations.of(context).privacyDescr,
+      art: HistoryOfMeLauncherIconArt(),
+    );
+  }
+}
+
+/// A customized [LitAboutDialog] widget displaying the app's about dialog.
+class _AboutDialog extends StatelessWidget {
+  /// Creates a [_AboutDialog].
+  const _AboutDialog({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return LitAboutDialog(
+      title: LeitmotifLocalizations.of(context).aboutAppLabel,
+      appName: App.appName,
+      art: HistoryOfMeLauncherIconArt(),
+      infoDescription: AppLocalizations.of(context).aboutAppDescr,
+    );
+  }
+}
+
+/// A customized [LitCreditsScreen] widget displaying the app's about dialog.
+class _CreditsScreen extends StatelessWidget {
+  final List<String> photographerNames;
+
+  /// Creates a [_CreditsScreen].
+  const _CreditsScreen({
+    Key? key,
+    required this.photographerNames,
+  }) : super(key: key);
+
+  static const _creatorName = "Michael Grigorenko";
+
+  static const _movieName = "Your Name. (2016)";
+
+  @override
+  Widget build(BuildContext context) {
+    return LitCreditsScreen(
+      art: HistoryOfMeLauncherIconArt(
+        boxShadow: LitBoxShadows.sm,
+      ),
+      appName: App.appName,
+      appDescription: AppLocalizations.of(context).aboutAppDescr,
+      credits: [
+        CreditData(
+          role: LeitmotifLocalizations.of(context).creatorLabel,
+          names: [
+            App.appDeveloper,
+          ],
+        ),
+        CreditData(
+          role: LeitmotifLocalizations.of(context).userExpericenceDesignLabel,
+          names: [_creatorName],
+        ),
+        CreditData(
+          role: LeitmotifLocalizations.of(context).developmentLabel,
+          names: [_creatorName],
+        ),
+        CreditData(
+          role: LeitmotifLocalizations.of(context).photographyLabel,
+          names: photographerNames,
+        ),
+        CreditData(
+          role: AppLocalizations.of(context).inspiredByLabel,
+          names: [_movieName],
         ),
       ],
     );
