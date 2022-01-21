@@ -1,14 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:history_of_me/controller/database/hive_db_service.dart';
-import 'package:history_of_me/controller/database/hive_query_controller.dart';
-import 'package:history_of_me/localization.dart';
+import 'package:history_of_me/api.dart';
 import 'package:history_of_me/controller/routes/hom_navigator.dart';
-import 'package:history_of_me/model/diary_entry.dart';
+import 'package:history_of_me/localization.dart';
 import 'package:history_of_me/model/user_data.dart';
 import 'package:history_of_me/styles.dart';
 import 'package:history_of_me/view/shared/bookmark/bookmark_page_view.dart';
-import 'package:hive/hive.dart';
 import 'package:leitmotif/leitmotif.dart';
 import 'diary_list_view.dart';
 
@@ -49,15 +46,6 @@ class _DiaryScreenState extends State<DiaryScreen>
     });
   }
 
-  /// Sortes the [DiaryEntry]s inside the provided box and returns the sorted
-  /// objects as a list.
-  List<DiaryEntry> _getDiaryEntriesSorted(Box entriesBox) {
-    return entriesBox.values.toList() as List<DiaryEntry>
-      ..sort(
-        HiveQueryController().sortEntriesByDateAscending,
-      );
-  }
-
   @override
   void initState() {
     _scrollController = ScrollController();
@@ -77,11 +65,8 @@ class _DiaryScreenState extends State<DiaryScreen>
 
   @override
   Widget build(BuildContext context) {
-    return ValueListenableBuilder(
-      valueListenable: HiveDBService().getUserData(),
-      builder: (BuildContext context, Box<UserData> userDataBox, Widget? _) {
-        final UserData? userData = userDataBox.getAt(0);
-
+    return UserDataProvider(
+      builder: (context, userData) {
         return LitScaffold(
           actionButton: CollapseOnScrollActionButton(
             backgroundColor: Color(userData!.primaryColor),
@@ -93,17 +78,16 @@ class _DiaryScreenState extends State<DiaryScreen>
             blurred: false,
           ),
           body: SafeArea(
-            child: ValueListenableBuilder(
-              valueListenable: HiveDBService().getDiaryEntries(),
-              builder: (BuildContext context, Box<DiaryEntry> entriesBox,
-                  Widget? _) {
-                final showDiaryList = entriesBox.isNotEmpty;
-                return showDiaryList
+            child: DiaryEntryProvider(
+              builder: (context, diaryEntries) {
+                return diaryEntries.isNotEmpty
                     ? DiaryListView(
                         animationController: _listViewAnimation,
                         bookmarkAnimation: widget.bookmarkAnimation,
-                        diaryEntriesListSorted:
-                            _getDiaryEntriesSorted(entriesBox),
+                        diaryEntriesListSorted: diaryEntries
+                          ..sort(
+                            QueryController().sortEntriesByDateAscending,
+                          ),
                         scrollController: _scrollController,
                         showFavoriteEntriesOnly: _showFavoriteEntriesOnly,
                         toggleShowFavoritesOnly: toggleShowFavoritesOnly,
