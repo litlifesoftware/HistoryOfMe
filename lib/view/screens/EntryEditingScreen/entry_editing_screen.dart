@@ -1,20 +1,15 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:history_of_me/api.dart';
 import 'package:history_of_me/controller/controllers.dart';
-import 'package:history_of_me/controller/database/hive_db_service.dart';
-//import 'package:history_of_me/controller/localization/hom_localizations.dart';
 import 'package:history_of_me/controller/mood_translation_controller.dart';
 import 'package:history_of_me/config/config.dart';
 import 'package:history_of_me/localization.dart';
-import 'package:history_of_me/model/diary_entry.dart';
-import 'package:history_of_me/view/shared/animated_updated_label.dart';
-import 'package:history_of_me/view/shared/editable_item_meta_info.dart';
+import 'package:history_of_me/models.dart';
 import 'package:history_of_me/view/shared/shared.dart';
-import 'package:hive/hive.dart';
+import 'package:history_of_me/widgets.dart';
 import 'package:leitmotif/leitmotif.dart';
-
-import 'editable_title_header.dart';
 
 /// A screen [Widget] to edit a [DiaryEntry].
 ///
@@ -62,13 +57,8 @@ class _EntryEditingScreenState extends State<EntryEditingScreen>
 
   final ScrollController _scrollController = ScrollController();
   late AnimationController _fadeInAnimationController;
-
   late LitRouteController _routeController;
-
-  //late Timer _saveDraftTimer;
-
   late LitSnackbarController _savedSnackbarContr;
-
   late AutosaveController _autosaveController;
 
   /// Syncs the editing controllers' text input with the corresponding state
@@ -121,19 +111,17 @@ class _EntryEditingScreenState extends State<EntryEditingScreen>
       favorite: widget.diaryEntry.favorite,
       backdropPhotoId: widget.diaryEntry.backdropPhotoId,
     );
-    HiveDBService().updateDiaryEntry(updatedDiaryEntry);
+    AppAPI().updateDiaryEntry(updatedDiaryEntry);
     if (DEBUG) print('Saved changes on current diary entry');
   }
 
+  /// Handles the `discard` action.
+  ///
+  /// Shows the discard draft dialog to allow to confirm discarding.
   void _handleDiscardDraft() {
     showDialog(
       context: context,
       builder: (_) => DiscardDraftDialog(
-        // titleText: HOMLocalizations(context).unsaved,
-        // infoDescription: HOMLocalizations(context).unsavedEntryDescr,
-        // discardText: HOMLocalizations(context).discardChanges,
-        // cancelButtonLabel: HOMLocalizations(context).cancel,
-        // discardButtonLabel: HOMLocalizations(context).discard,
         onDiscard: () {
           _routeController.dicardAndExit();
         },
@@ -156,6 +144,9 @@ class _EntryEditingScreenState extends State<EntryEditingScreen>
             : fallbackValue);
   }
 
+  /// Handles the `pop` action.
+  ///
+  /// Ensures to show the discard dialog when a draft has been detected.
   Future<bool> handlePopAction(bool isChanged) {
     if (isChanged) {
       _handleDiscardDraft();
@@ -187,22 +178,15 @@ class _EntryEditingScreenState extends State<EntryEditingScreen>
 
     // Initialized using empty string.
     _initTitleEditingController("");
-    //_titleEditingController.addListener(_titleEditingControllerListener);
 
     _contentEditingController =
         TextEditingController(text: widget.diaryEntry.content);
-    //_contentEditingController.addListener(_contentEditingControllerListener);
 
     _routeController = LitRouteController(context);
-    //_syncTextEditingControllerChanges();
+
     _fadeInAnimationController.forward();
     // Allow editing the entry at the start.
     _contentEditFocusNode.requestFocus();
-
-    // _saveDraftTimer = Timer.periodic(
-    //   Duration(seconds: 180),
-    //   (_) => {_saveChanges(), _savedSnackbarContr.showSnackBar()},
-    // );
 
     _autosaveController = AutosaveController(_onAutosave);
 
@@ -223,28 +207,32 @@ class _EntryEditingScreenState extends State<EntryEditingScreen>
     _contentEditFocusNode.dispose();
     _contentEditingController.dispose();
     _scrollController.dispose();
-    //_saveDraftTimer.cancel();
     _autosaveController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return ValueListenableBuilder(
-      valueListenable: HiveDBService().getDiaryEntries(),
-      builder: (BuildContext context, Box<DiaryEntry> entriesBox, Widget? _) {
-        final DiaryEntry dbDiaryEntry = entriesBox.get(widget.diaryEntry.uid)!;
+    return QueryDiaryEntryProvider(
+      diaryEntryUid: widget.diaryEntry.uid,
+      builder: (context, diaryEntry, isFirst, isLast, boxLength) {
+        if (diaryEntry == null) {
+          return Text("ERROR: Diary Entry not available");
+        }
+
         return WillPopScope(
-          onWillPop: () => handlePopAction(_isUnsaved(dbDiaryEntry)),
+          onWillPop: () => handlePopAction(
+            _isUnsaved(diaryEntry),
+          ),
           child: LitScaffold(
             appBar: FixedOnScrollAppbar(
               scrollController: _scrollController,
               backgroundColor: Colors.white,
-              shouldNavigateBack: !_isUnsaved(dbDiaryEntry),
+              shouldNavigateBack: !_isUnsaved(diaryEntry),
               onInvalidNavigation: _handleDiscardDraft,
               child: EditableItemMetaInfo(
-                lastUpdateTimestamp: dbDiaryEntry.lastUpdated,
-                showUnsavedBadge: _isUnsaved(dbDiaryEntry),
+                lastUpdateTimestamp: diaryEntry.lastUpdated,
+                showUnsavedBadge: _isUnsaved(diaryEntry),
               ),
             ),
             snackbars: [
@@ -266,90 +254,34 @@ class _EntryEditingScreenState extends State<EntryEditingScreen>
                       mainAxisAlignment: MainAxisAlignment.start,
                       mainAxisSize: MainAxisSize.max,
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                            vertical: 16.0,
-                          ),
-                          child: Column(
-                            children: [
-                              AnimatedUpdatedLabel(
-                                lastUpdateTimestamp: dbDiaryEntry.lastUpdated,
-                              ),
-                              EditableTitleHeader(
-                                textEditingController: _titleEditingController,
-                                focusNode: _titleEditFocusNode,
-                                animationController: _fadeInAnimationController,
-                              ),
-                              _DiaryContentInput(
-                                contentEditController:
-                                    _contentEditingController,
-                                contentEditFocusNode: _contentEditFocusNode,
-                                fadeInAnimationController:
-                                    _fadeInAnimationController,
-                              ),
-                            ],
-                          ),
-                        ),
-                        LitGradientCard(
-                          boxShadow: [
-                            BoxShadow(
-                              blurRadius: 8.0,
-                              color: Colors.black38,
-                              offset: Offset(-4.0, 2.0),
-                              spreadRadius: 1.0,
-                            )
+                        Column(
+                          children: [
+                            SizedBox(height: 16.0),
+                            AnimatedUpdatedLabel(
+                              lastUpdateTimestamp: diaryEntry.lastUpdated,
+                            ),
+                            _DiaryTitleTextfield(
+                              controller: _titleEditingController,
+                              focusNode: _titleEditFocusNode,
+                              animationController: _fadeInAnimationController,
+                            ),
+                            _DiaryContentInput(
+                              contentEditController: _contentEditingController,
+                              contentEditFocusNode: _contentEditFocusNode,
+                              fadeInAnimationController:
+                                  _fadeInAnimationController,
+                            ),
                           ],
-                          borderRadius: const BorderRadius.all(Radius.zero),
-                          child: Padding(
-                            padding: const EdgeInsets.only(
-                              bottom: 16.0,
-                              top: 4.0,
-                              left: 16.0,
-                              right: 16.0,
-                            ),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                    bottom: 24.0,
-                                    top: 16.0,
-                                    left: 4.0,
-                                    right: 4.0,
-                                  ),
-                                  child: Text(
-                                    AppLocalizations.of(context)
-                                        .yourMoodLabel
-                                        .toUpperCase(),
-                                    style: LitSansSerifStyles.subtitle2,
-                                  ),
-                                ),
-                                LitSliderCard(
-                                  padding: const EdgeInsets.symmetric(),
-                                  value: _moodScore,
-                                  onChanged: _onMoodScoreChanged,
-                                  activeTrackColor: Color.lerp(
-                                    LitColors.lightRed,
-                                    Color(0xFFbee5be),
-                                    _moodScore,
-                                  )!,
-                                  valueTitleText: MoodTranslationController(
-                                    moodScore: _moodScore,
-                                    context: context,
-                                  ).uppercaseLabel,
-                                  min: 0.0,
-                                  max: 1.0,
-                                ),
-                              ],
-                            ),
-                          ),
-                        )
+                        ),
+                        _MoodSlider(
+                          moodScore: _moodScore,
+                          onChange: _onMoodScoreChanged,
+                        ),
                       ],
                     ),
                   ),
                   PurplePinkSaveButton(
-                    disabled: !_isUnsaved(dbDiaryEntry),
+                    disabled: !_isUnsaved(diaryEntry),
                     onSaveChanges: _saveChanges,
                   ),
                 ],
@@ -362,21 +294,103 @@ class _EntryEditingScreenState extends State<EntryEditingScreen>
   }
 }
 
+class _MoodSlider extends StatelessWidget {
+  final double moodScore;
+  final void Function(double) onChange;
+  const _MoodSlider({
+    Key? key,
+    required this.moodScore,
+    required this.onChange,
+  }) : super(key: key);
+
+  static const height = 128.0;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: height,
+      child: LitGradientCard(
+        boxShadow: [
+          BoxShadow(
+            blurRadius: 8.0,
+            color: Colors.black38,
+            offset: Offset(-4.0, 2.0),
+            spreadRadius: 1.0,
+          )
+        ],
+        borderRadius: const BorderRadius.all(Radius.zero),
+        child: Padding(
+          padding: const EdgeInsets.only(
+            left: 16.0,
+            right: 16.0,
+            bottom: 16.0,
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(
+                  bottom: 8.0,
+                  top: 8.0,
+                  left: 8.0,
+                  right: 8.0,
+                ),
+                child: Text(
+                  AppLocalizations.of(context).yourMoodLabel.toUpperCase(),
+                  style: LitSansSerifStyles.subtitle2,
+                ),
+              ),
+              LitSliderCard(
+                padding: const EdgeInsets.symmetric(),
+                value: moodScore,
+                onChanged: onChange,
+                activeTrackColor: Color.lerp(
+                  LitColors.lightRed,
+                  Color(0xFFbee5be),
+                  moodScore,
+                )!,
+                valueTitleText: MoodTranslationController(
+                  moodScore: moodScore,
+                  context: context,
+                ).uppercaseLabel,
+                min: 0.0,
+                max: 1.0,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// A text input allowing to edit the diary entry's body text.
 class _DiaryContentInput extends StatelessWidget {
   final AnimationController fadeInAnimationController;
-  final TextEditingController? contentEditController;
-  final FocusNode? contentEditFocusNode;
+  final TextEditingController contentEditController;
+  final FocusNode contentEditFocusNode;
   final EdgeInsets padding;
   const _DiaryContentInput({
     Key? key,
     required this.fadeInAnimationController,
     required this.contentEditController,
     required this.contentEditFocusNode,
-    this.padding = const EdgeInsets.symmetric(
-      vertical: 8.0,
-      horizontal: 16.0,
-    ),
+    this.padding = const EdgeInsets.symmetric(horizontal: 16.0),
   }) : super(key: key);
+
+  /// Calculates a transform matrix based on the device width.
+  Matrix4 _calcTransform(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    final offset = width / 3;
+    final x = offset + (-offset * fadeInAnimationController.value);
+    return Matrix4.translationValues(x, 0, 0);
+  }
+
+  /// Calculates the minimum height based on the current device height.
+  double _calcMinHeight(BuildContext context) =>
+      MediaQuery.of(context).size.height - _MoodSlider.height - 64.0;
+
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
@@ -384,34 +398,72 @@ class _DiaryContentInput extends StatelessWidget {
       builder: (context, snapshot) {
         return FadeInTransformContainer(
           animationController: fadeInAnimationController,
-          transform: Matrix4.translationValues(
-            MediaQuery.of(context).size.width / 3 +
-                (-MediaQuery.of(context).size.width /
-                    3 *
-                    fadeInAnimationController.value),
-            0,
-            0,
-          ),
+          transform: _calcTransform(context),
           child: ConstrainedBox(
             constraints: BoxConstraints(
-              minHeight: MediaQuery.of(context).size.height - 164.0,
+              minHeight: _calcMinHeight(context),
             ),
             child: Padding(
               padding: padding,
-              child: EditableText(
-                controller: contentEditController!,
-                focusNode: contentEditFocusNode!,
-                style: LitSansSerifStyles.body2.copyWith(
-                  height: 1.65,
-                  color: Color(0xFF939393),
-                ),
-                cursorColor: HexColor('#b7b7b7'),
-                backgroundCursorColor: Colors.black,
-                selectionColor: HexColor('#b7b7b7'),
-                maxLines: null,
+              child: Column(
+                children: [
+                  CleanTextField(
+                    controller: contentEditController,
+                    focusNode: contentEditFocusNode,
+                    style: LitSansSerifStyles.body2.copyWith(
+                      height: 1.65,
+                      color: LitColors.grey350,
+                    ),
+                    minLines: 16,
+                  ),
+                ],
               ),
             ),
           ),
+        );
+      },
+    );
+  }
+}
+
+/// A text input allowing to edit the diary entry's title text.
+class _DiaryTitleTextfield extends StatelessWidget {
+  final AnimationController animationController;
+  final TextEditingController controller;
+  final FocusNode focusNode;
+  final EdgeInsets padding;
+  const _DiaryTitleTextfield({
+    Key? key,
+    required this.animationController,
+    required this.controller,
+    required this.focusNode,
+    this.padding = const EdgeInsets.symmetric(horizontal: 16.0),
+  }) : super(key: key);
+
+  /// Returns a transform matrix.
+  Matrix4 get _transform {
+    final offset = 25;
+    final x = offset + -offset * animationController.value;
+    return Matrix4.translationValues(x, 0, 0);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+      animation: animationController,
+      child: Padding(
+        padding: padding,
+        child: CleanTextField(
+          controller: controller,
+          focusNode: focusNode,
+          style: LitSansSerifStyles.h6,
+        ),
+      ),
+      builder: (BuildContext context, Widget? child) {
+        return FadeInTransformContainer(
+          animationController: animationController,
+          transform: _transform,
+          child: child ?? SizedBox(),
         );
       },
     );
