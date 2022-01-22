@@ -7,7 +7,9 @@ class CleanTextField extends StatelessWidget {
   final FocusNode focusNode;
   final TextEditingController controller;
   final TextStyle style;
+  final bool showCounter;
   final int? maxLines;
+  final int? minLines;
 
   /// Creates a [CleanTextField].
   const CleanTextField({
@@ -16,6 +18,8 @@ class CleanTextField extends StatelessWidget {
     required this.focusNode,
     required this.style,
     this.maxLines,
+    this.minLines,
+    this.showCounter = false,
   }) : super(key: key);
 
   @override
@@ -24,9 +28,13 @@ class CleanTextField extends StatelessWidget {
       controller: controller,
       cursorColor: LitColors.grey200,
       cursorRadius: Radius.circular(2.0),
-      decoration: InputDecoration(border: InputBorder.none),
+      decoration: InputDecoration(
+        border: InputBorder.none,
+        counter: showCounter ? WordCountBadge(controller: controller) : null,
+      ),
       focusNode: focusNode,
       maxLines: maxLines,
+      minLines: minLines,
       style: style,
     );
   }
