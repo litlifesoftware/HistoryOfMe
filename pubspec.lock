@@ -320,12 +320,10 @@ packages:
   leitmotif:
     dependency: "direct main"
     description:
-      path: "."
-      ref: HEAD
-      resolved-ref: "807bf100c4ef7381327acc66fa5049f06a7f28f1"
-      url: "https://github.com/litlifesoftware/leitmotif-flutter.git"
-    source: git
-    version: "2.0.1"
+      name: leitmotif
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.2"
   lit_backup_service:
     dependency: "direct main"
     description:
