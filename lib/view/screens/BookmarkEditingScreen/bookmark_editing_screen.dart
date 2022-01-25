@@ -1,14 +1,10 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:history_of_me/api.dart';
 import 'package:history_of_me/controller/controllers.dart';
 import 'package:history_of_me/localization.dart';
+import 'package:history_of_me/models.dart';
 import 'package:history_of_me/view/shared/shared.dart';
 import 'package:leitmotif/leitmotif.dart';
-import 'package:history_of_me/controller/database/hive_db_service.dart';
-import 'package:history_of_me/config/config.dart';
-import 'package:history_of_me/model/user_created_color.dart';
-import 'package:history_of_me/model/user_data.dart';
-import 'package:hive/hive.dart';
 
 import 'pattern_config_card.dart';
 import 'primary_color_selector_card.dart';
@@ -36,6 +32,9 @@ class BookmarkEditingScreen extends StatefulWidget {
 
 class _BookmarkEditingScreenState extends State<BookmarkEditingScreen>
     with TickerProviderStateMixin {
+  late TextEditingController _quoteController;
+  late TextEditingController _authorController;
+
   /// Stores the current [UserData.name] value.
   late String _name;
 
@@ -51,8 +50,8 @@ class _BookmarkEditingScreenState extends State<BookmarkEditingScreen>
   /// Stores the current [UserData.dotSize] value.
   late int _dotSize;
 
-  /// Stores the current [UserData.quote] value.
-  late String _quote;
+  // /// Stores the current [UserData.quote] value.
+  // late String _quote;
 
   /// Stores the current [UserData.animated] value.
   late bool _animated;
@@ -60,12 +59,13 @@ class _BookmarkEditingScreenState extends State<BookmarkEditingScreen>
   /// Stores the current [UserData.designPatternIndex] value.
   late int _designPattern;
 
-  /// Stores the current [UserData.quoteAuthor] value.
-  late String _quoteAuthor;
+  // /// Stores the current [UserData.quoteAuthor] value.
+  // late String _quoteAuthor;
 
   late AnimationController _appearAnimation;
 
   late LitSnackbarController _colorErrorSnackbar;
+
   late LitSnackbarController _autosaveSnackbar;
 
   late ScrollController _scrollController;
@@ -73,6 +73,8 @@ class _BookmarkEditingScreenState extends State<BookmarkEditingScreen>
   late LitRouteController _routeController;
 
   late AutosaveController _autosaveController;
+
+  late AppAPI _api;
 
   /// Sets the [_designPattern] using the setState method.
   void setDesignPattern(int value) {
@@ -119,17 +121,17 @@ class _BookmarkEditingScreenState extends State<BookmarkEditingScreen>
     );
   }
 
-  /// Sets the [_quote]. The will not be used on the view, therefore the
-  /// setState is not necessary.
-  void setQuote(String quote) {
-    _quote = quote;
-  }
+  // /// Sets the [_quote]. The will not be used on the view, therefore the
+  // /// setState is not necessary.
+  // void setQuote(String quote) {
+  //   _quote = quote;
+  // }
 
-  /// Sets the [_quoteAuthor]. The will not be used on the view, therefore the
-  /// setState is not necessary.
-  void setQuoteAuthor(String author) {
-    _quoteAuthor = author;
-  }
+  // /// Sets the [_quoteAuthor]. The will not be used on the view, therefore the
+  // /// setState is not necessary.
+  // void setQuoteAuthor(String author) {
+  //   _quoteAuthor = author;
+  // }
 
   /// Maps the state value into an [UserData] object.
   UserData _mapUserData(int lastUpdated) {
@@ -140,9 +142,9 @@ class _BookmarkEditingScreenState extends State<BookmarkEditingScreen>
       stripeCount: _stripeCount,
       dotSize: _dotSize,
       animated: _animated,
-      quote: _quote,
+      quote: _quoteController.text,
       designPatternIndex: _designPattern,
-      quoteAuthor: _quoteAuthor,
+      quoteAuthor: _authorController.text,
       lastUpdated: lastUpdated,
       created: widget.initialUserDataModel!.created,
     );
@@ -168,10 +170,10 @@ class _BookmarkEditingScreenState extends State<BookmarkEditingScreen>
     if (_name != other.name) {
       return true;
     }
-    if (_quote != other.quote) {
+    if (_quoteController.text != other.quote) {
       return true;
     }
-    if (_quoteAuthor != other.quoteAuthor) {
+    if (_authorController.text != other.quoteAuthor) {
       return true;
     }
     return false;
@@ -180,7 +182,7 @@ class _BookmarkEditingScreenState extends State<BookmarkEditingScreen>
   /// Updates the Hive database using the latest changes.
   void _saveChanges() {
     final data = _mapUserData(DateTime.now().millisecondsSinceEpoch);
-    HiveDBService(debug: DEBUG).updateUserData(data);
+    _api.updateUserData(data);
   }
 
   /// Updates the Hive database using the latest changes.
@@ -223,7 +225,10 @@ class _BookmarkEditingScreenState extends State<BookmarkEditingScreen>
   @override
   void initState() {
     super.initState();
-    // Initialize all controllers.
+    _quoteController =
+        TextEditingController(text: widget.initialUserDataModel!.quote);
+    _authorController =
+        TextEditingController(text: widget.initialUserDataModel!.quoteAuthor);
     _colorErrorSnackbar = LitSnackbarController();
     _autosaveSnackbar = LitSnackbarController();
     _scrollController = ScrollController();
@@ -238,6 +243,7 @@ class _BookmarkEditingScreenState extends State<BookmarkEditingScreen>
       _onAutosave,
       duration: Duration(seconds: 180),
     );
+    _api = AppAPI();
     // Inital state variables using the provided user data object.
     _name = widget.initialUserDataModel!.name;
     _animated = widget.initialUserDataModel!.animated;
@@ -245,8 +251,8 @@ class _BookmarkEditingScreenState extends State<BookmarkEditingScreen>
     _secondaryColor = widget.initialUserDataModel!.secondaryColor;
     _stripeCount = widget.initialUserDataModel!.stripeCount;
     _dotSize = widget.initialUserDataModel!.dotSize;
-    _quote = widget.initialUserDataModel!.quote;
-    _quoteAuthor = widget.initialUserDataModel!.quoteAuthor;
+    // _quote = widget.initialUserDataModel!.quote;
+    // _quoteAuthor = widget.initialUserDataModel!.quoteAuthor;
     _designPattern = widget.initialUserDataModel!.designPatternIndex;
     // Play the animation.
     _appearAnimation.forward();
@@ -264,20 +270,19 @@ class _BookmarkEditingScreenState extends State<BookmarkEditingScreen>
 
   @override
   Widget build(BuildContext context) {
-    return ValueListenableBuilder(
-      valueListenable: HiveDBService().getUserData(),
-      builder: (BuildContext context, Box<UserData> userDataBox, Widget? _) {
-        UserData updatedUserData = userDataBox.getAt(0)!;
+    return UserDataProvider(
+      api: _api,
+      builder: (context, updatedUserData) {
         return WillPopScope(
           onWillPop: () => handlePopAction(
-            _isUnsaved(updatedUserData),
+            _isUnsaved(updatedUserData!),
           ),
           child: LitScaffold(
             appBar: FixedOnScrollAppbar(
               scrollController: _scrollController,
               backgroundColor: Colors.white,
               child: EditableItemMetaInfo(
-                lastUpdateTimestamp: updatedUserData.lastUpdated,
+                lastUpdateTimestamp: updatedUserData!.lastUpdated,
                 showUnsavedBadge: _isUnsaved(updatedUserData),
               ),
               shouldNavigateBack: !_isUnsaved(updatedUserData),
@@ -353,14 +358,8 @@ class _BookmarkEditingScreenState extends State<BookmarkEditingScreen>
                               ],
                             ),
                           ),
-                          ValueListenableBuilder(
-                            valueListenable:
-                                HiveDBService().getUserCreatedColors(),
-                            builder: (BuildContext context,
-                                Box<UserCreatedColor> colorsBox, Widget? _) {
-                              List<UserCreatedColor> userColors =
-                                  colorsBox.values.toList();
-
+                          UserCreatedColorProvider(
+                            builder: (context, userColors) {
                               return ConstrainedBox(
                                 constraints: BoxConstraints(
                                     minHeight:
@@ -376,10 +375,8 @@ class _BookmarkEditingScreenState extends State<BookmarkEditingScreen>
                                       onDotsSliderChange: onDotsSliderChange,
                                     ),
                                     QuoteCard(
-                                      initialAuthor: _quoteAuthor,
-                                      initialQuote: _quote,
-                                      onAuthorChanged: setQuoteAuthor,
-                                      onQuoteChanged: setQuote,
+                                      authorController: _authorController,
+                                      quoteController: _quoteController,
                                     ),
                                     PrimaryColorSelectorCard(
                                       selectedColorValue: _primaryColor,

@@ -1,18 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:history_of_me/localization.dart';
+import 'package:history_of_me/widgets.dart';
 import 'package:leitmotif/leitmotif.dart';
 
 class QuoteCard extends StatefulWidget {
-  final String? initialQuote;
-  final String? initialAuthor;
-  final void Function(String) onQuoteChanged;
-  final void Function(String) onAuthorChanged;
+  final TextEditingController authorController;
+  final TextEditingController quoteController;
   const QuoteCard({
     Key? key,
-    required this.initialQuote,
-    required this.initialAuthor,
-    required this.onAuthorChanged,
-    required this.onQuoteChanged,
+    required this.authorController,
+    required this.quoteController,
   }) : super(key: key);
 
   @override
@@ -22,19 +19,6 @@ class QuoteCard extends StatefulWidget {
 class _QuoteCardState extends State<QuoteCard> {
   final FocusNode _quoteFocus = FocusNode();
   final FocusNode _authorFocus = FocusNode();
-  late TextEditingController _quoteEditingController;
-  late TextEditingController _authorEditingController;
-
-  @override
-  void initState() {
-    super.initState();
-    _quoteEditingController = TextEditingController(
-      text: widget.initialQuote,
-    );
-    _authorEditingController = TextEditingController(
-      text: widget.initialAuthor,
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,17 +39,13 @@ class _QuoteCardState extends State<QuoteCard> {
                 padding: const EdgeInsets.symmetric(
                   vertical: 8.0,
                 ),
-                child: EditableText(
-                  backgroundCursorColor: Colors.black,
-                  cursorColor: LitColors.mediumGrey,
-                  controller: _quoteEditingController,
-                  maxLines: null,
+                child: CleanTextField(
                   focusNode: _quoteFocus,
                   style: LitTextStyles.sansSerif.copyWith(
                     height: 1.5,
                     letterSpacing: 0.32,
                   ),
-                  onChanged: widget.onQuoteChanged,
+                  controller: widget.quoteController,
                 ),
               ),
             ),
@@ -86,16 +66,13 @@ class _QuoteCardState extends State<QuoteCard> {
                       ),
                     ),
                   ),
-                  EditableText(
-                    backgroundCursorColor: Colors.black,
-                    cursorColor: LitColors.mediumGrey,
-                    maxLines: 1,
-                    controller: _authorEditingController,
+                  CleanTextField(
+                    controller: widget.authorController,
                     focusNode: _authorFocus,
                     style: LitTextStyles.sansSerif.copyWith(
                       fontWeight: FontWeight.w700,
                     ),
-                    onChanged: widget.onAuthorChanged,
+                    maxLines: 1,
                   ),
                 ],
               ),
