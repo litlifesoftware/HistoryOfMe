@@ -28,11 +28,19 @@ class UserProfileCard extends StatefulWidget {
 }
 
 class _UserProfileCardState extends State<UserProfileCard> {
+  /// Shows the [ChangeNameDialog] widgets.
   void _showChangeNameDialog() {
-    LitRouteController(context).showDialogWidget(ChangeNameDialog(
-      userData: widget.userData,
-    ));
+    LitRouteController(context).showDialogWidget(
+      ChangeNameDialog(
+        userData: widget.userData,
+      ),
+    );
   }
+
+  /// Returns a localized date string based the provided `created` timestamp.
+  String get localizedCreatedLabel => DateTime.fromMillisecondsSinceEpoch(
+        widget.userData.created,
+      ).formatAsLocalizedDate(context);
 
   @override
   Widget build(BuildContext context) {
@@ -52,12 +60,9 @@ class _UserProfileCardState extends State<UserProfileCard> {
               onPressed: widget.onPressedUserIcon,
             ),
             Padding(
-              padding: const EdgeInsets.only(
-                top: 22.0,
-                bottom: 12.0,
-              ),
+              padding: LitEdgeInsets.card,
               child: ClippedText(
-                "${widget.userData.name}",
+                widget.userData.name,
                 style: LitSansSerifStyles.h6,
               ),
             ),
@@ -87,9 +92,7 @@ class _UserProfileCardState extends State<UserProfileCard> {
                               padding:
                                   const EdgeInsets.symmetric(vertical: 4.0),
                               child: ClippedText(
-                                DateTime.fromMillisecondsSinceEpoch(
-                                  widget.userData.created,
-                                ).formatAsLocalizedDate(context),
+                                localizedCreatedLabel,
                                 style: LitSansSerifStyles.subtitle2,
                               ),
                             ),
@@ -109,18 +112,6 @@ class _UserProfileCardState extends State<UserProfileCard> {
               child: Align(
                 alignment: Alignment.center,
                 child: LitPushedThroughButton(
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 6.0,
-                    horizontal: 12.0,
-                  ),
-                  boxShadow: [
-                    BoxShadow(
-                      blurRadius: 13.0,
-                      color: Colors.black12,
-                      offset: Offset(-1, 1),
-                      spreadRadius: 1.0,
-                    )
-                  ],
                   backgroundColor: LitColors.green100,
                   accentColor: LitColors.green200,
                   child: ClippedText(
