@@ -414,8 +414,12 @@ class _DiaryContentInput extends StatelessWidget {
                       height: 1.65,
                       color: LitColors.grey350,
                     ),
-                    minLines: 16,
+                    showCounter: true,
+                    minLines: 8,
                   ),
+                  SizedBox(
+                    height: 16.0,
+                  )
                 ],
               ),
             ),
