@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:history_of_me/api.dart';
+import 'package:history_of_me/localization.dart';
 import 'package:history_of_me/models.dart';
 import 'package:history_of_me/screens.dart';
 
@@ -42,8 +43,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     _bookmarkAnimation = AnimationController(
       duration: widget.bookmarkAnimationDuration,
       vsync: this,
-    );
-    _bookmarkAnimation.repeat(reverse: true);
+    )..repeat(reverse: true);
   }
 
   @override
@@ -66,8 +66,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 index: 0,
                 icon: LitIcons.home_alt,
                 iconAlt: LitIcons.home,
-                // TODO:Localize
-                title: "Home",
+                title: AppLocalizations.of(context).homeLabel,
               ),
               screen: DiaryScreen(
                 bookmarkAnimation: _bookmarkAnimation,
@@ -78,13 +77,12 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 index: 1,
                 icon: LitIcons.person,
                 iconAlt: LitIcons.person_solid,
-                // TODO:Localize
-                title: "Profile",
+                title: AppLocalizations.of(context).profileLabel,
               ),
               screen: ProfileScreen(
                 bookmarkAnimation: _bookmarkAnimation,
               ),
-            )
+            ),
           ],
         );
       },

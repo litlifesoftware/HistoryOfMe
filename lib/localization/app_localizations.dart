@@ -444,4 +444,12 @@ class AppLocalizations {
   String get bookmarkSavedDescr {
     return localizeValue(AppLocalizationsKeys.bookmarkSavedDescr);
   }
+
+  String get homeLabel {
+    return localizeValue(AppLocalizationsKeys.homeLabel);
+  }
+
+  String get profileLabel {
+    return localizeValue(AppLocalizationsKeys.profileLabel);
+  }
 }

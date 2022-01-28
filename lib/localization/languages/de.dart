@@ -131,5 +131,7 @@ class DE {
         'Dein Backup ist älter als zwei Tage. Wir empfehlen dein Tagebuch regelmäßig zu sichern, um einen Datenverlust zu vermeiden.',
     AppLocalizationsKeys.bookmarkSavedDescr:
         'Dein Lesezeichen wurde gespeichert.',
+    AppLocalizationsKeys.homeLabel: 'Home',
+    AppLocalizationsKeys.profileLabel: 'Profil',
   };
 }

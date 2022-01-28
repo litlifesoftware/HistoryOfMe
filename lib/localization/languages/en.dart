@@ -127,5 +127,7 @@ class EN {
     AppLocalizationsKeys.deprecatedBackupDescr:
         'Your backup is older than two days. We recommend to backup your diary regularly to prevent data loss.',
     AppLocalizationsKeys.bookmarkSavedDescr: 'Your bookmark has been saved.',
+    AppLocalizationsKeys.homeLabel: 'home',
+    AppLocalizationsKeys.profileLabel: 'profile',
   };
 }
