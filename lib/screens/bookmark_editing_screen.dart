@@ -6,10 +6,10 @@ import 'package:history_of_me/models.dart';
 import 'package:history_of_me/view/shared/shared.dart';
 import 'package:leitmotif/leitmotif.dart';
 
-import 'pattern_config_card.dart';
-import 'primary_color_selector_card.dart';
-import 'quote_card.dart';
-import 'secondary_color_selector_card.dart';
+import '../view/screens/BookmarkEditingScreen/pattern_config_card.dart';
+import '../view/screens/BookmarkEditingScreen/primary_color_selector_card.dart';
+import '../view/screens/BookmarkEditingScreen/quote_card.dart';
+import '../view/screens/BookmarkEditingScreen/secondary_color_selector_card.dart';
 
 /// A screen widget allowing to edit the user's bookmark using several input
 /// elements.

@@ -10,10 +10,10 @@ import 'package:history_of_me/models.dart';
 import 'package:history_of_me/view/shared/art/ellipse_icon.dart';
 import 'package:leitmotif/leitmotif.dart';
 
-import 'backdrop_photo_overlay.dart';
-import 'change_photo_dialog.dart';
-import 'entry_detail_backdrop.dart';
-import 'entry_detail_card.dart';
+import '../view/screens/EntryDetailScreen/backdrop_photo_overlay.dart';
+import '../view/screens/EntryDetailScreen/change_photo_dialog.dart';
+import '../view/screens/EntryDetailScreen/entry_detail_backdrop.dart';
+import '../view/screens/EntryDetailScreen/entry_detail_card.dart';
 
 /// A `screen` widget showing details and properties of a single [DiaryEntry]
 /// object while providing options to e.g. edit the entry.
