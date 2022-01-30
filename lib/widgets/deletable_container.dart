@@ -1,7 +1,4 @@
-import 'dart:math';
-
-import 'package:flutter/material.dart';
-import 'package:leitmotif/leitmotif.dart';
+part of widgets;
 
 class DeletableContainer extends StatefulWidget {
   final Widget child;

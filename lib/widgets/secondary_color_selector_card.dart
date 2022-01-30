@@ -1,9 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:history_of_me/localization.dart';
-import 'package:history_of_me/model/user_created_color.dart';
-import 'package:leitmotif/leitmotif.dart';
-
-import 'selectable_color_tile.dart';
+part of widgets;
 
 /// A card widget displaying a scrolling list of selectable color cards.
 ///

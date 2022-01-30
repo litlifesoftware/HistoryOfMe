@@ -1,5 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:leitmotif/leitmotif.dart';
+part of widgets;
 
 class SelectableColorTile extends StatefulWidget {
   final Color color;

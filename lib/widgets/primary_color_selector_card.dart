@@ -1,12 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:history_of_me/api.dart';
-import 'package:history_of_me/config/config.dart';
-import 'package:history_of_me/localization.dart';
-import 'package:history_of_me/model/user_created_color.dart';
-import 'package:leitmotif/leitmotif.dart';
-
-import 'deletable_container.dart';
-import 'selectable_color_tile.dart';
+part of widgets;
 
 /// A widget allowing to either select one of the previously created colors or
 /// to enable the user to create a new color.

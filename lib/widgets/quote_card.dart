@@ -1,7 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:history_of_me/localization.dart';
-import 'package:history_of_me/widgets.dart';
-import 'package:leitmotif/leitmotif.dart';
+part of widgets;
 
 class QuoteCard extends StatefulWidget {
   final TextEditingController authorController;
