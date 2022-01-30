@@ -21,14 +21,22 @@ class BookmarkBack extends StatefulWidget implements BookmarkCover {
 }
 
 class _BookmarkBackState extends State<BookmarkBack> {
+  /// Returns a light text color.
+  Color get textColorLight => Colors.white;
+
+  /// Returns a dark text color.
+  Color get textColorDark => LitColors.grey600;
+
+  /// Returns the user's preferred secondary color.
+  Color get quoteBackgroundColor => Color(widget.userData!.secondaryColor);
+
+  /// Returns the quote's text color depending on the current quote background
+  /// color.
   Color get _quoteTextColor {
-    int _secColorVal = widget.userData!.secondaryColor;
-    Color _secColor = Color(_secColorVal);
-
-    double luminance = _secColor.computeLuminance();
-
-    return Color.lerp(LitColors.lightGrey, LitColors.mediumGrey, luminance) ??
-        HexColor("#b5b5b5");
+    return quoteBackgroundColor.applyColorByContrast(
+      textColorLight,
+      textColorDark,
+    );
   }
 
   @override
