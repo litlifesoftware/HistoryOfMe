@@ -1,10 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:history_of_me/localization.dart';
-import 'package:history_of_me/model/user_data.dart';
-import 'package:history_of_me/view/shared/shared.dart';
-import 'package:leitmotif/leitmotif.dart';
-
-import 'change_name_dialog.dart';
+part of widgets;
 
 /// A widget displaying the user's analytics and basic customization options.
 ///

@@ -1,13 +1,4 @@
-import 'dart:convert';
-
-import 'package:flutter/material.dart';
-import 'package:history_of_me/api.dart';
-import 'package:history_of_me/localization.dart';
-import 'package:history_of_me/models.dart';
-import 'package:leitmotif/leitmotif.dart';
-import 'package:lit_backup_service/lit_backup_service.dart';
-import 'package:lit_relative_date_time/lit_relative_date_time.dart';
-import 'package:package_info_plus/package_info_plus.dart';
+part of widgets;
 
 /// A Flutter dialog widget allowing the user to create and manage backup files.
 ///

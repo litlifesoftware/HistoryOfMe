@@ -1,8 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:history_of_me/api.dart';
-import 'package:history_of_me/controller/mood_translation_controller.dart';
-import 'package:history_of_me/localization.dart';
-import 'package:leitmotif/leitmotif.dart';
+part of widgets;
 
 class StatisticsCard extends StatefulWidget {
   @override

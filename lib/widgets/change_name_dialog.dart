@@ -1,9 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:history_of_me/api.dart';
-import 'package:history_of_me/localization.dart';
-import 'package:history_of_me/model/user_data.dart';
-import 'package:history_of_me/widgets.dart';
-import 'package:leitmotif/leitmotif.dart';
+part of widgets;
 
 /// A dialog widget allowing the user to change his name.
 class ChangeNameDialog extends StatefulWidget {

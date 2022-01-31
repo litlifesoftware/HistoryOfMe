@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:history_of_me/api.dart';
 import 'package:history_of_me/controller/routes/hom_navigator.dart';
 import 'package:history_of_me/localization.dart';
-import 'package:history_of_me/model/user_data.dart';
-import 'package:history_of_me/api.dart';
+import 'package:history_of_me/models.dart';
 import 'package:history_of_me/view/shared/bookmark/bookmark_page_view.dart';
+import 'package:history_of_me/widgets.dart';
 import 'package:leitmotif/leitmotif.dart';
-
-import '../view/screens/ProfileScreen/settings_footer.dart';
-import '../view/screens/ProfileScreen/statistics_card.dart';
-import '../view/screens/ProfileScreen/user_profile_card.dart';
 
 class ProfileScreen extends StatefulWidget {
   final AnimationController bookmarkAnimation;

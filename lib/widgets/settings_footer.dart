@@ -1,16 +1,4 @@
-import 'dart:convert';
-
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:history_of_me/app.dart';
-import 'package:history_of_me/localization.dart';
-import 'package:history_of_me/model/app_settings.dart';
-import 'package:history_of_me/model/backdrop_photo.dart';
-import 'package:history_of_me/model/user_data.dart';
-import 'package:history_of_me/screens.dart';
-import 'package:history_of_me/view/screens/ProfileScreen/diary_backup_dialog.dart';
-import 'package:history_of_me/view/shared/art/history_of_me_launcher_icon_art.dart';
-import 'package:leitmotif/leitmotif.dart';
+part of widgets;
 
 /// A footer widget allowing to navigate various secondary screens and dialogs
 /// to e.g. manage certain settings.
