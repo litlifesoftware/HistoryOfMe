@@ -1,15 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:history_of_me/api.dart';
-import 'package:history_of_me/controller/mood_translation_controller.dart';
-import 'package:history_of_me/config/config.dart';
-import 'package:history_of_me/localization.dart';
-import 'package:history_of_me/model/diary_entry.dart';
-import 'package:history_of_me/styles.dart';
-import 'package:history_of_me/view/shared/shared.dart';
-import 'package:history_of_me/view/shared/updated_label_text.dart';
-import 'package:leitmotif/leitmotif.dart';
-
-import 'entry_detail_backdrop.dart';
+part of widgets;
 
 class EntryDetailCard extends StatefulWidget {
   final DiaryEntry diaryEntry;

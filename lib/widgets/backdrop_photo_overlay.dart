@@ -1,11 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:history_of_me/controller/backdrop_photo_controller.dart';
-import 'package:history_of_me/controller/routes/hom_navigator.dart';
-import 'package:history_of_me/model/backdrop_photo.dart';
-import 'package:history_of_me/model/diary_entry.dart';
-import 'package:leitmotif/leitmotif.dart';
-
-import 'entry_detail_backdrop.dart';
+part of widgets;
 
 class BackdropPhotoOverlay extends StatefulWidget {
   final ScrollController? scrollController;

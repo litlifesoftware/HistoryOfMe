@@ -1,8 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:history_of_me/controller/backdrop_photo_controller.dart';
-import 'package:history_of_me/model/backdrop_photo.dart';
-import 'package:history_of_me/model/diary_entry.dart';
-import 'package:leitmotif/leitmotif.dart';
+part of widgets;
 
 class EntryDetailBackdrop extends StatefulWidget {
   final bool? loading;
