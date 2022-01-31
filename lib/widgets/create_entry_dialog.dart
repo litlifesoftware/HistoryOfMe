@@ -1,11 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:history_of_me/api.dart';
-import 'package:history_of_me/controller/routes/hom_navigator.dart';
-import 'package:history_of_me/localization.dart';
-import 'package:history_of_me/view/shared/lit_toggle_button_group.dart';
-import 'package:history_of_me/model/diary_entry.dart';
-import 'package:intl/intl.dart';
-import 'package:leitmotif/leitmotif.dart';
+part of widgets;
 
 /// The today indicator.
 const int TODAY = 1;

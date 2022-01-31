@@ -1,6 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:history_of_me/model/user_data.dart';
-import 'package:history_of_me/view/shared/bookmark/bookmark_page_view.dart';
+part of widgets;
 
 class DiaryBookmarkHeader extends StatelessWidget {
   final UserData userData;

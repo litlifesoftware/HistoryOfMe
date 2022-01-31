@@ -1,8 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:history_of_me/localization.dart';
-import 'package:leitmotif/leitmotif.dart';
-
-import 'diary_filter_header_delegate.dart';
+part of widgets;
 
 class DiaryFilterHeader extends StatefulWidget {
   final int filteredLength;

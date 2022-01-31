@@ -1,7 +1,4 @@
-import 'package:flutter/material.dart';
-
-import 'selected_create_tile.dart';
-import 'unselected_create_tile.dart';
+part of widgets;
 
 class EntryDaySelectionTile extends StatelessWidget {
   final String label;

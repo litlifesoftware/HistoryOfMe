@@ -6,8 +6,8 @@ import 'package:history_of_me/localization.dart';
 import 'package:history_of_me/model/user_data.dart';
 import 'package:history_of_me/styles.dart';
 import 'package:history_of_me/view/shared/bookmark/bookmark_page_view.dart';
+import 'package:history_of_me/widgets.dart';
 import 'package:leitmotif/leitmotif.dart';
-import '../view/screens/DiaryScreen/diary_list_view.dart';
 
 /// A screen widget displaying the user's diary on a vertical listview.
 class DiaryScreen extends StatefulWidget {

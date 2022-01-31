@@ -1,6 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:history_of_me/localization.dart';
-import 'package:leitmotif/leitmotif.dart';
+part of widgets;
 
 class GreetingsBar extends StatelessWidget {
   @override
