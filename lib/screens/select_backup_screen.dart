@@ -6,11 +6,9 @@ import 'package:history_of_me/app.dart';
 import 'package:history_of_me/localization.dart';
 import 'package:history_of_me/models.dart';
 import 'package:history_of_me/view/shared/shared.dart';
+import 'package:history_of_me/widgets.dart';
 import 'package:leitmotif/leitmotif.dart';
 import 'package:lit_backup_service/lit_backup_service.dart';
-
-import 'diary_preview_card.dart';
-import 'cancel_restoring_dialog.dart';
 
 /// A Flutter `screen` widget allowing to restore an existing backup by picking
 /// a backup file located on the device storage.

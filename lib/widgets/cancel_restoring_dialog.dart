@@ -1,6 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:history_of_me/localization.dart';
-import 'package:leitmotif/leitmotif.dart';
+part of widgets;
 
 /// A Flutter widget allowing the user to confirm the creation of a new diary
 /// while canceling the restoring of a backuped diary.

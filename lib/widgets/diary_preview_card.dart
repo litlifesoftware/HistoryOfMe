@@ -1,11 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:history_of_me/app.dart';
-import 'package:history_of_me/localization.dart';
-import 'package:history_of_me/models.dart';
-import 'package:history_of_me/styles.dart';
-import 'package:history_of_me/view/shared/shared.dart';
-import 'package:leitmotif/leitmotif.dart';
-import 'package:lit_relative_date_time/lit_relative_date_time.dart';
+part of widgets;
 
 /// A Flutter widget rendering a visual preview the provided [DiaryBackup] and
 /// allowing the user to rebuild the database using the provided backup.

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:history_of_me/localization.dart';
+import 'package:history_of_me/screens.dart';
 import 'package:history_of_me/styles.dart';
-import 'package:history_of_me/view/screens/SelectBackupScreen/select_backup_screen.dart';
 import 'package:history_of_me/view/shared/shared.dart';
 import 'package:leitmotif/leitmotif.dart';
 
