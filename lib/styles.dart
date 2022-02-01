@@ -6,4 +6,4 @@ library styles;
 
 import 'package:flutter/material.dart';
 
-part 'view/styles/app_colors.dart';
+part 'styles/app_colors.dart';
