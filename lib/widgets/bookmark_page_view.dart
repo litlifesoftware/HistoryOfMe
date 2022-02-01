@@ -1,7 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:history_of_me/models.dart';
-import 'package:history_of_me/view/shared/shared.dart';
-import 'package:leitmotif/leitmotif.dart';
+part of widgets;
 
 /// A History of Me widget displaying the bookmark's front and back on a page
 /// view.

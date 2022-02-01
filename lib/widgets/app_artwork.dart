@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+part of widgets;
 
 class AppArtwork extends StatefulWidget {
   final double width;

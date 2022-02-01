@@ -1,12 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:history_of_me/model/user_data.dart';
-
-import 'bookmark_container.dart';
-import 'bookmark_cover.dart';
-import 'bookmark_design.dart';
-import 'bookmark_title.dart';
-import 'dotted_design.dart';
-import 'striped_design.dart';
+part of widgets;
 
 class BookmarkFront extends StatelessWidget implements BookmarkCover {
   final UserData userData;

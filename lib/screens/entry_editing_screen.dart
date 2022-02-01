@@ -7,7 +7,6 @@ import 'package:history_of_me/controller/mood_translation_controller.dart';
 import 'package:history_of_me/config/config.dart';
 import 'package:history_of_me/localization.dart';
 import 'package:history_of_me/models.dart';
-import 'package:history_of_me/view/shared/shared.dart';
 import 'package:history_of_me/widgets.dart';
 import 'package:leitmotif/leitmotif.dart';
 

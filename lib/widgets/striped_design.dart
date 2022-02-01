@@ -1,8 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:history_of_me/controller/striped_design_controller.dart';
-import 'package:history_of_me/model/user_data.dart';
-
-import 'bookmark_design.dart';
+part of widgets;
 
 class StripedDesign extends StatelessWidget implements BookmarkDesign {
   final double radius;

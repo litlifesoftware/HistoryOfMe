@@ -1,6 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:history_of_me/styles.dart';
-import 'package:leitmotif/leitmotif.dart';
+part of widgets;
 
 /// A Flutter widget displaying a gradient-decorated button.
 class PurplePinkButton extends StatelessWidget {

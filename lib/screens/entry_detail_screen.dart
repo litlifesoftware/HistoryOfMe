@@ -7,7 +7,6 @@ import 'package:history_of_me/app.dart';
 import 'package:history_of_me/controller/controllers.dart';
 import 'package:history_of_me/localization.dart';
 import 'package:history_of_me/models.dart';
-import 'package:history_of_me/view/shared/art/ellipse_icon.dart';
 import 'package:history_of_me/widgets.dart';
 import 'package:leitmotif/leitmotif.dart';
 

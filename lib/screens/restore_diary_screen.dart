@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:history_of_me/localization.dart';
 import 'package:history_of_me/screens.dart';
 import 'package:history_of_me/styles.dart';
-import 'package:history_of_me/view/shared/shared.dart';
+import 'package:history_of_me/widgets.dart';
 import 'package:leitmotif/leitmotif.dart';
 
 /// A Flutter `screen` widget allowing to restore an existing diary by reading

@@ -1,9 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:history_of_me/config/config.dart';
-import 'package:history_of_me/model/user_data.dart';
-import 'dart:ui' as ui;
-
-import 'bookmark_design.dart';
+part of widgets;
 
 /// Part of the [BookmarkDesign] classes.
 /// A grid matrix filled with dots in varying colors

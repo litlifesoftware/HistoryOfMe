@@ -1,7 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:leitmotif/leitmotif.dart';
-
-import 'animated_updated_label.dart';
+part of widgets;
 
 class EditableItemMetaInfo extends StatefulWidget {
   final int? lastUpdateTimestamp;

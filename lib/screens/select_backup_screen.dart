@@ -5,7 +5,6 @@ import 'package:history_of_me/api.dart';
 import 'package:history_of_me/app.dart';
 import 'package:history_of_me/localization.dart';
 import 'package:history_of_me/models.dart';
-import 'package:history_of_me/view/shared/shared.dart';
 import 'package:history_of_me/widgets.dart';
 import 'package:leitmotif/leitmotif.dart';
 import 'package:lit_backup_service/lit_backup_service.dart';

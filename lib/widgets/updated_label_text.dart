@@ -1,6 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:leitmotif/leitmotif.dart';
-import 'package:lit_relative_date_time/lit_relative_date_time.dart';
+part of widgets;
 
 class UpdatedLabelText extends StatelessWidget {
   final TextAlign textAlign;

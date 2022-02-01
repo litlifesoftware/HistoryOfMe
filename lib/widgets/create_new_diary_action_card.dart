@@ -1,7 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:history_of_me/localization.dart';
-import 'package:history_of_me/styles.dart';
-import 'package:leitmotif/leitmotif.dart';
+part of widgets;
 
 /// A Flutter widget displaying an action card to allow the user to create a
 /// new diary.

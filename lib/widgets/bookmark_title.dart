@@ -1,7 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:history_of_me/config/image_asset_names.dart';
-import 'package:history_of_me/model/user_data.dart';
-import 'package:leitmotif/leitmotif.dart';
+part of widgets;
 
 /// A History of Me widget displaying the bookmark's title, which is derived
 /// by the provided username.

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+part of widgets;
 
 class HistoryOfMeLauncherIconArt extends StatelessWidget {
   final BorderRadius borderRadius;

@@ -1,6 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:history_of_me/models.dart';
-import 'package:leitmotif/leitmotif.dart';
+part of widgets;
 
 class UserIcon extends StatelessWidget {
   final UserData userData;
@@ -19,7 +17,7 @@ class UserIcon extends StatelessWidget {
       size: size,
       name: userData.name,
       color: Color(userData.primaryColor),
-      accentColor: Color(0xFFDDDDDD),
+      accentColor: Color(userData.secondaryColor),
       onPressed: onPressed,
     );
   }

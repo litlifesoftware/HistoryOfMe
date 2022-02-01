@@ -1,15 +1,11 @@
-import 'package:flutter/material.dart';
-import 'package:history_of_me/model/user_data.dart';
+part of widgets;
 
-import 'bookmark_front.dart';
-import 'bookmark_preview_container.dart';
-
-class BookmarkFrontPreview extends StatelessWidget {
+class BookmarkBackPreview extends StatelessWidget {
   final EdgeInsets padding;
   final bool transformed;
-  final UserData userData;
+  final UserData? userData;
   final AnimationController? animationController;
-  const BookmarkFrontPreview({
+  const BookmarkBackPreview({
     Key? key,
     required this.userData,
     this.padding = const EdgeInsets.only(
@@ -26,9 +22,10 @@ class BookmarkFrontPreview extends StatelessWidget {
   Widget build(BuildContext context) {
     return BookmarkPreviewContainer(
       transformed: transformed,
+      reveredAnimation: true,
       animationController: animationController,
       padding: padding,
-      child: BookmarkFront(
+      child: BookmarkBack(
         userData: userData,
       ),
     );

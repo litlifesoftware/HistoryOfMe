@@ -3,7 +3,6 @@ import 'package:history_of_me/api.dart';
 import 'package:history_of_me/controller/routes/hom_navigator.dart';
 import 'package:history_of_me/localization.dart';
 import 'package:history_of_me/models.dart';
-import 'package:history_of_me/view/shared/bookmark/bookmark_page_view.dart';
 import 'package:history_of_me/widgets.dart';
 import 'package:leitmotif/leitmotif.dart';
 

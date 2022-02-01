@@ -1,8 +1,4 @@
-import 'dart:math';
-
-import 'package:flutter/material.dart';
-
-import 'bookmark_cover.dart';
+part of widgets;
 
 class BookmarkPreviewContainer extends StatefulWidget {
   final bool transformed;
