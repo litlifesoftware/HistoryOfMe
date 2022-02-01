@@ -27,12 +27,11 @@ import 'package:lit_backup_service/lit_backup_service.dart';
 import 'package:lit_relative_date_time/lit_relative_date_time.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
-part 'view/widgets/clean_text_field.dart';
-part 'view/widgets/word_count_badge.dart';
 part 'widgets/backdrop_photo_overlay.dart';
 part 'widgets/cancel_restoring_dialog.dart';
 part 'widgets/change_name_dialog.dart';
 part 'widgets/change_photo_dialog.dart';
+part 'widgets/clean_text_field.dart';
 part 'widgets/create_entry_dialog.dart';
 part 'widgets/deletable_container.dart';
 part 'widgets/diary_backup_dialog.dart';
@@ -56,3 +55,4 @@ part 'widgets/settings_footer.dart';
 part 'widgets/statistics_card.dart';
 part 'widgets/unselected_create_tile.dart';
 part 'widgets/user_profile_card.dart';
+part 'widgets/word_count_badge.dart';
