@@ -1,11 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:history_of_me/api.dart';
-import 'package:history_of_me/app.dart';
-import 'package:history_of_me/config/config.dart';
-import 'package:history_of_me/localization.dart';
-import 'package:history_of_me/models.dart';
-import 'package:history_of_me/screens.dart';
-import 'package:leitmotif/leitmotif.dart';
+part of widgets;
 
 /// A builder widget returning the appropriate screen considering the current
 /// database state.

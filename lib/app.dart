@@ -1,14 +1,13 @@
 import 'dart:convert';
 
-import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
-import 'package:history_of_me/config/config.dart';
-import 'package:history_of_me/model/backdrop_photo.dart';
-import 'package:history_of_me/view/builder/builder.dart';
-import 'package:leitmotif/leitmotif.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-
-import 'localization.dart';
+import 'package:history_of_me/config/config.dart';
+import 'package:history_of_me/localization.dart';
+import 'package:history_of_me/models.dart';
+import 'package:history_of_me/widgets.dart';
+import 'package:leitmotif/leitmotif.dart';
 
 /// The main Flutter widget of `HistoryOfMe`.
 ///
@@ -27,10 +26,6 @@ class App extends StatefulWidget {
 
   /// The application's developer.
   static const String appDeveloper = "LitLifeSoftware";
-
-  /// The localization file's location.
-  // static const String localizationFilePath =
-  //     "assets/json/localized_strings.json";
 
   static const imageCollectionPath = 'assets/json/image_collection_data.json';
 
@@ -73,9 +68,13 @@ class _AppState extends State<App> {
   void parseBackdropPhotos(String assetData) {
     final parsed = jsonDecode(assetData).cast<Map<String, dynamic>>();
     parsed.forEach(
-      (json) => setState(
-        () => backdropPhotoUrlList.add(BackdropPhoto.fromJson(json).assetUrl),
-      ),
+      (json) {
+        setState(
+          () {
+            backdropPhotoUrlList.add(BackdropPhoto.fromJson(json).assetUrl);
+          },
+        );
+      },
     );
   }
 
@@ -115,21 +114,11 @@ class _AppState extends State<App> {
         debugShowCheckedModeBanner: DEBUG,
         theme: ThemeData(
           brightness: Brightness.light,
-
           primarySwatch: Colors.grey,
           primaryColor: Colors.grey[50],
           primaryColorBrightness: Brightness.light,
-
-          //Sliver scroll physics color
-          // accentColor: Colors.transparent,
-          // accentColorBrightness: Brightness.light,
         ),
         localizationsDelegates: const [
-          // LitLocalizationServiceDelegate(
-          //   jsonAssetURL: App.localizationFilePath,
-          //   supportedLanguages: App.supportedLanguages,
-          //   debug: true,
-          // ),
           AppLocalizations.delegate,
           LeitmotifLocalizations.delegate,
           GlobalMaterialLocalizations.delegate,
@@ -140,9 +129,7 @@ class _AppState extends State<App> {
         /// Supported languages
         supportedLocales: App.supportedLocales,
         title: App.appName,
-        home: DatabaseStateScreenBuilder(
-            //  localizationsAssetURL: App.localizationFilePath,
-            ),
+        home: DatabaseStateScreenBuilder(),
       ),
     );
   }
