@@ -93,7 +93,7 @@ class _PrimaryColorSelectorCardState extends State<PrimaryColorSelectorCard>
   /// color has failed.
   void _addColor(Color color) {
     try {
-      AppAPI(debug: DEBUG).addUserCreatedColor(
+      AppAPI(debug: App.DEBUG).addUserCreatedColor(
         color.alpha,
         color.red,
         color.green,

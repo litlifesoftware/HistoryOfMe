@@ -84,7 +84,7 @@ class _DatabaseStateScreenBuilderState
       LitStartupScreen.backgroundAnimationDuration,
     ).then(
       (_) {
-        if (_initalStartup & !DEBUG) {
+        if (_initalStartup & !App.DEBUG) {
           _toggleShouldShowStartupScreen();
         }
       },
@@ -98,7 +98,7 @@ class _DatabaseStateScreenBuilderState
     if (userData == null) {
       _initalStartup = true;
 
-      if (_showSplashScreen && !DEBUG) {
+      if (_showSplashScreen && !App.DEBUG) {
         // Show the startup screen
         return _StartupScreen();
       }

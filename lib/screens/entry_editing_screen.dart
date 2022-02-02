@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:history_of_me/api.dart';
+import 'package:history_of_me/app.dart';
 import 'package:history_of_me/controller/controllers.dart';
 import 'package:history_of_me/controller/mood_translation_controller.dart';
 import 'package:history_of_me/config/config.dart';
@@ -111,7 +112,7 @@ class _EntryEditingScreenState extends State<EntryEditingScreen>
       backdropPhotoId: widget.diaryEntry.backdropPhotoId,
     );
     AppAPI().updateDiaryEntry(updatedDiaryEntry);
-    if (DEBUG) print('Saved changes on current diary entry');
+    if (App.DEBUG) print('Saved changes on current diary entry');
   }
 
   /// Handles the `discard` action.

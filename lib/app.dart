@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:history_of_me/config/config.dart';
 import 'package:history_of_me/localization.dart';
 import 'package:history_of_me/models.dart';
 import 'package:history_of_me/widgets.dart';
@@ -18,6 +17,11 @@ import 'package:leitmotif/leitmotif.dart';
 /// It also provides the option to restart the whole app if required using
 /// its `restartApp()` method.
 class App extends StatefulWidget {
+  /// States whether the app runs in debug mode.
+  ///
+  /// This will prevent debug output to be printed.
+  static const bool DEBUG = false;
+
   /// The application's name.
   static const String appName = "History Of Me";
 
@@ -111,7 +115,7 @@ class _AppState extends State<App> {
     return KeyedSubtree(
       key: _key,
       child: MaterialApp(
-        debugShowCheckedModeBanner: DEBUG,
+        debugShowCheckedModeBanner: App.DEBUG,
         theme: ThemeData(
           brightness: Brightness.light,
           primarySwatch: Colors.grey,

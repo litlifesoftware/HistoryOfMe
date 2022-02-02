@@ -29,14 +29,14 @@ class _ChangePhotoDialogState extends State<ChangePhotoDialog>
   void setSelectedImage(int? value) {
     if (!_isSelected(value)) {
       setState(() {
-        if (DEBUG) print("Selected backdrop id: $value");
+        if (App.DEBUG) print("Selected backdrop id: $value");
         AppAPI().updateDiaryEntryBackdrop(widget.diaryEntry, value!);
         _selectedImage = value;
       });
       _appearAnimationController.forward(from: 0.0);
       print(value);
     } else {
-      if (DEBUG) print("Already Selected");
+      if (App.DEBUG) print("Already Selected");
     }
   }
 
