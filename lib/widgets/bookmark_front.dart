@@ -27,7 +27,7 @@ class BookmarkFront extends StatelessWidget implements BookmarkCover {
   }
 }
 
-class _BookmarkFrontArt extends StatefulWidget {
+class _BookmarkFrontArt extends StatelessWidget {
   final UserData userData;
   final double radius;
   const _BookmarkFrontArt({
@@ -36,58 +36,43 @@ class _BookmarkFrontArt extends StatefulWidget {
     required this.radius,
   }) : super(key: key);
 
-  @override
-  __BookmarkFrontArtState createState() => __BookmarkFrontArtState();
-}
+  /// Returns the current design type selected by the user.
+  DesignType get type => DesignType.values[userData.designPatternIndex];
 
-class __BookmarkFrontArtState extends State<_BookmarkFrontArt>
-    with TickerProviderStateMixin {
-  AnimationController? _patternAnimationController;
-
-  @override
-  void initState() {
-    super.initState();
-    _patternAnimationController = AnimationController(
-      vsync: this,
-      duration: Duration(milliseconds: 4000),
-    );
-    _patternAnimationController!.forward();
-    _patternAnimationController!.addStatusListener((status) {
-      if (status == AnimationStatus.completed) {
-        _patternAnimationController!.reverse();
-      } else if (status == AnimationStatus.dismissed) {
-        _patternAnimationController!.forward();
-      }
-    });
+  /// Returns the appropriate design implementation based on the [type] value.
+  Widget get design {
+    switch (type) {
+      case DesignType.stiped:
+        return StripedDesign(
+          radius: radius,
+          userData: userData,
+        );
+      case DesignType.dotted:
+        return DottedDesign(
+          radius: radius,
+          userData: userData,
+        );
+      default:
+        return StripedDesign(
+          radius: radius,
+          userData: userData,
+        );
+    }
   }
 
-  @override
-  void dispose() {
-    _patternAnimationController!.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
         Container(
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(
-            widget.radius,
-          ))),
+            borderRadius: BorderRadius.all(
+              Radius.circular(
+                radius,
+              ),
+            ),
+          ),
         ),
-        DesignType.values[widget.userData.designPatternIndex] ==
-                DesignType.stiped
-            ? StripedDesign(
-                radius: widget.radius,
-                userData: widget.userData,
-              )
-            : DottedDesign(
-                radius: widget.radius,
-                animationController: _patternAnimationController,
-                userData: widget.userData,
-              )
+        design
       ],
     );
   }

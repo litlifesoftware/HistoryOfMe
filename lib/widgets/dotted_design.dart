@@ -1,52 +1,93 @@
 part of widgets;
 
-/// Part of the [BookmarkDesign] classes.
-/// A grid matrix filled with dots in varying colors
-/// which will either be animated or static, dependend
-/// on the provided [userData] property values.
-class DottedDesign extends StatelessWidget implements BookmarkDesign {
+/// A `History of Me` widget implementing a dotted [BookmarkDesign] to be
+/// used as a bookmark preview based on the [UserData] provided.
+class DottedDesign extends StatefulWidget implements BookmarkDesign {
+  /// The bookmark
   final double radius;
-  final AnimationController? animationController;
-  final UserData? userData;
+  final UserData userData;
+
+  /// Creates a [DottedDesign].
   const DottedDesign({
     Key? key,
     required this.radius,
-    required this.animationController,
     required this.userData,
   }) : super(key: key);
+
+  static const animationDuration = Duration(milliseconds: 4000);
+
+  @override
+  State<DottedDesign> createState() => _DottedDesignState();
+}
+
+class _DottedDesignState extends State<DottedDesign>
+    with TickerProviderStateMixin {
+  /// The dot animation.
+  late AnimationController _animationController;
+
+  /// The bookmark's design primary color.
+  Color get _primaryColor => Color(widget.userData.primaryColor);
+
+  /// The bookmark's design accent color.
+  Color get _accentColor => Colors.white;
+
+  /// Returns the bookmark's background color.
+  ///
+  /// Increase the [_primaryColor]'s brightness using the [_accentColor].
+  Color? get _backgroundColor => Color.lerp(_primaryColor, _accentColor, 0.6);
+
+  /// Returns a tween animation starting at a fixed begin value to ensure
+  /// the dots have a fixed minimun size when being animated.
+  Animation<double> get _animation => Tween(begin: 0.4, end: 1.0).animate(
+        _animationController,
+      );
+
+  @override
+  void initState() {
+    super.initState();
+    _animationController = AnimationController(
+      vsync: this,
+      duration: DottedDesign.animationDuration,
+    )..repeat(reverse: true);
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
-      borderRadius: BorderRadius.circular(radius),
+      borderRadius: BorderRadius.circular(widget.radius),
       child: AnimatedBuilder(
-        animation: animationController!,
+        animation: _animationController,
         builder: (context, child) {
-          return Stack(children: [
-            AspectRatio(
-              aspectRatio: bookmarkDimensions.aspectRatio,
-              child: Container(
-                decoration: BoxDecoration(
-                  /// Increase the provided color's brightness and set it
-                  /// to be the background color of the design.
-                  color: Color.lerp(
-                      Color(userData!.primaryColor), Colors.white, 0.6),
-                  borderRadius: BorderRadius.circular(radius),
+          return Stack(
+            children: [
+              AspectRatio(
+                aspectRatio: bookmarkDimensions.aspectRatio,
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: _backgroundColor,
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(
+                        widget.radius,
+                      ),
+                    ),
+                  ),
                 ),
               ),
-            ),
-            CustomPaint(
-              painter: DottedDesignPainter(
-                userData: userData,
-                animation:
-                    Tween(begin: 0.4, end: 1.0).animate(animationController!),
+              CustomPaint(
+                painter: DottedDesignPainter(
+                  userData: widget.userData,
+                  animation: _animation,
+                ),
+                child: Container(),
               ),
-
-              /// Set an empty [Container] as the child to ensure the painting
-              /// will be displayed.
-              child: Container(),
-            ),
-          ]);
+            ],
+          );
         },
       ),
     );
@@ -57,119 +98,141 @@ class DottedDesign extends StatelessWidget implements BookmarkDesign {
 /// dots in alternating colors.
 class DottedDesignPainter extends CustomPainter {
   final Animation animation;
-  final UserData? userData;
+  final UserData userData;
+
+  /// Creates a [DottedDesignPainter].
   DottedDesignPainter({
     required this.animation,
     required this.userData,
   });
   @override
   void paint(ui.Canvas canvas, ui.Size size) {
-    /// The inital vertical offset value relative
-    /// to the widgets, which will be painted on.
-    final double initalHorizontalOffset =
-        (size.height / this.userData!.dotSize);
+    // States whether to animate the dot grid
+    final bool _shouldAnimate = this.userData.animated;
 
-    /// Get the vertical offset, which will be depended
-    /// on the dot size and the current grid's column
-    /// count (provided by the iterator [i]'s value).
-    double getHorizontalOffset(int i) {
-      return initalHorizontalOffset + (i * (this.userData!.dotSize * 1.7));
+    // The user's preferred dot size.
+    final int _dotSize = this.userData.dotSize;
+
+    // The user's main color.
+    final Color _mainColor = Color(this.userData.primaryColor);
+
+    // The accent color applied on the color lerp.
+    final Color _accentColor = Colors.white;
+
+    /// The initial offset's x value based on the device width.
+    final double initialOffsetX = size.width / _dotSize;
+
+    /// The initial offset's y value based on the device height.
+    final double initialOffsetY = size.height / _dotSize;
+
+    /// The total row count based on the device width.
+    final int rowCount = size.width ~/ _dotSize;
+
+    /// The total column count based on the device height.
+    final int columnCount =
+        (size.height ~/ _dotSize) + (_dotSize ~/ initialOffsetY);
+
+    /// Calculates the offset's x value.
+    double calcOffsetX(int row) {
+      return initialOffsetX + (row * _dotSize * 1.7);
     }
 
-    /// The inital horizontal offset value relative
-    /// to the widgets, which will be painted on.
-    final double initalVerticalOffset = (size.height / this.userData!.dotSize);
+    /// Calculates the offset's y value.
+    double calcOffsetY(int column) {
+      return initialOffsetY + (_dotSize * column);
+    }
 
-    /// Get the horizontal offset, which will be depended
-    /// on the dot size and the current grid's row
-    /// count (provided by the iterator [j]'s value).
-    double getVerticalOffset(int j) {
-      return initalVerticalOffset + (this.userData!.dotSize * j);
+    /// Calculates the offset of a circle based on its position on the grid.
+    Offset calcOffset(int row, int column) {
+      return Offset(calcOffsetX(row), calcOffsetY(column));
     }
 
     /// Get the doz size. It will either be mutated by the
     /// current [Animation] value or fixed, if the animation
     /// is disabled.
-    double getDotSize() {
-      return this.userData!.dotSize *
-          (this.userData!.animated ? this.animation.value : 0.4) as double;
+    double calcDotSize() {
+      if (_shouldAnimate) {
+        return _dotSize * this.animation.value as double;
+      }
+      return 0.4;
     }
-
-    final int getRowCount = size.width ~/ this.userData!.dotSize;
-
-    final int getColumnCount = (size.height ~/ this.userData!.dotSize) +
-        (this.userData!.dotSize ~/ initalVerticalOffset);
 
     /// The list of [Paint] objects will vary in their [Color].
     List<Paint> paints = [
       Paint()
         // The provided color.
-        ..color = Color(this.userData!.primaryColor)
+        ..color = _mainColor
         ..strokeWidth = 4.0
         ..style = PaintingStyle.fill,
       Paint()
         // Brightened provided color.
-        ..color =
-            Color.lerp(Color(this.userData!.primaryColor), Colors.white, 0.3)!
+        ..color = Color.lerp(_mainColor, _accentColor, 0.25)!
         ..strokeWidth = 4.0
         ..style = PaintingStyle.fill,
       Paint()
         // Brightened provided color.
-        ..color =
-            Color.lerp(Color(this.userData!.primaryColor), Colors.white, 0.5)!
+        ..color = Color.lerp(_mainColor, _accentColor, 0.5)!
         ..strokeWidth = 4.0
         ..style = PaintingStyle.fill,
     ];
 
-    /// Paint the grid matrix of dots using a nested loop.
-    void paintCircles() {
-      // Create the rows fields of the grid using the utmost loop.
-      for (int i = 0; i < getRowCount; i++) {
-        // Create the columns fields of the grid using the
-        // mid-level loop.
-        for (int j = 0; j < getColumnCount; j++) {
-          // Paint the alternating colored dots in the fields
-          // by varying the used Paint objects inside the list.
+    /// Returns a [Paint] based on the current position on the grid.
+    ///
+    /// Every column and row will either have two of the three colors.
+    /// Event and uneven row counts will result in differently colored
+    /// circles.
+    Paint getPaintByGridPosition(int row, int column, int i) {
+      // States whether the paint's list has not been exceeded.
+      bool inUpperRange = (i + 1) < paints.length;
+      // States whether the paint's list index is in range.
+      bool inLowerRange = (i - 1) >= 0;
+
+      // Check if the row count is even.
+      if (row % 2 == 0) {
+        // Toggle between the previous and the current color by checking if
+        // the column count is also even.
+        if (column % 2 == 0) {
+          if (inLowerRange) {
+            return paints[i - 1];
+          } else {
+            return paints[i];
+          }
+        }
+        return paints[i];
+      }
+      // Check if the row count is even.
+      if (column % 2 == 0) {
+        if (inUpperRange) {
+          return paints[i + 1];
+        } else {
+          return paints[i];
+        }
+      } else {
+        return paints[0];
+      }
+    }
+
+    /// Paints the grid of dots using a nested loop.
+    void paintCircleGrid() {
+      // Create rows.
+      for (int i = 0; i < rowCount; i++) {
+        // Create column.
+        for (int j = 0; j < columnCount; j++) {
+          // Iterate through the paint list to paint each dot.
           for (int k = 0; k < paints.length; k++) {
             // Paint the circle
             canvas.drawCircle(
-              // Calculate the vertical and horizontal offset
-              // using the corresponding iterator values.
-              Offset(getHorizontalOffset(i), getVerticalOffset(j)),
-              // Set the dot size.
-              getDotSize(),
-
-              /// Every column and row will either have two
-              /// of the three colors.
-              /// Check if the row count is even
-              i % 2 == 0
-                  // If so, toggle between the previous and the
-                  // current color by checking if the column
-                  // count is also even.
-                  ? paints[j % 2 == 0
-                      ? ((k - 1) > 0)
-                          ? k - 1
-                          : k
-                      : k]
-                  // else the row count is uneven
-                  : paints[
-                      // Toggle beween the next and the current
-                      // color by checking if the column count
-                      // even. If the last Paint is reached,
-                      // start all over again.
-                      j % 2 == 0
-                          ? (k + 1) != paints.length
-                              ? (k + 1)
-                              : k
-                          : 0],
+              calcOffset(i, j),
+              calcDotSize(),
+              getPaintByGridPosition(i, j, k),
             );
           }
         }
       }
     }
 
-    // Draw the circles.
-    paintCircles();
+    // Paint the circles.
+    paintCircleGrid();
   }
 
   @override
