@@ -16,7 +16,6 @@ import 'package:history_of_me/config/image_asset_names.dart';
 import 'package:history_of_me/controller/backdrop_photo_controller.dart';
 import 'package:history_of_me/controller/controllers.dart';
 import 'package:history_of_me/controller/mood_translation_controller.dart';
-import 'package:history_of_me/controller/striped_design_controller.dart';
 import 'package:history_of_me/extensions.dart';
 import 'package:history_of_me/localization.dart';
 import 'package:history_of_me/models.dart';
