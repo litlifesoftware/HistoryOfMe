@@ -515,12 +515,14 @@ class _NoContentAvailableCard extends StatelessWidget {
 }
 
 class _MoodScoreIndicator extends StatefulWidget {
-  final double? moodScore;
+  final double moodScore;
 
   const _MoodScoreIndicator({
     Key? key,
     required this.moodScore,
   }) : super(key: key);
+
+  static const animationDuration = Duration(milliseconds: 4000);
 
   @override
   __MoodScoreIndicatorState createState() => __MoodScoreIndicatorState();
@@ -530,20 +532,12 @@ class __MoodScoreIndicatorState extends State<_MoodScoreIndicator>
     with TickerProviderStateMixin {
   late AnimationController _animationController;
 
-  String get _moodTranslationString {
-    return MoodTranslator(
-      moodScore: widget.moodScore!,
-      context: context,
-    ).label.toUpperCase();
-  }
-
   @override
   void initState() {
     _animationController = AnimationController(
-      duration: Duration(milliseconds: 4000),
+      duration: _MoodScoreIndicator.animationDuration,
       vsync: this,
-    );
-    _animationController.repeat(reverse: true);
+    )..repeat(reverse: true);
     super.initState();
   }
 
@@ -568,7 +562,7 @@ class __MoodScoreIndicatorState extends State<_MoodScoreIndicator>
                   Color.lerp(
                     LitColors.lightRed,
                     HexColor('bee5be'),
-                    widget.moodScore!,
+                    widget.moodScore,
                   )!,
                   Color.lerp(
                     Colors.white,
@@ -597,7 +591,10 @@ class __MoodScoreIndicatorState extends State<_MoodScoreIndicator>
                     ),
                   ),
                   Text(
-                    "$_moodTranslationString",
+                    MoodTranslator(
+                      moodScore: widget.moodScore,
+                      context: context,
+                    ).label.toUpperCase(),
                     style: LitTextStyles.sansSerif.copyWith(
                       fontSize: 12.0,
                       letterSpacing: 0.65,
