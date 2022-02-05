@@ -151,7 +151,7 @@ class _StatisticsCardContent extends StatelessWidget {
                             value: MoodTranslationController(
                               moodScore: queryController.avgMood,
                               context: context,
-                            ).translatedLabelText.capitalize(),
+                            ).label.capitalize(),
                             constraints: constraints,
                           ),
                         ],

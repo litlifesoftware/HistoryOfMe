@@ -353,7 +353,7 @@ class _MoodSlider extends StatelessWidget {
                 valueTitleText: MoodTranslationController(
                   moodScore: moodScore,
                   context: context,
-                ).uppercaseLabel,
+                ).label.toUpperCase(),
                 min: 0.0,
                 max: 1.0,
               ),

@@ -1,30 +1,48 @@
 import 'package:flutter/material.dart';
 import 'package:history_of_me/localization.dart';
 
+/// A `controller` class translating the provided [moodScore] to a human
+/// readable label.
 class MoodTranslationController {
-  final double? moodScore;
+  /// The current [BuildContext].
   final BuildContext context;
+
+  /// A list of mood labels sorted accending according to the corresponding
+  /// [moodScore] it should represent.
+  ///
+  /// Applies default labels if none are provided.
+  final List<String>? labels;
+
+  /// The current mood score.
+  final double moodScore;
   const MoodTranslationController({
     required this.moodScore,
     required this.context,
+    this.labels,
   });
 
-  /// Returns a [String] describing the [moodScore] in a human readable label.
-  String get translatedLabelText {
-    if ((moodScore! > 0) & (moodScore! < 0.33)) {
-      return AppLocalizations.of(context).badLabel;
-    }
-    if ((moodScore! > 0.33) & (moodScore! < 0.66)) {
-      return AppLocalizations.of(context).alrightLabel;
-    }
-    if ((moodScore! > 0.66)) {
-      return AppLocalizations.of(context).goodLabel;
-    }
-    return AppLocalizations.of(context).badLabel;
-  }
+  /// A list of mood labels sorted accending according to the corresponding
+  /// [moodScore] it should represent.
+  List<String> get _labels =>
+      labels ??
+      [
+        AppLocalizations.of(context).badLabel,
+        AppLocalizations.of(context).alrightLabel,
+        AppLocalizations.of(context).goodLabel,
+      ];
 
-  /// Returns a label in 	in upper case.
-  String get uppercaseLabel {
-    return translatedLabelText.toUpperCase();
+  /// Returns a [String] translating the [moodScore] into a human readable
+  /// label.
+  String get label {
+    for (int i = 0; i < _labels.length; i++) {
+      // States the limit the score should not exceed in order to fit
+      // the value.
+      double limit = (i + 1) / _labels.length;
+      if (moodScore < limit) {
+        return _labels[i];
+      }
+    }
+
+    return _labels.last;
   }
 }

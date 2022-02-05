@@ -532,9 +532,9 @@ class __MoodScoreIndicatorState extends State<_MoodScoreIndicator>
 
   String get _moodTranslationString {
     return MoodTranslationController(
-      moodScore: widget.moodScore,
+      moodScore: widget.moodScore!,
       context: context,
-    ).translatedLabelText.toUpperCase();
+    ).label.toUpperCase();
   }
 
   @override
