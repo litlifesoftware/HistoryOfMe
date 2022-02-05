@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:history_of_me/api.dart';
 import 'package:history_of_me/app.dart';
 import 'package:history_of_me/controller/controllers.dart';
-import 'package:history_of_me/controller/mood_translation_controller.dart';
+import 'package:history_of_me/controller/mood_translator.dart';
 import 'package:history_of_me/config/config.dart';
 import 'package:history_of_me/localization.dart';
 import 'package:history_of_me/models.dart';
@@ -350,7 +350,7 @@ class _MoodSlider extends StatelessWidget {
                   Color(0xFFbee5be),
                   moodScore,
                 )!,
-                valueTitleText: MoodTranslationController(
+                valueTitleText: MoodTranslator(
                   moodScore: moodScore,
                   context: context,
                 ).label.toUpperCase(),

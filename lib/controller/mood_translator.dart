@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:history_of_me/localization.dart';
 
-/// A `controller` class translating the provided [moodScore] to a human
+/// A `controller` class translating the provided [moodScore] into a human
 /// readable label.
-class MoodTranslationController {
+class MoodTranslator {
   /// The current [BuildContext].
   final BuildContext context;
 
@@ -15,7 +15,7 @@ class MoodTranslationController {
 
   /// The current mood score.
   final double moodScore;
-  const MoodTranslationController({
+  const MoodTranslator({
     required this.moodScore,
     required this.context,
     this.labels,

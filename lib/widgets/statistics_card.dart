@@ -148,7 +148,7 @@ class _StatisticsCardContent extends StatelessWidget {
                           ),
                           _StatisticsHeaderItem(
                             label: AppLocalizations.of(context).avgMoodLabel,
-                            value: MoodTranslationController(
+                            value: MoodTranslator(
                               moodScore: queryController.avgMood,
                               context: context,
                             ).label.capitalize(),

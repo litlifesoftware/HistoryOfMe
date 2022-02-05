@@ -531,7 +531,7 @@ class __MoodScoreIndicatorState extends State<_MoodScoreIndicator>
   late AnimationController _animationController;
 
   String get _moodTranslationString {
-    return MoodTranslationController(
+    return MoodTranslator(
       moodScore: widget.moodScore!,
       context: context,
     ).label.toUpperCase();
