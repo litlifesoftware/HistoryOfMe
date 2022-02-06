@@ -109,4 +109,5 @@ class AppLocalizationsKeys {
   static const String bookmarkSavedDescr = 'bookmarkSavedDescr';
   static const String homeLabel = 'homeLabel';
   static const String profileLabel = 'profileLabel';
+  static const String mixedLabel = 'mixedLabel';
 }

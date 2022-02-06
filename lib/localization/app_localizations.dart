@@ -452,4 +452,8 @@ class AppLocalizations {
   String get profileLabel {
     return localizeValue(AppLocalizationsKeys.profileLabel);
   }
+
+  String get mixedLabel {
+    return localizeValue(AppLocalizationsKeys.mixedLabel);
+  }
 }

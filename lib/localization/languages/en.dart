@@ -129,5 +129,6 @@ class EN {
     AppLocalizationsKeys.bookmarkSavedDescr: 'Your bookmark has been saved.',
     AppLocalizationsKeys.homeLabel: 'home',
     AppLocalizationsKeys.profileLabel: 'profile',
+    AppLocalizationsKeys.mixedLabel: 'mixed',
   };
 }

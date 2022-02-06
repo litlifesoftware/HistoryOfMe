@@ -133,5 +133,6 @@ class DE {
         'Dein Lesezeichen wurde gespeichert.',
     AppLocalizationsKeys.homeLabel: 'Home',
     AppLocalizationsKeys.profileLabel: 'Profil',
+    AppLocalizationsKeys.mixedLabel: 'gemischt',
   };
 }

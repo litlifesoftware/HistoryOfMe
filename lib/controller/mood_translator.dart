@@ -27,6 +27,7 @@ class MoodTranslator {
       labels ??
       [
         AppLocalizations.of(context).badLabel,
+        AppLocalizations.of(context).mixedLabel,
         AppLocalizations.of(context).alrightLabel,
         AppLocalizations.of(context).goodLabel,
       ];
