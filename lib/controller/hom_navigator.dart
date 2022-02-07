@@ -1,9 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:history_of_me/models.dart';
-import 'package:history_of_me/screens.dart';
-import 'package:history_of_me/widgets.dart';
-
-import 'package:leitmotif/leitmotif.dart';
+part of controllers;
 
 /// A controller class enabling to navigate through screens by its corresponding
 /// member method.

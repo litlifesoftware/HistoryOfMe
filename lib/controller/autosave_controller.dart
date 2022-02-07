@@ -1,4 +1,4 @@
-import 'dart:async';
+part of controllers;
 
 /// A `controller` class handling autosave events.
 ///

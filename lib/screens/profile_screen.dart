@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:history_of_me/api.dart';
-import 'package:history_of_me/controller/routes/hom_navigator.dart';
+import 'package:history_of_me/controllers.dart';
 import 'package:history_of_me/localization.dart';
 import 'package:history_of_me/models.dart';
 import 'package:history_of_me/widgets.dart';

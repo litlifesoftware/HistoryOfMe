@@ -1,5 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:history_of_me/localization.dart';
+part of controllers;
 
 /// A `controller` class translating the provided [moodScore] into a human
 /// readable label.

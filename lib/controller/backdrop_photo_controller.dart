@@ -1,5 +1,4 @@
-import 'package:history_of_me/model/backdrop_photo.dart';
-import 'package:history_of_me/model/diary_entry.dart';
+part of controllers;
 
 /// Controller class to find the requested backdrop photo based on its id passed
 /// on using the [DiaryEntry].
