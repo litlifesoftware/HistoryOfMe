@@ -456,4 +456,16 @@ class AppLocalizations {
   String get mixedLabel {
     return localizeValue(AppLocalizationsKeys.mixedLabel);
   }
+
+  String get futureDateActionDescr {
+    return localizeValue(AppLocalizationsKeys.futureDateActionDescr);
+  }
+
+  String get futureDateDescr {
+    return localizeValue(AppLocalizationsKeys.futureDateDescr);
+  }
+
+  String get confirmDateLabel {
+    return localizeValue(AppLocalizationsKeys.confirmDateLabel);
+  }
 }

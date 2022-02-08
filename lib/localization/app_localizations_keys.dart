@@ -110,4 +110,7 @@ class AppLocalizationsKeys {
   static const String homeLabel = 'homeLabel';
   static const String profileLabel = 'profileLabel';
   static const String mixedLabel = 'mixedLabel';
+  static const String futureDateActionDescr = 'futureDateActionDescr';
+  static const String futureDateDescr = 'futureDateDescr';
+  static const String confirmDateLabel = 'confirmDateLabel';
 }

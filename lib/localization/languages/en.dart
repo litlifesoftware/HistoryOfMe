@@ -130,5 +130,10 @@ class EN {
     AppLocalizationsKeys.homeLabel: 'home',
     AppLocalizationsKeys.profileLabel: 'profile',
     AppLocalizationsKeys.mixedLabel: 'mixed',
+    AppLocalizationsKeys.futureDateActionDescr:
+        'Are you sure to create an entry for this date?',
+    AppLocalizationsKeys.futureDateDescr:
+        'This date is in the future. It is generally recommended to write about things you already experienced.',
+    AppLocalizationsKeys.confirmDateLabel: 'Confirm Date',
   };
 }

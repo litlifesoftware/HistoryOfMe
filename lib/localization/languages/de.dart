@@ -134,5 +134,10 @@ class DE {
     AppLocalizationsKeys.homeLabel: 'Home',
     AppLocalizationsKeys.profileLabel: 'Profil',
     AppLocalizationsKeys.mixedLabel: 'gemischt',
+    AppLocalizationsKeys.futureDateActionDescr:
+        'Möchtest du einen Eintrag für diesen Tag erstellen?',
+    AppLocalizationsKeys.futureDateDescr:
+        'Dieser Tag liegt in der Zukunft. Es wird generell empfohlen nur über Dinge zu schreiben, welche du bereits erlebt hast.',
+    AppLocalizationsKeys.confirmDateLabel: 'Tag bestätigen',
   };
 }
