@@ -10,10 +10,14 @@ import 'package:history_of_me/models.dart';
 import 'package:history_of_me/widgets.dart';
 import 'package:leitmotif/leitmotif.dart';
 
-/// A `screen` widget showing details and properties of a single [DiaryEntry]
-/// object while providing options to e.g. edit the entry.
+/// A `History of Me` `screen` widget showing details and properties of a
+/// specific [DiaryEntry] object while providing options to edit or delete
+/// the entry.
 class EntryDetailScreen extends StatefulWidget {
+  /// The entry's index on the chronological list of diary entries.
   final int listIndex;
+
+  /// The entry's uid.
   final String? diaryEntryUid;
 
   /// Creates a [EntryDetailScreen].
@@ -62,6 +66,7 @@ class _EntryDetailScreenState extends State<EntryDetailScreen>
     return _decode(data);
   }
 
+  /// Shows the [ChangePhotoDialog].
   void _showChangePhotoDialog(DiaryEntry diaryEntry) {
     showDialog(
       context: context,
@@ -104,8 +109,9 @@ class _EntryDetailScreenState extends State<EntryDetailScreen>
       (_) {
         LitRouteController(context).replaceCurrentCupertinoWidget(
           newWidget: EntryDetailScreen(
-            // Decrease the index by one to artificially lower the total entries count
-            // and therefore increase the entries number on the label text.
+            // Decrease the index by one to artificially lower the total
+            // entries count and therefore increase the entries number on
+            // the label text.
             listIndex: widget.listIndex,
             diaryEntryUid: _queryController.getNextDiaryEntry(diaryEntry).uid,
           ),
@@ -119,8 +125,9 @@ class _EntryDetailScreenState extends State<EntryDetailScreen>
       (_) {
         LitRouteController(context).replaceCurrentCupertinoWidget(
           newWidget: EntryDetailScreen(
-            // Increase the index by one to artificially higher the total entries count
-            // and therefore lower the entries number on the label text.
+            // Increase the index by one to artificially higher the total
+            // entries count and therefore lower the entries number on
+            // the label text.
             listIndex: widget.listIndex,
             diaryEntryUid:
                 _queryController.getPreviousDiaryEntry(diaryEntry).uid,
@@ -205,13 +212,12 @@ class _EntryDetailScreenState extends State<EntryDetailScreen>
                             onEdit: () => _onEdit(diaryEntry),
                             queryController: _queryController,
                           ),
-                          _EntryDetailFooter(
+                          _Footer(
                             showNextButton: _shouldShowNextButton(diaryEntry),
                             showPreviousButton:
                                 _shouldShowPreviousButton(diaryEntry),
-                            onPreviousPressed: () =>
-                                _onPreviousPressed(diaryEntry),
-                            onNextPressed: () => _onNextPressed(diaryEntry),
+                            onPrevious: () => _onPreviousPressed(diaryEntry),
+                            onNext: () => _onNextPressed(diaryEntry),
                             moreOptionsPressed:
                                 _settingsPanelController.showSettingsPanel,
                           ),
@@ -230,29 +236,33 @@ class _EntryDetailScreenState extends State<EntryDetailScreen>
   }
 }
 
-class _EntryDetailFooter extends StatelessWidget {
-  final void Function() moreOptionsPressed;
-  final bool showPreviousButton;
+/// A `History of Me` widget showing a row of buttons allowing the user to
+/// interact with a diary entry.
+///
+/// It allows to navigate to the previous and next entry and to delete the
+/// entry.
+class _Footer extends StatelessWidget {
   final bool showNextButton;
-  final void Function() onPreviousPressed;
-  final void Function() onNextPressed;
-  final List<BoxShadow> buttonBoxShadow;
-  const _EntryDetailFooter({
+  final bool showPreviousButton;
+  final void Function() moreOptionsPressed;
+  final void Function() onNext;
+  final void Function() onPrevious;
+
+  /// Creates a [_Footer].
+  const _Footer({
     Key? key,
     required this.moreOptionsPressed,
-    required this.showPreviousButton,
+    required this.onNext,
+    required this.onPrevious,
     required this.showNextButton,
-    required this.onPreviousPressed,
-    required this.onNextPressed,
-    this.buttonBoxShadow = const [
-      const BoxShadow(
-        blurRadius: 6.0,
-        color: Colors.black26,
-        offset: Offset(2, 2),
-        spreadRadius: -1.0,
-      )
-    ],
+    required this.showPreviousButton,
   }) : super(key: key);
+
+  /// Returns the spacing in pixels that should be applied between the
+  /// buttons in the row.
+  double get _buttonSpacing =>
+      showNextButton && showPreviousButton ? 16.0 : 0.0;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -292,35 +302,23 @@ class _EntryDetailFooter extends StatelessWidget {
             Row(
               children: [
                 showPreviousButton
-                    ? _BottomNavButton(
-                        isPrevious: true,
-                        onPressed: onPreviousPressed,
-                      )
+                    ? _PreviousNavigationButton(onPressed: onPrevious)
                     : SizedBox(),
+                SizedBox(width: _buttonSpacing),
                 showNextButton
-                    ? Padding(
-                        padding: const EdgeInsets.only(
-                          left: 8.0,
-                        ),
-                        child: _BottomNavButton(
-                          isPrevious: false,
-                          onPressed: onNextPressed,
-                        ))
+                    ? _NextNavigationButton(onPressed: onNext)
                     : SizedBox()
               ],
             ),
             LitPushedThroughButton(
-              boxShadow: buttonBoxShadow,
-
               margin: LitEdgeInsets.button * 1.5,
               child: EllipseIcon(
                 animated: false,
-                dotColor: Colors.white,
+                dotColor: LitColors.grey380,
               ),
-              accentColor: LitColors.grey200,
-              //baackgroundColor: HexColor('#CCCCCC'),
-              backgroundColor: LitColors.grey100,
               onPressed: moreOptionsPressed,
+              accentColor: Colors.white,
+              backgroundColor: Colors.white,
             ),
           ],
         ),
@@ -329,56 +327,74 @@ class _EntryDetailFooter extends StatelessWidget {
   }
 }
 
-/// A button enabling to navigate between all available diary entries.
-class _BottomNavButton extends StatelessWidget {
-  final bool isPrevious;
+/// A `History of Me` widget allowing to navigate to the next entry using the
+/// [onPressed] callback.
+class _NextNavigationButton extends StatelessWidget {
   final void Function() onPressed;
 
-  const _BottomNavButton({
+  /// Creates a [_NextNavigationButton].
+  const _NextNavigationButton({
     Key? key,
-    required this.isPrevious,
     required this.onPressed,
   }) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(
-        right: 8.0,
-      ),
-      child: LitPushedThroughButton(
-        child: Row(
-          children: [
-            isPrevious
-                ? Padding(
-                    padding: const EdgeInsets.only(
-                      right: 4.0,
-                    ),
-                    child: LinearNavigationIcon(
-                      mode: LitLinearNavigationMode.previous,
-                    ),
-                  )
-                : SizedBox(),
-            Text(
-              isPrevious
-                  ? AppLocalizations.of(context).previousLabel.toUpperCase()
-                  : AppLocalizations.of(context).nextLabel.toUpperCase(),
-              style: LitSansSerifStyles.button,
+    return LitPushedThroughButton(
+      child: Row(
+        children: [
+          Text(
+            AppLocalizations.of(context).nextLabel.toUpperCase(),
+            style: LitSansSerifStyles.button,
+          ),
+          Padding(
+            padding: const EdgeInsets.only(
+              left: 4.0,
             ),
-            !isPrevious
-                ? Padding(
-                    padding: const EdgeInsets.only(
-                      left: 4.0,
-                    ),
-                    child: LinearNavigationIcon(
-                      mode: LitLinearNavigationMode.next,
-                    ),
-                  )
-                : SizedBox(),
-          ],
-        ),
-        accentColor: Colors.grey[200]!,
-        onPressed: onPressed,
+            child: LinearNavigationIcon(
+              mode: LitLinearNavigationMode.next,
+            ),
+          ),
+        ],
       ),
+      accentColor: LitColors.grey100,
+      onPressed: onPressed,
+    );
+  }
+}
+
+/// A `History of Me` widget allowing to navigate to the previous entry using the
+/// [onPressed] callback.
+class _PreviousNavigationButton extends StatelessWidget {
+  final void Function() onPressed;
+
+  /// Creates a [_PreviousNavigationButton].
+  const _PreviousNavigationButton({
+    Key? key,
+    required this.onPressed,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return LitPushedThroughButton(
+      child: Row(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(
+              right: 4.0,
+            ),
+            child: LinearNavigationIcon(
+              mode: LitLinearNavigationMode.previous,
+            ),
+          ),
+          Text(
+            AppLocalizations.of(context).previousLabel.toUpperCase(),
+            style: LitSansSerifStyles.button,
+          ),
+        ],
+      ),
+      accentColor: LitColors.grey100,
+      onPressed: onPressed,
     );
   }
 }
