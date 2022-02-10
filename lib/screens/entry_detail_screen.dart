@@ -101,7 +101,17 @@ class _EntryDetailScreenState extends State<EntryDetailScreen>
   }
 
   void _onEdit(DiaryEntry diaryEntry) {
+    if (_settingsPanelController.isShown)
+      _settingsPanelController.dismissSettingsPanel();
     _screenRouter.toEntryEditingScreen(diaryEntry: diaryEntry);
+  }
+
+  /// Delays the [_onEdit] call by the button animation duration to allow the
+  /// animation to fully play back before transitioning to the next screen.
+  void _onEditDelayed(DiaryEntry diaryEntry) {
+    Future.delayed(LitAnimationDurations.button).then(
+      (_) => _onEdit(diaryEntry),
+    );
   }
 
   void _onNextPressed(DiaryEntry diaryEntry) {
@@ -170,10 +180,19 @@ class _EntryDetailScreenState extends State<EntryDetailScreen>
                   : AppLocalizations.of(context).untitledLabel,
             ),
             settingsPanel: LitSettingsPanel(
-              height: 128.0,
+              height: 180.0,
               controller: _settingsPanelController,
-              title: AppLocalizations.of(context).optionsLabel,
+              title: AppLocalizations.of(context).optionsLabel.capitalize(),
               children: [
+                LitPushedThroughButton(
+                  child: Text(
+                    AppLocalizations.of(context).editLabel.toUpperCase(),
+                    style: LitSansSerifStyles.button,
+                  ),
+                  accentColor: LitColors.grey100,
+                  onPressed: () => _onEditDelayed(diaryEntry),
+                ),
+                SizedBox(height: 16.0),
                 LitDeleteButton(
                   onPressed: _showConfirmDeleteDialog,
                 ),
