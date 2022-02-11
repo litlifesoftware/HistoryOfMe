@@ -67,7 +67,7 @@ class _DottedDesignState extends State<DottedDesign>
           return Stack(
             children: [
               AspectRatio(
-                aspectRatio: bookmarkDimensions.aspectRatio,
+                aspectRatio: BookmarkCover.aspectRatio,
                 child: Container(
                   decoration: BoxDecoration(
                     color: _backgroundColor,

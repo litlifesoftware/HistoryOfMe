@@ -23,12 +23,12 @@ class StripedDesign extends StatelessWidget implements BookmarkDesign {
 
   /// The bookmark height.
   double get _height {
-    return bookmarkDimensions.height;
+    return BookmarkCover.height;
   }
 
   /// The bookmark width.
   double get _width {
-    return bookmarkDimensions.width;
+    return BookmarkCover.width;
   }
 
   /// Returns the stripe's aspect ratio.
