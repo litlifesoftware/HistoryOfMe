@@ -72,7 +72,7 @@ class _KeyIcon extends StatelessWidget {
         child: Image(
           color: LitColors.grey150,
           image: AssetImage(
-            ImageAssetNames.keyLogo,
+            AppAssets.keyLogo,
           ),
           fit: BoxFit.fitHeight,
           //color: Colors.black,
