@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:history_of_me/api.dart';
 import 'package:history_of_me/app.dart';
 import 'package:history_of_me/controllers.dart';
-import 'package:history_of_me/config/config.dart';
 import 'package:history_of_me/localization.dart';
 import 'package:history_of_me/models.dart';
 import 'package:history_of_me/widgets.dart';
@@ -86,8 +85,8 @@ class _EntryEditingScreenState extends State<EntryEditingScreen>
 
   /// Checks whether the user has submitted any unsaved changes.
   bool _isUnsaved(DiaryEntry databaseEntry) {
-    bool _titleChanged =
-        _title != databaseEntry.title && !(_title == initialDiaryEntryTitle);
+    bool _titleChanged = _title != databaseEntry.title &&
+        !(_title == DefaultData.diaryEntryTitle);
     bool _contentChanged = _content != databaseEntry.content;
     bool _moodScoreChanged = _moodScore != databaseEntry.moodScore;
     return (_titleChanged || _contentChanged || _moodScoreChanged);
@@ -138,7 +137,7 @@ class _EntryEditingScreenState extends State<EntryEditingScreen>
   /// 'untitled'.
   void _initTitleEditingController(String fallbackValue) {
     _titleEditingController = TextEditingController(
-        text: widget.diaryEntry.title != initialDiaryEntryTitle
+        text: widget.diaryEntry.title != DefaultData.diaryEntryTitle
             ? widget.diaryEntry.title
             : fallbackValue);
   }

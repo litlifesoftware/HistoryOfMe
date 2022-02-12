@@ -117,9 +117,9 @@ class AppAPI {
   /// Returns the default app settings.
   AppSettings get defaultAppSettings {
     return AppSettings(
-      privacyPolicyAgreed: initialAgreedPrivacy,
-      darkMode: initialDarkMode,
-      tabIndex: initialTabIndex,
+      privacyPolicyAgreed: DefaultData.agreedPrivacy,
+      darkMode: DefaultData.darkMode,
+      tabIndex: DefaultData.tabIndex,
       installationID: generateInstallationID(),
       lastBackup: "",
     );
@@ -198,14 +198,14 @@ class AppAPI {
     final int timeStampNow = DateTime.now().millisecondsSinceEpoch;
     final UserData userData = UserData(
       name: username,
-      primaryColor: initialPrimaryColor,
-      secondaryColor: initialSecondayColor,
-      stripeCount: minStripeCount,
-      dotSize: minDotSize,
+      primaryColor: DefaultData.primaryColor,
+      secondaryColor: DefaultData.secondaryColors,
+      stripeCount: DefaultData.minStripeCount,
+      dotSize: DefaultData.minDotSize,
       animated: true,
-      quote: initialQuote,
-      designPatternIndex: initialDesignPatternIndex,
-      quoteAuthor: initialQuoteAuthor,
+      quote: DefaultData.quote,
+      designPatternIndex: DefaultData.designPatternIndex,
+      quoteAuthor: DefaultData.quoteAuthor,
       lastUpdated: timeStampNow,
       created: timeStampNow,
     );
@@ -276,11 +276,11 @@ class AppAPI {
       date: date.toIso8601String(),
       created: now.millisecondsSinceEpoch,
       lastUpdated: now.millisecondsSinceEpoch,
-      title: initialDiaryEntryTitle,
-      content: initialDiaryEntryContent,
-      moodScore: initialDiaryEntryMoodScore,
+      title: DefaultData.diaryEntryTitle,
+      content: DefaultData.diaryEntryContent,
+      moodScore: DefaultData.diaryEntryMoodScore,
       favorite: false,
-      backdropPhotoId: initalDiaryEntryBackdropId,
+      backdropPhotoId: DefaultData.diaryEntryBackdropId,
     );
 
     Hive.box<DiaryEntry>(_diaryEntriesKey).put(diaryEntry.uid, diaryEntry);
@@ -420,7 +420,7 @@ class AppAPI {
 
   void addInitialColors() {
     if (Hive.box<UserCreatedColor>(_userCreatedColorsKey).isEmpty) {
-      for (Color color in initialColors) {
+      for (Color color in DefaultData.userCreatedColorValues) {
         addUserCreatedColor(color.alpha, color.red, color.green, color.blue);
       }
     } else {

@@ -44,7 +44,7 @@ class _SecondaryColorSelectorCardState
   }
 
   /// Returns the color values as a [Color] object of an specific item on the
-  /// provided [widget.userCreatedColors] list (based on its index).
+  /// provided [widget.userCreatedColorValues] list (based on its index).
   Color _mapSelectedColor(int index) {
     return Color.fromARGB(
       widget.userCreatedColors[index].alpha,

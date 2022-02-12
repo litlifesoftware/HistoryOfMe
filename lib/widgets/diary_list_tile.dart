@@ -240,7 +240,7 @@ class __EntryCardState extends State<_EntryCard> {
   }
 
   bool get _titleAvailable {
-    return widget.diaryEntry.title != initialDiaryEntryTitle;
+    return widget.diaryEntry.title != DefaultData.diaryEntryTitle;
   }
 
   String get _title {

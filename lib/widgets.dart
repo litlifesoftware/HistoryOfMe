@@ -11,7 +11,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:history_of_me/api.dart';
 import 'package:history_of_me/app.dart';
-import 'package:history_of_me/config/config.dart';
 import 'package:history_of_me/controllers.dart';
 import 'package:history_of_me/extensions.dart';
 import 'package:history_of_me/localization.dart';

@@ -203,7 +203,7 @@ class _Header extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 4.0),
                       child: Text(
-                        diaryEntry.title != initialDiaryEntryTitle
+                        diaryEntry.title != DefaultData.diaryEntryTitle
                             ? diaryEntry.title
                             : AppLocalizations.of(context).untitledLabel,
                         style: LitSansSerifStyles.subtitle1.copyWith(
