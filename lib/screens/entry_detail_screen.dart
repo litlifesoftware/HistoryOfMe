@@ -279,8 +279,7 @@ class _Footer extends StatelessWidget {
 
   /// Returns the spacing in pixels that should be applied between the
   /// buttons in the row.
-  double get _buttonSpacing =>
-      showNextButton && showPreviousButton ? 16.0 : 0.0;
+  double get _buttonSpacing => showNextButton && showPreviousButton ? 8.0 : 0.0;
 
   @override
   Widget build(BuildContext context) {
@@ -326,7 +325,7 @@ class _Footer extends StatelessWidget {
                 SizedBox(width: _buttonSpacing),
                 showNextButton
                     ? _NextNavigationButton(onPressed: onNext)
-                    : SizedBox()
+                    : SizedBox(),
               ],
             ),
             LitPushedThroughButton(
@@ -359,24 +358,9 @@ class _NextNavigationButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LitPushedThroughButton(
-      child: Row(
-        children: [
-          Text(
-            AppLocalizations.of(context).nextLabel.toUpperCase(),
-            style: LitSansSerifStyles.button,
-          ),
-          Padding(
-            padding: const EdgeInsets.only(
-              left: 4.0,
-            ),
-            child: LinearNavigationIcon(
-              mode: LitLinearNavigationMode.next,
-            ),
-          ),
-        ],
-      ),
-      accentColor: LitColors.grey100,
+    return _NavigationButton(
+      label: AppLocalizations.of(context).nextLabel.toUpperCase(),
+      mode: LitLinearNavigationMode.next,
       onPressed: onPressed,
     );
   }
@@ -395,21 +379,50 @@ class _PreviousNavigationButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return _NavigationButton(
+      label: AppLocalizations.of(context).previousLabel.toUpperCase(),
+      mode: LitLinearNavigationMode.previous,
+      onPressed: onPressed,
+    );
+  }
+}
+
+/// A `History of Me` widget displaying a navigation button based on the
+/// provided [mode] value.
+class _NavigationButton extends StatelessWidget {
+  final LitLinearNavigationMode mode;
+  final String label;
+  final void Function() onPressed;
+  const _NavigationButton({
+    Key? key,
+    required this.label,
+    required this.mode,
+    required this.onPressed,
+  }) : super(key: key);
+
+  static const double _maxWidth = 72.0;
+
+  static const double _spacing = 4.0;
+
+  @override
+  Widget build(BuildContext context) {
     return LitPushedThroughButton(
       child: Row(
         children: [
-          Padding(
-            padding: const EdgeInsets.only(
-              right: 4.0,
+          LinearNavigationIcon(
+            mode: mode,
+          ),
+          const SizedBox(width: _spacing),
+          ConstrainedBox(
+            constraints: const BoxConstraints(
+              maxWidth: _maxWidth,
             ),
-            child: LinearNavigationIcon(
-              mode: LitLinearNavigationMode.previous,
+            child: ClippedText(
+              label,
+              style: LitSansSerifStyles.button,
             ),
           ),
-          Text(
-            AppLocalizations.of(context).previousLabel.toUpperCase(),
-            style: LitSansSerifStyles.button,
-          ),
+          const SizedBox(width: _spacing),
         ],
       ),
       accentColor: LitColors.grey100,
