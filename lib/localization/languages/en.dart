@@ -135,5 +135,6 @@ class EN {
     AppLocalizationsKeys.futureDateDescr:
         'This date is in the future. It is generally recommended to write about things you already experienced.',
     AppLocalizationsKeys.confirmDateLabel: 'Confirm Date',
+    AppLocalizationsKeys.hintText: 'Type something',
   };
 }

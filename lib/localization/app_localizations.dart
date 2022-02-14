@@ -468,4 +468,8 @@ class AppLocalizations {
   String get confirmDateLabel {
     return localizeValue(AppLocalizationsKeys.confirmDateLabel);
   }
+
+  String get hintText {
+    return localizeValue(AppLocalizationsKeys.hintText);
+  }
 }

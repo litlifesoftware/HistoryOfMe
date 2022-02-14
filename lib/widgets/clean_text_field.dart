@@ -22,6 +22,9 @@ class CleanTextField extends StatelessWidget {
     this.showCounter = false,
   }) : super(key: key);
 
+  /// Returns the hint's text style
+  TextStyle get hintStyle => style.copyWith(color: LitColors.grey200);
+
   @override
   Widget build(BuildContext context) {
     return TextField(
@@ -31,6 +34,8 @@ class CleanTextField extends StatelessWidget {
       decoration: InputDecoration(
         border: InputBorder.none,
         counter: showCounter ? WordCountBadge(controller: controller) : null,
+        hintText: AppLocalizations.of(context).hintText + "...",
+        hintStyle: hintStyle,
       ),
       focusNode: focusNode,
       maxLines: maxLines,
