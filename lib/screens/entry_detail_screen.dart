@@ -359,7 +359,7 @@ class _NextNavigationButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _NavigationButton(
-      label: AppLocalizations.of(context).nextLabel.toUpperCase(),
+      label: LeitmotifLocalizations.of(context).nextLabel.toUpperCase(),
       mode: LitLinearNavigationMode.next,
       onPressed: onPressed,
     );
@@ -380,7 +380,7 @@ class _PreviousNavigationButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _NavigationButton(
-      label: AppLocalizations.of(context).previousLabel.toUpperCase(),
+      label: LeitmotifLocalizations.of(context).backLabel.toUpperCase(),
       mode: LitLinearNavigationMode.previous,
       onPressed: onPressed,
     );
