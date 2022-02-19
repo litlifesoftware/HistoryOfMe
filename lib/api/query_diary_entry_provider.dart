@@ -48,11 +48,15 @@ class QueryDiaryEntryProvider extends StatelessWidget {
 
   /// Returns the first entry's index.
   DiaryEntry? getFirstEntry(Box<DiaryEntry> box) {
-    return box.getAt(0);
+    return box.isNotEmpty ? box.getAt(0) : null;
   }
 
   /// Returns whether the queried entry is stored on the first index.
   bool getIsFirstIndex(Box<DiaryEntry> box) {
+    if (box.isEmpty) {
+      return false;
+    }
+
     DiaryEntry? first = getFirstEntry(box);
 
     if (first == null) return false;
@@ -64,6 +68,10 @@ class QueryDiaryEntryProvider extends StatelessWidget {
 
   /// Returns whether the queried entry is stored on the last index.
   bool getIsLastIndex(Box<DiaryEntry> box) {
+    if (box.isEmpty) {
+      return false;
+    }
+
     final bool? isFirst = box.getAt(getLastIndex(box))!.uid == diaryEntryUid;
     return isFirst ?? false;
   }
