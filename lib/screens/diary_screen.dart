@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:history_of_me/api.dart';
 import 'package:history_of_me/controllers.dart';
 import 'package:history_of_me/localization.dart';
-import 'package:history_of_me/model/user_data.dart';
+import 'package:history_of_me/models.dart';
 import 'package:history_of_me/styles.dart';
 import 'package:history_of_me/widgets.dart';
 import 'package:leitmotif/leitmotif.dart';
@@ -56,6 +56,29 @@ class _DiaryScreenState extends State<DiaryScreen>
     super.initState();
   }
 
+  /// Returns a diary entry list view or a information card if no entries
+  /// have been created yet.
+  Widget buildListView(List<DiaryEntry> diaryEntries, UserData userData) {
+    if (diaryEntries.isNotEmpty)
+      return DiaryListView(
+        animationController: _listViewAnimation,
+        bookmarkAnimation: widget.bookmarkAnimation,
+        diaryEntriesListSorted: diaryEntries
+          ..sort(
+            QueryController().sortEntriesByDateAscending,
+          ),
+        scrollController: _scrollController,
+        showFavoriteEntriesOnly: _showFavoriteEntriesOnly,
+        toggleShowFavoritesOnly: toggleShowFavoritesOnly,
+        userData: userData,
+      );
+    return _EmptyDiaryView(
+      animationController: widget.bookmarkAnimation,
+      handleCreateAction: _showCreateEntryDialog,
+      userData: userData,
+    );
+  }
+
   @override
   void dispose() {
     _listViewAnimation.dispose();
@@ -69,6 +92,7 @@ class _DiaryScreenState extends State<DiaryScreen>
         return LitScaffold(
           actionButton: CollapseOnScrollActionButton(
             backgroundColor: Color(userData!.primaryColor),
+            accentColor: Color(userData.secondaryColor),
             onPressed: _showCreateEntryDialog,
             scrollController: _scrollController,
             label:
@@ -78,26 +102,8 @@ class _DiaryScreenState extends State<DiaryScreen>
           ),
           body: SafeArea(
             child: DiaryEntryProvider(
-              builder: (context, diaryEntries) {
-                return diaryEntries.isNotEmpty
-                    ? DiaryListView(
-                        animationController: _listViewAnimation,
-                        bookmarkAnimation: widget.bookmarkAnimation,
-                        diaryEntriesListSorted: diaryEntries
-                          ..sort(
-                            QueryController().sortEntriesByDateAscending,
-                          ),
-                        scrollController: _scrollController,
-                        showFavoriteEntriesOnly: _showFavoriteEntriesOnly,
-                        toggleShowFavoritesOnly: toggleShowFavoritesOnly,
-                        userData: userData,
-                      )
-                    : _EmptyDiaryView(
-                        animationController: widget.bookmarkAnimation,
-                        handleCreateAction: _showCreateEntryDialog,
-                        userData: userData,
-                      );
-              },
+              builder: (context, diaryEntries) =>
+                  buildListView(diaryEntries, userData),
             ),
           ),
         );
