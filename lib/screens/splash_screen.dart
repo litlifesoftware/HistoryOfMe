@@ -6,13 +6,12 @@ import 'package:leitmotif/leitmotif.dart';
 /// application being loaded.
 class SplashScreen extends StatelessWidget {
   /// Creates a [SplashScreen].
-  ///
   const SplashScreen();
   @override
   Widget build(BuildContext context) {
     return LitStaticLoadingScreen(
       child: HistoryOfMeAppLogo(
-        color: Colors.white,
+        color: LitColors.grey350,
         showKeyImage: false,
       ),
     );
