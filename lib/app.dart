@@ -120,7 +120,6 @@ class _AppState extends State<App> {
           brightness: Brightness.light,
           primarySwatch: Colors.grey,
           primaryColor: Colors.grey[50],
-          primaryColorBrightness: Brightness.light,
         ),
         localizationsDelegates: const [
           AppLocalizations.delegate,
