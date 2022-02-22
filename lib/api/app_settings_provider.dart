@@ -30,21 +30,21 @@ class AppSettingsProvider extends StatelessWidget {
 
   /// Extracts the content stored inside the `Hive` box.
   AppSettings? extractContent(Box<AppSettings> box) {
+    AppSettings? appSettings;
     // Try to retrieve the `AppSettings` instance
     try {
-      AppSettings? appSettings = box.getAt(AppAPI.defaultEntryIndex);
+      appSettings = box.getAt(AppAPI.defaultEntryIndex);
       // If none found, return null.
       if (appSettings == null) return null;
       // Validate the app settings object to enforce data integrity.
       if (validator != null) validator!.validateAppSettings(appSettings);
-
-      return appSettings;
     } catch (e) {
       print(e);
       _createAppSettings();
       print('Error while accessing AppSettings object. '
           'Creating backup AppSettings object ...');
     }
+    return appSettings;
   }
 
   @override
