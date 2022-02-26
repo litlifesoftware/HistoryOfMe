@@ -10,6 +10,9 @@ class DiaryPreviewCard extends StatelessWidget {
   /// Handles the action to rebuild the database.
   final Future Function() rebuildDatabase;
 
+  /// Handles the `select backup file` action.
+  final void Function() selectBackup;
+
   /// The user icon's size displayed on the backup preview.
   final double _userIconSize = 48.0;
 
@@ -18,6 +21,7 @@ class DiaryPreviewCard extends StatelessWidget {
     Key? key,
     required this.diaryBackup,
     required this.rebuildDatabase,
+    required this.selectBackup,
   }) : super(key: key);
 
   @override
@@ -80,6 +84,12 @@ class DiaryPreviewCard extends StatelessWidget {
           onPressed: rebuildDatabase,
           backgroundColor: AppColors.pastelGreen,
           accentColor: AppColors.pastelBlue,
+        ),
+        ActionButtonData(
+          title: AppLocalizations.of(context).selectAnother,
+          onPressed: selectBackup,
+          backgroundColor: AppColors.pastelPink,
+          accentColor: AppColors.pastelPink,
         ),
       ],
     );

@@ -140,5 +140,6 @@ class DE {
         'Dieser Tag liegt in der Zukunft. Es wird generell empfohlen nur über Dinge zu schreiben, welche du bereits erlebt hast.',
     AppLocalizationsKeys.confirmDateLabel: 'Tag bestätigen',
     AppLocalizationsKeys.hintText: 'Schreibe etwas',
+    AppLocalizationsKeys.selectAnother: 'Anderes auswählen',
   };
 }

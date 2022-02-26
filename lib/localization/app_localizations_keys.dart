@@ -114,4 +114,5 @@ class AppLocalizationsKeys {
   static const String futureDateDescr = 'futureDateDescr';
   static const String confirmDateLabel = 'confirmDateLabel';
   static const String hintText = 'hintText';
+  static const String selectAnother = 'selectAnother';
 }

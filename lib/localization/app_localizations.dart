@@ -472,4 +472,8 @@ class AppLocalizations {
   String get hintText {
     return localizeValue(AppLocalizationsKeys.hintText);
   }
+
+  String get selectAnother {
+    return localizeValue(AppLocalizationsKeys.selectAnother);
+  }
 }
