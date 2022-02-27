@@ -265,6 +265,7 @@ class _BackupBuilder extends StatelessWidget {
                                   diaryBackup: diaryBackup!,
                                   rebuildDatabase: () =>
                                       rebuildDatabase(diaryBackup!),
+                                  selectBackup: pickFile,
                                 )
                               : _BackupNotFoundCard(onPickFile: pickFile);
                     },
