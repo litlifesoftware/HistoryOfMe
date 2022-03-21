@@ -27,8 +27,8 @@ class QueryController {
     _diaryEntries.forEach((entry) {
       entryContentString = entryContentString + " ${entry.content}";
     });
-    List<String> words = entryContentString.split(_pattern);
-    return words.length;
+    return entryContentString.wordCount;
+    //return words.length;
   }
 
   /// Returns the calculated average number of words written per diary entry.
@@ -36,14 +36,18 @@ class QueryController {
     return (totalWordsWritten / totalDiaryEntries);
   }
 
-  String? _getContentExtreme(bool max) {
-    String? content = _diaryEntries[0].content;
+  String _getContentExtreme(bool max) {
+    if (_diaryEntries.isEmpty) {
+      return "";
+    }
+
+    String content = _diaryEntries[0].content;
 
     _diaryEntries.forEach((entry) {
-      bool maxCondition = entry.content.length > content!.length;
-      bool minCondition = entry.content.length < content!.length;
-      bool splitCondition = (entry.content.split(_pattern).length > 0);
-      if ((max ? maxCondition : minCondition) && splitCondition) {
+      bool maxCondition = entry.content.wordCount > content.wordCount;
+      bool minCondition = entry.content.wordCount < content.wordCount;
+      //bool splitCondition = (entry.content.split(_pattern).length > 0);
+      if ((max ? maxCondition : minCondition)) {
         content = entry.content;
       }
       if (!max) {
@@ -56,12 +60,12 @@ class QueryController {
 
   /// Returns the total number of words written on the largest diary entry.
   int get mostWordsWrittenAtOnce {
-    return _getContentExtreme(true)!.split(_pattern).length;
+    return _getContentExtreme(true).wordCount;
   }
 
   /// Returns the total number of words written on the largest diary entry.
   int get leastWordsWrittenAtOnce {
-    return _getContentExtreme(false)!.split(_pattern).length;
+    return _getContentExtreme(false).split(_pattern).length;
   }
 
   int get entriesThisWeek {
