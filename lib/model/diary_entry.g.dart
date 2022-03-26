@@ -26,13 +26,14 @@ class DiaryEntryAdapter extends TypeAdapter<DiaryEntry> {
       moodScore: fields[6] as double,
       favorite: fields[7] as bool,
       backdropPhotoId: fields[8] as int,
+      photos: (fields[9] as List?)?.cast<DiaryPhoto>(),
     );
   }
 
   @override
   void write(BinaryWriter writer, DiaryEntry obj) {
     writer
-      ..writeByte(9)
+      ..writeByte(10)
       ..writeByte(0)
       ..write(obj.uid)
       ..writeByte(1)
@@ -50,7 +51,9 @@ class DiaryEntryAdapter extends TypeAdapter<DiaryEntry> {
       ..writeByte(7)
       ..write(obj.favorite)
       ..writeByte(8)
-      ..write(obj.backdropPhotoId);
+      ..write(obj.backdropPhotoId)
+      ..writeByte(9)
+      ..write(obj.photos);
   }
 
   @override
