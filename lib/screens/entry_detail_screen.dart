@@ -40,6 +40,13 @@ class _EntryDetailScreenState extends State<EntryDetailScreen>
   late HOMNavigator _screenRouter;
   late LitSettingsPanelController _settingsPanelController;
 
+  late DiaryPhotoPicker _diaryPhotoPicker;
+
+  // bool unsupportedFile = false;
+
+  // late Directory storageDir;
+  // late Directory cacheDir;
+
   /// Toggles the [_assetsLoading] value.
   void _toggleAssetsLoading() {
     setState(() {
@@ -67,16 +74,16 @@ class _EntryDetailScreenState extends State<EntryDetailScreen>
   }
 
   /// Shows the [ChangePhotoDialog].
-  void _showChangePhotoDialog(DiaryEntry diaryEntry) {
-    showDialog(
-      context: context,
-      builder: (_) => ChangePhotoDialog(
-        backdropPhotos: _photoAssets,
-        diaryEntry: diaryEntry,
-        // imageNames: imageNames,
-      ),
-    );
-  }
+  // void _showChangePhotoDialog(DiaryEntry diaryEntry) {
+  //   showDialog(
+  //     context: context,
+  //     builder: (_) => ChangePhotoDialog(
+  //       backdropPhotos: _photoAssets,
+  //       diaryEntry: diaryEntry,
+  //       // imageNames: imageNames,
+  //     ),
+  //   );
+  // }
 
   void _onDeleteEntry() {
     LitRouteController(context).clearNavigationStack();
@@ -114,6 +121,183 @@ class _EntryDetailScreenState extends State<EntryDetailScreen>
     );
   }
 
+  //final ImagePicker picker = ImagePicker();
+
+  //List<XFile> images = [];
+
+  // void pickImage(DiaryEntry entry) async {
+  //   //final ImagePicker _picker = ImagePicker();
+  //   // final
+
+  //   // setState(() {
+  //   //   images = [];
+  //   // })
+
+  //   List<XFile?>? pickedImages = [];
+  //   List<DiaryPhoto> diaryPhotos = [];
+
+  //   try {
+  //     pickedImages = await picker.pickMultiImage();
+  //     if (pickedImages != null && pickedImages.length != 0) {
+  //       images = [];
+  //     }
+  //   } catch (e) {
+  //     unsupportedFile = true;
+  //     showDialog(
+  //       context: context,
+  //       builder: (context) => LitTitledDialog(
+  //         titleText: "Error",
+  //         child: Padding(
+  //           padding: LitEdgeInsets.dialogMargin,
+  //           child: Text(
+  //             "Not supported file.",
+  //             style: LitSansSerifStyles.body2,
+  //           ),
+  //         ),
+  //       ),
+  //     );
+  //   }
+
+  //   if (pickedImages != null) {
+  //     pickedImages.forEach(
+  //       (XFile? element) async {
+  //         if (element == null)
+  //           return;
+  //         else {
+  //           setState(() {
+  //             images.add(element);
+  //           });
+  //           // element.openRead();
+  //           // Future<Uint8List> ele = await element.readAsBytes();
+  //           // print(ele);
+  //           //TODO: Store on app directory
+  //           //TODO: copy to media directory to backup photos
+  //           //maybe store photos as base64 string
+  //           //TODO: make sure it will work on all version apps / error handling
+  //           // TODO: include the base64 string in the photo model
+  //           // TODO: extend backuping to backup photos.
+
+  //           String uid = AppAPI().generateUid();
+  //           String fileName = uid + p.extension(element.path);
+  //           String filePath = storageDir.path + '/' + fileName;
+  //           // Directory('/data/user/0/com.litlifesoftware.historyofme/images/')
+  //           //     .create();
+
+  //           //TODO: PICK STORE AND RETRIVE
+  //           // Pick file, get path, genereate image name using uid, copy image to
+  //           // app dir using custom image name (APPDIR/images/imagename.ext)
+  //           // store list of image names on diary entry (we already know the
+  //           // app dir path)
+  //           // TODO: BACKUP and restore
+  //           // Backup: Copy all images on APPDIR/images/ to Download/LitLifeSoftware/HistoryOfMe/images (loop all entries then loop all
+  //           // images of the entry to get its image file paths)
+  //           // Restore: Copy all images on Download/../images to APPDir/images/
+  //           // (loop all entries then loop all images of the entry to get its image file path).
+  //           try {
+  //             element.saveTo(filePath).then((_) {
+  //               try {
+  //                 print("Trying to delete cached file on: " + element.path);
+  //                 File(element.path).delete();
+  //               } catch (e) {}
+  //             });
+  //           } catch (e) {
+  //             print("Not saved propely");
+  //           }
+
+  //           print(filePath);
+
+  //           // final dir = Directory(dirPath);
+  //           // dir.deleteSync(recursive: true);
+
+  //           diaryPhotos.add(
+  //             DiaryPhoto(
+  //               uid: uid,
+  //               date: entry.date,
+  //               created: new DateTime.now().millisecondsSinceEpoch,
+  //               name: fileName,
+  //               path: filePath,
+  //             ),
+  //           );
+  //         }
+  //       },
+  //     );
+
+  //     // Delete image cache.
+  //     // if (cachePath != null) {
+  //     //   cachePath!.deleteSync(recursive: true);
+  //     //   print("Cached images deleted.");
+  //     // } else {
+  //     //   print("Cached images not delete, dir is null");
+  //     // }
+  //   }
+
+  //   images.forEach((element) {
+  //     print(element.path);
+  //   });
+
+  //   if (diaryPhotos.length != 0) {
+  //     int nowTimestamp = new DateTime.now().millisecondsSinceEpoch;
+
+  //     DiaryEntry updated = DiaryEntry(
+  //       uid: entry.uid,
+  //       date: entry.date,
+  //       created: entry.created,
+  //       // Update 'updated' timestamp
+  //       lastUpdated: nowTimestamp,
+  //       title: entry.title,
+  //       content: entry.content,
+  //       moodScore: entry.moodScore,
+  //       favorite: entry.favorite,
+  //       backdropPhotoId: entry.backdropPhotoId,
+  //       // Include picked photos.
+  //       photos: diaryPhotos,
+  //     );
+
+  //     AppAPI().updateDiaryEntry(updated);
+
+  //     // Delete image cache.
+  //     // deleteCachedFiles();
+  //   } else {
+  //     if (!unsupportedFile) {
+  //       showDialog(
+  //         context: context,
+  //         builder: (context) => LitTitledDialog(
+  //           child: Text("delete all images ?"),
+  //           titleText: "titleText",
+  //           actionButtons: [
+  //             DialogActionButton(
+  //               data: ActionButtonData(
+  //                   title: "Delete",
+  //                   onPressed: () {
+  //                     DiaryEntry updated = DiaryEntry(
+  //                       uid: entry.uid,
+  //                       date: entry.date,
+  //                       created: entry.created,
+  //                       lastUpdated: entry.lastUpdated,
+  //                       title: entry.title,
+  //                       content: entry.content,
+  //                       moodScore: entry.moodScore,
+  //                       favorite: entry.favorite,
+  //                       backdropPhotoId: entry.backdropPhotoId,
+  //                       photos: [],
+  //                     );
+
+  //                     AppAPI().updateDiaryEntry(updated);
+  //                     Navigator.of(context).pop();
+  //                   }),
+  //             )
+  //           ],
+  //         ),
+  //       );
+  //     }
+  //   }
+  // }
+
+  // void deleteCachedFiles() async {
+  //   await cacheDir.delete(recursive: true);
+  //   print("Cached files deleted.");
+  // }
+
   void _onNextPressed(DiaryEntry diaryEntry) {
     Future.delayed(LitAnimationDurations.button).then(
       (_) {
@@ -147,6 +331,30 @@ class _EntryDetailScreenState extends State<EntryDetailScreen>
     );
   }
 
+  // CustomAppBar getAppBar(DiaryEntry diaryEntry) {
+  //   if (_scrollController == null) {
+  //     return LitAppBar(title: "he");
+  //   }
+
+  //   if (_scrollController!.offset > CustomAppBar.height) {}
+
+  //   return LitAppBar(title: "he");
+  // }
+
+  void _onPickedUnsupportedFile() {
+    showDialog(
+      context: context,
+      builder: (context) => UnsupportedFileDialog(),
+    );
+  }
+
+  void _onDeleteAllPhotos(DiaryEntry entry) {
+    showDialog(
+      context: context,
+      builder: (context) => DeleteAllPhotosDialog(entry: entry),
+    );
+  }
+
   @override
   void initState() {
     super.initState();
@@ -157,6 +365,11 @@ class _EntryDetailScreenState extends State<EntryDetailScreen>
     _settingsPanelController = LitSettingsPanelController();
     _queryController = QueryController();
     _screenRouter = HOMNavigator(context);
+    //
+    _diaryPhotoPicker = DiaryPhotoPicker(
+      onPickedUnsupportedFile: _onPickedUnsupportedFile,
+      onDeleteAllPhotos: _onDeleteAllPhotos,
+    )..init();
   }
 
   @override
@@ -202,34 +415,53 @@ class _EntryDetailScreenState extends State<EntryDetailScreen>
               return Container(
                 child: Stack(
                   children: [
-                    EntryDetailBackdrop(
-                      backdropPhotos: _photoAssets,
-                      loading: _assetsLoading,
-                      diaryEntry: diaryEntry,
-                    ),
                     LitScrollbar(
                       child: ScrollableColumn(
                         controller: _scrollController,
                         children: [
-                          BackdropPhotoOverlay(
-                            scrollController: _scrollController,
-                            showChangePhotoDialogCallback: () =>
-                                _showChangePhotoDialog(diaryEntry),
-                            backdropPhotos: _photoAssets,
-                            loading: _assetsLoading,
-                            diaryEntry: diaryEntry,
-                          ),
                           SizedBox(
-                            height: 16.0,
+                            height: 384.0,
+                            child: Stack(
+                              alignment: Alignment.center,
+                              children: [
+                                EntryDetailBackdrop(
+                                  // backdropPhotos: _photoAssets,
+                                  // loading: _assetsLoading,
+                                  diaryEntry: diaryEntry,
+                                  diaryPhotoPicker: _diaryPhotoPicker,
+                                  //  images: images,
+                                ),
+                                Align(
+                                  alignment: Alignment.bottomRight,
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(
+                                      bottom: 64.0 + 16.0,
+                                      top: 16.0,
+                                      left: 16.0,
+                                      right: 20.0,
+                                    ),
+                                    child: PickPhotosButton(
+                                      onPressed: () {
+                                        _diaryPhotoPicker
+                                            .pickImages(diaryEntry);
+                                      },
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
-                          EntryDetailCard(
-                            boxLength: boxLength,
-                            listIndex: widget.listIndex,
-                            isFirst: isFirst,
-                            isLast: isLast,
-                            diaryEntry: diaryEntry,
-                            onEdit: () => _onEdit(diaryEntry),
-                            queryController: _queryController,
+                          Transform(
+                            transform: Matrix4.translationValues(0, -64.0, 0),
+                            child: EntryDetailCard(
+                              boxLength: boxLength,
+                              listIndex: widget.listIndex,
+                              isFirst: isFirst,
+                              isLast: isLast,
+                              diaryEntry: diaryEntry,
+                              onEdit: () => _onEdit(diaryEntry),
+                              queryController: _queryController,
+                            ),
                           ),
                           _Footer(
                             showNextButton: _shouldShowNextButton(diaryEntry),

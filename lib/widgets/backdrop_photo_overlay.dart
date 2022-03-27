@@ -3,6 +3,7 @@ part of widgets;
 class BackdropPhotoOverlay extends StatefulWidget {
   final ScrollController? scrollController;
   final void Function() showChangePhotoDialogCallback;
+  final void Function() pickPhotos;
   final List<BackdropPhoto> backdropPhotos;
   final bool? loading;
   //final int selectedPhotoIndex;
@@ -12,6 +13,7 @@ class BackdropPhotoOverlay extends StatefulWidget {
     Key? key,
     required this.scrollController,
     required this.showChangePhotoDialogCallback,
+    required this.pickPhotos,
     required this.backdropPhotos,
     required this.loading,
     //@required this.selectedPhotoIndex,
@@ -102,32 +104,38 @@ class _BackdropPhotoOverlayState extends State<BackdropPhotoOverlay>
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
                   child: Align(
                     alignment: Alignment.bottomCenter,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        _ChangePhotoButton(
-                          onScrollAnimationController:
-                              _animationOnScrollController.animationController,
-                          onPressed: widget.showChangePhotoDialogCallback,
-                        ),
-                        widget.loading!
-                            ? SizedBox()
-                            : _PhotoDetailsButton(
-                                animationController:
-                                    _animationOnScrollController
-                                        .animationController,
-                                onPressed: _navigateDetailScreen,
-                                location: _backdropController
-                                    .findBackdropPhotoLocation()!,
-                                photographerName: BackdropPhotoController(
-                                  widget.backdropPhotos,
-                                  widget.diaryEntry,
-                                ).findBackdropPhotoPhotographer()!,
-                                offsetY: MediaQuery.of(context).size.width,
-                              )
-                      ],
+                    child: LitPushedThroughButton(
+                      child: Text(
+                        "PICK",
+                        style: LitSansSerifStyles.button,
+                      ),
+                      onPressed: widget.pickPhotos,
                     ),
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //   crossAxisAlignment: CrossAxisAlignment.end,
+                    // children: [
+                    // _ChangePhotoButton(
+                    //   onScrollAnimationController:
+                    //       _animationOnScrollController.animationController,
+                    //   onPressed: widget.showChangePhotoDialogCallback,
+                    // ),
+                    // widget.loading!
+                    //     ? SizedBox()
+                    //     : _PhotoDetailsButton(
+                    //         animationController:
+                    //             _animationOnScrollController
+                    //                 .animationController,
+                    //         onPressed: _navigateDetailScreen,
+                    //         location: _backdropController
+                    //             .findBackdropPhotoLocation()!,
+                    //         photographerName: BackdropPhotoController(
+                    //           widget.backdropPhotos,
+                    //           widget.diaryEntry,
+                    //         ).findBackdropPhotoPhotographer()!,
+                    //         offsetY: MediaQuery.of(context).size.width,
+                    //       )
+                    // ],
                   ),
                 ),
               ],
