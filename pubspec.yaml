@@ -31,6 +31,7 @@ dependencies:
   hive_generator: ^1.1.1
   build_runner: ^2.1.7
   path_provider: ^2.0.3
+  image_picker: ^0.8.4+10
   package_info_plus: ^1.0.6
   leitmotif:
     ^2.0.3
@@ -40,11 +41,11 @@ dependencies:
     # path: ../leitmotif-flutter/
   # lit_localization_service: ^0.0.2
   lit_relative_date_time: ^1.2.0
-  lit_backup_service: 
-    ^1.0.1
+  lit_backup_service:
+    # ^1.0.1
     # Specify alternative leitmotif-flutter locations
-    # git:
-    #   url: https://github.com/litlifesoftware/lit_backup_service.git
+    git:
+      url: https://github.com/litlifesoftware/lit_backup_service.git
     # path: ../lit_backup_service/
 
 dev_dependencies:
