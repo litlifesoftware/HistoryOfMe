@@ -476,4 +476,32 @@ class AppLocalizations {
   String get selectAnother {
     return localizeValue(AppLocalizationsKeys.selectAnother);
   }
+
+  String get noPhotosAvailableText {
+    return localizeValue(AppLocalizationsKeys.noPhotosAvailableText);
+  }
+
+  String get pickPhotoLabel {
+    return localizeValue(AppLocalizationsKeys.pickPhotoLabel);
+  }
+
+  String get photosMissingLabel {
+    return localizeValue(AppLocalizationsKeys.photosMissingLabel);
+  }
+
+  String get photosMissingDescr {
+    return localizeValue(AppLocalizationsKeys.photosMissingDescr);
+  }
+
+  String get noPhotosSelectedLabel {
+    return localizeValue(AppLocalizationsKeys.noPhotosSelectedLabel);
+  }
+
+  String get deletePhotosDescr {
+    return localizeValue(AppLocalizationsKeys.deletePhotosDescr);
+  }
+
+  String get deletePhotosActionLabel {
+    return localizeValue(AppLocalizationsKeys.deletePhotosActionLabel);
+  }
 }

@@ -137,5 +137,18 @@ class EN {
     AppLocalizationsKeys.confirmDateLabel: 'Confirm Date',
     AppLocalizationsKeys.hintText: 'Type something',
     AppLocalizationsKeys.selectAnother: 'Select another',
+    AppLocalizationsKeys.noPhotosAvailableText:
+        "There are no photos available for this diary entry."
+            " "
+            "Select photos from your gallery by pressing the button on the top right.",
+    AppLocalizationsKeys.pickPhotoLabel: 'Select',
+    AppLocalizationsKeys.photosMissingLabel: 'Photos missing',
+    AppLocalizationsKeys.photosMissingDescr:
+        'We cannot find all photos of your diary. However, you can import them afterwards into your diary entries, if you still have the photos on your device.',
+    AppLocalizationsKeys.noPhotosSelectedLabel: "No Photos selected",
+    AppLocalizationsKeys.deletePhotosDescr:
+        "You did not select any photos. Removing your photos can not be undone.",
+    AppLocalizationsKeys.deletePhotosActionLabel:
+        "Do you want to delete all photos?",
   };
 }

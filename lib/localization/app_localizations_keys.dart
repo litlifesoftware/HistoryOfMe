@@ -115,4 +115,11 @@ class AppLocalizationsKeys {
   static const String confirmDateLabel = 'confirmDateLabel';
   static const String hintText = 'hintText';
   static const String selectAnother = 'selectAnother';
+  static const String noPhotosAvailableText = 'noPhotosAvailableText';
+  static const String pickPhotoLabel = 'pickPhotoLabel';
+  static const String photosMissingLabel = 'photosMissingLabel';
+  static const String photosMissingDescr = 'photosMissingDescr';
+  static const String noPhotosSelectedLabel = 'noPhotosSelectedLabel';
+  static const String deletePhotosDescr = 'deletePhotosDescr';
+  static const String deletePhotosActionLabel = 'deletePhotosActionLabel';
 }

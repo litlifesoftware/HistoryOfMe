@@ -141,5 +141,21 @@ class DE {
     AppLocalizationsKeys.confirmDateLabel: 'Tag bestätigen',
     AppLocalizationsKeys.hintText: 'Schreibe etwas',
     AppLocalizationsKeys.selectAnother: 'Anderes auswählen',
+    AppLocalizationsKeys.noPhotosAvailableText:
+        "Für diesen Tagebucheintrag sind keine Fotos verfügbar."
+            " "
+            "Drücke den Knopf oben rechts, um Fotos auszuwählen.",
+    AppLocalizationsKeys.pickPhotoLabel: 'auswählen',
+    AppLocalizationsKeys.photosMissingLabel: 'Fotos fehlen',
+    AppLocalizationsKeys.photosMissingDescr:
+        "Wir können nicht alle Fotos deines Tagebuchs finden."
+            " "
+            "Jedoch kannst du diese später in deine Tagebucheinträge importieren, wenn du die Fotos noch auf deinem Gerät hast.",
+    AppLocalizationsKeys.noPhotosSelectedLabel: "Keine Fotos ausgewählt",
+    AppLocalizationsKeys.deletePhotosDescr: "Du hast keine Fotos ausgewählt."
+        " "
+        "Deine Fotos zu entfernen kann nicht rückgängig gemacht werden.",
+    AppLocalizationsKeys.deletePhotosActionLabel:
+        "Möchtest du alle Fotos löschen.",
   };
 }
