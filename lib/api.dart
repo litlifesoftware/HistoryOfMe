@@ -8,6 +8,7 @@ import 'dart:math';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
+import 'package:history_of_me/extensions.dart';
 import 'package:history_of_me/models.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:leitmotif/leitmotif.dart';

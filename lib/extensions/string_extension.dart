@@ -1,5 +1,6 @@
 part of extensions;
 
+//TODO: Integrate into Leitmotif
 /// Extension on [String] class.
 ///
 /// Includes various methods for word counting.

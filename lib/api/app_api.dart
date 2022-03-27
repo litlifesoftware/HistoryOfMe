@@ -19,6 +19,7 @@ class AppAPI {
     Hive.registerAdapter(UserCreatedColorAdapter());
     Hive.registerAdapter(DiaryEntryAdapter());
     Hive.registerAdapter(AppSettingsAdapter());
+    Hive.registerAdapter(DiaryPhotoAdapter());
   }
 
   /// The default index on a box where single objects are stored (such as the
@@ -272,16 +273,16 @@ class AppAPI {
   }) {
     final DateTime now = DateTime.now();
     final DiaryEntry diaryEntry = DiaryEntry(
-      uid: _generateUniqueID(),
-      date: date.toIso8601String(),
-      created: now.millisecondsSinceEpoch,
-      lastUpdated: now.millisecondsSinceEpoch,
-      title: DefaultData.diaryEntryTitle,
-      content: DefaultData.diaryEntryContent,
-      moodScore: DefaultData.diaryEntryMoodScore,
-      favorite: false,
-      backdropPhotoId: DefaultData.diaryEntryBackdropId,
-    );
+        uid: _generateUniqueID(),
+        date: date.toIso8601String(),
+        created: now.millisecondsSinceEpoch,
+        lastUpdated: now.millisecondsSinceEpoch,
+        title: DefaultData.diaryEntryTitle,
+        content: DefaultData.diaryEntryContent,
+        moodScore: DefaultData.diaryEntryMoodScore,
+        favorite: false,
+        backdropPhotoId: DefaultData.diaryEntryBackdropId,
+        photos: []);
 
     Hive.box<DiaryEntry>(_diaryEntriesKey).put(diaryEntry.uid, diaryEntry);
     return diaryEntry;
@@ -321,6 +322,7 @@ class AppAPI {
       moodScore: diaryEntry.moodScore,
       favorite: diaryEntry.favorite,
       backdropPhotoId: newBackdropPhotoId,
+      photos: diaryEntry.photos,
     );
 
     updateDiaryEntry(updatedDiaryEntry);
@@ -339,6 +341,7 @@ class AppAPI {
       moodScore: diaryEntry.moodScore,
       favorite: !(diaryEntry.favorite),
       backdropPhotoId: diaryEntry.backdropPhotoId,
+      photos: diaryEntry.photos,
     );
 
     updateDiaryEntry(updatedDiaryEntry);
@@ -435,6 +438,10 @@ class AppAPI {
     String timestampHash = timestamp.toRadixString(16);
     String saltHash = salt.toRadixString(16);
     return "$timestampHash$saltHash";
+  }
+
+  String generateUid() {
+    return _generateUniqueID();
   }
 
   /// Generates a installation id.
