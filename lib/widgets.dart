@@ -4,6 +4,7 @@
 library widgets;
 
 import 'dart:convert';
+import 'dart:io';
 import 'dart:math';
 import 'dart:ui' as ui;
 
@@ -18,10 +19,12 @@ import 'package:history_of_me/models.dart';
 import 'package:history_of_me/screens.dart';
 import 'package:history_of_me/static.dart';
 import 'package:history_of_me/styles.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:leitmotif/leitmotif.dart';
 import 'package:lit_backup_service/lit_backup_service.dart';
 import 'package:lit_relative_date_time/lit_relative_date_time.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:path_provider/path_provider.dart';
 
 part 'widgets/animated_updated_label.dart';
 part 'widgets/app_artwork.dart';
@@ -62,6 +65,7 @@ part 'widgets/history_of_me_app_logo.dart';
 part 'widgets/history_of_me_launcher_icon_art.dart';
 part 'widgets/lit_toggle_button_group.dart';
 part 'widgets/pattern_config_card.dart';
+part 'widgets/pick_photos_button.dart';
 part 'widgets/primary_color_selector_card.dart';
 part 'widgets/purple_pink_button.dart';
 part 'widgets/purple_pink_save_button.dart';
@@ -73,6 +77,7 @@ part 'widgets/settings_footer.dart';
 part 'widgets/statistics_card.dart';
 part 'widgets/striped_design.dart';
 part 'widgets/unselected_create_tile.dart';
+part 'widgets/unsupported_file_dialog.dart';
 part 'widgets/updated_label_text.dart';
 part 'widgets/user_icon.dart';
 part 'widgets/user_profile_card.dart';
