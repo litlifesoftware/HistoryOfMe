@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:history_of_me/api.dart';
@@ -58,6 +59,7 @@ class _EntryEditingScreenState extends State<EntryEditingScreen>
   late LitRouteController _routeController;
   late LitSnackbarController _savedSnackbarContr;
   late AutosaveController _autosaveController;
+  late DiaryPhotoPicker _diaryPhotoPicker;
 
   /// Syncs the editing controllers' text input with the corresponding state
   /// values to check for any changes made to the inital values.
@@ -89,7 +91,11 @@ class _EntryEditingScreenState extends State<EntryEditingScreen>
         !(_title == DefaultData.diaryEntryTitle);
     bool _contentChanged = _content != databaseEntry.content;
     bool _moodScoreChanged = _moodScore != databaseEntry.moodScore;
-    return (_titleChanged || _contentChanged || _moodScoreChanged);
+    bool _photosChanged = _photos != databaseEntry.photos;
+    return (_titleChanged ||
+        _contentChanged ||
+        _moodScoreChanged ||
+        _photosChanged);
   }
 
   Future<void> _saveChanges() async {
@@ -108,6 +114,7 @@ class _EntryEditingScreenState extends State<EntryEditingScreen>
       moodScore: _moodScore,
       favorite: widget.diaryEntry.favorite,
       backdropPhotoId: widget.diaryEntry.backdropPhotoId,
+      photos: _photos,
     );
     AppAPI().updateDiaryEntry(updatedDiaryEntry);
     if (App.DEBUG) print('Saved changes on current diary entry');
@@ -161,6 +168,30 @@ class _EntryEditingScreenState extends State<EntryEditingScreen>
     _savedSnackbarContr.showSnackBar();
   }
 
+  void _onPickedUnsupportedFile() {
+    showDialog(
+      context: context,
+      builder: (context) => UnsupportedFileDialog(),
+    );
+  }
+
+  void _onDeleteAllPhotos(DiaryEntry entry) {
+    showDialog(
+      context: context,
+      builder: (context) => DeleteAllPhotosDialog(entry: entry),
+    );
+  }
+
+  void _onPickPhotos() async {
+    List<DiaryPhoto> photos =
+        await _diaryPhotoPicker.pickImagesWithoutUpdating(widget.diaryEntry);
+    setState(() {
+      _photos = photos;
+    });
+  }
+
+  late List<DiaryPhoto> _photos;
+
   @override
   void initState() {
     super.initState();
@@ -168,6 +199,7 @@ class _EntryEditingScreenState extends State<EntryEditingScreen>
     _title = widget.diaryEntry.title;
     _content = widget.diaryEntry.content;
     _moodScore = widget.diaryEntry.moodScore;
+    _photos = widget.diaryEntry.photos ?? [];
 
     _fadeInAnimationController = AnimationController(
       duration: Duration(milliseconds: 450),
@@ -189,6 +221,11 @@ class _EntryEditingScreenState extends State<EntryEditingScreen>
     _autosaveController = AutosaveController(_onAutosave);
 
     _savedSnackbarContr = LitSnackbarController();
+
+    _diaryPhotoPicker = DiaryPhotoPicker(
+      onPickedUnsupportedFile: _onPickedUnsupportedFile,
+      onDeleteAllPhotos: _onDeleteAllPhotos,
+    )..init();
   }
 
   @override
@@ -271,6 +308,78 @@ class _EntryEditingScreenState extends State<EntryEditingScreen>
                             ),
                           ],
                         ),
+                        Container(
+                          height: 164.0,
+                          width: MediaQuery.of(context).size.width,
+                          child: Stack(
+                            alignment: Alignment.center,
+                            children: [
+                              ListView.builder(
+                                scrollDirection: Axis.horizontal,
+                                physics: BouncingScrollPhysics(),
+                                itemCount: _photos.length,
+                                itemBuilder: ((context, index) {
+                                  return SizedBox(
+                                    height: 164.0,
+                                    width: MediaQuery.of(context).size.width,
+                                    child: _diaryPhotoPicker
+                                            .imageFileExists(_photos[index])
+                                        ? Image.file(
+                                            File(
+                                              _photos[index].path,
+                                            ),
+                                            fit: BoxFit.cover,
+                                            alignment: Alignment.center,
+                                          )
+                                        : Container(
+                                            color: Colors.black,
+                                            child: Center(
+                                              child: Text(
+                                                "This photo is unavailable",
+                                                style: LitSansSerifStyles.body2
+                                                    .copyWith(
+                                                  color: Colors.white,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                  );
+                                }),
+                              ),
+                              Container(
+                                height: 164.0,
+                                width: MediaQuery.of(context).size.width,
+                                child: Align(
+                                  alignment: Alignment.bottomRight,
+                                  child: Padding(
+                                    padding: EdgeInsets.only(
+                                      top: _photos.isNotEmpty ? 16.0 : 64.0,
+                                      left: 16.0,
+                                      right: 16.0,
+                                      bottom: 16.0,
+                                    ),
+                                    child: PickPhotosButton(
+                                      onPressed: _onPickPhotos,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        _photos.isEmpty
+                            ? Padding(
+                                padding: const EdgeInsets.only(
+                                  left: 16.0,
+                                  right: 16.0,
+                                  bottom: 16.0,
+                                ),
+                                child: LitDescriptionTextBox(
+                                  text: AppLocalizations.of(context)
+                                      .noPhotosAvailableText,
+                                ),
+                              )
+                            : SizedBox(),
                         _MoodSlider(
                           moodScore: _moodScore,
                           onChange: _onMoodScoreChanged,
@@ -387,7 +496,7 @@ class _DiaryContentInput extends StatelessWidget {
 
   /// Calculates the minimum height based on the current device height.
   double _calcMinHeight(BuildContext context) =>
-      MediaQuery.of(context).size.height - _MoodSlider.height - 64.0;
+      MediaQuery.of(context).size.height - _MoodSlider.height - 64.0 - 128.0;
 
   @override
   Widget build(BuildContext context) {
@@ -413,7 +522,7 @@ class _DiaryContentInput extends StatelessWidget {
                       color: LitColors.grey350,
                     ),
                     showCounter: true,
-                    minLines: 8,
+                    minLines: 4,
                   ),
                   SizedBox(
                     height: 16.0,
