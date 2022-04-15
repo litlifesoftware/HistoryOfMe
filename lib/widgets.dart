@@ -64,6 +64,7 @@ part 'widgets/entry_detail_card.dart';
 part 'widgets/greetings_bar.dart';
 part 'widgets/history_of_me_app_logo.dart';
 part 'widgets/history_of_me_launcher_icon_art.dart';
+part 'widgets/image_preview_dialog.dart';
 part 'widgets/lit_toggle_button_group.dart';
 part 'widgets/pattern_config_card.dart';
 part 'widgets/photos_missing_dialog.dart';
