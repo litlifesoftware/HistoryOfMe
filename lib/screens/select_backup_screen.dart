@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:history_of_me/api.dart';
 import 'package:history_of_me/app.dart';
+import 'package:history_of_me/extensions.dart';
 import 'package:history_of_me/localization.dart';
 import 'package:history_of_me/models.dart';
 import 'package:history_of_me/widgets.dart';
@@ -41,6 +42,8 @@ class _SelectBackupScreenState extends State<SelectBackupScreen> {
 
   late LitSnackbarController _snackbarController;
 
+  List<DiaryPhoto> diaryPhotos = [];
+
   final BackupStorage backupStorage = BackupStorage(
     organizationName: "LitLifeSoftware",
     applicationName: "HistoryOfMe",
@@ -49,6 +52,7 @@ class _SelectBackupScreenState extends State<SelectBackupScreen> {
     /// Installation ID will not be required for restoring backups as due to
     /// the file location being provided by the user.
     installationID: "",
+    useShortDirectoryNaming: true,
   );
 
   void _initRouteController() {
@@ -92,6 +96,16 @@ class _SelectBackupScreenState extends State<SelectBackupScreen> {
           setState(() {
             _diaryBackup = value as DiaryBackup;
           });
+
+          for (DiaryEntry entry in _diaryBackup!.diaryEntries) {
+            if (entry.photos != null) {
+              for (DiaryPhoto photo in entry.photos!) {
+                setState(() {
+                  diaryPhotos.add(photo);
+                });
+              }
+            }
+          }
         }
       },
     );
@@ -203,6 +217,7 @@ class _BackupBuilder extends StatelessWidget {
   final void Function() pickFile;
   final void Function() requestPermissions;
   final Future<void> Function(DiaryBackup backup) rebuildDatabase;
+
   const _BackupBuilder({
     Key? key,
     required this.backupStorage,
@@ -266,6 +281,7 @@ class _BackupBuilder extends StatelessWidget {
                                   rebuildDatabase: () =>
                                       rebuildDatabase(diaryBackup!),
                                   selectBackup: pickFile,
+                                  backupStorage: backupStorage,
                                 )
                               : _BackupNotFoundCard(onPickFile: pickFile);
                     },
@@ -327,8 +343,7 @@ class _BackupNotFoundCard extends StatelessWidget {
               _FilePathPreview(
                 pathItems: [
                   "Download",
-                  App.appDeveloper,
-                  App.appName,
+                  App.appName.removeSpaces(),
                   "historyofmebackup-ID.json",
                 ],
               ),

@@ -150,5 +150,10 @@ class EN {
         "You did not select any photos. Removing your photos can not be undone.",
     AppLocalizationsKeys.deletePhotosActionLabel:
         "Do you want to delete all photos?",
+    AppLocalizationsKeys.somePhotosMissingLabel: 'Some photos are missing!',
+    AppLocalizationsKeys.allPhotosRestorableLabel:
+        'All photos can be restored!',
+    AppLocalizationsKeys.photosTotalLabel: 'Photos total',
+    AppLocalizationsKeys.photosFoundLabel: 'Photos found',
   };
 }

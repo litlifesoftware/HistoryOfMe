@@ -28,4 +28,9 @@ extension StringExtension on String {
 
     return counter;
   }
+
+  /// Removes all whitespaces and returns the cleaned [String].
+  String removeSpaces() {
+    return this.split(" ").join();
+  }
 }

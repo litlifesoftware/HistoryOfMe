@@ -157,5 +157,10 @@ class DE {
         "Deine Fotos zu entfernen kann nicht rückgängig gemacht werden.",
     AppLocalizationsKeys.deletePhotosActionLabel:
         "Möchtest du alle Fotos löschen.",
+    AppLocalizationsKeys.somePhotosMissingLabel: 'Einige Fotos fehlen!',
+    AppLocalizationsKeys.allPhotosRestorableLabel:
+        'Alle Fotos können wiederhergestellt werden',
+    AppLocalizationsKeys.photosTotalLabel: 'Fotos insgesamt',
+    AppLocalizationsKeys.photosFoundLabel: 'Fotos gefunden',
   };
 }

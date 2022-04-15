@@ -46,7 +46,11 @@ class AppLocalizations {
   ];
 
   String localizeValue(String localizationKey) {
-    return _localizedValues[locale.languageCode]![localizationKey]!;
+    try {
+      return _localizedValues[locale.languageCode]![localizationKey]!;
+    } catch (e) {
+      return "MISSING LANGUAGE IMPLEMENTATION";
+    }
   }
 
   String get usernameLabel {
@@ -503,5 +507,21 @@ class AppLocalizations {
 
   String get deletePhotosActionLabel {
     return localizeValue(AppLocalizationsKeys.deletePhotosActionLabel);
+  }
+
+  String get somePhotosMissingLabel {
+    return localizeValue(AppLocalizationsKeys.somePhotosMissingLabel);
+  }
+
+  String get allPhotosRestorableLabel {
+    return localizeValue(AppLocalizationsKeys.allPhotosRestorableLabel);
+  }
+
+  String get photosTotalLabel {
+    return localizeValue(AppLocalizationsKeys.photosTotalLabel);
+  }
+
+  String get photosFoundLabel {
+    return localizeValue(AppLocalizationsKeys.photosFoundLabel);
   }
 }
