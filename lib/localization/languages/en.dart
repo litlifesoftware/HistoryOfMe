@@ -153,7 +153,15 @@ class EN {
     AppLocalizationsKeys.somePhotosMissingLabel: 'Some photos are missing!',
     AppLocalizationsKeys.allPhotosRestorableLabel:
         'All photos can be restored!',
+    AppLocalizationsKeys.photosLabel: 'Photos',
+    AppLocalizationsKeys.photoCopiedLabel: 'Photo copied',
+    AppLocalizationsKeys.photosCopiedLabel: 'Photos copied',
     AppLocalizationsKeys.photosTotalLabel: 'Photos total',
     AppLocalizationsKeys.photosFoundLabel: 'Photos found',
+    AppLocalizationsKeys.includePhotosLabel: 'Include Photos',
+    AppLocalizationsKeys.includePhotosDescr:
+        'Backs up the photos of your diary.'
+            ' '
+            'This will require more free space on your device.',
   };
 }

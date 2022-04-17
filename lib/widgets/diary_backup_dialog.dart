@@ -22,6 +22,14 @@ class _DiaryBackupDialogState extends State<DiaryBackupDialog> {
   final AppAPI _api = AppAPI();
   late BackupStorage _backupStorage;
   late PackageInfo _packageInfo;
+  late Directory storageDir;
+  bool includePhotos = true;
+  int photosCopied = 0;
+  bool isProcessing = false;
+
+  void setIncludePhotos(bool val) {
+    includePhotos = val;
+  }
 
   /// Initializes the [_backupStorage].
   void _initBackupStorage() {
@@ -30,6 +38,7 @@ class _DiaryBackupDialogState extends State<DiaryBackupDialog> {
       applicationName: "HistoryOfMe",
       fileName: "historyofmebackup",
       installationID: widget.installationID,
+      useShortDirectoryNaming: true,
     );
   }
 
@@ -48,35 +57,110 @@ class _DiaryBackupDialogState extends State<DiaryBackupDialog> {
     AppSettings appSettings,
   ) async {
     final DateTime now = DateTime.now();
-    setState(
-      () => {
-        _backupStorage.writeBackup(backup),
-      },
-    );
+
+    await _backupStorage.writeBackup(backup);
+    await _backupPhotos(backup);
+
     _api.updateLastBackup(appSettings, now);
   }
 
-  /// Deletes the currently maintained backup file.
-  Future<void> _deleteBackup() async {
-    setState(
-      () => {
-        _backupStorage.deleteBackup(),
-      },
-    );
+  String get imagesBackupDirectoryPath =>
+      _backupStorage.expectedBackupPath + '/' + 'images';
+  String get imagesBackupPath =>
+      _backupStorage.expectedBackupPath + '/' + 'images' + '/';
+
+  // TODO: Delete unused photos on '/files' and '/images'
+  Future<void> _backupPhotos(DiaryBackup backup) async {
+    setState(() {
+      photosCopied = 0;
+      isProcessing = true;
+    });
+
+    if (includePhotos) {
+      // Creates the images backup directory (if it doesn't exists yet).
+      Directory(imagesBackupDirectoryPath).create();
+
+      for (DiaryEntry entry in backup.diaryEntries) {
+        if (entry.photos != null) {
+          for (DiaryPhoto photo in entry.photos!) {
+            String filePath = imagesBackupPath + photo.name;
+
+            bool exists = await File(filePath).exists();
+
+            if (!exists) {
+              bool existsOnStorage = await File(photo.path).exists();
+              if (existsOnStorage) {
+                await File(photo.path)
+                    .copy(
+                      filePath,
+                    )
+                    .then(
+                      (__) => photosCopied++,
+                    )
+                    .then((____) => print(filePath + " copied."));
+              } else {
+                print("Diary Photo on " +
+                    "'" +
+                    photo.path +
+                    "'" +
+                    " does not exists anymore.");
+              }
+            } else {
+              print("Image File on " +
+                  "'" +
+                  filePath +
+                  "'" " already backed up.");
+            }
+          }
+        }
+      }
+    }
+
+    setState(() {
+      isProcessing = false;
+    });
   }
 
-  /// Returns a [DiaryBackup] (backup file content) using cleaned user data
-  /// copies.
+  /// Deletes the currently maintained backup file including the backed up
+  /// images.
+  Future<void> _deleteBackup() async {
+    setState(() => isProcessing = false);
+    await _backupStorage.deleteBackup();
+    // If there are backed up images
+    if (await Directory(imagesBackupPath).exists()) {
+      // Delete the backup images
+      //await Directory(imagesBackupPath).delete(recursive: true);
+      await Directory(imagesBackupPath).list().toList().then(
+            (v) => v.forEach((file) async {
+              try {
+                await file.delete();
+                print("File on " + "'" + file.path + "'" + " " + "deleted");
+              } catch (e) {
+                print("File not found ...");
+              }
+            }),
+          );
+    }
+    setState(() => isProcessing = false);
+  }
+
+  /// Returns a [DiaryBackup] (backup file content) using cleaned data objects.
   ///
-  /// The initial tap index will lead to the `ProfileScreen` to avoid the
-  /// `HomeScreen` being rendered incorrectly on first startup after
-  /// restoring the diary.
+  /// Cleaning the individual objects before creating the backup object is
+  /// required to ensure older data sets are updated to the according
+  /// standards. Otherwise the serialization will fail, resulting in invalid
+  /// backup files and typecast errors when reading backup files.
   DiaryBackup _getCleanBackup(
     AppSettings appSettings,
     List<DiaryEntry> diaryEntries,
     List<UserCreatedColor> userCreatedColors,
     UserData userData,
   ) {
+    List<DiaryEntry> cleanDiaryEntries = [];
+
+    /// The initial tap index will lead to the `ProfileScreen` to avoid the
+    /// `HomeScreen` being rendered incorrectly on first startup after
+    /// restoring the diary.
     final cleanSettings = AppSettings(
       privacyPolicyAgreed: appSettings.privacyPolicyAgreed,
       darkMode: appSettings.privacyPolicyAgreed,
@@ -84,9 +168,28 @@ class _DiaryBackupDialogState extends State<DiaryBackupDialog> {
       installationID: appSettings.installationID,
       lastBackup: "",
     );
+
+    // Add the provided diary entries to the cleaned list.
+    for (DiaryEntry item in diaryEntries) {
+      cleanDiaryEntries.add(
+        DiaryEntry(
+          uid: item.uid,
+          date: item.date,
+          created: item.created,
+          lastUpdated: item.lastUpdated,
+          title: item.title,
+          content: item.content,
+          moodScore: item.moodScore,
+          favorite: item.favorite,
+          backdropPhotoId: item.backdropPhotoId,
+          photos: item.photos ?? [],
+        ),
+      );
+    }
+
     return DiaryBackup(
       appSettings: cleanSettings,
-      diaryEntries: diaryEntries,
+      diaryEntries: cleanDiaryEntries,
       userCreatedColors: userCreatedColors,
       userData: userData,
       appVersion: _packageInfo.version,
@@ -114,10 +217,16 @@ class _DiaryBackupDialogState extends State<DiaryBackupDialog> {
     _backupStorage.requestPermissions().then((value) => _rebuildView());
   }
 
+  void _initStorageDirectory() async {
+    storageDir = await getExternalStorageDirectory() ??
+        await getApplicationDocumentsDirectory();
+  }
+
   @override
   void initState() {
     _initPackageInfo();
     _initBackupStorage();
+    _initStorageDirectory();
     super.initState();
   }
 
@@ -151,6 +260,11 @@ class _DiaryBackupDialogState extends State<DiaryBackupDialog> {
                           ),
                           appSettings,
                         ),
+                        includePhotos: includePhotos,
+                        setIncludePhotos: setIncludePhotos,
+                        photosCopied: photosCopied,
+                        imagesBackupPath: imagesBackupPath,
+                        isProcessing: isProcessing,
                       )
                     : Text("Unsupported Backup!");
               }
@@ -175,6 +289,8 @@ class _DiaryBackupDialogState extends State<DiaryBackupDialog> {
                       ),
                       appSettings,
                     ),
+                    includePhotos: includePhotos,
+                    setIncludePhotos: setIncludePhotos,
                   );
                 }
                 if (hasPerSnap.hasData && !hasPerSnap.data!) {
@@ -259,10 +375,13 @@ class _PermissionDeniedDialog extends StatelessWidget {
 /// A dialog widget allowing the user to create a new backup.
 class _CreateBackupDialog extends StatelessWidget {
   final void Function() writeBackup;
-
+  final void Function(bool) setIncludePhotos;
+  final bool includePhotos;
   const _CreateBackupDialog({
     Key? key,
     required this.writeBackup,
+    required this.setIncludePhotos,
+    required this.includePhotos,
   }) : super(key: key);
 
   @override
@@ -288,10 +407,12 @@ class _CreateBackupDialog extends StatelessWidget {
         ),
         children: [
           _InfoDescription(),
+          _IncludePhotosToggleButton(
+            value: includePhotos,
+            setIncludePhotos: setIncludePhotos,
+          ),
           Padding(
-            padding: const EdgeInsets.only(
-              top: 16.0,
-            ),
+            padding: const EdgeInsets.only(top: 16.0),
             child: Text(
               AppLocalizations.of(context).noBackupFoundDescr,
               style: LitSansSerifStyles.caption,
@@ -303,16 +424,73 @@ class _CreateBackupDialog extends StatelessWidget {
   }
 }
 
+class _IncludePhotosToggleButton extends StatelessWidget {
+  final bool value;
+  final void Function(bool) setIncludePhotos;
+  const _IncludePhotosToggleButton({
+    Key? key,
+    required this.value,
+    required this.setIncludePhotos,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ConstrainedBox(
+                  constraints:
+                      BoxConstraints(maxWidth: constraints.maxWidth / 2),
+                  child: Text(
+                    AppLocalizations.of(context).includePhotosLabel,
+                    style: LitSansSerifStyles.subtitle2,
+                  ),
+                ),
+                LitToggleButton(
+                  onChanged: setIncludePhotos,
+                  value: value,
+                ),
+              ],
+            ),
+            SizedBox(height: 4.0),
+            Text(
+              AppLocalizations.of(context).includePhotosDescr,
+              style: LitSansSerifStyles.overline,
+            ),
+          ],
+        );
+      },
+    );
+  }
+}
+
 /// A dialog widget allowing the user to manage an existing backup.
 class _ManageBackupDialog extends StatelessWidget {
   final DiaryBackup diaryBackup;
   final void Function() deleteBackup;
   final void Function() writeBackup;
+  final bool includePhotos;
+  final Function(bool) setIncludePhotos;
+  final int photosCopied;
+  final String imagesBackupPath;
+  final bool isProcessing;
   const _ManageBackupDialog({
     Key? key,
     required this.diaryBackup,
     required this.deleteBackup,
     required this.writeBackup,
+    required this.includePhotos,
+    required this.setIncludePhotos,
+    required this.photosCopied,
+    required this.imagesBackupPath,
+    required this.isProcessing,
   }) : super(key: key);
 
   @override
@@ -342,8 +520,55 @@ class _ManageBackupDialog extends StatelessWidget {
           diaryEntries,
           userCreatedColors,
         ) {
-          return _BackupPreview(
-            diaryBackup: diaryBackup,
+          return ScrollableColumn(
+            padding: const EdgeInsets.symmetric(
+              vertical: 16.0,
+              horizontal: 16.0,
+            ),
+            constrained: false,
+            children: isProcessing
+                ? [
+                    Center(
+                      child: JugglingLoadingIndicator(),
+                    ),
+                  ]
+                : [
+                    _InfoDescription(),
+                    SizedBox(height: 8.0),
+                    _IncludePhotosToggleButton(
+                      value: includePhotos,
+                      setIncludePhotos: setIncludePhotos,
+                    ),
+                    SizedBox(height: 4.0),
+                    _BackupPreview(
+                      diaryBackup: diaryBackup,
+                    ),
+                    _UpToDateIndicator(
+                      diaryBackup: diaryBackup,
+                    ),
+                    photosCopied != 0
+                        ? RichText(
+                            text: TextSpan(
+                              children: [
+                                TextSpan(
+                                  text: photosCopied.toString(),
+                                  style: LitSansSerifStyles.body2,
+                                ),
+                                TextSpan(
+                                  text: " " +
+                                      (photosCopied == 1
+                                          ? AppLocalizations.of(context)
+                                              .photoCopiedLabel
+                                          : AppLocalizations.of(context)
+                                              .photosCopiedLabel) +
+                                      ".",
+                                  style: LitSansSerifStyles.body2,
+                                ),
+                              ],
+                            ),
+                          )
+                        : SizedBox(),
+                  ],
           );
         },
       ),
@@ -366,20 +591,26 @@ class _BackupPreview extends StatefulWidget {
 }
 
 class __BackupPreviewState extends State<_BackupPreview> {
+  List<DiaryPhoto> get _photos {
+    List<DiaryPhoto> list = [];
+
+    for (DiaryEntry entry in widget.diaryBackup.diaryEntries) {
+      if (entry.photos != null) {
+        for (DiaryPhoto photo in entry.photos!) {
+          list.add(photo);
+        }
+      }
+    }
+    return list;
+  }
+
   @override
   Widget build(BuildContext context) {
-    return ScrollableColumn(
-      constrained: false,
+    return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
-      padding: const EdgeInsets.symmetric(
-        vertical: 16.0,
-        horizontal: 16.0,
-      ),
       children: [
-        _InfoDescription(),
-        SizedBox(height: 16.0),
         _MetaDataItem(
           keyText: AppLocalizations.of(context).backupIdLabel,
           valueText: widget.diaryBackup.appSettings.installationID.toString(),
@@ -387,6 +618,10 @@ class __BackupPreviewState extends State<_BackupPreview> {
         _MetaDataItem(
           keyText: AppLocalizations.of(context).entriesLabel.capitalize(),
           valueText: widget.diaryBackup.diaryEntries.length.toString(),
+        ),
+        _MetaDataItem(
+          keyText: AppLocalizations.of(context).photosLabel,
+          valueText: _photos.length.toString(),
         ),
         _MetaDataItem(
           keyText: AppLocalizations.of(context).lastestBackupLabel,
@@ -406,9 +641,6 @@ class __BackupPreviewState extends State<_BackupPreview> {
             },
           ),
         ),
-        _UpToDateIndicator(
-          diaryBackup: widget.diaryBackup,
-        )
       ],
     );
   }
@@ -422,6 +654,7 @@ class _InfoDescription extends StatelessWidget {
   Widget build(BuildContext context) {
     return LitDescriptionTextBox(
       padding: const EdgeInsets.all(0),
+      maxLines: 4,
       text: AppLocalizations.of(context).backupInfoDescr,
     );
   }
@@ -466,17 +699,41 @@ class __UpToDateIndicatorState extends State<_UpToDateIndicator> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Row(
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          return Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                LeitmotifLocalizations.of(context).upToDateLabel,
-                style: LitSansSerifStyles.subtitle2,
+              ConstrainedBox(
+                constraints: BoxConstraints(
+                  maxWidth: constraints.maxWidth - 32.0 - 16.0,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Text(
+                      LeitmotifLocalizations.of(context).upToDateLabel,
+                      style: LitSansSerifStyles.subtitle2,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 4.0),
+                      child: _isUpToDate
+                          ? Text(
+                              AppLocalizations.of(context).upToDateDescr,
+                              style: LitSansSerifStyles.caption,
+                            )
+                          : Text(
+                              AppLocalizations.of(context)
+                                  .deprecatedBackupDescr,
+                              style: LitSansSerifStyles.caption.copyWith(
+                                color: LitColors.darkRed,
+                              ),
+                            ),
+                    ),
+                  ],
+                ),
               ),
               Container(
                 height: 32.0,
@@ -497,22 +754,8 @@ class __UpToDateIndicatorState extends State<_UpToDateIndicator> {
                 ),
               ),
             ],
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 4.0),
-            child: _isUpToDate
-                ? Text(
-                    AppLocalizations.of(context).upToDateDescr,
-                    style: LitSansSerifStyles.caption,
-                  )
-                : Text(
-                    AppLocalizations.of(context).deprecatedBackupDescr,
-                    style: LitSansSerifStyles.caption.copyWith(
-                      color: LitColors.darkRed,
-                    ),
-                  ),
-          ),
-        ],
+          );
+        },
       ),
     );
   }

@@ -150,7 +150,9 @@ class DE {
     AppLocalizationsKeys.photosMissingDescr:
         "Wir können nicht alle Fotos deines Tagebuchs finden."
             " "
-            "Jedoch kannst du diese später in deine Tagebucheinträge importieren, wenn du die Fotos noch auf deinem Gerät hast.",
+            "Jedoch kannst du diese später in deine Tagebucheinträge importieren,"
+            " "
+            "wenn du die Fotos noch auf deinem Gerät hast.",
     AppLocalizationsKeys.noPhotosSelectedLabel: "Keine Fotos ausgewählt",
     AppLocalizationsKeys.deletePhotosDescr: "Du hast keine Fotos ausgewählt."
         " "
@@ -160,7 +162,15 @@ class DE {
     AppLocalizationsKeys.somePhotosMissingLabel: 'Einige Fotos fehlen!',
     AppLocalizationsKeys.allPhotosRestorableLabel:
         'Alle Fotos können wiederhergestellt werden',
+    AppLocalizationsKeys.photosLabel: 'Fotos',
+    AppLocalizationsKeys.photoCopiedLabel: 'Foto kopiert',
+    AppLocalizationsKeys.photosCopiedLabel: 'Fotos kopiert',
     AppLocalizationsKeys.photosTotalLabel: 'Fotos insgesamt',
     AppLocalizationsKeys.photosFoundLabel: 'Fotos gefunden',
+    AppLocalizationsKeys.includePhotosLabel: 'Fotos einbeziehen',
+    AppLocalizationsKeys.includePhotosDescr:
+        'Sichert die Fotos deines Tagebuchs.'
+            ' '
+            'Dies wird mehr freien Speicherplatz auf deinem Gerät erfordern.',
   };
 }

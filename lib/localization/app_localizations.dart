@@ -517,11 +517,31 @@ class AppLocalizations {
     return localizeValue(AppLocalizationsKeys.allPhotosRestorableLabel);
   }
 
+  String get photosLabel {
+    return localizeValue(AppLocalizationsKeys.photosLabel);
+  }
+
+  String get photoCopiedLabel {
+    return localizeValue(AppLocalizationsKeys.photoCopiedLabel);
+  }
+
+  String get photosCopiedLabel {
+    return localizeValue(AppLocalizationsKeys.photosCopiedLabel);
+  }
+
   String get photosTotalLabel {
     return localizeValue(AppLocalizationsKeys.photosTotalLabel);
   }
 
   String get photosFoundLabel {
     return localizeValue(AppLocalizationsKeys.photosFoundLabel);
+  }
+
+  String get includePhotosLabel {
+    return localizeValue(AppLocalizationsKeys.includePhotosLabel);
+  }
+
+  String get includePhotosDescr {
+    return localizeValue(AppLocalizationsKeys.includePhotosDescr);
   }
 }

@@ -124,6 +124,11 @@ class AppLocalizationsKeys {
   static const String deletePhotosActionLabel = 'deletePhotosActionLabel';
   static const String somePhotosMissingLabel = 'somePhotosMissingLabel';
   static const String allPhotosRestorableLabel = 'allPhotosRestorableLabel';
+  static const String photosLabel = 'photosLabel';
+  static const String photoCopiedLabel = 'photoCopiedLabel';
+  static const String photosCopiedLabel = 'photosCopiedLabel';
   static const String photosTotalLabel = 'photosTotalLabel';
   static const String photosFoundLabel = 'photosFoundLabel';
+  static const String includePhotosLabel = 'includePhotosLabel';
+  static const String includePhotosDescr = 'includePhotosDescr';
 }
