@@ -369,7 +369,7 @@ class _EntryDetailScreenState extends State<EntryDetailScreen>
     _diaryPhotoPicker = DiaryPhotoPicker(
       onPickedUnsupportedFile: _onPickedUnsupportedFile,
       onDeleteAllPhotos: _onDeleteAllPhotos,
-    )..init();
+    );
   }
 
   @override
@@ -443,7 +443,7 @@ class _EntryDetailScreenState extends State<EntryDetailScreen>
                                     child: PickPhotosButton(
                                       onPressed: () {
                                         _diaryPhotoPicker
-                                            .pickImages(diaryEntry);
+                                            .pickPhotosAndSave(diaryEntry);
                                       },
                                     ),
                                   ),

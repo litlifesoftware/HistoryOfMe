@@ -184,7 +184,7 @@ class _EntryEditingScreenState extends State<EntryEditingScreen>
 
   void _onPickPhotos() async {
     List<DiaryPhoto> photos =
-        await _diaryPhotoPicker.pickImagesWithoutUpdating(widget.diaryEntry);
+        await _diaryPhotoPicker.pickPhotos(widget.diaryEntry);
     setState(() {
       _photos = photos;
     });
@@ -225,7 +225,7 @@ class _EntryEditingScreenState extends State<EntryEditingScreen>
     _diaryPhotoPicker = DiaryPhotoPicker(
       onPickedUnsupportedFile: _onPickedUnsupportedFile,
       onDeleteAllPhotos: _onDeleteAllPhotos,
-    )..init();
+    );
   }
 
   @override
@@ -324,12 +324,21 @@ class _EntryEditingScreenState extends State<EntryEditingScreen>
                                     width: MediaQuery.of(context).size.width,
                                     child: _diaryPhotoPicker
                                             .imageFileExists(_photos[index])
-                                        ? Image.file(
-                                            File(
-                                              _photos[index].path,
+                                        ? InkWell(
+                                            onTap: () => showDialog(
+                                              context: context,
+                                              builder: (context) =>
+                                                  ImagePreviewDialog(
+                                                path: _photos[index].path,
+                                              ),
                                             ),
-                                            fit: BoxFit.cover,
-                                            alignment: Alignment.center,
+                                            child: Image.file(
+                                              File(
+                                                _photos[index].path,
+                                              ),
+                                              fit: BoxFit.cover,
+                                              alignment: Alignment.center,
+                                            ),
                                           )
                                         : Container(
                                             color: Colors.black,

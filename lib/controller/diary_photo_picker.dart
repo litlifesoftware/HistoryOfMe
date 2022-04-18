@@ -1,39 +1,60 @@
 part of controllers;
 
-// TODO: Empty out all previous photos on '.../files/ of a diary entry before
-// picking new photos like it's already done with cached files.
-// Make sure not to delete photos that are used by other diary entries.
+/// A `controller` class to pick image files and create [DiaryPhoto] objects
+/// based on the selected image files.
 class DiaryPhotoPicker {
+  /// The total number of photos per entry.
+  final int maxPhotos;
+
+  /// Handles the action once `unsupported` file types are selected.
   final void Function() onPickedUnsupportedFile;
+
+  /// Handles the `delete all photos` action.
   final void Function(DiaryEntry) onDeleteAllPhotos;
+
+  /// Creates a [DiaryPhotoPicker].
   DiaryPhotoPicker({
+    this.maxPhotos = _defaultMaxPhotos,
     required this.onPickedUnsupportedFile,
     required this.onDeleteAllPhotos,
-  });
-
-  void init() {
-    _initPath();
+  }) {
+    init();
   }
 
+  static const int _defaultMaxPhotos = 8;
+
+  /// The error message displayed if the [Directory] instances failed to
+  /// initialize.
+  final String _dirErrMsg = "Directories not initialized." +
+      " " +
+      "Ensure to call 'init()' to initialize all required objects.";
+
+  /// The [ImagePicker] instace used for picking image files using the system
+  /// file explorer.
   final ImagePicker picker = ImagePicker();
 
-  //List<XFile> images = [];
+  /// States whether the in the latest image picking action at least on
+  /// file type is not supported.
+  ///
+  /// This will render the whole sequence of images invalid.
   bool unsupportedFile = false;
 
+  /// The `storage` [Directory] instance, where picked images are copied to
+  /// for persisting image files.
   Directory? storageDir;
+
+  /// The `cache` [Directory] instance, where picked images are temporarily
+  /// stored by the [ImagePicker].
   Directory? cacheDir;
 
+  /// The [AppAPI] instance.
   AppAPI _api = AppAPI();
 
+  /// Initiates the [Directory] instances.
   void _initPath() async {
     storageDir = await getExternalStorageDirectory() ??
         await getApplicationDocumentsDirectory();
     cacheDir = await getTemporaryDirectory();
-
-    if (storageDir != null && cacheDir != null) {
-      print("app path according to path prov " + storageDir!.path);
-      print("temp path according to path prov " + cacheDir!.path);
-    }
   }
 
   /// Returns whether the provided diary photo has an image file stored on the
@@ -46,19 +67,16 @@ class DiaryPhotoPicker {
     ).existsSync();
   }
 
-  final String _dirErrorMessage = "Directories not initialized." +
-      " " +
-      "Ensure to call 'init()' to initialize all required objects.";
-
-  /// Doesn't update the provided diary entry and therefore will not ask
-  /// whether to apply an empty list of photos.
-  Future<List<DiaryPhoto>> pickImagesWithoutUpdating(DiaryEntry entry) async {
+  /// Picks a list of image files using the System File Explorer and returns a
+  /// [List] of selected [DiaryPhoto] elements.
+  Future<List<DiaryPhoto>> pickPhotos(DiaryEntry entry) async {
     List<XFile?>? pickedImages = [];
     List<DiaryPhoto> diaryPhotos = [];
     List<XFile> images = [];
+    int totalPhotosSelected = 0;
 
     if (storageDir == null) {
-      print(_dirErrorMessage);
+      print(_dirErrMsg);
       return diaryPhotos;
     }
 
@@ -75,38 +93,16 @@ class DiaryPhotoPicker {
     if (pickedImages != null) {
       pickedImages.forEach(
         (XFile? element) async {
-          if (element == null)
+          if (element == null) return;
+          if (totalPhotosSelected > (maxPhotos - 1)) {
             return;
-          else {
-            //setState(() {
+          } else {
             images.add(element);
-            //});
-            // element.openRead();
-            // Future<Uint8List> ele = await element.readAsBytes();
-            // print(ele);
-            //TODO: Store on app directory
-            //TODO: copy to media directory to backup photos
-            //maybe store photos as base64 string
-            //TODO: make sure it will work on all version apps / error handling
-            // TODO: include the base64 string in the photo model
-            // TODO: extend backuping to backup photos.
 
             String uid = _api.generateUid();
             String fileName = uid + p.extension(element.path);
             String filePath = storageDir!.path + '/' + fileName;
-            // Directory('/data/user/0/com.litlifesoftware.historyofme/images/')
-            //     .create();
 
-            //TODO: PICK STORE AND RETRIVE
-            // Pick file, get path, genereate image name using uid, copy image to
-            // app dir using custom image name (APPDIR/images/imagename.ext)
-            // store list of image names on diary entry (we already know the
-            // app dir path)
-            // TODO: BACKUP and restore
-            // Backup: Copy all images on APPDIR/images/ to Download/LitLifeSoftware/HistoryOfMe/images (loop all entries then loop all
-            // images of the entry to get its image file paths)
-            // Restore: Copy all images on Download/../images to APPDir/images/
-            // (loop all entries then loop all images of the entry to get its image file path).
             try {
               element.saveTo(filePath).then((_) {
                 try {
@@ -118,11 +114,6 @@ class DiaryPhotoPicker {
               print("Not saved propely");
             }
 
-            print(filePath);
-
-            // final dir = Directory(dirPath);
-            // dir.deleteSync(recursive: true);
-
             diaryPhotos.add(
               DiaryPhoto(
                 uid: uid,
@@ -132,135 +123,30 @@ class DiaryPhotoPicker {
                 path: filePath,
               ),
             );
+            totalPhotosSelected++;
           }
         },
       );
-
-      // Delete image cache.
-      // if (cachePath != null) {
-      //   cachePath!.deleteSync(recursive: true);
-      //   print("Cached images deleted.");
-      // } else {
-      //   print("Cached images not delete, dir is null");
-      // }
     }
 
     return diaryPhotos;
   }
 
-  void pickImages(DiaryEntry entry) async {
-    if (storageDir == null) {
-      print(_dirErrorMessage);
-      return;
-    }
-
-    //final ImagePicker _picker = ImagePicker();
-    // final
-
-    // setState(() {
-    //   images = [];
-    // })
-
-    List<XFile?>? pickedImages = [];
-    List<DiaryPhoto> diaryPhotos = [];
-    List<XFile> images = [];
-
-    try {
-      pickedImages = await picker.pickMultiImage();
-      if (pickedImages != null && pickedImages.length != 0) {
-        images = [];
-      }
-    } catch (e) {
-      unsupportedFile = true;
-      onPickedUnsupportedFile();
-    }
-
-    if (pickedImages != null) {
-      pickedImages.forEach(
-        (XFile? element) async {
-          if (element == null)
-            return;
-          else {
-            //setState(() {
-            images.add(element);
-            //});
-            // element.openRead();
-            // Future<Uint8List> ele = await element.readAsBytes();
-            // print(ele);
-            //TODO: Store on app directory
-            //TODO: copy to media directory to backup photos
-            //maybe store photos as base64 string
-            //TODO: make sure it will work on all version apps / error handling
-            // TODO: include the base64 string in the photo model
-            // TODO: extend backuping to backup photos.
-
-            String uid = _api.generateUid();
-            String fileName = uid + p.extension(element.path);
-            String filePath = storageDir!.path + '/' + fileName;
-            // Directory('/data/user/0/com.litlifesoftware.historyofme/images/')
-            //     .create();
-
-            //TODO: PICK STORE AND RETRIVE
-            // Pick file, get path, genereate image name using uid, copy image to
-            // app dir using custom image name (APPDIR/images/imagename.ext)
-            // store list of image names on diary entry (we already know the
-            // app dir path)
-            // TODO: BACKUP and restore
-            // Backup: Copy all images on APPDIR/images/ to Download/LitLifeSoftware/HistoryOfMe/images (loop all entries then loop all
-            // images of the entry to get its image file paths)
-            // Restore: Copy all images on Download/../images to APPDir/images/
-            // (loop all entries then loop all images of the entry to get its image file path).
-            try {
-              element.saveTo(filePath).then((_) {
-                try {
-                  print("Trying to delete cached file on: " + element.path);
-                  File(element.path).delete();
-                } catch (e) {}
-              });
-            } catch (e) {
-              print("Not saved propely");
-            }
-
-            print(filePath);
-
-            // final dir = Directory(dirPath);
-            // dir.deleteSync(recursive: true);
-
-            diaryPhotos.add(
-              DiaryPhoto(
-                uid: uid,
-                date: entry.date,
-                created: new DateTime.now().millisecondsSinceEpoch,
-                name: fileName,
-                path: filePath,
-              ),
-            );
-          }
-        },
-      );
-
-      // Delete image cache.
-      // if (cachePath != null) {
-      //   cachePath!.deleteSync(recursive: true);
-      //   print("Cached images deleted.");
-      // } else {
-      //   print("Cached images not delete, dir is null");
-      // }
-    }
-
-    images.forEach((element) {
-      print(element.path);
-    });
+  /// Picks a list of image files using the System File Explorer and updates
+  /// the provided [DiaryEntry] instance using the [List] of selected
+  /// [DiaryPhoto] elements.
+  Future<void> pickPhotosAndSave(DiaryEntry entry) async {
+    List<DiaryPhoto> diaryPhotos = await pickPhotos(entry);
 
     if (diaryPhotos.length != 0) {
-      int nowTimestamp = new DateTime.now().millisecondsSinceEpoch;
+      int now = new DateTime.now().millisecondsSinceEpoch;
 
       DiaryEntry updated = DiaryEntry(
         uid: entry.uid,
         date: entry.date,
         created: entry.created,
         // Update 'updated' timestamp
-        lastUpdated: nowTimestamp,
+        lastUpdated: now,
         title: entry.title,
         content: entry.content,
         moodScore: entry.moodScore,
@@ -271,9 +157,6 @@ class DiaryPhotoPicker {
       );
 
       _api.updateDiaryEntry(updated);
-
-      // Delete image cache.
-      // deleteCachedFiles();
     } else {
       if (!unsupportedFile) {
         onDeleteAllPhotos(entry);
@@ -281,8 +164,8 @@ class DiaryPhotoPicker {
     }
   }
 
-  // void deleteCachedFiles() async {
-  //   await cacheDir.delete(recursive: true);
-  //   print("Cached files deleted.");
-  // }
+  /// Initalizes the [DiaryPhotoPicker].
+  void init() {
+    _initPath();
+  }
 }
