@@ -17,6 +17,7 @@ part 'api/all_data_provider.dart';
 part 'api/app_api.dart';
 part 'api/app_settings_provider.dart';
 part 'api/database_state_validator.dart';
+part 'api/debug_output_service.dart';
 part 'api/default_data.dart';
 part 'api/diary_entry_provider.dart';
 part 'api/query_controller.dart';
