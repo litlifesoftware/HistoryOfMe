@@ -544,4 +544,12 @@ class AppLocalizations {
   String get includePhotosDescr {
     return localizeValue(AppLocalizationsKeys.includePhotosDescr);
   }
+
+  String get duplicatePhotoRemovedLabel {
+    return localizeValue(AppLocalizationsKeys.duplicatePhotoRemovedLabel);
+  }
+
+  String get duplicatePhotosRemovedLabel {
+    return localizeValue(AppLocalizationsKeys.duplicatePhotosRemovedLabel);
+  }
 }

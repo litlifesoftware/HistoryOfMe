@@ -131,4 +131,7 @@ class AppLocalizationsKeys {
   static const String photosFoundLabel = 'photosFoundLabel';
   static const String includePhotosLabel = 'includePhotosLabel';
   static const String includePhotosDescr = 'includePhotosDescr';
+  static const String duplicatePhotoRemovedLabel = 'duplicatePhotoRemovedLabel';
+  static const String duplicatePhotosRemovedLabel =
+      'duplicatePhotosRemovedLabel';
 }

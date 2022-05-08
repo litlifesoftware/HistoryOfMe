@@ -163,5 +163,7 @@ class EN {
         'Backs up the photos of your diary.'
             ' '
             'This will require more free space on your device.',
+    AppLocalizationsKeys.duplicatePhotoRemovedLabel: 'duplicate photo removed',
+    AppLocalizationsKeys.duplicatePhotosRemovedLabel: 'duplicate photos removed'
   };
 }

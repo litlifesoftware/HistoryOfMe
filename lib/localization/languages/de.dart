@@ -172,5 +172,7 @@ class DE {
         'Sichert die Fotos deines Tagebuchs.'
             ' '
             'Dies wird mehr freien Speicherplatz auf deinem Gerät erfordern.',
+    AppLocalizationsKeys.duplicatePhotoRemovedLabel: 'doppeltes Foto entfernt',
+    AppLocalizationsKeys.duplicatePhotosRemovedLabel: 'doppelte Fotos entfernt',
   };
 }

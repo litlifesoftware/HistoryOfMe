@@ -23,8 +23,11 @@ class _DiaryBackupDialogState extends State<DiaryBackupDialog> {
   late BackupStorage _backupStorage;
   late PackageInfo _packageInfo;
   late Directory storageDir;
+  late Directory imagesCacheDirectory;
+
   bool includePhotos = true;
   int photosCopied = 0;
+  int duplicatesDeleted = 0;
   bool isProcessing = false;
 
   void setIncludePhotos(bool val) {
@@ -69,12 +72,98 @@ class _DiaryBackupDialogState extends State<DiaryBackupDialog> {
   String get imagesBackupPath =>
       _backupStorage.expectedBackupPath + '/' + 'images' + '/';
 
-  // TODO: Delete unused photos on '/files' and '/images'
+  Future<void> _deleteUnusedStorageFiles(
+      DiaryBackup backup, int counter, void Function(int) setCounter) async {
+    List<DiaryPhoto> photos = [];
+
+    for (DiaryEntry e in backup.diaryEntries) {
+      if (e.photos != null) {
+        photos.addAll(e.photos!);
+      }
+    }
+
+    for (FileSystemEntity fse in storageDir.listSync()) {
+      if (fse is File) {
+        if (!diaryPhotoExistsByPath(photos, fse)) {
+          try {
+            await File(fse.path).delete();
+
+            setCounter(counter++);
+
+            DebugOutputService.printStorageImageFileDeleted(fse.path);
+          } catch (e) {
+            DebugOutputService.printStorageImageFileDeletionError(fse.path);
+          }
+        }
+      }
+    }
+  }
+
+  Future<void> _deleteUnusedBackupFiles(
+      DiaryBackup backup, int counter, void Function(int) setCounter) async {
+    List<DiaryPhoto> photos = [];
+    //int counter = 0;
+
+    Directory backupDirectory = Directory(imagesBackupDirectoryPath);
+
+    for (DiaryEntry e in backup.diaryEntries) {
+      if (e.photos != null) {
+        photos.addAll(e.photos!);
+      }
+    }
+
+    for (FileSystemEntity f in backupDirectory.listSync()) {
+      if (f is File) {
+        if (!diaryPhotoExistsByName(photos, f)) {
+          try {
+            await File(f.path).delete();
+            //counter++;
+            setCounter(counter++);
+
+            DebugOutputService.printBackedUpImageFileDeleted(f.path);
+          } catch (e) {
+            DebugOutputService.printBackedUpImageFileDeletionError(f.path);
+          }
+        }
+      }
+    }
+  }
+
+  /// Returns whether the provided image file is linked to any [DiaryPhoto]
+  /// based on the file's path.
+  bool diaryPhotoExistsByPath(List<DiaryPhoto> photos, File f) {
+    for (DiaryPhoto p in photos) {
+      if (p.path == f.path) {
+        //print("File: " + fse.path + " is linked to a DiaryEntry");
+        DebugOutputService.printImageFileLinked(f.path);
+        return true;
+      }
+    }
+    return false;
+  }
+
+  /// Returns whether the provided image file is linked to any [DiaryPhoto]
+  /// based on the file's name.
+  bool diaryPhotoExistsByName(List<DiaryPhoto> photos, File f) {
+    for (DiaryPhoto p in photos) {
+      if (p.name == f.name) {
+        //print("File: " + f.path + " is linked to a DiaryEntry");
+        DebugOutputService.printImageFileLinked(f.path);
+        return true;
+      }
+    }
+    return false;
+  }
+
   Future<void> _backupPhotos(DiaryBackup backup) async {
     setState(() {
       photosCopied = 0;
+      duplicatesDeleted = 0;
       isProcessing = true;
     });
+
+    int storageDuplicateCounter = 0;
+    int backupDuplicateCounter = 0;
 
     if (includePhotos) {
       // Creates the images backup directory (if it doesn't exists yet).
@@ -97,27 +186,41 @@ class _DiaryBackupDialogState extends State<DiaryBackupDialog> {
                     .then(
                       (__) => photosCopied++,
                     )
-                    .then((____) => print(filePath + " copied."));
+                    .then((____) {
+                  DebugOutputService.printImageFileCopied(filePath);
+                });
               } else {
-                print("Diary Photo on " +
-                    "'" +
-                    photo.path +
-                    "'" +
-                    " does not exists anymore.");
+                DebugOutputService.printImageFileStorageError(photo.path);
               }
             } else {
-              print("Image File on " +
-                  "'" +
-                  filePath +
-                  "'" " already backed up.");
+              DebugOutputService.printBackedUpImageFileDuplicateError(filePath);
             }
           }
         }
       }
     }
 
+    // Delete all unused files on the application's storage directory.
+    await _deleteUnusedStorageFiles(
+      backup,
+      storageDuplicateCounter,
+      (int v) {
+        storageDuplicateCounter = v;
+      },
+    );
+
+    // Delete all unused files on the application's backup directory.
+    await _deleteUnusedBackupFiles(
+      backup,
+      backupDuplicateCounter,
+      (int v) {
+        backupDuplicateCounter = v;
+      },
+    );
+
     setState(() {
       isProcessing = false;
+      duplicatesDeleted = storageDuplicateCounter + backupDuplicateCounter;
     });
   }
 
@@ -217,16 +320,17 @@ class _DiaryBackupDialogState extends State<DiaryBackupDialog> {
     _backupStorage.requestPermissions().then((value) => _rebuildView());
   }
 
-  void _initStorageDirectory() async {
+  void _initDirectories() async {
     storageDir = await getExternalStorageDirectory() ??
         await getApplicationDocumentsDirectory();
+    imagesCacheDirectory = await getTemporaryDirectory();
   }
 
   @override
   void initState() {
     _initPackageInfo();
     _initBackupStorage();
-    _initStorageDirectory();
+    _initDirectories();
     super.initState();
   }
 
@@ -263,6 +367,7 @@ class _DiaryBackupDialogState extends State<DiaryBackupDialog> {
                         includePhotos: includePhotos,
                         setIncludePhotos: setIncludePhotos,
                         photosCopied: photosCopied,
+                        duplicatesDeleted: duplicatesDeleted,
                         imagesBackupPath: imagesBackupPath,
                         isProcessing: isProcessing,
                       )
@@ -479,6 +584,7 @@ class _ManageBackupDialog extends StatelessWidget {
   final bool includePhotos;
   final Function(bool) setIncludePhotos;
   final int photosCopied;
+  final int duplicatesDeleted;
   final String imagesBackupPath;
   final bool isProcessing;
   const _ManageBackupDialog({
@@ -489,6 +595,7 @@ class _ManageBackupDialog extends StatelessWidget {
     required this.includePhotos,
     required this.setIncludePhotos,
     required this.photosCopied,
+    required this.duplicatesDeleted,
     required this.imagesBackupPath,
     required this.isProcessing,
   }) : super(key: key);
@@ -546,6 +653,28 @@ class _ManageBackupDialog extends StatelessWidget {
                     _UpToDateIndicator(
                       diaryBackup: diaryBackup,
                     ),
+                    duplicatesDeleted != 0
+                        ? RichText(
+                            text: TextSpan(
+                              children: [
+                                TextSpan(
+                                  text: duplicatesDeleted.toString(),
+                                  style: LitSansSerifStyles.body2,
+                                ),
+                                TextSpan(
+                                  text: " " +
+                                      (duplicatesDeleted == 1
+                                          ? AppLocalizations.of(context)
+                                              .duplicatePhotoRemovedLabel
+                                          : AppLocalizations.of(context)
+                                              .duplicatePhotosRemovedLabel) +
+                                      ".",
+                                  style: LitSansSerifStyles.body2,
+                                ),
+                              ],
+                            ),
+                          )
+                        : SizedBox(),
                     photosCopied != 0
                         ? RichText(
                             text: TextSpan(
