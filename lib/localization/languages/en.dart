@@ -164,6 +164,9 @@ class EN {
             ' '
             'This will require more free space on your device.',
     AppLocalizationsKeys.duplicatePhotoRemovedLabel: 'duplicate photo removed',
-    AppLocalizationsKeys.duplicatePhotosRemovedLabel: 'duplicate photos removed'
+    AppLocalizationsKeys.duplicatePhotosRemovedLabel:
+        'duplicate photos removed',
+    AppLocalizationsKeys.creatorName: "Michael Grigorenko",
+    AppLocalizationsKeys.inspiredByMovieTitle: "Your Name. (2016)",
   };
 }

@@ -134,4 +134,6 @@ class AppLocalizationsKeys {
   static const String duplicatePhotoRemovedLabel = 'duplicatePhotoRemovedLabel';
   static const String duplicatePhotosRemovedLabel =
       'duplicatePhotosRemovedLabel';
+  static const String creatorName = 'creatorName';
+  static const String inspiredByMovieTitle = 'inspiredByMovieTitle';
 }

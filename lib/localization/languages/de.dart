@@ -174,5 +174,7 @@ class DE {
             'Dies wird mehr freien Speicherplatz auf deinem Gerät erfordern.',
     AppLocalizationsKeys.duplicatePhotoRemovedLabel: 'doppeltes Foto entfernt',
     AppLocalizationsKeys.duplicatePhotosRemovedLabel: 'doppelte Fotos entfernt',
+    AppLocalizationsKeys.creatorName: "Michael Grigorenko",
+    AppLocalizationsKeys.inspiredByMovieTitle: "Your Name. (2016)",
   };
 }

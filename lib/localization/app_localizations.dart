@@ -552,4 +552,12 @@ class AppLocalizations {
   String get duplicatePhotosRemovedLabel {
     return localizeValue(AppLocalizationsKeys.duplicatePhotosRemovedLabel);
   }
+
+  String get creatorName {
+    return localizeValue(AppLocalizationsKeys.creatorName);
+  }
+
+  String get inspiredByMovieTitle {
+    return localizeValue(AppLocalizationsKeys.inspiredByMovieTitle);
+  }
 }

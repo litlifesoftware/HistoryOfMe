@@ -159,10 +159,6 @@ class _CreditsScreen extends StatelessWidget {
     required this.photographerNames,
   }) : super(key: key);
 
-  static const _creatorName = "Michael Grigorenko";
-
-  static const _movieName = "Your Name. (2016)";
-
   @override
   Widget build(BuildContext context) {
     return LitCreditsScreen(
@@ -180,11 +176,15 @@ class _CreditsScreen extends StatelessWidget {
         ),
         CreditData(
           role: LeitmotifLocalizations.of(context).userExpericenceDesignLabel,
-          names: [_creatorName],
+          names: [
+            AppLocalizations.of(context).creatorName,
+          ],
         ),
         CreditData(
           role: LeitmotifLocalizations.of(context).developmentLabel,
-          names: [_creatorName],
+          names: [
+            AppLocalizations.of(context).creatorName,
+          ],
         ),
         CreditData(
           role: LeitmotifLocalizations.of(context).photographyLabel,
@@ -192,7 +192,9 @@ class _CreditsScreen extends StatelessWidget {
         ),
         CreditData(
           role: AppLocalizations.of(context).inspiredByLabel,
-          names: [_movieName],
+          names: [
+            AppLocalizations.of(context).inspiredByMovieTitle,
+          ],
         ),
       ],
     );
