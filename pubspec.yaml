@@ -34,10 +34,10 @@ dependencies:
   image_picker: ^0.8.4+10
   package_info_plus: ^1.0.6
   leitmotif:
-    ^2.1.0
+    # ^2.1.0
     # Specify alternative leitmotif-flutter locations
-    # git:
-    #   url: https://github.com/litlifesoftware/leitmotif-flutter.git
+    git:
+      url: https://github.com/litlifesoftware/leitmotif-flutter.git
     # path: ../leitmotif-flutter/
   # lit_localization_service: ^0.0.2
   lit_relative_date_time: ^1.2.0
