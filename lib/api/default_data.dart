@@ -56,4 +56,5 @@ class DefaultData {
   static const bool agreedPrivacy = true;
   static const bool darkMode = false;
   static const int tabIndex = 0;
+  static const String lastBackup = "";
 }

@@ -122,7 +122,7 @@ class AppAPI {
       darkMode: DefaultData.darkMode,
       tabIndex: DefaultData.tabIndex,
       installationID: generateInstallationID(),
-      lastBackup: "",
+      lastBackup: DefaultData.lastBackup,
     );
   }
 
@@ -134,7 +134,7 @@ class AppAPI {
       darkMode: appSettings.darkMode,
       tabIndex: 0,
       installationID: generateInstallationID(),
-      lastBackup: "",
+      lastBackup: DefaultData.lastBackup,
     );
   }
 
