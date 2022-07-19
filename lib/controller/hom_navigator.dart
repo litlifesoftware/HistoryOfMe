@@ -56,12 +56,6 @@ class HOMNavigator {
     _routeController.pushMaterialWidget(pushedWidget);
   }
 
-  void toBackdropPhotoDetailScreen({required BackdropPhoto backdropPhoto}) {
-    final Widget pushedWidget =
-        BackdropPhotoDetailScreen(backdropPhoto: backdropPhoto);
-    _routeController.pushMaterialWidget(pushedWidget);
-  }
-
   void showCreateEntryDialog() {
     _routeController.showDialogWidget(
       CreateEntryDialog(),

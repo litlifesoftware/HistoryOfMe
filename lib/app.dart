@@ -1,10 +1,7 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:history_of_me/localization.dart';
-import 'package:history_of_me/models.dart';
+import 'package:history_of_me/static.dart';
 import 'package:history_of_me/widgets.dart';
 import 'package:leitmotif/leitmotif.dart';
 
@@ -31,8 +28,6 @@ class App extends StatefulWidget {
   /// The application's developer.
   static const String appDeveloper = "LitLifeSoftware";
 
-  static const imageCollectionPath = 'assets/json/image_collection_data.json';
-
   static const supportedLocales = AppLocalizations.supportedLocales;
 
   static const supportedLanguages = const [
@@ -58,35 +53,14 @@ class _AppState extends State<App> {
 
   /// The list of images required to load from local storage.
   final List<String> utilityImagesUrlList = const [
-    "assets/images/History_Of_Me_Key_Icon_256px-01.png",
-    "assets/images/Key.png",
-    "assets/images/Curtain_Left.png",
-    "assets/images/Curtain_Right.png",
-    "assets/images/Window.png",
-    "assets/images/Cloud.png",
-    "assets/images/History_Of_Me_Window_Artwork_Small.png"
+    AppAssets.keyLogo256px,
+    AppAssets.keyIcon,
+    AppAssets.curtainLeftImg,
+    AppAssets.curtainRightImg,
+    AppAssets.windowImg,
+    AppAssets.cloudImg,
+    AppAssets.historyOfMeArtworkSmall,
   ];
-
-  /// Parses the provided assets data formatted as a string value in order to
-  /// create [BackdropPhoto] instances.
-  void parseBackdropPhotos(String assetData) {
-    final parsed = jsonDecode(assetData).cast<Map<String, dynamic>>();
-    parsed.forEach(
-      (json) {
-        setState(
-          () {
-            backdropPhotoUrlList.add(BackdropPhoto.fromJson(json).assetUrl);
-          },
-        );
-      },
-    );
-  }
-
-  /// Loads the `JSON` file content and initiates the parsing process.
-  Future<void> loadPhotosFromJson() async {
-    String data = await rootBundle.loadString(App.imageCollectionPath);
-    return parseBackdropPhotos(data);
-  }
 
   /// Restart the app globally by creating a new [UniqueKey].
   void restartApp() {
@@ -101,12 +75,6 @@ class _AppState extends State<App> {
     ImageCacheController(
       context: context,
       assetImages: utilityImagesUrlList,
-    );
-    loadPhotosFromJson().then(
-      (value) => ImageCacheController(
-        context: context,
-        assetImages: backdropPhotoUrlList,
-      ),
     );
   }
 

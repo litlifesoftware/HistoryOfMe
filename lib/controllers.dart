@@ -17,7 +17,6 @@ import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 
 part 'controller/autosave_controller.dart';
-part 'controller/backdrop_photo_controller.dart';
 part 'controller/hom_navigator.dart';
 part 'controller/mood_translator.dart';
 part 'controller/diary_photo_picker.dart';

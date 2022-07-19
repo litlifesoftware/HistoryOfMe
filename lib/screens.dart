@@ -4,7 +4,6 @@
 library screens;
 
 export 'screens/app_onboarding_screen.dart';
-export 'screens/backdrop_photo_detail_screen.dart';
 export 'screens/bookmark_editing_screen.dart';
 export 'screens/diary_screen.dart';
 export 'screens/entry_detail_screen.dart';

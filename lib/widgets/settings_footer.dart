@@ -47,25 +47,10 @@ class _SettingsFooterState extends State<SettingsFooter> {
   /// Navigates to the credits screen.
   ///
   /// Extracts the photographer names from the local json file.
-  void _showCredits() async {
-    dynamic parsed;
-    List<String> photographerNames = [];
-    await rootBundle
-        .loadString(App.imageCollectionPath)
-        .then(
-          (value) => parsed = jsonDecode(value).cast<Map<String, dynamic>>(),
-        )
-        .then(
-          (_) => parsed.forEach(
-            (json) => photographerNames
-                .add(BackdropPhoto.fromJson(json).photographer!),
-          ),
-        )
-        .then(
-          (value) => LitRouteController(context).pushMaterialWidget(
-            _CreditsScreen(photographerNames: photographerNames),
-          ),
-        );
+  void _showCredits() {
+    LitRouteController(context).pushMaterialWidget(
+      _CreditsScreen(),
+    );
   }
 
   /// Show the app's onboarding screen.
@@ -151,13 +136,8 @@ class _AboutDialog extends StatelessWidget {
 
 /// A customized [LitCreditsScreen] widget displaying the app's about dialog.
 class _CreditsScreen extends StatelessWidget {
-  final List<String> photographerNames;
-
   /// Creates a [_CreditsScreen].
-  const _CreditsScreen({
-    Key? key,
-    required this.photographerNames,
-  }) : super(key: key);
+  const _CreditsScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -185,10 +165,6 @@ class _CreditsScreen extends StatelessWidget {
           names: [
             AppLocalizations.of(context).creatorName,
           ],
-        ),
-        CreditData(
-          role: LeitmotifLocalizations.of(context).photographyLabel,
-          names: photographerNames,
         ),
         CreditData(
           role: AppLocalizations.of(context).inspiredByLabel,

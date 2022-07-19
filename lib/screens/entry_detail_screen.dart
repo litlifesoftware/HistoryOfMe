@@ -1,9 +1,5 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:history_of_me/api.dart';
-import 'package:history_of_me/app.dart';
 import 'package:history_of_me/controllers.dart';
 import 'package:history_of_me/localization.dart';
 import 'package:history_of_me/models.dart';
@@ -33,13 +29,11 @@ class EntryDetailScreen extends StatefulWidget {
 
 class _EntryDetailScreenState extends State<EntryDetailScreen>
     with TickerProviderStateMixin {
-  List<BackdropPhoto> _photoAssets = [];
   late QueryController _queryController;
   ScrollController? _scrollController;
   bool _assetsLoading = false;
   late HOMNavigator _screenRouter;
   late LitSettingsPanelController _settingsPanelController;
-
   late DiaryPhotoPicker _diaryPhotoPicker;
 
   // bool unsupportedFile = false;
@@ -53,37 +47,6 @@ class _EntryDetailScreenState extends State<EntryDetailScreen>
       _assetsLoading = !_assetsLoading;
     });
   }
-
-  /// Adds the provided object to the [_photoAssets] list.
-  void _addAsset(dynamic json) {
-    setState(() => _photoAssets.add(BackdropPhoto.fromJson(json)));
-  }
-
-  /// Decodes the json provided string data.
-  void _decode(String assetData) {
-    final parsed = jsonDecode(assetData).cast<Map<String, dynamic>>();
-    parsed.forEach((json) => _addAsset(json));
-    _toggleAssetsLoading();
-  }
-
-  /// Loads the json assets from storage into memory.
-  Future<void> _loadAssets() async {
-    String data = await rootBundle.loadString(App.imageCollectionPath);
-
-    return _decode(data);
-  }
-
-  /// Shows the [ChangePhotoDialog].
-  // void _showChangePhotoDialog(DiaryEntry diaryEntry) {
-  //   showDialog(
-  //     context: context,
-  //     builder: (_) => ChangePhotoDialog(
-  //       backdropPhotos: _photoAssets,
-  //       diaryEntry: diaryEntry,
-  //       // imageNames: imageNames,
-  //     ),
-  //   );
-  // }
 
   void _onDeleteEntry() {
     LitRouteController(context).clearNavigationStack();
@@ -359,7 +322,7 @@ class _EntryDetailScreenState extends State<EntryDetailScreen>
   void initState() {
     super.initState();
     _toggleAssetsLoading();
-    _loadAssets();
+    //_loadAssets();
 
     _scrollController = ScrollController();
     _settingsPanelController = LitSettingsPanelController();
@@ -612,7 +575,8 @@ class _PreviousNavigationButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _NavigationButton(
-      label: LeitmotifLocalizations.of(context).backLabel.toUpperCase(),
+      label:
+          LeitmotifLocalizations.of(context).previousLabelShort.toUpperCase(),
       mode: LitLinearNavigationMode.previous,
       onPressed: onPressed,
     );
