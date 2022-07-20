@@ -225,12 +225,13 @@ class _UserCreatedColorGridState extends State<UserCreatedColorGrid>
     setState(() {
       _deletionEnabled = !_deletionEnabled;
     });
+
     if (_deletionEnabled) {
       _animationController.repeat(reverse: true);
     } else {
       if (_animationController.isAnimating) {
         _animationController.stop();
-        _animationController.animateTo(1.0);
+        _animationController.animateTo(0.0);
       }
     }
   }
@@ -240,7 +241,7 @@ class _UserCreatedColorGridState extends State<UserCreatedColorGrid>
     super.initState();
     _animationController = AnimationController(
       vsync: this,
-      duration: Duration(milliseconds: 1000),
+      duration: Duration(milliseconds: 600),
     );
     _animationController.forward();
   }
@@ -314,7 +315,7 @@ class _DeletableColorGridItem extends StatefulWidget {
   final Animation animation;
   final List<BoxShadow> boxShadow;
   final int index;
-  final List<dynamic> userColors;
+  final List<UserCreatedColor> userColors;
   final int selectedColorValue;
   final void Function(Color) onSelectColorCallback;
   final BoxConstraints constraints;
@@ -357,6 +358,8 @@ class _DeletableColorGridItemState extends State<_DeletableColorGridItem> {
     return DeletableContainer(
       deletionEnabled: widget.deletionEnabled,
       animation: widget.animation,
+      index: widget.index,
+      totalItems: widget.userColors.length,
       child: SelectableColorTile(
         boxShadow: widget.boxShadow,
         onSelectCallback: widget.onSelectColorCallback,
