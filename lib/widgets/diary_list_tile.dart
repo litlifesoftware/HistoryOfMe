@@ -273,96 +273,109 @@ class __EntryCardState extends State<_EntryCard> {
               onPressed: widget.onPressed,
               minScale: 0.94,
               animateOnStart: false,
-              child: Stack(
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(15.0),
-                      boxShadow: [
-                        BoxShadow(
-                          offset: Offset(1, 4),
-                          blurRadius: 12.0,
-                          spreadRadius: 1.0,
-                          color: Colors.black.withOpacity(0.22),
-                        )
-                      ],
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 16.0,
-                        vertical: 12.0,
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(_title,
-                              style: LitTextStyles.sansSerifStyles[body]),
-                          Padding(
-                            padding: const EdgeInsets.only(
-                              bottom: 16.0,
-                              top: 4.0,
-                            ),
-                            child: Container(
-                              width:
-                                  ((MediaQuery.of(context).size.width - 32.0) *
-                                          0.75) -
-                                      32.0,
-                              height: 2.0,
-                              color: HexColor('e0e0e0'),
-                            ),
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                _formattedDiaryDate,
-                                style: LitTextStyles.sansSerifStyles[caption]
-                                    .copyWith(
-                                  color: HexColor('666666'),
-                                ),
-                              ),
-                              Text(
-                                _relativeDateUpdated,
-                                style: LitTextStyles.sansSerifStyles[caption]
-                                    .copyWith(
-                                  color: HexColor('666666'),
-                                ),
-                              ),
-                            ],
-                          )
-                        ],
-                      ),
-                    ),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(15.0),
+                  boxShadow: [
+                    BoxShadow(
+                      offset: Offset(1, 4),
+                      blurRadius: 12.0,
+                      spreadRadius: 1.0,
+                      color: Colors.black.withOpacity(0.22),
+                    )
+                  ],
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16.0,
+                    vertical: 12.0,
                   ),
-                  Align(
-                    alignment: Alignment.topRight,
-                    child: Padding(
-                      padding: const EdgeInsets.all(
-                        8.0,
-                      ),
-                      child: Container(
-                        height: 15.0,
-                        width: 15.0,
-                        decoration: BoxDecoration(
-                          color: Color.lerp(
-                            LitColors.lightRed,
-                            HexColor('bee5be'),
-                            widget.diaryEntry.moodScore,
-                          ),
-                          borderRadius: BorderRadius.circular(
-                            5.95,
-                          ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      LayoutBuilder(
+                        builder: (context, constraints) => Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                              width: constraints.maxWidth - 14.0,
+                              child: ClippedText(
+                                _title,
+                                maxLines: 2,
+                                style: LitSansSerifStyles.body2,
+                              ),
+                            ),
+                            Align(
+                              alignment: Alignment.topRight,
+                              child: Container(
+                                width: 12.0,
+                                height: 12.0,
+                                decoration: BoxDecoration(
+                                  color: Color.lerp(
+                                    LitColors.lightRed,
+                                    HexColor('bee5be'),
+                                    widget.diaryEntry.moodScore,
+                                  ),
+                                  borderRadius: BorderRadius.circular(
+                                    4,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                    ),
-                  )
-                ],
+                      _Divider(),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            _formattedDiaryDate,
+                            style:
+                                LitTextStyles.sansSerifStyles[caption].copyWith(
+                              color: HexColor('666666'),
+                            ),
+                          ),
+                          Text(
+                            _relativeDateUpdated,
+                            style:
+                                LitTextStyles.sansSerifStyles[caption].copyWith(
+                              color: HexColor('666666'),
+                            ),
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                ),
               ),
             ),
           ),
         );
       },
+    );
+  }
+}
+
+class _Divider extends StatelessWidget {
+  const _Divider({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(
+      builder: ((context, constraints) => Padding(
+            padding: const EdgeInsets.symmetric(
+              vertical: 8.0,
+            ),
+            child: Container(
+              width: constraints.maxWidth,
+              height: 2.0,
+              color: HexColor('e0e0e0'),
+            ),
+          )),
     );
   }
 }

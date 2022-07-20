@@ -5,8 +5,8 @@ class DiaryListView extends StatelessWidget {
   final AnimationController animationController;
   final AnimationController bookmarkAnimation;
   final UserData userData;
-  final List<dynamic> diaryEntriesListSorted;
-  final bool? showFavoriteEntriesOnly;
+  final List<DiaryEntry> diaryEntriesListSorted;
+  final bool showFavoriteEntriesOnly;
   final void Function() toggleShowFavoritesOnly;
   const DiaryListView({
     Key? key,
@@ -18,6 +18,18 @@ class DiaryListView extends StatelessWidget {
     required this.showFavoriteEntriesOnly,
     required this.toggleShowFavoritesOnly,
   }) : super(key: key);
+
+  int get _favoriteEntriesCount => diaryEntriesListSorted
+      .where((entry) {
+        return entry.favorite;
+      })
+      .toList()
+      .length;
+
+  int get _filteredLength => showFavoriteEntriesOnly
+      ? _favoriteEntriesCount
+      : diaryEntriesListSorted.length;
+
   @override
   Widget build(BuildContext context) {
     return CleanInkWell(
@@ -38,14 +50,7 @@ class DiaryListView extends StatelessWidget {
                       bookmarkAnimation: bookmarkAnimation,
                     ),
                     DiaryFilterHeader(
-                      filteredLength: showFavoriteEntriesOnly!
-                          ? diaryEntriesListSorted
-                              .where((entry) {
-                                return entry.favorite;
-                              })
-                              .toList()
-                              .length
-                          : diaryEntriesListSorted.length,
+                      filteredLength: _filteredLength,
                       showFavoritesOnly: showFavoriteEntriesOnly,
                       toggleShowFavoritesOnly: toggleShowFavoritesOnly,
                       accentTextStyle: LitSansSerifStyles.subtitle2.copyWith(
@@ -69,10 +74,11 @@ class DiaryListView extends StatelessWidget {
   }
 }
 
-class _DiaryListViewContent extends StatefulWidget {
-  final AnimationController? animationController;
-  final List<dynamic> diaryEntriesListSorted;
-  final bool? showFavoritesOnly;
+class _DiaryListViewContent extends StatelessWidget {
+  final AnimationController animationController;
+  final List<DiaryEntry> diaryEntriesListSorted;
+  final bool showFavoritesOnly;
+
   const _DiaryListViewContent({
     Key? key,
     required this.animationController,
@@ -80,23 +86,12 @@ class _DiaryListViewContent extends StatefulWidget {
     required this.showFavoritesOnly,
   }) : super(key: key);
 
-  @override
-  _DiaryListViewContentState createState() => _DiaryListViewContentState();
-}
-
-class _DiaryListViewContentState extends State<_DiaryListViewContent> {
   bool get noFavoritesAvailable {
-    return widget.diaryEntriesListSorted
-        .where((element) => element.favorite)
-        .isEmpty;
-  }
-
-  bool? get showFavoritesOnly {
-    return widget.showFavoritesOnly;
+    return diaryEntriesListSorted.where((element) => element.favorite).isEmpty;
   }
 
   bool get showInfoMessage {
-    return noFavoritesAvailable && showFavoritesOnly!;
+    return noFavoritesAvailable && showFavoritesOnly;
   }
 
   @override
@@ -107,27 +102,26 @@ class _DiaryListViewContentState extends State<_DiaryListViewContent> {
         builder: (context) {
           return showInfoMessage
               ? _NoFavoritesView(
-                  animationController: widget.animationController,
+                  animationController: animationController,
                 )
               : ListView.builder(
                   physics: BouncingScrollPhysics(),
-                  //itemCount: entriesBox.values.length,
-                  itemCount: widget.diaryEntriesListSorted.length,
+                  itemCount: diaryEntriesListSorted.length,
                   scrollDirection: Axis.vertical,
                   padding: const EdgeInsets.only(bottom: 96.0),
                   itemBuilder: (BuildContext context, int listIndex) {
                     final DiaryEntry diaryEntry =
-                        widget.diaryEntriesListSorted[listIndex];
-                    return showFavoritesOnly!
+                        diaryEntriesListSorted[listIndex];
+                    return showFavoritesOnly
                         ? diaryEntry.favorite
                             ? DiaryListTile(
-                                animationController: widget.animationController,
+                                animationController: animationController,
                                 listIndex: listIndex,
                                 diaryEntry: diaryEntry,
                               )
                             : SizedBox()
                         : DiaryListTile(
-                            animationController: widget.animationController,
+                            animationController: animationController,
                             listIndex: listIndex,
                             diaryEntry: diaryEntry,
                           );

@@ -4,7 +4,7 @@ class DiaryFilterHeader extends StatefulWidget {
   final int filteredLength;
   final TextStyle textStyle;
   final TextStyle accentTextStyle;
-  final bool? showFavoritesOnly;
+  final bool showFavoritesOnly;
   final void Function() toggleShowFavoritesOnly;
   final double landscapeWidthFactor;
   const DiaryFilterHeader({
@@ -38,7 +38,7 @@ class _DiaryFilterHeaderState extends State<DiaryFilterHeader>
     final bool plural =
         (widget.filteredLength > 1) || (widget.filteredLength == 0);
 
-    if (widget.showFavoritesOnly!) {
+    if (widget.showFavoritesOnly) {
       if (plural) {
         return AppLocalizations.of(context).favoriteEntriesLabel;
       } else {
@@ -89,41 +89,45 @@ class _DiaryFilterHeaderState extends State<DiaryFilterHeader>
             color: Colors.white,
           ),
           child: SizedBox(
-            width: alternativeWidth(MediaQuery.of(context).size,
-                portraitWidth: portraitWidth, landscapeWidth: landscapeWidth),
+            width: alternativeWidth(
+              MediaQuery.of(context).size,
+              portraitWidth: portraitWidth,
+              landscapeWidth: landscapeWidth,
+            ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 AnimatedBuilder(
                   animation: _animationController,
-                  builder: (context, _) {
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(
+                      vertical: 16.0,
+                      horizontal: 8.0,
+                    ),
+                    child: Align(
+                      alignment: Alignment.topCenter,
+                      child: RichText(
+                        text: TextSpan(
+                          style: widget.textStyle,
+                          children: [
+                            TextSpan(
+                              text: widget.filteredLength.toString(),
+                            ),
+                            TextSpan(text: ' '),
+                            TextSpan(
+                              text: _entriesLabel,
+                              style: widget.accentTextStyle,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  builder: (context, child) {
                     return AnimatedOpacity(
                       duration: _animationController.duration!,
                       opacity: _animationController.value,
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(
-                          vertical: 16.0,
-                          horizontal: 8.0,
-                        ),
-                        child: Align(
-                          alignment: Alignment.topCenter,
-                          child: RichText(
-                            text: TextSpan(
-                              style: widget.textStyle,
-                              children: [
-                                TextSpan(
-                                  text: widget.filteredLength.toString(),
-                                ),
-                                TextSpan(text: ' '),
-                                TextSpan(
-                                  text: _entriesLabel,
-                                  style: widget.accentTextStyle,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
+                      child: child,
                     );
                   },
                 ),
@@ -138,14 +142,14 @@ class _DiaryFilterHeaderState extends State<DiaryFilterHeader>
                       enabledTitle: Icon(
                         LitIcons.heart_solid,
                         size: 16.0,
-                        color: widget.showFavoritesOnly!
+                        color: widget.showFavoritesOnly
                             ? widget.accentTextStyle.color
                             : widget.textStyle.color,
                       ),
                       disabledTitle: ClippedText(
                         LeitmotifLocalizations.of(context).allLabel,
                         style: widget.textStyle.copyWith(
-                          color: widget.showFavoritesOnly!
+                          color: widget.showFavoritesOnly
                               ? widget.textStyle.color
                               : widget.accentTextStyle.color,
                         ),

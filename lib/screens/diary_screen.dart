@@ -101,8 +101,10 @@ class _DiaryScreenState extends State<DiaryScreen>
           ),
           body: SafeArea(
             child: DiaryEntryProvider(
-              builder: (context, diaryEntries) =>
-                  buildListView(diaryEntries, userData),
+              builder: (context, diaryEntries) => buildListView(
+                diaryEntries,
+                userData,
+              ),
             ),
           ),
         );
