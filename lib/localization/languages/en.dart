@@ -51,6 +51,7 @@ class EN {
         'There are no entries available. Would you like to create your first entry now?',
     AppLocalizationsKeys.diaryEntriesLabel: 'Diary entries',
     AppLocalizationsKeys.avgMoodLabel: 'Average mood',
+    AppLocalizationsKeys.wordWrittenLabel: "Word written",
     AppLocalizationsKeys.wordsWrittenLabel: 'Words written',
     AppLocalizationsKeys.wordsPerEntryLabel: 'Words per entry',
     AppLocalizationsKeys.mostWordsAtOnceLabel: 'Most words at once',
@@ -168,5 +169,7 @@ class EN {
         'duplicate photos removed',
     AppLocalizationsKeys.creatorName: "Michael Grigorenko",
     AppLocalizationsKeys.inspiredByMovieTitle: "Your Name. (2016)",
+    AppLocalizationsKeys.photoAvailableLabel: "Photo available",
+    AppLocalizationsKeys.photosAvailableLabel: "Photos available",
   };
 }

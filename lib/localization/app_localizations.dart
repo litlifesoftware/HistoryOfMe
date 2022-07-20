@@ -189,6 +189,10 @@ class AppLocalizations {
     return localizeValue(AppLocalizationsKeys.avgMoodLabel);
   }
 
+  String get wordWrittenLabel {
+    return localizeValue(AppLocalizationsKeys.wordWrittenLabel);
+  }
+
   String get wordsWrittenLabel {
     return localizeValue(AppLocalizationsKeys.wordsWrittenLabel);
   }
@@ -559,5 +563,13 @@ class AppLocalizations {
 
   String get inspiredByMovieTitle {
     return localizeValue(AppLocalizationsKeys.inspiredByMovieTitle);
+  }
+
+  String get photoAvailableLabel {
+    return localizeValue(AppLocalizationsKeys.photoAvailableLabel);
+  }
+
+  String get photosAvailableLabel {
+    return localizeValue(AppLocalizationsKeys.photosAvailableLabel);
   }
 }

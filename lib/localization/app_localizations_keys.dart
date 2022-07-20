@@ -40,6 +40,7 @@ class AppLocalizationsKeys {
       'statisticsFallbackActionLabel';
   static const String diaryEntriesLabel = 'diaryEntriesLabel';
   static const String avgMoodLabel = 'avgMoodLabel';
+  static const String wordWrittenLabel = 'wordWrittenLabel';
   static const String wordsWrittenLabel = 'wordsWrittenLabel';
   static const String wordsPerEntryLabel = 'wordsPerEntryLabel';
   static const String mostWordsAtOnceLabel = 'mostWordsAtOnceLabel';
@@ -136,4 +137,6 @@ class AppLocalizationsKeys {
       'duplicatePhotosRemovedLabel';
   static const String creatorName = 'creatorName';
   static const String inspiredByMovieTitle = 'inspiredByMovieTitle';
+  static const String photoAvailableLabel = "photoAvailableLabel";
+  static const String photosAvailableLabel = "photosAvailableLabel";
 }

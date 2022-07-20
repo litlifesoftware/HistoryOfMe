@@ -8,6 +8,7 @@ class EntryDetailCard extends StatefulWidget {
   final bool isFirst;
   final bool isLast;
   final QueryController? queryController;
+  final void Function(DragEndDetails details, DiaryEntry entry) flipPage;
 
   final void Function() onEdit;
   const EntryDetailCard({
@@ -37,6 +38,7 @@ class EntryDetailCard extends StatefulWidget {
     required this.isFirst,
     required this.isLast,
     required this.queryController,
+    required this.flipPage,
   }) : super(key: key);
 
   @override
@@ -95,9 +97,13 @@ class _EntryDetailCardState extends State<EntryDetailCard> {
               onToggleFavorite: _onToggleFavorite,
               onEdit: _onEdit,
             ),
-            _TextPreview(
-              diaryEntry: widget.diaryEntry,
-              onEdit: _onEdit,
+            GestureDetector(
+              onHorizontalDragEnd: (details) =>
+                  widget.flipPage(details, widget.diaryEntry),
+              child: _TextPreview(
+                diaryEntry: widget.diaryEntry,
+                onEdit: _onEdit,
+              ),
             ),
           ],
         ),
@@ -132,143 +138,137 @@ class _Header extends StatelessWidget {
     return Container(
       width: MediaQuery.of(context).size.width,
       decoration: boxDecoration,
-      child: Stack(
+      child: Column(
         children: [
-          Column(
-            children: [
-              Padding(
-                padding: EntryDetailCard.margin,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    LayoutBuilder(
-                      builder: (context, constraints) {
-                        return Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            SizedBox(
-                              width: constraints.maxWidth / 2,
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    AppLocalizations.of(context)
-                                        .entryLabel
-                                        .capitalize(),
-                                    style:
-                                        LitSansSerifStyles.subtitle1.copyWith(
-                                      fontWeight: FontWeight.bold,
-                                      color: LitColors.grey380,
-                                    ),
-                                  ),
-                                  Padding(
+          Padding(
+            padding: EntryDetailCard.margin,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                LayoutBuilder(
+                  builder: (context, constraints) {
+                    return Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        SizedBox(
+                          width: constraints.maxWidth / 2,
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Text(
+                                AppLocalizations.of(context)
+                                    .entryLabel
+                                    .capitalize(),
+                                style: LitSansSerifStyles.subtitle1.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                  color: LitColors.grey380,
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 8.0,
+                                ),
+                                child: LitBadge(
+                                  backgroundColor: LitColors.grey200,
+                                  child: Padding(
                                     padding: const EdgeInsets.symmetric(
-                                      horizontal: 8.0,
+                                      vertical: 1.0,
+                                      horizontal: 4.0,
                                     ),
-                                    child: LitBadge(
-                                      backgroundColor: LitColors.grey200,
-                                      child: Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                          vertical: 1.0,
-                                          horizontal: 4.0,
-                                        ),
-                                        child: Text(
-                                          diaryNumberLabel,
-                                          style: LitSansSerifStyles.caption
-                                              .copyWith(
-                                            color: LitColors.white,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
+                                    child: Text(
+                                      diaryNumberLabel,
+                                      style:
+                                          LitSansSerifStyles.caption.copyWith(
+                                        color: LitColors.white,
+                                        fontWeight: FontWeight.bold,
                                       ),
                                     ),
                                   ),
-                                ],
+                                ),
                               ),
-                            ),
-                            ConstrainedBox(
-                              constraints: BoxConstraints(
-                                maxWidth: constraints.maxWidth / 2,
-                              ),
-                              child: _EditButton(
-                                constraints: constraints,
-                                onEdit: onEdit,
-                              ),
-                            ),
-                          ],
-                        );
-                      },
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 4.0),
-                      child: Text(
-                        diaryEntry.title != DefaultData.diaryEntryTitle
-                            ? diaryEntry.title
-                            : AppLocalizations.of(context).untitledLabel,
-                        style: LitSansSerifStyles.subtitle1.copyWith(
-                          fontWeight: FontWeight.bold,
-                          color: LitColors.grey400,
+                            ],
+                          ),
                         ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(
-                        bottom: 4.0,
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          UpdatedLabelText(
-                            lastUpdateTimestamp: diaryEntry.lastUpdated,
+                        ConstrainedBox(
+                          constraints: BoxConstraints(
+                            maxWidth: constraints.maxWidth / 2,
                           ),
-                          _FavoriteButton(
-                            onPressed: onToggleFavorite,
-                            favorite: diaryEntry.favorite,
+                          child: _EditButton(
+                            constraints: constraints,
+                            onEdit: onEdit,
                           ),
-                        ],
-                      ),
-                    ),
-                    Row(
-                      children: [
-                        isLast
-                            ? Padding(
-                                padding: EdgeInsets.only(
-                                  top: 4.0,
-                                  bottom: 4.0,
-                                  left: 0.0,
-                                  right: isFirst ? 3.0 : 0,
-                                ),
-                                child: _MetaLabel(
-                                  title: LeitmotifLocalizations.of(context)
-                                      .latestLabel,
-                                ),
-                              )
-                            : SizedBox(),
-                        isFirst
-                            ? Padding(
-                                padding: EdgeInsets.only(
-                                  top: 4.0,
-                                  bottom: 4.0,
-                                  left: isLast ? 3.0 : 0.0,
-                                  right: 0.0,
-                                ),
-                                child: _MetaLabel(
-                                  title:
-                                      AppLocalizations.of(context).firstLabel,
-                                ),
-                              )
-                            : SizedBox(),
+                        ),
                       ],
+                    );
+                  },
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 4.0),
+                  child: Text(
+                    diaryEntry.title != DefaultData.diaryEntryTitle
+                        ? diaryEntry.title
+                        : AppLocalizations.of(context).untitledLabel,
+                    style: LitSansSerifStyles.subtitle1.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: LitColors.grey400,
                     ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(
+                    bottom: 4.0,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      UpdatedLabelText(
+                        lastUpdateTimestamp: diaryEntry.lastUpdated,
+                      ),
+                      _FavoriteButton(
+                        onPressed: onToggleFavorite,
+                        favorite: diaryEntry.favorite,
+                      ),
+                    ],
+                  ),
+                ),
+                Row(
+                  children: [
+                    isLast
+                        ? Padding(
+                            padding: EdgeInsets.only(
+                              top: 4.0,
+                              bottom: 4.0,
+                              left: 0.0,
+                              right: isFirst ? 3.0 : 0,
+                            ),
+                            child: _MetaLabel(
+                              title: LeitmotifLocalizations.of(context)
+                                  .latestLabel,
+                            ),
+                          )
+                        : SizedBox(),
+                    isFirst
+                        ? Padding(
+                            padding: EdgeInsets.only(
+                              top: 4.0,
+                              bottom: 4.0,
+                              left: isLast ? 3.0 : 0.0,
+                              right: 0.0,
+                            ),
+                            child: _MetaLabel(
+                              title: AppLocalizations.of(context).firstLabel,
+                            ),
+                          )
+                        : SizedBox(),
                   ],
                 ),
-              ),
-              _MoodScoreIndicator(
-                moodScore: diaryEntry.moodScore,
-              ),
-            ],
+              ],
+            ),
+          ),
+          _MoodScoreIndicator(
+            moodScore: diaryEntry.moodScore,
           ),
         ],
       ),
@@ -480,7 +480,12 @@ class _TextPreview extends StatelessWidget {
                               child: SelectableText(
                                 wordCount.toString() +
                                     " " +
-                                    (wordCount == 1 ? "word." : "words."),
+                                    (wordCount == 1
+                                        ? AppLocalizations.of(context)
+                                            .wordWrittenLabel
+                                        : AppLocalizations.of(context)
+                                            .wordsWrittenLabel) +
+                                    ".",
                                 style: LitSansSerifStyles.overline.copyWith(
                                   height: 1.5,
                                   letterSpacing: 0.5,
@@ -493,8 +498,11 @@ class _TextPreview extends StatelessWidget {
                                 photos.length.toString() +
                                     " " +
                                     (photos.length == 1
-                                        ? "photo available."
-                                        : "photos available."),
+                                        ? AppLocalizations.of(context)
+                                            .photoAvailableLabel
+                                        : AppLocalizations.of(context)
+                                            .photosAvailableLabel) +
+                                    ".",
                                 style: LitSansSerifStyles.overline.copyWith(
                                   height: 1.5,
                                   letterSpacing: 0.5,

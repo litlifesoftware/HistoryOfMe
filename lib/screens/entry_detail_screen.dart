@@ -30,16 +30,11 @@ class EntryDetailScreen extends StatefulWidget {
 class _EntryDetailScreenState extends State<EntryDetailScreen>
     with TickerProviderStateMixin {
   late QueryController _queryController;
-  ScrollController? _scrollController;
+  late ScrollController _scrollController;
   bool _assetsLoading = false;
   late HOMNavigator _screenRouter;
   late LitSettingsPanelController _settingsPanelController;
   late DiaryPhotoPicker _diaryPhotoPicker;
-
-  // bool unsupportedFile = false;
-
-  // late Directory storageDir;
-  // late Directory cacheDir;
 
   /// Toggles the [_assetsLoading] value.
   void _toggleAssetsLoading() {
@@ -62,18 +57,20 @@ class _EntryDetailScreenState extends State<EntryDetailScreen>
     );
   }
 
-  bool _shouldShowNextButton(DiaryEntry diaryEntry) {
+  bool _isAvailableNextEntry(DiaryEntry diaryEntry) {
     return _queryController.nextEntryExistsByUID(diaryEntry.uid);
   }
 
-  bool _shouldShowPreviousButton(DiaryEntry diaryEntry) {
+  bool _isAvailablePreviousEntry(DiaryEntry diaryEntry) {
     return _queryController.previousEntryExistsByUID(diaryEntry.uid);
   }
 
   void _onEdit(DiaryEntry diaryEntry) {
     if (_settingsPanelController.isShown)
       _settingsPanelController.dismissSettingsPanel();
-    _screenRouter.toEntryEditingScreen(diaryEntry: diaryEntry);
+    Future.delayed(LitAnimationDurations.button).then(
+      (_) => _screenRouter.toEntryEditingScreen(diaryEntry: diaryEntry),
+    );
   }
 
   /// Delays the [_onEdit] call by the button animation duration to allow the
@@ -83,183 +80,6 @@ class _EntryDetailScreenState extends State<EntryDetailScreen>
       (_) => _onEdit(diaryEntry),
     );
   }
-
-  //final ImagePicker picker = ImagePicker();
-
-  //List<XFile> images = [];
-
-  // void pickImage(DiaryEntry entry) async {
-  //   //final ImagePicker _picker = ImagePicker();
-  //   // final
-
-  //   // setState(() {
-  //   //   images = [];
-  //   // })
-
-  //   List<XFile?>? pickedImages = [];
-  //   List<DiaryPhoto> diaryPhotos = [];
-
-  //   try {
-  //     pickedImages = await picker.pickMultiImage();
-  //     if (pickedImages != null && pickedImages.length != 0) {
-  //       images = [];
-  //     }
-  //   } catch (e) {
-  //     unsupportedFile = true;
-  //     showDialog(
-  //       context: context,
-  //       builder: (context) => LitTitledDialog(
-  //         titleText: "Error",
-  //         child: Padding(
-  //           padding: LitEdgeInsets.dialogMargin,
-  //           child: Text(
-  //             "Not supported file.",
-  //             style: LitSansSerifStyles.body2,
-  //           ),
-  //         ),
-  //       ),
-  //     );
-  //   }
-
-  //   if (pickedImages != null) {
-  //     pickedImages.forEach(
-  //       (XFile? element) async {
-  //         if (element == null)
-  //           return;
-  //         else {
-  //           setState(() {
-  //             images.add(element);
-  //           });
-  //           // element.openRead();
-  //           // Future<Uint8List> ele = await element.readAsBytes();
-  //           // print(ele);
-  //           //TODO: Store on app directory
-  //           //TODO: copy to media directory to backup photos
-  //           //maybe store photos as base64 string
-  //           //TODO: make sure it will work on all version apps / error handling
-  //           // TODO: include the base64 string in the photo model
-  //           // TODO: extend backuping to backup photos.
-
-  //           String uid = AppAPI().generateUid();
-  //           String fileName = uid + p.extension(element.path);
-  //           String filePath = storageDir.path + '/' + fileName;
-  //           // Directory('/data/user/0/com.litlifesoftware.historyofme/images/')
-  //           //     .create();
-
-  //           //TODO: PICK STORE AND RETRIVE
-  //           // Pick file, get path, genereate image name using uid, copy image to
-  //           // app dir using custom image name (APPDIR/images/imagename.ext)
-  //           // store list of image names on diary entry (we already know the
-  //           // app dir path)
-  //           // TODO: BACKUP and restore
-  //           // Backup: Copy all images on APPDIR/images/ to Download/LitLifeSoftware/HistoryOfMe/images (loop all entries then loop all
-  //           // images of the entry to get its image file paths)
-  //           // Restore: Copy all images on Download/../images to APPDir/images/
-  //           // (loop all entries then loop all images of the entry to get its image file path).
-  //           try {
-  //             element.saveTo(filePath).then((_) {
-  //               try {
-  //                 print("Trying to delete cached file on: " + element.path);
-  //                 File(element.path).delete();
-  //               } catch (e) {}
-  //             });
-  //           } catch (e) {
-  //             print("Not saved propely");
-  //           }
-
-  //           print(filePath);
-
-  //           // final dir = Directory(dirPath);
-  //           // dir.deleteSync(recursive: true);
-
-  //           diaryPhotos.add(
-  //             DiaryPhoto(
-  //               uid: uid,
-  //               date: entry.date,
-  //               created: new DateTime.now().millisecondsSinceEpoch,
-  //               name: fileName,
-  //               path: filePath,
-  //             ),
-  //           );
-  //         }
-  //       },
-  //     );
-
-  //     // Delete image cache.
-  //     // if (cachePath != null) {
-  //     //   cachePath!.deleteSync(recursive: true);
-  //     //   print("Cached images deleted.");
-  //     // } else {
-  //     //   print("Cached images not delete, dir is null");
-  //     // }
-  //   }
-
-  //   images.forEach((element) {
-  //     print(element.path);
-  //   });
-
-  //   if (diaryPhotos.length != 0) {
-  //     int nowTimestamp = new DateTime.now().millisecondsSinceEpoch;
-
-  //     DiaryEntry updated = DiaryEntry(
-  //       uid: entry.uid,
-  //       date: entry.date,
-  //       created: entry.created,
-  //       // Update 'updated' timestamp
-  //       lastUpdated: nowTimestamp,
-  //       title: entry.title,
-  //       content: entry.content,
-  //       moodScore: entry.moodScore,
-  //       favorite: entry.favorite,
-  //       backdropPhotoId: entry.backdropPhotoId,
-  //       // Include picked photos.
-  //       photos: diaryPhotos,
-  //     );
-
-  //     AppAPI().updateDiaryEntry(updated);
-
-  //     // Delete image cache.
-  //     // deleteCachedFiles();
-  //   } else {
-  //     if (!unsupportedFile) {
-  //       showDialog(
-  //         context: context,
-  //         builder: (context) => LitTitledDialog(
-  //           child: Text("delete all images ?"),
-  //           titleText: "titleText",
-  //           actionButtons: [
-  //             DialogActionButton(
-  //               data: ActionButtonData(
-  //                   title: "Delete",
-  //                   onPressed: () {
-  //                     DiaryEntry updated = DiaryEntry(
-  //                       uid: entry.uid,
-  //                       date: entry.date,
-  //                       created: entry.created,
-  //                       lastUpdated: entry.lastUpdated,
-  //                       title: entry.title,
-  //                       content: entry.content,
-  //                       moodScore: entry.moodScore,
-  //                       favorite: entry.favorite,
-  //                       backdropPhotoId: entry.backdropPhotoId,
-  //                       photos: [],
-  //                     );
-
-  //                     AppAPI().updateDiaryEntry(updated);
-  //                     Navigator.of(context).pop();
-  //                   }),
-  //             )
-  //           ],
-  //         ),
-  //       );
-  //     }
-  //   }
-  // }
-
-  // void deleteCachedFiles() async {
-  //   await cacheDir.delete(recursive: true);
-  //   print("Cached files deleted.");
-  // }
 
   void _onNextPressed(DiaryEntry diaryEntry) {
     Future.delayed(LitAnimationDurations.button).then(
@@ -294,15 +114,27 @@ class _EntryDetailScreenState extends State<EntryDetailScreen>
     );
   }
 
-  // CustomAppBar getAppBar(DiaryEntry diaryEntry) {
-  //   if (_scrollController == null) {
-  //     return LitAppBar(title: "he");
-  //   }
+  /// Flips the currently displayed entry of the diary by either navigating
+  /// to the next entry on a negative drag velocity or by navigating to the
+  /// next entry in case of a positive velocity.
+  void _flipPage(DragEndDetails details, DiaryEntry diaryEntry) {
+    print(details.primaryVelocity.toString());
+    if (details.primaryVelocity == null) return;
 
-  //   if (_scrollController!.offset > CustomAppBar.height) {}
+    // Next
+    if (details.primaryVelocity! < 0) {
+      if (_isAvailableNextEntry(diaryEntry)) {
+        _onNextPressed(diaryEntry);
+      }
+    }
 
-  //   return LitAppBar(title: "he");
-  // }
+    // Previous
+    if (details.primaryVelocity! > 0) {
+      if (_isAvailablePreviousEntry(diaryEntry)) {
+        _onPreviousPressed(diaryEntry);
+      }
+    }
+  }
 
   void _onPickedUnsupportedFile() {
     showDialog(
@@ -322,13 +154,10 @@ class _EntryDetailScreenState extends State<EntryDetailScreen>
   void initState() {
     super.initState();
     _toggleAssetsLoading();
-    //_loadAssets();
-
     _scrollController = ScrollController();
     _settingsPanelController = LitSettingsPanelController();
     _queryController = QueryController();
     _screenRouter = HOMNavigator(context);
-    //
     _diaryPhotoPicker = DiaryPhotoPicker(
       onPickedUnsupportedFile: _onPickedUnsupportedFile,
       onDeleteAllPhotos: _onDeleteAllPhotos,
@@ -337,7 +166,7 @@ class _EntryDetailScreenState extends State<EntryDetailScreen>
 
   @override
   void dispose() {
-    _scrollController!.dispose();
+    _scrollController.dispose();
     super.dispose();
   }
 
@@ -424,12 +253,13 @@ class _EntryDetailScreenState extends State<EntryDetailScreen>
                               diaryEntry: diaryEntry,
                               onEdit: () => _onEdit(diaryEntry),
                               queryController: _queryController,
+                              flipPage: _flipPage,
                             ),
                           ),
                           _Footer(
-                            showNextButton: _shouldShowNextButton(diaryEntry),
+                            showNextButton: _isAvailableNextEntry(diaryEntry),
                             showPreviousButton:
-                                _shouldShowPreviousButton(diaryEntry),
+                                _isAvailablePreviousEntry(diaryEntry),
                             onPrevious: () => _onPreviousPressed(diaryEntry),
                             onNext: () => _onNextPressed(diaryEntry),
                             moreOptionsPressed:
@@ -524,10 +354,12 @@ class _Footer extends StatelessWidget {
               ],
             ),
             LitPushedThroughButton(
-              margin: LitEdgeInsets.button * 1.5,
+              margin: LitEdgeInsets.button * 1.4,
               child: EllipseIcon(
                 animated: false,
                 dotColor: LitColors.grey380,
+                dotHeight: 6.0,
+                dotWidth: 6.0,
               ),
               onPressed: moreOptionsPressed,
               accentColor: Colors.white,

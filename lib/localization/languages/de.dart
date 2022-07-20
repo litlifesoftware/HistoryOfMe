@@ -53,6 +53,7 @@ class DE {
         'Gehe zurück zu deinem Tagebuch, um deinen ersten Eintrag zu erstellen.',
     AppLocalizationsKeys.diaryEntriesLabel: 'Tagebucheinträge',
     AppLocalizationsKeys.avgMoodLabel: 'Durchschnittliche Stimmung',
+    AppLocalizationsKeys.wordWrittenLabel: "Verfasstes Wort",
     AppLocalizationsKeys.wordsWrittenLabel: 'Verfasste Wörter',
     AppLocalizationsKeys.wordsPerEntryLabel: 'Wörter pro Eintrag',
     AppLocalizationsKeys.mostWordsAtOnceLabel: 'Meiste Wörter zugleich',
@@ -176,5 +177,7 @@ class DE {
     AppLocalizationsKeys.duplicatePhotosRemovedLabel: 'doppelte Fotos entfernt',
     AppLocalizationsKeys.creatorName: "Michael Grigorenko",
     AppLocalizationsKeys.inspiredByMovieTitle: "Your Name. (2016)",
+    AppLocalizationsKeys.photoAvailableLabel: "Foto verfügbar",
+    AppLocalizationsKeys.photosAvailableLabel: "Fotos verfügbar",
   };
 }
