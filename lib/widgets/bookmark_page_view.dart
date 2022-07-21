@@ -25,6 +25,7 @@ class BookmarkPageView extends StatelessWidget {
     return IndexedPageView(
       height: height,
       indicatorSpacingTop: 0.0,
+      tapToNavigate: true,
       children: [
         BookmarkFrontPreview(
           userData: userData,
