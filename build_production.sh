@@ -1,6 +1,6 @@
 #/!/bin/bash
 
-now=`date +"%Y-%m-%d"`
+now=`date +"%Y%m%d-%H%M"`
 appName="History of Me"
 appNameClean="HistoryOfMe"
 arm64="arm64-v8a"
