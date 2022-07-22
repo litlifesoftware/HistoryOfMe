@@ -128,7 +128,9 @@ class _AboutDialog extends StatelessWidget {
     return LitAboutDialog(
       title: LeitmotifLocalizations.of(context).aboutAppLabel,
       appName: App.appName,
-      art: HistoryOfMeLauncherIconArt(),
+      art: HistoryOfMeLauncherIconArt(
+        boxShadow: LitBoxShadows.sm,
+      ),
       infoDescription: AppLocalizations.of(context).aboutAppDescr,
     );
   }
