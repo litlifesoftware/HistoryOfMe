@@ -3,12 +3,14 @@ part of widgets;
 class DiaryListTile extends StatefulWidget {
   final AnimationController? animationController;
   final int listIndex;
+  final int listLength;
   final DiaryEntry diaryEntry;
   final double landscapeWidthFactor;
   const DiaryListTile({
     Key? key,
     required this.animationController,
     required this.listIndex,
+    required this.listLength,
     required this.diaryEntry,
     this.landscapeWidthFactor = 0.75,
   }) : super(key: key);
@@ -26,6 +28,23 @@ class _DiaryListTileState extends State<DiaryListTile> {
       diaryEntryUid: widget.diaryEntry.uid,
     );
   }
+
+  Animation<double> get _animation =>
+      Tween<double>(begin: 0.0, end: 1.0).animate(
+        CurvedAnimation(
+          parent: widget.animationController!,
+          curve: Interval((1 / 50) * widget.listIndex, 1.0,
+              curve: Curves.easeInOut),
+        ),
+      );
+
+  Matrix4 get _transform => Matrix4.translationValues(
+        -(MediaQuery.of(context).size.width * (1 / 50) * widget.listIndex) +
+            ((MediaQuery.of(context).size.width * (1 / 50) * widget.listIndex) *
+                _animation.value),
+        0,
+        0,
+      );
 
   @override
   void initState() {
@@ -57,59 +76,37 @@ class _DiaryListTileState extends State<DiaryListTile> {
     return AnimatedBuilder(
       animation: widget.animationController!,
       builder: (context, _) {
-        widget.animationController!.forward();
-
-        final Animation<double> animation = Tween<double>(begin: 0.0, end: 1.0)
-            .animate(CurvedAnimation(
-                parent: widget.animationController!,
-                curve: Interval((1 / 50) * widget.listIndex, 1.0,
-                    curve: Curves.easeInOut)));
         return FadeTransition(
-          opacity: animation,
+          opacity: _animation,
           child: Transform(
-            transform: Matrix4.translationValues(
-              -(MediaQuery.of(context).size.width *
-                      (1 / 50) *
-                      widget.listIndex) +
-                  ((MediaQuery.of(context).size.width *
-                          (1 / 50) *
-                          widget.listIndex) *
-                      animation.value),
-              0,
-              0,
-            ),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(
-                vertical: 16.0,
-              ),
-              child: SizedBox(
-                width: MediaQuery.of(context).size.width,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    _EntryDateLabel(
-                      boxShadowOffset: Offset(-2, 4),
-                      quaterTurns: 3,
-                      text: monthLabels[
-                          DateTime.parse(widget.diaryEntry.date).month - 1],
-                      landscapeWidthFactor: widget.landscapeWidthFactor,
-                    ),
-                    _EntryCard(
-                      listIndex: widget.listIndex,
-                      diaryEntry: widget.diaryEntry,
-                      landscapeWidthFactor: widget.landscapeWidthFactor,
-                      onPressed: _onTilePressed,
-                    ),
-                    _EntryDateLabel(
-                      boxShadowOffset: Offset(4, -2),
-                      quaterTurns: 1,
-                      text: DateTime.parse(widget.diaryEntry.date)
-                          .year
-                          .toString(),
-                      landscapeWidthFactor: widget.landscapeWidthFactor,
-                    ),
-                  ],
-                ),
+            transform: _transform,
+            child: SizedBox(
+              width: MediaQuery.of(context).size.width,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  _EntryDateLabel(
+                    boxShadowOffset: Offset(-2, 4),
+                    quaterTurns: 3,
+                    text: monthLabels[
+                        DateTime.parse(widget.diaryEntry.date).month - 1],
+                    landscapeWidthFactor: widget.landscapeWidthFactor,
+                  ),
+                  _EntryCard(
+                    listIndex: widget.listIndex,
+                    listLength: widget.listLength,
+                    diaryEntry: widget.diaryEntry,
+                    landscapeWidthFactor: widget.landscapeWidthFactor,
+                    onPressed: _onTilePressed,
+                  ),
+                  _EntryDateLabel(
+                    boxShadowOffset: Offset(4, -2),
+                    quaterTurns: 1,
+                    text:
+                        DateTime.parse(widget.diaryEntry.date).year.toString(),
+                    landscapeWidthFactor: widget.landscapeWidthFactor,
+                  ),
+                ],
               ),
             ),
           ),
@@ -158,49 +155,52 @@ class __EntryDateLabelState extends State<_EntryDateLabel> {
         landscapeWidth: landscapeWidth,
       ),
       child: RotatedBox(
-          quarterTurns: widget.quaterTurns,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8.0),
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15.0),
-                color: HexColor('efefef'),
-                boxShadow: [
-                  BoxShadow(
-                    blurRadius: 15.0,
-                    offset: widget.boxShadowOffset,
-                    color: Colors.black.withOpacity(0.20),
-                    spreadRadius: 2.0,
-                  )
-                ],
+        quarterTurns: widget.quaterTurns,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8.0),
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(15.0),
+              color: HexColor('efefef'),
+              boxShadow: [
+                BoxShadow(
+                  blurRadius: 15.0,
+                  offset: widget.boxShadowOffset,
+                  color: Colors.black.withOpacity(0.20),
+                  spreadRadius: 2.0,
+                )
+              ],
+            ),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                vertical: 4.0,
+                horizontal: 12.0,
               ),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 4.0,
-                  horizontal: 12.0,
-                ),
-                child: Center(
-                  child: ClippedText(
-                    "${widget.text}",
-                    textAlign: TextAlign.center,
-                    style: LitTextStyles.sansSerifStyles[caption],
-                  ),
+              child: Center(
+                child: ClippedText(
+                  "${widget.text}",
+                  textAlign: TextAlign.center,
+                  style: LitTextStyles.sansSerifStyles[caption],
                 ),
               ),
             ),
-          )),
+          ),
+        ),
+      ),
     );
   }
 }
 
 class _EntryCard extends StatefulWidget {
   final int listIndex;
+  final int listLength;
   final DiaryEntry diaryEntry;
   final double landscapeWidthFactor;
   final void Function() onPressed;
   const _EntryCard({
     Key? key,
     required this.listIndex,
+    required this.listLength,
     required this.diaryEntry,
     required this.landscapeWidthFactor,
     required this.onPressed,
@@ -257,6 +257,14 @@ class __EntryCardState extends State<_EntryCard> {
     return _portraitWidth * widget.landscapeWidthFactor;
   }
 
+  int get _diaryNumber {
+    return (widget.listIndex - widget.listLength).abs();
+  }
+
+  Matrix4 get _numberTransform {
+    return Matrix4.translationValues(-8.0, -8.0, 0);
+  }
+
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
@@ -269,89 +277,111 @@ class __EntryCardState extends State<_EntryCard> {
           ),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            child: LitPushedButton(
-              onPressed: widget.onPressed,
-              minScale: 0.94,
-              animateOnStart: false,
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(15.0),
-                  boxShadow: [
-                    BoxShadow(
-                      offset: Offset(1, 4),
-                      blurRadius: 12.0,
-                      spreadRadius: 1.0,
-                      color: Colors.black.withOpacity(0.22),
-                    )
-                  ],
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 16.0,
-                    vertical: 12.0,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      LayoutBuilder(
-                        builder: (context, constraints) => Row(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            SizedBox(
-                              width: constraints.maxWidth - 14.0,
-                              child: ClippedText(
-                                _title,
-                                maxLines: 2,
-                                style: LitSansSerifStyles.body2,
-                              ),
-                            ),
-                            Align(
-                              alignment: Alignment.topRight,
-                              child: Container(
-                                width: 12.0,
-                                height: 12.0,
-                                decoration: BoxDecoration(
-                                  color: Color.lerp(
-                                    LitColors.lightRed,
-                                    HexColor('bee5be'),
-                                    widget.diaryEntry.moodScore,
-                                  ),
-                                  borderRadius: BorderRadius.circular(
-                                    4,
+            child: Stack(
+              alignment: Alignment.topLeft,
+              children: [
+                LitPushedButton(
+                  onPressed: widget.onPressed,
+                  minScale: 0.94,
+                  animateOnStart: false,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(16.0),
+                      boxShadow: LitBoxShadows.md,
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 16.0,
+                        vertical: 12.0,
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          LayoutBuilder(
+                            builder: (context, constraints) => Row(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SizedBox(
+                                  width:
+                                      constraints.maxWidth - 14.0 - 16.0 - 4.0,
+                                  child: ClippedText(
+                                    _title,
+                                    maxLines: 2,
+                                    style: LitSansSerifStyles.body2,
                                   ),
                                 ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      _Divider(),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            _formattedDiaryDate,
-                            style:
-                                LitTextStyles.sansSerifStyles[caption].copyWith(
-                              color: HexColor('666666'),
+                                Align(
+                                  alignment: Alignment.topRight,
+                                  child: Container(
+                                    width: 12.0,
+                                    height: 12.0,
+                                    decoration: BoxDecoration(
+                                      color: Color.lerp(
+                                        LitColors.lightRed,
+                                        HexColor('bee5be'),
+                                        widget.diaryEntry.moodScore,
+                                      ),
+                                      borderRadius: BorderRadius.circular(
+                                        4,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
-                          Text(
-                            _relativeDateUpdated,
-                            style:
-                                LitTextStyles.sansSerifStyles[caption].copyWith(
-                              color: HexColor('666666'),
-                            ),
+                          _Divider(),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                _formattedDiaryDate,
+                                style: LitTextStyles.sansSerifStyles[caption]
+                                    .copyWith(
+                                  color: HexColor('666666'),
+                                ),
+                              ),
+                              Text(
+                                _relativeDateUpdated,
+                                style: LitTextStyles.sansSerifStyles[caption]
+                                    .copyWith(
+                                  color: HexColor('666666'),
+                                ),
+                              ),
+                            ],
                           ),
                         ],
-                      )
-                    ],
+                      ),
+                    ),
                   ),
                 ),
-              ),
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: Transform(
+                    transform: _numberTransform,
+                    child: SizedBox(
+                      child: LitBadge(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 8.0,
+                          vertical: 4.0,
+                        ),
+                        backgroundColor: LitColors.grey200,
+                        child: Text(
+                          '#' + (_diaryNumber).toString(),
+                          textAlign: TextAlign.center,
+                          style: LitSansSerifStyles.button.copyWith(
+                            fontSize: 9.0,
+                            color: LitColors.grey500,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
         );

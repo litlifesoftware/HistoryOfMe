@@ -34,41 +34,38 @@ class DiaryListView extends StatelessWidget {
   Widget build(BuildContext context) {
     return CleanInkWell(
       onTap: LitRouteController(context).closeDialog,
-      child: LitScrollbar(
-        child: Column(
-          children: <Widget>[
-            GreetingsBar(),
-            Expanded(
-              child: NestedScrollView(
-                //physics: AlwaysScrollableScrollPhysics(),
-                controller: scrollController,
-                headerSliverBuilder:
-                    (BuildContext context, bool innerBoxIsScrolled) {
-                  return <Widget>[
-                    DiaryBookmarkHeader(
-                      userData: userData,
-                      bookmarkAnimation: bookmarkAnimation,
+      child: Column(
+        children: <Widget>[
+          GreetingsBar(),
+          Expanded(
+            child: NestedScrollView(
+              controller: scrollController,
+              headerSliverBuilder:
+                  (BuildContext context, bool innerBoxIsScrolled) {
+                return <Widget>[
+                  DiaryBookmarkHeader(
+                    userData: userData,
+                    bookmarkAnimation: bookmarkAnimation,
+                  ),
+                  DiaryFilterHeader(
+                    filteredLength: _filteredLength,
+                    showFavoritesOnly: showFavoriteEntriesOnly,
+                    toggleShowFavoritesOnly: toggleShowFavoritesOnly,
+                    accentTextStyle: LitSansSerifStyles.subtitle2.copyWith(
+                      color: LitColors.grey380,
                     ),
-                    DiaryFilterHeader(
-                      filteredLength: _filteredLength,
-                      showFavoritesOnly: showFavoriteEntriesOnly,
-                      toggleShowFavoritesOnly: toggleShowFavoritesOnly,
-                      accentTextStyle: LitSansSerifStyles.subtitle2.copyWith(
-                        color: LitColors.grey380,
-                      ),
-                      textStyle: LitSansSerifStyles.subtitle2,
-                    ),
-                  ];
-                },
-                body: _DiaryListViewContent(
-                  diaryEntriesListSorted: diaryEntriesListSorted,
-                  showFavoritesOnly: showFavoriteEntriesOnly,
-                  animationController: animationController,
-                ),
+                    textStyle: LitSansSerifStyles.subtitle2,
+                  ),
+                ];
+              },
+              body: _DiaryListViewContent(
+                diaryEntriesListSorted: diaryEntriesListSorted,
+                showFavoritesOnly: showFavoriteEntriesOnly,
+                animationController: animationController,
               ),
-            )
-          ],
-        ),
+            ),
+          )
+        ],
       ),
     );
   }
@@ -90,44 +87,55 @@ class _DiaryListViewContent extends StatelessWidget {
     return diaryEntriesListSorted.where((element) => element.favorite).isEmpty;
   }
 
-  bool get showInfoMessage {
+  bool get showFavoritesInfoMessage {
     return noFavoritesAvailable && showFavoritesOnly;
   }
 
+  DiaryEntry getDiaryEntryByIndex(int index) => diaryEntriesListSorted[index];
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.white,
-      child: Builder(
-        builder: (context) {
-          return showInfoMessage
-              ? _NoFavoritesView(
-                  animationController: animationController,
-                )
-              : ListView.builder(
-                  physics: BouncingScrollPhysics(),
-                  itemCount: diaryEntriesListSorted.length,
-                  scrollDirection: Axis.vertical,
-                  padding: const EdgeInsets.only(bottom: 96.0),
-                  itemBuilder: (BuildContext context, int listIndex) {
-                    final DiaryEntry diaryEntry =
-                        diaryEntriesListSorted[listIndex];
-                    return showFavoritesOnly
-                        ? diaryEntry.favorite
-                            ? DiaryListTile(
-                                animationController: animationController,
-                                listIndex: listIndex,
-                                diaryEntry: diaryEntry,
-                              )
-                            : SizedBox()
-                        : DiaryListTile(
+    return LitScrollbar(
+      child: Container(
+        child: Builder(
+          builder: (context) {
+            if (showFavoritesInfoMessage)
+              return _NoFavoritesView(
+                animationController: animationController,
+              );
+
+            return ListView.builder(
+              physics: BouncingScrollPhysics(),
+              itemCount: diaryEntriesListSorted.length,
+              scrollDirection: Axis.vertical,
+              padding: const EdgeInsets.only(bottom: 96.0),
+              itemBuilder: (BuildContext context, int index) {
+                if (showFavoritesOnly)
+                  return getDiaryEntryByIndex(index).favorite
+                      ? Padding(
+                          padding: const EdgeInsets.only(top: 24.0),
+                          child: DiaryListTile(
                             animationController: animationController,
-                            listIndex: listIndex,
-                            diaryEntry: diaryEntry,
-                          );
-                  },
+                            listIndex: index,
+                            listLength: diaryEntriesListSorted.length,
+                            diaryEntry: getDiaryEntryByIndex(index),
+                          ),
+                        )
+                      : SizedBox();
+
+                return Padding(
+                  padding: const EdgeInsets.only(top: 24.0),
+                  child: DiaryListTile(
+                    animationController: animationController,
+                    listIndex: index,
+                    listLength: diaryEntriesListSorted.length,
+                    diaryEntry: getDiaryEntryByIndex(index),
+                  ),
                 );
-        },
+              },
+            );
+          },
+        ),
       ),
     );
   }

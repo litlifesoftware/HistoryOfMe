@@ -50,7 +50,7 @@ class _DiaryScreenState extends State<DiaryScreen>
     _listViewAnimation = AnimationController(
       duration: LitAnimationDurations.appearAnimation,
       vsync: this,
-    );
+    )..forward();
     _navigator = HOMNavigator(context);
     super.initState();
   }
