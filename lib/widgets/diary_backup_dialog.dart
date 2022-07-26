@@ -61,10 +61,14 @@ class _DiaryBackupDialogState extends State<DiaryBackupDialog> {
   ) async {
     final DateTime now = DateTime.now();
 
+    setState(() => isProcessing = true);
+
     await _backupStorage.writeBackup(backup);
     await _backupPhotos(backup);
 
     _api.updateLastBackup(appSettings, now);
+
+    setState(() => isProcessing = false);
   }
 
   String get imagesBackupDirectoryPath =>
@@ -159,7 +163,6 @@ class _DiaryBackupDialogState extends State<DiaryBackupDialog> {
     setState(() {
       photosCopied = 0;
       duplicatesDeleted = 0;
-      isProcessing = true;
     });
 
     int storageDuplicateCounter = 0;
@@ -218,10 +221,8 @@ class _DiaryBackupDialogState extends State<DiaryBackupDialog> {
       },
     );
 
-    setState(() {
-      isProcessing = false;
-      duplicatesDeleted = storageDuplicateCounter + backupDuplicateCounter;
-    });
+    setState(() =>
+        duplicatesDeleted = storageDuplicateCounter + backupDuplicateCounter);
   }
 
   /// Deletes the currently maintained backup file including the backed up
@@ -375,33 +376,50 @@ class _DiaryBackupDialogState extends State<DiaryBackupDialog> {
               }
 
               if (snap.hasError) return Text("Could load fetch diary backup!");
-            } else if (snap.connectionState == ConnectionState.waiting) {
+            } else if (snap.connectionState == ConnectionState.waiting ||
+                snap.connectionState == ConnectionState.none) {
               return _LoadingBackupDialog();
             }
 
             return FutureBuilder(
               future: _backupStorage.hasPermissions(),
               builder: (context, AsyncSnapshot<bool> hasPerSnap) {
-                print(hasPerSnap.data);
-                if (hasPerSnap.hasData && hasPerSnap.data!) {
-                  return _CreateBackupDialog(
-                    writeBackup: () => _writeBackup(
-                      _getCleanBackup(
-                        appSettings,
-                        diaryEntries,
-                        userCreatedColors,
-                        userData!,
-                      ),
-                      appSettings,
-                    ),
-                    includePhotos: includePhotos,
-                    setIncludePhotos: setIncludePhotos,
-                  );
-                }
-                if (hasPerSnap.hasData && !hasPerSnap.data!) {
-                  return _PermissionDeniedDialog(
-                    onGrant: _requestPermissions,
-                  );
+                if (hasPerSnap.connectionState == ConnectionState.done) {
+                  if (hasPerSnap.hasData) {
+                    if (hasPerSnap.data == null)
+                      return Text("Unsupported Permission Configuration!" +
+                          " " +
+                          "Please check the app's compatibility with" +
+                          " " +
+                          "your device.");
+
+                    if (hasPerSnap.data!)
+                      return _CreateBackupDialog(
+                        writeBackup: () => _writeBackup(
+                          _getCleanBackup(
+                            appSettings,
+                            diaryEntries,
+                            userCreatedColors,
+                            userData!,
+                          ),
+                          appSettings,
+                        ),
+                        includePhotos: includePhotos,
+                        setIncludePhotos: setIncludePhotos,
+                      );
+
+                    if (!hasPerSnap.data!)
+                      return _PermissionDeniedDialog(
+                        onGrant: _requestPermissions,
+                      );
+
+                    if (hasPerSnap.hasError)
+                      return Text("Could not fetch Permission data!");
+                  }
+                  if (hasPerSnap.connectionState == ConnectionState.waiting ||
+                      hasPerSnap.connectionState == ConnectionState.none) {
+                    return _LoadingBackupDialog();
+                  }
                 }
                 return SizedBox();
               },
