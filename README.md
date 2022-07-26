@@ -46,7 +46,7 @@ flutter run
 
 In order to create signed APK files to upload to various app stores, you have to specify a keystore location inside the `android\key.properties` file. This file should link to a keystore stored on your local hard drive. Follow [Flutter's deployment guidelines](https://flutter.dev/docs/deployment/android#create-a-keystore) to create your own keystore required to generate verified APK files. Keystores are generated using Java's built-in library. You can generate the JSK files using [Android Studio](https://developer.android.com/studio/publish/app-signing#generate-key). Visit Oracle's Java documentation for a [step-by-step tutorial](https://docs.oracle.com/cd/E19509-01/820-3503/ggfen/index.html).
 
-If you are using Windows and you are working with a working directory on your desktop, your `keystore.properties` file might look similar like this:
+If you are using Windows and you are working in a workspace on your desktop, your `keystore.properties` file might look similar like this:
 
 ```properties
 storePassword=YOUR_STORE_PASSWORD
@@ -69,21 +69,7 @@ Though it's recommended, keep in mind that signing your binaries is not required
 
 ## Localization
 
-There are **English** and **German** localizations available for this app. These strings are stored in the `assets\json\localized_strings.json` and read on the app's start up.
-
-## Photography Assets
-
-The photographs displayed as 'diary entry backdrop image' are stored on disk and were downloaded from [Unsplash](https://www.unsplash.com/).
-
-Special thanks to the photographers whose photos were used:
-
-**Niilo Isotalo**: "Kuopio, Finland", published `2017-10-16` on [Unsplash](https://unsplash.com/photos/-BZc9Ee1qo0).
-
-**Peiwen Yu**: "Hanzhong, China", published `2017-4-10` on [Unsplash](https://unsplash.com/photos/Etpd8Le6b8E).
-
-**Greg Rakozy**: "Spiral Jetty, United States", published `2015-10-15` on [Unsplash](https://unsplash.com/photos/oMpAz-DN-9I).
-
-Consider checking out their profiles and photos.
+Localizations are implemented in the `AppLocalizations` class (`/localization`). There are **English** and **German** localizations available for this app (`/localization/languages`). 
 
 ## Dependencies
 
