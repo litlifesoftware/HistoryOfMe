@@ -57,7 +57,7 @@ class _DiaryScreenState extends State<DiaryScreen>
 
   /// Returns a diary entry list view or a information card if no entries
   /// have been created yet.
-  Widget buildListView(List<DiaryEntry> diaryEntries, UserData userData) {
+  Widget _buildListView(List<DiaryEntry> diaryEntries, UserData userData) {
     if (diaryEntries.isNotEmpty)
       return DiaryListView(
         animationController: _listViewAnimation,
@@ -78,6 +78,11 @@ class _DiaryScreenState extends State<DiaryScreen>
     );
   }
 
+  Color _generateActionButtonAccentColor(UserData userData) {
+    return Color.lerp(Color(userData.primaryColor), Colors.white, 0.5) ??
+        Colors.white;
+  }
+
   @override
   void dispose() {
     _listViewAnimation.dispose();
@@ -90,18 +95,19 @@ class _DiaryScreenState extends State<DiaryScreen>
       builder: (context, userData) {
         return LitScaffold(
           actionButton: CollapseOnScrollActionButton(
-            backgroundColor: Color(userData!.primaryColor),
-            accentColor: Color(userData.secondaryColor),
+            backgroundColor: Colors.white,
+            accentColor: _generateActionButtonAccentColor(userData!),
             onPressed: _showCreateEntryDialog,
             scrollController: _scrollController,
             label:
                 LeitmotifLocalizations.of(context).composeLabel.toUpperCase(),
-            icon: LitIcons.plus,
+            icon: LitIcons.pencil,
+            boxShadow: LitBoxShadows.md,
             blurred: false,
           ),
           body: SafeArea(
             child: DiaryEntryProvider(
-              builder: (context, diaryEntries) => buildListView(
+              builder: (context, diaryEntries) => _buildListView(
                 diaryEntries,
                 userData,
               ),
