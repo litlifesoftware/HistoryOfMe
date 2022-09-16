@@ -58,6 +58,16 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       api: _api,
       builder: (context, appSettings) {
         return LitTabView(
+          materialAppBar: AppBar(
+            centerTitle: true,
+            title: Text(
+              AppLocalizations.of(context).greetingLabel,
+              textAlign: TextAlign.center,
+              style: LitSansSerifStyles.subtitle2.copyWith(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
           initialTabIndex: appSettings.tabIndex,
           transitionListener: (index) => _onTabSwitch(index, appSettings),
           tabs: [

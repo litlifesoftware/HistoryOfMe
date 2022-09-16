@@ -7,6 +7,8 @@ class DiaryFilterHeader extends StatefulWidget {
   final bool showFavoritesOnly;
   final void Function() toggleShowFavoritesOnly;
   final double landscapeWidthFactor;
+  final ScrollController scrollController;
+  final AnimationController animationController;
   const DiaryFilterHeader({
     Key? key,
     required this.filteredLength,
@@ -15,6 +17,8 @@ class DiaryFilterHeader extends StatefulWidget {
     required this.showFavoritesOnly,
     required this.toggleShowFavoritesOnly,
     this.landscapeWidthFactor = 0.75,
+    required this.scrollController,
+    required this.animationController,
   }) : super(key: key);
 
   @override
@@ -24,33 +28,54 @@ class DiaryFilterHeader extends StatefulWidget {
 class _DiaryFilterHeaderState extends State<DiaryFilterHeader>
     with TickerProviderStateMixin {
   late AnimationController _animationController;
+  late AnimationOnScrollController _animationOnScrollController;
 
-  double get portraitWidth {
-    return MediaQuery.of(context).size.width * 0.75;
-  }
+  double get portraitWidth => MediaQuery.of(context).size.width * 0.75;
 
-  double get landscapeWidth {
-    return portraitWidth * widget.landscapeWidthFactor;
-  }
+  double get landscapeWidth => portraitWidth * widget.landscapeWidthFactor;
+
+  double get _offsetThreshold => 84.0;
 
   /// Returns the amount of filted entires in human-readable format.
   String get _entriesLabel {
-    final bool plural =
+    final bool isPlural =
         (widget.filteredLength > 1) || (widget.filteredLength == 0);
 
     if (widget.showFavoritesOnly) {
-      if (plural) {
+      if (isPlural) {
         return AppLocalizations.of(context).favoriteEntriesLabel;
       } else {
         return AppLocalizations.of(context).favoriteEntryLabel;
       }
     } else {
-      if (plural) {
+      if (isPlural) {
         return AppLocalizations.of(context).entriesLabel;
       } else {
         return AppLocalizations.of(context).entryLabel;
       }
     }
+  }
+
+  double get _scrollAniValue =>
+      _animationOnScrollController.animationController.value;
+
+  List<BoxShadow> get _boxShadow {
+    List<BoxShadow> shadows = [];
+
+    for (BoxShadow shadow in LitBoxShadows.md) {
+      shadows.add(
+        BoxShadow(
+          blurRadius: _scrollAniValue * shadow.blurRadius,
+          color:
+              shadow.color.withOpacity(_scrollAniValue * shadow.color.opacity),
+          offset: Offset(
+            _scrollAniValue * shadow.offset.dx,
+            _scrollAniValue * shadow.offset.dy,
+          ),
+        ),
+      );
+    }
+    return shadows;
   }
 
   void _onShowFavoritesOnlyToggle() {
@@ -68,6 +93,13 @@ class _DiaryFilterHeaderState extends State<DiaryFilterHeader>
       ),
       vsync: this,
     );
+
+    _animationOnScrollController = AnimationOnScrollController(
+      scrollController: widget.scrollController,
+      vsync: this,
+      requiredScrollOffset: _offsetThreshold,
+    );
+
     _animationController.forward();
     super.initState();
   }
@@ -84,9 +116,14 @@ class _DiaryFilterHeaderState extends State<DiaryFilterHeader>
       pinned: true,
       floating: true,
       delegate: DiaryFilterHeaderDelegate(
-        Container(
-          decoration: BoxDecoration(
-            color: Colors.white,
+        AnimatedBuilder(
+          animation: _animationOnScrollController.animationController,
+          builder: (context, child) => Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              boxShadow: _boxShadow,
+            ),
+            child: child,
           ),
           child: SizedBox(
             width: alternativeWidth(

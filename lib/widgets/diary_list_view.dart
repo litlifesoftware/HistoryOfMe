@@ -36,7 +36,7 @@ class DiaryListView extends StatelessWidget {
       onTap: LitRouteController(context).closeDialog,
       child: Column(
         children: <Widget>[
-          GreetingsBar(),
+          //GreetingsBar(),
           Expanded(
             child: NestedScrollView(
               controller: scrollController,
@@ -55,6 +55,8 @@ class DiaryListView extends StatelessWidget {
                       color: LitColors.grey380,
                     ),
                     textStyle: LitSansSerifStyles.subtitle2,
+                    scrollController: scrollController,
+                    animationController: animationController,
                   ),
                 ];
               },
@@ -108,29 +110,26 @@ class _DiaryListViewContent extends StatelessWidget {
               physics: BouncingScrollPhysics(),
               itemCount: diaryEntriesListSorted.length,
               scrollDirection: Axis.vertical,
-              padding: const EdgeInsets.only(bottom: 96.0),
+              padding: const EdgeInsets.only(
+                bottom: 128.0,
+                top: 36.0,
+              ),
               itemBuilder: (BuildContext context, int index) {
                 if (showFavoritesOnly)
                   return getDiaryEntryByIndex(index).favorite
-                      ? Padding(
-                          padding: const EdgeInsets.only(top: 24.0),
-                          child: DiaryListTile(
-                            animationController: animationController,
-                            listIndex: index,
-                            listLength: diaryEntriesListSorted.length,
-                            diaryEntry: getDiaryEntryByIndex(index),
-                          ),
+                      ? DiaryListTile(
+                          animationController: animationController,
+                          listIndex: index,
+                          listLength: diaryEntriesListSorted.length,
+                          diaryEntry: getDiaryEntryByIndex(index),
                         )
                       : SizedBox();
 
-                return Padding(
-                  padding: const EdgeInsets.only(top: 24.0),
-                  child: DiaryListTile(
-                    animationController: animationController,
-                    listIndex: index,
-                    listLength: diaryEntriesListSorted.length,
-                    diaryEntry: getDiaryEntryByIndex(index),
-                  ),
+                return DiaryListTile(
+                  animationController: animationController,
+                  listIndex: index,
+                  listLength: diaryEntriesListSorted.length,
+                  diaryEntry: getDiaryEntryByIndex(index),
                 );
               },
             );
