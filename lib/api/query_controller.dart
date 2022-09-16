@@ -131,8 +131,6 @@ class QueryController {
       moodSum = moodSum + entry.moodScore;
     });
 
-    print("avg. mood: ${moodSum / _diaryEntries.length} ");
-
     return moodSum / _diaryEntries.length;
   }
 
