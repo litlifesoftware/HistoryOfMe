@@ -88,6 +88,9 @@ class _AppState extends State<App> {
           brightness: Brightness.light,
           primarySwatch: Colors.grey,
           primaryColor: Colors.grey[50],
+          useMaterial3: true,
+          textTheme: LitSansSerifStyles.theme,
+          iconTheme: IconThemeData(color: LitColors.grey500),
         ),
         localizationsDelegates: const [
           AppLocalizations.delegate,
