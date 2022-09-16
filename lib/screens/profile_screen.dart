@@ -53,11 +53,33 @@ class _ProfileScreenState extends State<ProfileScreen>
         userCreatedColors,
       ) {
         return LitScaffold(
-          appBar: FixedOnScrollTitledAppbar(
+          appBar: FixedOnScrollAppbar(
             scrollController: _scrollController,
             backgroundColor: Colors.white,
-            title: AppLocalizations.of(context).greetingLabel,
-            //displayBackButton: false,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                ClippedText(
+                  AppLocalizations.of(context).customizeBookmarkTitle,
+                  maxLines: 1,
+                ),
+                LitBubbleButton(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 4.0,
+                      horizontal: 12.0,
+                    ),
+                    child: Icon(
+                      LitIcons.pencil,
+                      color: Colors.white,
+                      size: 20.0,
+                    ),
+                  ),
+                  onPressed: () => _onEditBookmark(userData),
+                )
+              ],
+            ),
+            requiredOffset: 92.0,
           ),
           snackbars: [
             LitIconSnackbar(
@@ -80,6 +102,12 @@ class _ProfileScreenState extends State<ProfileScreen>
                       BookmarkPageView(
                         animationController: widget.bookmarkAnimation,
                         userData: userData,
+                        padding: const EdgeInsets.only(
+                          top: 0,
+                          bottom: 32.0,
+                          left: 16.0,
+                          right: 16.0,
+                        ),
                       ),
                       _EditBookmarkButton(
                         onPressed: () => _onEditBookmark(userData),
