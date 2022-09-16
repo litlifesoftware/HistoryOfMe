@@ -12,12 +12,15 @@ class BookmarkPageView extends StatelessWidget {
   /// The page view's total height.
   final double height;
 
+  final EdgeInsets padding;
+
   /// Creates a [BookmarkPageView].
   const BookmarkPageView({
     Key? key,
     required this.userData,
     required this.animationController,
     this.height = 180.0,
+    this.padding = LitEdgeInsets.screen,
   }) : super(key: key);
 
   @override
@@ -30,15 +33,15 @@ class BookmarkPageView extends StatelessWidget {
         BookmarkFrontPreview(
           userData: userData,
           animationController: animationController,
-          padding: LitEdgeInsets.screen,
+          padding: padding,
         ),
         BookmarkBackPreview(
           userData: userData,
           animationController: animationController,
-          padding: LitEdgeInsets.screen,
+          padding: padding,
         ),
       ],
-      indicatorColor: LitColors.mediumGrey,
+      indicatorColor: LitColors.grey400,
     );
   }
 }
