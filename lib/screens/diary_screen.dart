@@ -25,7 +25,7 @@ class DiaryScreen extends StatefulWidget {
 class _DiaryScreenState extends State<DiaryScreen>
     with TickerProviderStateMixin {
   late HOMNavigator _navigator;
-  late AnimationController _listViewAnimation;
+  late AnimationController _listViewAniCon;
   late ScrollController _scrollController;
 
   /// States whether to show only the favorite entries.
@@ -42,13 +42,16 @@ class _DiaryScreenState extends State<DiaryScreen>
     setState(() {
       _showFavoriteEntriesOnly = !_showFavoriteEntriesOnly;
     });
+    if (_listViewAniCon.isCompleted) {
+      _listViewAniCon.reverse().then((v) => _listViewAniCon.forward());
+    }
   }
 
   @override
   void initState() {
     _scrollController = ScrollController();
-    _listViewAnimation = AnimationController(
-      duration: LitAnimationDurations.appearAnimation,
+    _listViewAniCon = AnimationController(
+      duration: Duration(milliseconds: 240),
       vsync: this,
     )..forward();
     _navigator = HOMNavigator(context);
@@ -60,7 +63,7 @@ class _DiaryScreenState extends State<DiaryScreen>
   Widget _buildListView(List<DiaryEntry> diaryEntries, UserData userData) {
     if (diaryEntries.isNotEmpty)
       return DiaryListView(
-        animationController: _listViewAnimation,
+        animationController: _listViewAniCon,
         bookmarkAnimation: widget.bookmarkAnimation,
         diaryEntriesListSorted: diaryEntries
           ..sort(
@@ -85,7 +88,7 @@ class _DiaryScreenState extends State<DiaryScreen>
 
   @override
   void dispose() {
-    _listViewAnimation.dispose();
+    _listViewAniCon.dispose();
     super.dispose();
   }
 
