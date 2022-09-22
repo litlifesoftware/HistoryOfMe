@@ -85,8 +85,11 @@ class _DiaryListViewContent extends StatelessWidget {
     required this.showFavoritesOnly,
   }) : super(key: key);
 
+  List<DiaryEntry> get favoriteEntries =>
+      diaryEntriesListSorted.where((element) => element.favorite).toList();
+
   bool get noFavoritesAvailable {
-    return diaryEntriesListSorted.where((element) => element.favorite).isEmpty;
+    return favoriteEntries.isEmpty;
   }
 
   bool get showFavoritesInfoMessage {
@@ -108,30 +111,23 @@ class _DiaryListViewContent extends StatelessWidget {
 
             return ListView.builder(
               physics: BouncingScrollPhysics(),
-              itemCount: diaryEntriesListSorted.length,
+              itemCount: showFavoritesOnly
+                  ? favoriteEntries.length
+                  : diaryEntriesListSorted.length,
               scrollDirection: Axis.vertical,
               padding: const EdgeInsets.only(
                 bottom: 128.0,
                 top: 36.0,
               ),
-              itemBuilder: (BuildContext context, int index) {
-                if (showFavoritesOnly)
-                  return getDiaryEntryByIndex(index).favorite
-                      ? DiaryListTile(
-                          animationController: animationController,
-                          listIndex: index,
-                          listLength: diaryEntriesListSorted.length,
-                          diaryEntry: getDiaryEntryByIndex(index),
-                        )
-                      : SizedBox();
-
-                return DiaryListTile(
-                  animationController: animationController,
-                  listIndex: index,
-                  listLength: diaryEntriesListSorted.length,
-                  diaryEntry: getDiaryEntryByIndex(index),
-                );
-              },
+              itemBuilder: (BuildContext context, int index) => DiaryListTile(
+                animationController: animationController,
+                listIndex: index,
+                listLength: diaryEntriesListSorted.length,
+                diaryEntry: getDiaryEntryByIndex(index),
+                showDivider: showFavoritesOnly
+                    ? (index != favoriteEntries.length - 1)
+                    : (index != diaryEntriesListSorted.length - 1),
+              ),
             );
           },
         ),

@@ -9,6 +9,7 @@ class DiaryListTile extends StatefulWidget {
   final int listIndex;
   final int listLength;
   final DiaryEntry diaryEntry;
+  final bool showDivider;
   final double landscapeWidthFactor;
 
   /// Creates a [DiaryListTile].
@@ -17,6 +18,7 @@ class DiaryListTile extends StatefulWidget {
     required this.animationController,
     required this.listIndex,
     required this.listLength,
+    required this.showDivider,
     required this.diaryEntry,
     this.landscapeWidthFactor = 0.75,
   }) : super(key: key);
@@ -28,8 +30,6 @@ class DiaryListTile extends StatefulWidget {
 class _DiaryListTileState extends State<DiaryListTile> {
   late HOMNavigator _screenRouter;
   late DateColorScheme _colorScheme;
-
-  bool get _isLastItem => (widget.listIndex != widget.listLength - 1);
 
   DateTime get _date => DateTime.parse(widget.diaryEntry.date);
 
@@ -110,7 +110,7 @@ class _DiaryListTileState extends State<DiaryListTile> {
               ),
             ],
           ),
-          _isLastItem
+          widget.showDivider
               ? Transform(
                   transform: _staticTransform,
                   child: Divider(color: Colors.black26),
