@@ -171,5 +171,6 @@ class EN {
     AppLocalizationsKeys.inspiredByMovieTitle: "Your Name. (2016)",
     AppLocalizationsKeys.photoAvailableLabel: "Photo available",
     AppLocalizationsKeys.photosAvailableLabel: "Photos available",
+    AppLocalizationsKeys.moreLabel: "more",
   };
 }

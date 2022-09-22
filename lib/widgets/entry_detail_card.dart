@@ -610,10 +610,11 @@ class __MoodScoreIndicatorState extends State<_MoodScoreIndicator>
               gradient: LinearGradient(
                 colors: [
                   Color.lerp(
-                    LitColors.lightRed,
-                    HexColor('bee5be'),
-                    widget.moodScore,
-                  )!,
+                        Colors.red,
+                        Colors.green,
+                        widget.moodScore,
+                      ) ??
+                      Colors.grey,
                   Color.lerp(
                     Colors.white,
                     Colors.grey,

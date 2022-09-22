@@ -6,15 +6,16 @@ import 'package:history_of_me/models.dart';
 import 'package:history_of_me/widgets.dart';
 import 'package:leitmotif/leitmotif.dart';
 
-/// A `History of Me` `screen` widget showing details and properties of a
-/// specific [DiaryEntry] object while providing options to edit or delete
-/// the entry.
+/// A `screen` widget showing a preview of the provided entry's data.
+/// The entry will be fetched from Hive using the provided [diaryEntryUid].
+///
+/// Allows to navigate to the editing screen.
 class EntryDetailScreen extends StatefulWidget {
   /// The entry's index on the chronological list of diary entries.
   final int listIndex;
 
   /// The entry's uid.
-  final String? diaryEntryUid;
+  final String diaryEntryUid;
 
   /// Creates a [EntryDetailScreen].
   const EntryDetailScreen({
@@ -30,18 +31,12 @@ class EntryDetailScreen extends StatefulWidget {
 class _EntryDetailScreenState extends State<EntryDetailScreen>
     with TickerProviderStateMixin {
   late QueryController _queryController;
-  late ScrollController _scrollController;
-  bool _assetsLoading = false;
-  late HOMNavigator _screenRouter;
-  late LitSettingsPanelController _settingsPanelController;
-  late DiaryPhotoPicker _diaryPhotoPicker;
 
-  /// Toggles the [_assetsLoading] value.
-  void _toggleAssetsLoading() {
-    setState(() {
-      _assetsLoading = !_assetsLoading;
-    });
-  }
+  late ScrollController _scrollController;
+
+  late HOMNavigator _screenRouter;
+
+  late DiaryPhotoPicker _diaryPhotoPicker;
 
   void _onDeleteEntry() {
     LitRouteController(context).clearNavigationStack();
@@ -66,8 +61,6 @@ class _EntryDetailScreenState extends State<EntryDetailScreen>
   }
 
   void _onEdit(DiaryEntry diaryEntry) {
-    if (_settingsPanelController.isShown)
-      _settingsPanelController.dismissSettingsPanel();
     Future.delayed(LitAnimationDurations.button).then(
       (_) => _screenRouter.toEntryEditingScreen(diaryEntry: diaryEntry),
     );
@@ -86,9 +79,6 @@ class _EntryDetailScreenState extends State<EntryDetailScreen>
       (_) {
         LitRouteController(context).replaceCurrentCupertinoWidget(
           newWidget: EntryDetailScreen(
-            // Decrease the index by one to artificially lower the total
-            // entries count and therefore increase the entries number on
-            // the label text.
             listIndex: widget.listIndex,
             diaryEntryUid: _queryController.getNextDiaryEntry(diaryEntry).uid,
           ),
@@ -102,9 +92,6 @@ class _EntryDetailScreenState extends State<EntryDetailScreen>
       (_) {
         LitRouteController(context).replaceCurrentCupertinoWidget(
           newWidget: EntryDetailScreen(
-            // Increase the index by one to artificially higher the total
-            // entries count and therefore lower the entries number on
-            // the label text.
             listIndex: widget.listIndex,
             diaryEntryUid:
                 _queryController.getPreviousDiaryEntry(diaryEntry).uid,
@@ -150,12 +137,21 @@ class _EntryDetailScreenState extends State<EntryDetailScreen>
     );
   }
 
+  void _onPressedOptions(DiaryEntry diaryEntry) {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) => _EntryOptionsBottomSheet(
+        onPressedEdit: () => _onEditDelayed(diaryEntry),
+        onPressedDelete: _showConfirmDeleteDialog,
+      ),
+    );
+  }
+
   @override
   void initState() {
     super.initState();
-    _toggleAssetsLoading();
+
     _scrollController = ScrollController();
-    _settingsPanelController = LitSettingsPanelController();
     _queryController = QueryController();
     _screenRouter = HOMNavigator(context);
     _diaryPhotoPicker = DiaryPhotoPicker(
@@ -173,35 +169,16 @@ class _EntryDetailScreenState extends State<EntryDetailScreen>
   @override
   Widget build(BuildContext context) {
     return QueryDiaryEntryProvider(
-      diaryEntryUid: widget.diaryEntryUid!,
+      diaryEntryUid: widget.diaryEntryUid,
       builder: (context, diaryEntry, isFirst, isLast, boxLength) {
         /// Verify the entry has not been deleted yet.
         if (diaryEntry != null) {
           return LitScaffold(
             appBar: FixedOnScrollTitledAppbar(
               scrollController: _scrollController,
-              title: diaryEntry.title != ""
+              title: diaryEntry.title != DefaultData.diaryEntryTitle
                   ? diaryEntry.title
                   : AppLocalizations.of(context).untitledLabel,
-            ),
-            settingsPanel: LitSettingsPanel(
-              height: 180.0,
-              controller: _settingsPanelController,
-              title: AppLocalizations.of(context).optionsLabel.capitalize(),
-              children: [
-                LitPushedThroughButton(
-                  child: Text(
-                    AppLocalizations.of(context).editLabel.toUpperCase(),
-                    style: LitSansSerifStyles.button,
-                  ),
-                  accentColor: LitColors.grey100,
-                  onPressed: () => _onEditDelayed(diaryEntry),
-                ),
-                SizedBox(height: 16.0),
-                LitDeleteButton(
-                  onPressed: _showConfirmDeleteDialog,
-                ),
-              ],
             ),
             body: LayoutBuilder(builder: (context, constraints) {
               return Container(
@@ -217,11 +194,8 @@ class _EntryDetailScreenState extends State<EntryDetailScreen>
                               alignment: Alignment.center,
                               children: [
                                 EntryDetailBackdrop(
-                                  // backdropPhotos: _photoAssets,
-                                  // loading: _assetsLoading,
                                   diaryEntry: diaryEntry,
                                   diaryPhotoPicker: _diaryPhotoPicker,
-                                  //  images: images,
                                 ),
                                 Align(
                                   alignment: Alignment.bottomRight,
@@ -256,15 +230,29 @@ class _EntryDetailScreenState extends State<EntryDetailScreen>
                               flipPage: _flipPage,
                             ),
                           ),
-                          _Footer(
+                          Divider(color: Colors.black26),
+                          _BottomNavigationBar(
                             showNextButton: _isAvailableNextEntry(diaryEntry),
                             showPreviousButton:
                                 _isAvailablePreviousEntry(diaryEntry),
                             onPrevious: () => _onPreviousPressed(diaryEntry),
                             onNext: () => _onNextPressed(diaryEntry),
-                            moreOptionsPressed:
-                                _settingsPanelController.showSettingsPanel,
+                            onPressedOptions: () =>
+                                _onPressedOptions(diaryEntry),
                           ),
+                          _isAvailableNextEntry(diaryEntry) &&
+                                  _isAvailablePreviousEntry(diaryEntry)
+                              ? Column(
+                                  children: [
+                                    Divider(color: Colors.black26),
+                                    _OptionsBar(
+                                      onPressedOptions: () =>
+                                          _onPressedOptions(diaryEntry),
+                                    )
+                                  ],
+                                )
+                              : SizedBox(),
+                          SizedBox(height: 16.0),
                         ],
                       ),
                     ),
@@ -274,106 +262,116 @@ class _EntryDetailScreenState extends State<EntryDetailScreen>
             }),
           );
         }
+        // Return empty page if the entry has been deleted.
         return SizedBox();
       },
     );
   }
 }
 
-/// A `History of Me` widget showing a row of buttons allowing the user to
-/// interact with a diary entry.
-///
-/// It allows to navigate to the previous and next entry and to delete the
-/// entry.
-class _Footer extends StatelessWidget {
-  final bool showNextButton;
-  final bool showPreviousButton;
-  final void Function() moreOptionsPressed;
-  final void Function() onNext;
-  final void Function() onPrevious;
-
-  /// Creates a [_Footer].
-  const _Footer({
+class _OptionsBar extends StatelessWidget {
+  final void Function() onPressedOptions;
+  const _OptionsBar({
     Key? key,
-    required this.moreOptionsPressed,
-    required this.onNext,
-    required this.onPrevious,
-    required this.showNextButton,
-    required this.showPreviousButton,
+    required this.onPressedOptions,
   }) : super(key: key);
-
-  /// Returns the spacing in pixels that should be applied between the
-  /// buttons in the row.
-  double get _buttonSpacing => showNextButton && showPreviousButton ? 8.0 : 0.0;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      height: 72.0,
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [
-            LitColors.lightGrey,
-            Colors.white,
-          ],
-          stops: [
-            0.00,
-            0.87,
-          ],
-        ),
-        boxShadow: [
-          BoxShadow(
-            blurRadius: 12.0,
-            offset: Offset(0, -2),
-            color: Colors.black12,
-            spreadRadius: 1.0,
-          )
-        ],
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        horizontal: 16.0,
+        vertical: 8.0,
       ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 16.0,
-          vertical: 8.0,
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Row(
-              children: [
-                showPreviousButton
-                    ? _PreviousNavigationButton(onPressed: onPrevious)
-                    : SizedBox(),
-                SizedBox(width: _buttonSpacing),
-                showNextButton
-                    ? _NextNavigationButton(onPressed: onNext)
-                    : SizedBox(),
-              ],
-            ),
-            LitPushedThroughButton(
-              margin: LitEdgeInsets.button * 1.4,
-              child: EllipseIcon(
-                animated: false,
-                dotColor: LitColors.grey380,
-                dotHeight: 6.0,
-                dotWidth: 6.0,
-              ),
-              onPressed: moreOptionsPressed,
-              accentColor: Colors.white,
-              backgroundColor: Colors.white,
-            ),
-          ],
-        ),
+      child: Row(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          SizedBox(),
+          _MoreButton(
+            onPressed: onPressedOptions,
+          ),
+        ],
       ),
     );
   }
 }
 
-/// A `History of Me` widget allowing to navigate to the next entry using the
-/// [onPressed] callback.
+class _MoreButton extends StatelessWidget {
+  final void Function() onPressed;
+  const _MoreButton({Key? key, required this.onPressed}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return LitPushedThroughButton(
+      child: Row(
+        children: [
+          Icon(Icons.more_vert, size: 18.0),
+          ClippedText(
+            AppLocalizations.of(context).moreLabel.toUpperCase(),
+            style: LitSansSerifStyles.button,
+          ),
+          const SizedBox(width: 4.0),
+        ],
+      ),
+      accentColor: LitColors.grey100,
+      onPressed: onPressed,
+    );
+  }
+}
+
+class _BottomNavigationBar extends StatelessWidget {
+  /// Flag to force the `next` button to show up.
+  final bool showNextButton;
+
+  /// Flag to force the `previous` button to show up.
+  final bool showPreviousButton;
+
+  final void Function() onNext;
+  final void Function() onPrevious;
+  final void Function() onPressedOptions;
+
+  /// Creates a [_BottomNavigationBar].
+  const _BottomNavigationBar({
+    Key? key,
+    required this.onNext,
+    required this.onPrevious,
+    required this.showNextButton,
+    required this.showPreviousButton,
+    required this.onPressedOptions,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        horizontal: 16.0,
+        vertical: 8.0,
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          showPreviousButton
+              ? _PreviousNavigationButton(
+                  onPressed: onPrevious,
+                )
+              : _MoreButton(
+                  onPressed: onPressedOptions,
+                ),
+          showNextButton
+              ? _NextNavigationButton(
+                  onPressed: onNext,
+                )
+              : _MoreButton(
+                  onPressed: onPressedOptions,
+                ),
+        ],
+      ),
+    );
+  }
+}
+
 class _NextNavigationButton extends StatelessWidget {
   final void Function() onPressed;
 
@@ -393,8 +391,6 @@ class _NextNavigationButton extends StatelessWidget {
   }
 }
 
-/// A `History of Me` widget allowing to navigate to the previous entry using the
-/// [onPressed] callback.
 class _PreviousNavigationButton extends StatelessWidget {
   final void Function() onPressed;
 
@@ -415,8 +411,6 @@ class _PreviousNavigationButton extends StatelessWidget {
   }
 }
 
-/// A `History of Me` widget displaying a navigation button based on the
-/// provided [mode] value.
 class _NavigationButton extends StatelessWidget {
   final LitLinearNavigationMode mode;
   final String label;
@@ -428,10 +422,6 @@ class _NavigationButton extends StatelessWidget {
     required this.onPressed,
   }) : super(key: key);
 
-  static const double _maxWidth = 72.0;
-
-  static const double _spacing = 4.0;
-
   @override
   Widget build(BuildContext context) {
     return LitPushedThroughButton(
@@ -440,21 +430,78 @@ class _NavigationButton extends StatelessWidget {
           LinearNavigationIcon(
             mode: mode,
           ),
-          const SizedBox(width: _spacing),
-          ConstrainedBox(
-            constraints: const BoxConstraints(
-              maxWidth: _maxWidth,
-            ),
-            child: ClippedText(
-              label,
-              style: LitSansSerifStyles.button,
-            ),
+          const SizedBox(width: 4.0),
+          ClippedText(
+            label,
+            style: LitSansSerifStyles.button,
           ),
-          const SizedBox(width: _spacing),
+          const SizedBox(width: 4.0),
         ],
       ),
       accentColor: LitColors.grey100,
       onPressed: onPressed,
+    );
+  }
+}
+
+class _EntryOptionsBottomSheet extends StatelessWidget {
+  final void Function() onPressedEdit;
+  final void Function() onPressedDelete;
+  const _EntryOptionsBottomSheet({
+    Key? key,
+    required this.onPressedEdit,
+    required this.onPressedDelete,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        SizedBox(height: 16.0),
+        Text(
+          AppLocalizations.of(context).optionsLabel.capitalize(),
+          style: LitSansSerifStyles.h6.copyWith(color: LitColors.grey380),
+        ),
+        Divider(),
+        SizedBox(
+          height: 142.0,
+          child: ListView(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 16.0,
+              vertical: 16.0,
+            ),
+            children: [
+              LitPushedThroughButton(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      LitIcons.pencil_alt,
+                      color: LitSansSerifStyles.button.color,
+                      size: LitSansSerifStyles.button.fontSize,
+                    ),
+                    SizedBox(width: 8.0),
+                    ClippedText(
+                      AppLocalizations.of(context).editLabel.toUpperCase(),
+                      textAlign: TextAlign.center,
+                      style: LitSansSerifStyles.button,
+                    ),
+                  ],
+                ),
+                accentColor: LitColors.grey100,
+                onPressed: onPressedEdit,
+              ),
+              SizedBox(height: 16.0),
+              LitDeleteButton(
+                textAlign: TextAlign.center,
+                showIcon: true,
+                onPressed: onPressedDelete,
+              )
+            ],
+          ),
+        )
+      ],
     );
   }
 }

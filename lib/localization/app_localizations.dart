@@ -572,4 +572,8 @@ class AppLocalizations {
   String get photosAvailableLabel {
     return localizeValue(AppLocalizationsKeys.photosAvailableLabel);
   }
+
+  String get moreLabel {
+    return localizeValue(AppLocalizationsKeys.moreLabel);
+  }
 }

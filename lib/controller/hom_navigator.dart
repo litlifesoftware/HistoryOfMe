@@ -23,7 +23,7 @@ class HOMNavigator {
   /// Provide the arguments that should be passed to the screen widget.
   void toDiaryEntryDetailScreen({
     required int listIndex,
-    required String? diaryEntryUid,
+    required String diaryEntryUid,
   }) {
     final Widget pushedWidget = EntryDetailScreen(
       listIndex: listIndex,

@@ -139,4 +139,5 @@ class AppLocalizationsKeys {
   static const String inspiredByMovieTitle = 'inspiredByMovieTitle';
   static const String photoAvailableLabel = "photoAvailableLabel";
   static const String photosAvailableLabel = "photosAvailableLabel";
+  static const String moreLabel = "moreLabel";
 }

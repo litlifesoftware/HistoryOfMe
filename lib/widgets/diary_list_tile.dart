@@ -113,7 +113,7 @@ class _DiaryListTileState extends State<DiaryListTile> {
           _isLastItem
               ? Transform(
                   transform: _staticTransform,
-                  child: Divider(color: LitColors.grey200),
+                  child: Divider(color: Colors.black26),
                 )
               : SizedBox(),
         ],
