@@ -4,37 +4,20 @@ class EntryDetailCard extends StatefulWidget {
   final DiaryEntry diaryEntry;
   final int listIndex;
   final int boxLength;
-  final BoxDecoration backgroundDecoration;
   final bool isFirst;
   final bool isLast;
-  final QueryController? queryController;
-  final void Function(DragEndDetails details, DiaryEntry entry) flipPage;
+  final QueryController queryController;
 
+  final void Function(DragEndDetails details, DiaryEntry entry) flipPage;
   final void Function() onEdit;
+
+  /// Creates an [EntryDetailCard].
   const EntryDetailCard({
     Key? key,
     required this.listIndex,
     required this.boxLength,
     required this.diaryEntry,
     required this.onEdit,
-    this.backgroundDecoration = const BoxDecoration(
-      gradient: const LinearGradient(
-        begin: Alignment.bottomLeft,
-        end: Alignment.topRight,
-        stops: [
-          0.65,
-          1.00,
-        ],
-        colors: [
-          LitColors.white,
-          LitColors.grey300,
-        ],
-      ),
-      borderRadius: BorderRadius.only(
-        topLeft: Radius.circular(24.0),
-        topRight: Radius.circular(24.0),
-      ),
-    ),
     required this.isFirst,
     required this.isLast,
     required this.queryController,
@@ -48,27 +31,54 @@ class EntryDetailCard extends StatefulWidget {
 
   static const margin = const EdgeInsets.symmetric(
     vertical: 16.0,
-    horizontal: 22.0,
+    horizontal: 20.0,
   );
 }
 
-class _EntryDetailCardState extends State<EntryDetailCard> {
+class _EntryDetailCardState extends State<EntryDetailCard>
+    with TickerProviderStateMixin {
+  late AnimationController _favoriteButtonAniCon;
+  late DateColorScheme _dateColorScheme;
+  late AppAPI _api;
+
   /// Returns the diary's number as a string label.
   /// The value is based on the index in the hive box.
   String get _diaryNumberLabel {
-    int number = widget.queryController!
+    int number = widget.queryController
             .getIndexChronologicallyByUID(widget.diaryEntry.uid) +
         1;
-    return "$number";
+    return number.toString();
   }
+
+  DateTime get _entryDate => DateTime.parse(widget.diaryEntry.date);
 
   /// Toggles the 'favorite' state by updating the diary entry.
   void _onToggleFavorite() {
-    AppAPI().toggleDiaryEntryFavorite(widget.diaryEntry);
+    _favoriteButtonAniCon
+        .reverse(from: 1.0)
+        .then((value) => _api.toggleDiaryEntryFavorite(widget.diaryEntry))
+        .then(
+          (value) => _favoriteButtonAniCon.forward(),
+        );
   }
 
+  /// Handles the `edit` action.
   void _onEdit() {
     widget.onEdit();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    _api = AppAPI();
+    _dateColorScheme = DateColorScheme(_entryDate);
+    _favoriteButtonAniCon = AnimationController(
+        duration: Duration(
+          milliseconds: 120,
+        ),
+        vsync: this)
+      ..forward();
   }
 
   @override
@@ -89,13 +99,17 @@ class _EntryDetailCardState extends State<EntryDetailCard> {
         child: Column(
           children: [
             _Header(
-              boxDecoration: widget.backgroundDecoration,
               diaryEntry: widget.diaryEntry,
               diaryNumberLabel: _diaryNumberLabel,
               isFirst: widget.isFirst,
               isLast: widget.isLast,
               onToggleFavorite: _onToggleFavorite,
               onEdit: _onEdit,
+              dateColorScheme: _dateColorScheme,
+              favoriteButtonAnimationController: _favoriteButtonAniCon,
+            ),
+            _MoodScoreIndicator(
+              moodScore: widget.diaryEntry.moodScore,
             ),
             GestureDetector(
               onHorizontalDragEnd: (details) =>
@@ -116,28 +130,45 @@ class _EntryDetailCardState extends State<EntryDetailCard> {
 /// the action buttons.
 class _Header extends StatelessWidget {
   final DiaryEntry diaryEntry;
-  final BoxDecoration boxDecoration;
   final String diaryNumberLabel;
+  final DateColorScheme dateColorScheme;
   final bool isFirst;
   final bool isLast;
+  final AnimationController favoriteButtonAnimationController;
   final void Function() onToggleFavorite;
   final void Function() onEdit;
   const _Header({
     Key? key,
     required this.diaryEntry,
-    required this.boxDecoration,
+    required this.dateColorScheme,
     required this.diaryNumberLabel,
     required this.isFirst,
     required this.isLast,
     required this.onToggleFavorite,
     required this.onEdit,
+    required this.favoriteButtonAnimationController,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width,
-      decoration: boxDecoration,
+      decoration: BoxDecoration(
+        boxShadow: LitBoxShadows.md,
+        gradient: LinearGradient(
+          begin: Alignment.topRight,
+          end: Alignment.bottomLeft,
+          colors: [
+            dateColorScheme.colorOfTheSeason,
+            dateColorScheme.combinedColor,
+            dateColorScheme.colorOfYear,
+          ],
+        ),
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(24.0),
+          topRight: Radius.circular(24.0),
+        ),
+      ),
       child: Column(
         children: [
           Padding(
@@ -163,7 +194,7 @@ class _Header extends StatelessWidget {
                                     .capitalize(),
                                 style: LitSansSerifStyles.subtitle1.copyWith(
                                   fontWeight: FontWeight.bold,
-                                  color: LitColors.grey380,
+                                  color: Colors.white,
                                 ),
                               ),
                               Padding(
@@ -171,7 +202,7 @@ class _Header extends StatelessWidget {
                                   horizontal: 8.0,
                                 ),
                                 child: LitBadge(
-                                  backgroundColor: LitColors.grey200,
+                                  backgroundColor: Colors.white,
                                   child: Padding(
                                     padding: const EdgeInsets.symmetric(
                                       vertical: 1.0,
@@ -181,7 +212,6 @@ class _Header extends StatelessWidget {
                                       diaryNumberLabel,
                                       style:
                                           LitSansSerifStyles.caption.copyWith(
-                                        color: LitColors.white,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
@@ -212,7 +242,14 @@ class _Header extends StatelessWidget {
                         : AppLocalizations.of(context).untitledLabel,
                     style: LitSansSerifStyles.subtitle1.copyWith(
                       fontWeight: FontWeight.bold,
-                      color: LitColors.grey400,
+                      color: Colors.white,
+                      shadows: [
+                        Shadow(
+                          offset: Offset(1.0, 1.0),
+                          blurRadius: 8.0,
+                          color: Colors.black26,
+                        ),
+                      ],
                     ),
                   ),
                 ),
@@ -225,10 +262,15 @@ class _Header extends StatelessWidget {
                     children: [
                       UpdatedLabelText(
                         lastUpdateTimestamp: diaryEntry.lastUpdated,
+                        textStyle: LitSansSerifStyles.caption.copyWith(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
                       _FavoriteButton(
                         onPressed: onToggleFavorite,
                         favorite: diaryEntry.favorite,
+                        animationController: favoriteButtonAnimationController,
                       ),
                     ],
                   ),
@@ -243,7 +285,7 @@ class _Header extends StatelessWidget {
                               left: 0.0,
                               right: isFirst ? 3.0 : 0,
                             ),
-                            child: _MetaLabel(
+                            child: _MetaDataBadge(
                               title: LeitmotifLocalizations.of(context)
                                   .latestLabel,
                             ),
@@ -257,7 +299,7 @@ class _Header extends StatelessWidget {
                               left: isLast ? 3.0 : 0.0,
                               right: 0.0,
                             ),
-                            child: _MetaLabel(
+                            child: _MetaDataBadge(
                               title: AppLocalizations.of(context).firstLabel,
                             ),
                           )
@@ -266,9 +308,6 @@ class _Header extends StatelessWidget {
                 ),
               ],
             ),
-          ),
-          _MoodScoreIndicator(
-            moodScore: diaryEntry.moodScore,
           ),
         ],
       ),
@@ -290,36 +329,23 @@ class _EditButton extends StatelessWidget {
 
   static const spacing = 8.0;
 
-  /// Returns the text boxes' constraints.
-  BoxConstraints get _constraints => BoxConstraints(
-        maxWidth: (constraints.maxWidth / 2) - 44.0 - spacing - iconSize,
-      );
   @override
   Widget build(BuildContext context) {
-    //  this.backgroundColor = LitColors.red580,
-    //   this.accentColor = LitColors.grey380,
-
     return LitPushedThroughButton(
       onPressed: onEdit,
-      accentColor: LitColors.red580,
-      backgroundColor: LitColors.red50,
+      accentColor: Colors.white,
+      backgroundColor: Colors.white,
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
           Icon(
             LitIcons.pencil,
-            color: Colors.white,
             size: iconSize,
           ),
           SizedBox(width: spacing),
-          ConstrainedBox(
-            constraints: _constraints,
-            child: ClippedText(
-              AppLocalizations.of(context).editLabel.toUpperCase(),
-              style: LitSansSerifStyles.button.copyWith(
-                color: Colors.white,
-              ),
-            ),
+          ClippedText(
+            AppLocalizations.of(context).editLabel.toUpperCase(),
+            style: LitSansSerifStyles.button,
           ),
         ],
       ),
@@ -327,95 +353,79 @@ class _EditButton extends StatelessWidget {
   }
 }
 
-class _MetaLabel extends StatelessWidget {
+class _MetaDataBadge extends StatelessWidget {
   final String title;
 
-  const _MetaLabel({
+  const _MetaDataBadge({
     Key? key,
     required this.title,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return LitBadge(
-      backgroundColor: LitColors.beigeGrey,
+      backgroundColor: Colors.white,
       padding: const EdgeInsets.symmetric(
-        horizontal: 10.0,
+        horizontal: 12.0,
         vertical: 2.0,
       ),
       child: Text(
         title,
-        style: LitTextStyles.sansSerifStyles[caption].copyWith(
+        style: LitSansSerifStyles.caption.copyWith(
           fontWeight: bold,
-          color: Colors.white,
         ),
       ),
     );
   }
 }
 
-class _FavoriteButton extends StatefulWidget {
+class _FavoriteButton extends StatelessWidget {
+  final bool favorite;
+  final AnimationController animationController;
   final void Function() onPressed;
-  final bool? favorite;
   const _FavoriteButton({
     Key? key,
-    required this.onPressed,
     required this.favorite,
+    required this.animationController,
+    required this.onPressed,
   }) : super(key: key);
-
-  @override
-  __FavoriteButtonState createState() => __FavoriteButtonState();
-}
-
-class __FavoriteButtonState extends State<_FavoriteButton>
-    with TickerProviderStateMixin {
-  late AnimationController _animationController;
 
   Matrix4 get _transform {
     double x = 0;
-    double y = ((widget.favorite! ? -8.0 : 8.0) +
-        (widget.favorite! ? 8.0 : -8.0) * _animationController.value);
+    double y = ((favorite ? -8.0 : 8.0) +
+        (favorite ? 8.0 : -8.0) * animationController.value);
     double z = 0;
     return Matrix4.translationValues(x, y, z);
-  }
-
-  void _onTap() {
-    _animationController
-        .reverse(from: 1.0)
-        .then((value) => widget.onPressed())
-        .then(
-          (value) => _animationController.forward(),
-        );
-  }
-
-  @override
-  void initState() {
-    _animationController = AnimationController(
-        duration: Duration(
-          milliseconds: 120,
-        ),
-        vsync: this);
-    _animationController.forward();
-    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return CleanInkWell(
-      onTap: _onTap,
+      onTap: onPressed,
       child: AnimatedBuilder(
-        animation: _animationController,
+        animation: animationController,
         builder: (context, _) {
           return AnimatedOpacity(
-            duration: _animationController.duration!,
-            opacity: 0.5 + 0.5 * _animationController.value,
+            duration: animationController.duration!,
+            opacity: 0.5 + 0.5 * animationController.value,
             child: Transform(
               transform: _transform,
               child: Icon(
-                widget.favorite! ? LitIcons.heart_solid : LitIcons.heart,
+                favorite ? LitIcons.heart_solid : LitIcons.heart,
                 size: 26.0,
-                color: HexColor(
-                  "#b2b2b2",
+                color: Color.lerp(
+                  favorite ? LitColors.white : LitColors.red600,
+                  favorite ? LitColors.red550 : LitColors.white,
+                  animationController.value,
                 ),
+                shadows: favorite
+                    ? [
+                        Shadow(
+                          blurRadius: 8.0,
+                          color: Colors.black26,
+                          offset: Offset(1.0, 1.0),
+                        )
+                      ]
+                    : [],
               ),
             ),
           );
@@ -599,70 +609,67 @@ class __MoodScoreIndicatorState extends State<_MoodScoreIndicator>
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 4.0),
-      child: AnimatedBuilder(
-        animation: _animationController,
-        builder: (context, _) {
-          return Container(
-            width: MediaQuery.of(context).size.width,
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  Color.lerp(
-                        Colors.red,
-                        Colors.green,
-                        widget.moodScore,
-                      ) ??
-                      Colors.grey,
-                  Color.lerp(
-                    Colors.white,
+    return AnimatedBuilder(
+      animation: _animationController,
+      builder: (context, child) {
+        return Container(
+          width: MediaQuery.of(context).size.width,
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                Color.lerp(
+                      Colors.red,
+                      Colors.green,
+                      widget.moodScore,
+                    ) ??
                     Colors.grey,
-                    _animationController.value,
-                  )!,
-                ],
-              ),
+                Color.lerp(
+                  Colors.white,
+                  Colors.grey,
+                  _animationController.value,
+                )!,
+              ],
             ),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 22.0,
-                vertical: 8.0,
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Text(
-                    AppLocalizations.of(context).yourMoodLabel.capitalize(),
-                    style: LitTextStyles.sansSerif.copyWith(
-                      fontSize: 13.0,
-                      letterSpacing: 0.25,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.white,
+          ),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 22.0,
+              vertical: 8.0,
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Text(
+                  AppLocalizations.of(context).yourMoodLabel.capitalize(),
+                  style: LitTextStyles.sansSerif.copyWith(
+                    fontSize: 13.0,
+                    letterSpacing: 0.25,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.white,
+                  ),
+                ),
+                Text(
+                  MoodTranslator(
+                    moodScore: widget.moodScore,
+                    context: context,
+                  ).label.toUpperCase(),
+                  style: LitTextStyles.sansSerif.copyWith(
+                    fontSize: 12.0,
+                    letterSpacing: 0.65,
+                    fontWeight: FontWeight.w700,
+                    color: Color.lerp(
+                      Colors.grey,
+                      Colors.white,
+                      _animationController.value,
                     ),
                   ),
-                  Text(
-                    MoodTranslator(
-                      moodScore: widget.moodScore,
-                      context: context,
-                    ).label.toUpperCase(),
-                    style: LitTextStyles.sansSerif.copyWith(
-                      fontSize: 12.0,
-                      letterSpacing: 0.65,
-                      fontWeight: FontWeight.w700,
-                      color: Color.lerp(
-                        Colors.grey,
-                        Colors.white,
-                        _animationController.value,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
   }
 }

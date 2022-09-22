@@ -2,12 +2,14 @@ part of widgets;
 
 class UpdatedLabelText extends StatelessWidget {
   final TextAlign textAlign;
+  final TextStyle textStyle;
 
   final int? lastUpdateTimestamp;
   const UpdatedLabelText({
     Key? key,
     this.textAlign = TextAlign.left,
     required this.lastUpdateTimestamp,
+    this.textStyle = LitSansSerifStyles.caption,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -22,7 +24,7 @@ class UpdatedLabelText extends StatelessWidget {
     return ClippedText(
       "${relativeDateFormatter.format(relativeDateTime)}",
       textAlign: textAlign,
-      style: LitSansSerifStyles.caption,
+      style: textStyle,
     );
   }
 }
