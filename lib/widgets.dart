@@ -8,6 +8,7 @@ import 'dart:io';
 import 'dart:math';
 import 'dart:ui' as ui;
 
+import 'package:date_colors/date_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:history_of_me/api.dart';
 import 'package:history_of_me/app.dart';

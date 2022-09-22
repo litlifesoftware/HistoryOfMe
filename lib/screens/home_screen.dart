@@ -56,7 +56,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     return AppSettingsProvider(
       api: _api,
-      builder: (context, appSettings) {
+      builder: (BuildContext context, AppSettings appSettings) {
         return LitTabView(
           materialAppBar: AppBar(
             centerTitle: true,

@@ -1,11 +1,17 @@
 part of widgets;
 
+/// A widget displaying a preview of the provided [DiaryEntry].
+///
+/// Allows to navigate to the [DiaryEntry]'s detail screen by tapping on the
+/// widget.
 class DiaryListTile extends StatefulWidget {
-  final AnimationController? animationController;
+  final AnimationController animationController;
   final int listIndex;
   final int listLength;
   final DiaryEntry diaryEntry;
   final double landscapeWidthFactor;
+
+  /// Creates a [DiaryListTile].
   const DiaryListTile({
     Key? key,
     required this.animationController,
@@ -21,6 +27,37 @@ class DiaryListTile extends StatefulWidget {
 
 class _DiaryListTileState extends State<DiaryListTile> {
   late HOMNavigator _screenRouter;
+  late DateColorScheme _colorScheme;
+
+  bool get _isLastItem => (widget.listIndex != widget.listLength - 1);
+
+  DateTime get _date => DateTime.parse(widget.diaryEntry.date);
+
+  double get _deviceWidth => MediaQuery.of(context).size.width;
+
+  double get _intervalBegin => (1 / 50) * widget.listIndex;
+
+  double get _tweenX => _deviceWidth * _intervalBegin;
+
+  Curve get _animationCurve =>
+      Interval(_intervalBegin, 1.0, curve: Curves.easeInOut);
+
+  Tween<double> get _animationTween => Tween(begin: 0.0, end: 1.0);
+
+  Animation<double> get _animation => _animationTween.animate(
+        CurvedAnimation(
+          parent: widget.animationController,
+          curve: _animationCurve,
+        ),
+      );
+
+  Matrix4 get _tweenTransform => Matrix4.translationValues(
+        -_tweenX + (_tweenX * _animation.value),
+        0,
+        0,
+      );
+
+  Matrix4 get _staticTransform => Matrix4.translationValues(0, -24, 0);
 
   void _onTilePressed() {
     _screenRouter.toDiaryEntryDetailScreen(
@@ -29,162 +66,135 @@ class _DiaryListTileState extends State<DiaryListTile> {
     );
   }
 
-  Animation<double> get _animation =>
-      Tween<double>(begin: 0.0, end: 1.0).animate(
-        CurvedAnimation(
-          parent: widget.animationController!,
-          curve: Interval((1 / 50) * widget.listIndex, 1.0,
-              curve: Curves.easeInOut),
-        ),
-      );
-
-  Matrix4 get _transform => Matrix4.translationValues(
-        -(MediaQuery.of(context).size.width * (1 / 50) * widget.listIndex) +
-            ((MediaQuery.of(context).size.width * (1 / 50) * widget.listIndex) *
-                _animation.value),
-        0,
-        0,
-      );
-
   @override
   void initState() {
     super.initState();
     _screenRouter = HOMNavigator(context);
+    _colorScheme = DateColorScheme(DateTime.parse(widget.diaryEntry.date));
+    // Ensure the DateColorScheme is rerendered in case the argument values
+    // change.
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _colorScheme = DateColorScheme(DateTime.parse(widget.diaryEntry.date));
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    /// The [List] of month labels provided by the [CalendarLocalizationService].
-    List<String> monthLabels;
-    print(widget.diaryEntry.date);
-    // monthLabels = CalendarLocalizationService.getLocalizedCalendarMonths(
-    //     Localizations.localeOf(context));
-    monthLabels = [
-      LeitmotifLocalizations.of(context).january,
-      LeitmotifLocalizations.of(context).february,
-      LeitmotifLocalizations.of(context).march,
-      LeitmotifLocalizations.of(context).april,
-      LeitmotifLocalizations.of(context).may,
-      LeitmotifLocalizations.of(context).june,
-      LeitmotifLocalizations.of(context).july,
-      LeitmotifLocalizations.of(context).august,
-      LeitmotifLocalizations.of(context).september,
-      LeitmotifLocalizations.of(context).october,
-      LeitmotifLocalizations.of(context).november,
-      LeitmotifLocalizations.of(context).december,
-    ];
     return AnimatedBuilder(
-      animation: widget.animationController!,
-      builder: (context, _) {
+      animation: widget.animationController,
+      builder: (BuildContext context, Widget? child) {
         return FadeTransition(
           opacity: _animation,
-          child: Transform(
-            transform: _transform,
-            child: SizedBox(
-              width: MediaQuery.of(context).size.width,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  _EntryDateLabel(
-                    boxShadowOffset: Offset(-2, 4),
-                    quaterTurns: 3,
-                    text: monthLabels[
-                        DateTime.parse(widget.diaryEntry.date).month - 1],
-                    landscapeWidthFactor: widget.landscapeWidthFactor,
-                  ),
-                  _EntryCard(
-                    listIndex: widget.listIndex,
-                    listLength: widget.listLength,
-                    diaryEntry: widget.diaryEntry,
-                    landscapeWidthFactor: widget.landscapeWidthFactor,
-                    onPressed: _onTilePressed,
-                  ),
-                  _EntryDateLabel(
-                    boxShadowOffset: Offset(4, -2),
-                    quaterTurns: 1,
-                    text:
-                        DateTime.parse(widget.diaryEntry.date).year.toString(),
-                    landscapeWidthFactor: widget.landscapeWidthFactor,
-                  ),
-                ],
-              ),
-            ),
-          ),
+          child: Transform(transform: _tweenTransform, child: child),
         );
       },
+      child: Column(
+        children: [
+          Stack(
+            children: [
+              Transform(
+                transform: _staticTransform,
+                child: _DateIndicator(
+                  colorScheme: _colorScheme,
+                  context: context,
+                  date: _date,
+                ),
+              ),
+              _EntryCard(
+                listIndex: widget.listIndex,
+                listLength: widget.listLength,
+                diaryEntry: widget.diaryEntry,
+                landscapeWidthFactor: widget.landscapeWidthFactor,
+                colorScheme: _colorScheme,
+                onPressed: _onTilePressed,
+              ),
+            ],
+          ),
+          _isLastItem
+              ? Transform(
+                  transform: _staticTransform,
+                  child: Divider(color: LitColors.grey200),
+                )
+              : SizedBox(),
+        ],
+      ),
     );
   }
 }
 
-class _EntryDateLabel extends StatefulWidget {
-  final int quaterTurns;
-  final String text;
-  final Offset boxShadowOffset;
-  final double landscapeWidthFactor;
-  const _EntryDateLabel({
+class _DateIndicator extends StatelessWidget {
+  final DateTime date;
+  final DateColorScheme colorScheme;
+  final BuildContext context;
+  const _DateIndicator({
     Key? key,
-    required this.quaterTurns,
-    required this.text,
-    required this.boxShadowOffset,
-    required this.landscapeWidthFactor,
+    required this.date,
+    required this.colorScheme,
+    required this.context,
   }) : super(key: key);
 
-  @override
-  __EntryDateLabelState createState() => __EntryDateLabelState();
-}
-
-class __EntryDateLabelState extends State<_EntryDateLabel> {
-  Size get _deviceSize {
-    return MediaQuery.of(context).size;
-  }
-
-  double get portraitWidth {
-    return MediaQuery.of(context).size.width * 0.125;
-  }
-
-  double get landscapeWidth {
-    return portraitWidth * widget.landscapeWidthFactor;
+  String get _yearLabel {
+    return date.formatAsLocalizedYear(context);
   }
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: alternativeWidth(
-        _deviceSize,
-        portraitWidth: portraitWidth,
-        landscapeWidth: landscapeWidth,
+    return Container(
+      width: 36.0,
+      height: 120.0,
+      decoration: BoxDecoration(
+        color: colorScheme.colorOfYear,
+        borderRadius: BorderRadius.only(
+          topRight: Radius.circular(12.0),
+          bottomRight: Radius.circular(8.0),
+        ),
       ),
-      child: RotatedBox(
-        quarterTurns: widget.quaterTurns,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8.0),
-          child: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(15.0),
-              color: HexColor('efefef'),
-              boxShadow: [
-                BoxShadow(
-                  blurRadius: 15.0,
-                  offset: widget.boxShadowOffset,
-                  color: Colors.black.withOpacity(0.20),
-                  spreadRadius: 2.0,
-                )
-              ],
-            ),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(
-                vertical: 4.0,
-                horizontal: 12.0,
-              ),
-              child: Center(
-                child: ClippedText(
-                  "${widget.text}",
-                  textAlign: TextAlign.center,
-                  style: LitTextStyles.sansSerifStyles[caption],
+      child: LayoutBuilder(
+        builder: (context, constraints) => Column(
+          children: [
+            Expanded(
+              child: Container(
+                width: 36.0,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                    topRight: Radius.circular(
+                      12.0,
+                    ),
+                  ),
+                  color: colorScheme.colorOfTheSeason,
+                ),
+                child: Transform(
+                  transform: Matrix4.translationValues(-2, 0, 0),
+                  child: RotatedBox(
+                    quarterTurns: 3,
+                    child: Center(
+                      child: Text(
+                        date.formatAsLocalizedMonth(context),
+                        style: LitSansSerifStyles.caption.copyWith(
+                          letterSpacing: 0.75,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
               ),
             ),
-          ),
+            Container(
+              height: 18.0,
+              child: Center(
+                child: Text(
+                  _yearLabel,
+                  style: LitSansSerifStyles.caption.copyWith(
+                    fontSize: 6.0,
+                    letterSpacing: 0.75,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            )
+          ],
         ),
       ),
     );
@@ -196,6 +206,7 @@ class _EntryCard extends StatefulWidget {
   final int listLength;
   final DiaryEntry diaryEntry;
   final double landscapeWidthFactor;
+  final DateColorScheme colorScheme;
   final void Function() onPressed;
   const _EntryCard({
     Key? key,
@@ -203,6 +214,7 @@ class _EntryCard extends StatefulWidget {
     required this.listLength,
     required this.diaryEntry,
     required this.landscapeWidthFactor,
+    required this.colorScheme,
     required this.onPressed,
   }) : super(key: key);
 
@@ -211,7 +223,6 @@ class _EntryCard extends StatefulWidget {
 }
 
 class __EntryCardState extends State<_EntryCard> {
-  /// Returns the [RelativeDateTime] of the last diary entry update..
   RelativeDateTime get _relativeDateTime {
     return RelativeDateTime(
       dateTime: DateTime.now(),
@@ -239,18 +250,18 @@ class __EntryCardState extends State<_EntryCard> {
     return _relativeDateFormatter.format(_relativeDateTime);
   }
 
-  bool get _titleAvailable {
+  bool get _isTitleAvailable {
     return widget.diaryEntry.title != DefaultData.diaryEntryTitle;
   }
 
   String get _title {
-    return _titleAvailable
+    return _isTitleAvailable
         ? widget.diaryEntry.title
         : AppLocalizations.of(context).untitledLabel;
   }
 
   double get _portraitWidth {
-    return MediaQuery.of(context).size.width * 0.75;
+    return MediaQuery.of(context).size.width;
   }
 
   double get _landscapeWidth {
@@ -265,6 +276,23 @@ class __EntryCardState extends State<_EntryCard> {
     return Matrix4.translationValues(-8.0, -8.0, 0);
   }
 
+  Color get _moodColor =>
+      Color.lerp(
+        Colors.red,
+        Colors.green,
+        widget.diaryEntry.moodScore,
+      ) ??
+      Colors.grey;
+
+  List<BoxShadow> get _boxShadow => [
+        BoxShadow(
+          color: widget.colorScheme.combinedColor.withOpacity(0.5),
+          blurRadius: 12.0,
+          offset: Offset(2, 4),
+          spreadRadius: 2.0,
+        )
+      ];
+
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
@@ -276,7 +304,10 @@ class __EntryCardState extends State<_EntryCard> {
             landscapeWidth: _landscapeWidth,
           ),
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            padding: const EdgeInsets.only(
+              right: 16.0,
+              left: 34.0,
+            ),
             child: Stack(
               alignment: Alignment.topLeft,
               children: [
@@ -288,7 +319,7 @@ class __EntryCardState extends State<_EntryCard> {
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(16.0),
-                      boxShadow: LitBoxShadows.md,
+                      boxShadow: _boxShadow,
                     ),
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
@@ -298,58 +329,38 @@ class __EntryCardState extends State<_EntryCard> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          LayoutBuilder(
-                            builder: (context, constraints) => Row(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                SizedBox(
-                                  width:
-                                      constraints.maxWidth - 14.0 - 16.0 - 4.0,
-                                  child: ClippedText(
-                                    _title,
-                                    maxLines: 2,
-                                    style: LitSansSerifStyles.body2,
-                                  ),
-                                ),
-                                Align(
-                                  alignment: Alignment.topRight,
-                                  child: Container(
-                                    width: 12.0,
-                                    height: 12.0,
-                                    decoration: BoxDecoration(
-                                      color: Color.lerp(
-                                        LitColors.lightRed,
-                                        HexColor('bee5be'),
-                                        widget.diaryEntry.moodScore,
-                                      ),
-                                      borderRadius: BorderRadius.circular(
-                                        4,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
+                          SingleChildScrollView(
+                            child: Text(
+                              _title,
+                              maxLines: 1,
+                              overflow: TextOverflow.visible,
+                              style: LitSansSerifStyles.subtitle1,
                             ),
                           ),
-                          _Divider(),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 2.0),
+                            child: Container(
+                              width: constraints.maxWidth,
+                              height: 6.0,
+                              decoration: BoxDecoration(
+                                color: _moodColor,
+                                borderRadius: BorderRadius.all(
+                                  const Radius.circular(3.0),
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: 8.0),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
                                 _formattedDiaryDate,
-                                style: LitTextStyles.sansSerifStyles[caption]
-                                    .copyWith(
-                                  color: HexColor('666666'),
-                                ),
+                                style: LitSansSerifStyles.overline,
                               ),
                               Text(
                                 _relativeDateUpdated,
-                                style: LitTextStyles.sansSerifStyles[caption]
-                                    .copyWith(
-                                  color: HexColor('666666'),
-                                ),
+                                style: LitSansSerifStyles.overline,
                               ),
                             ],
                           ),
@@ -362,23 +373,7 @@ class __EntryCardState extends State<_EntryCard> {
                   alignment: Alignment.topLeft,
                   child: Transform(
                     transform: _numberTransform,
-                    child: SizedBox(
-                      child: LitBadge(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 8.0,
-                          vertical: 4.0,
-                        ),
-                        backgroundColor: LitColors.grey200,
-                        child: Text(
-                          '#' + (_diaryNumber).toString(),
-                          textAlign: TextAlign.center,
-                          style: LitSansSerifStyles.button.copyWith(
-                            fontSize: 9.0,
-                            color: LitColors.grey500,
-                          ),
-                        ),
-                      ),
-                    ),
+                    child: _EntryNumberBadge(diaryNumber: _diaryNumber),
                   ),
                 ),
               ],
@@ -390,22 +385,32 @@ class __EntryCardState extends State<_EntryCard> {
   }
 }
 
-class _Divider extends StatelessWidget {
-  const _Divider({Key? key}) : super(key: key);
+class _EntryNumberBadge extends StatelessWidget {
+  final int diaryNumber;
+  const _EntryNumberBadge({
+    Key? key,
+    required this.diaryNumber,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: ((context, constraints) => Padding(
-            padding: const EdgeInsets.symmetric(
-              vertical: 8.0,
-            ),
-            child: Container(
-              width: constraints.maxWidth,
-              height: 2.0,
-              color: HexColor('e0e0e0'),
-            ),
-          )),
+    return SizedBox(
+      child: LitBadge(
+        padding: const EdgeInsets.symmetric(
+          horizontal: 12.0,
+          vertical: 4.0,
+        ),
+        backgroundColor: LitColors.grey120,
+        child: Text(
+          '#' + (diaryNumber).toString(),
+          textAlign: TextAlign.center,
+          style: LitSansSerifStyles.overline.copyWith(
+            fontSize: 8.0,
+            fontWeight: FontWeight.w600,
+            color: LitColors.grey600,
+          ),
+        ),
+      ),
     );
   }
 }
