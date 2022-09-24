@@ -30,6 +30,7 @@ class DiaryListTile extends StatefulWidget {
 class _DiaryListTileState extends State<DiaryListTile> {
   late HOMNavigator _screenRouter;
   late DateColorScheme _colorScheme;
+  late ScrollController _titleScrollController;
 
   DateTime get _date => DateTime.parse(widget.diaryEntry.date);
 
@@ -66,15 +67,43 @@ class _DiaryListTileState extends State<DiaryListTile> {
     );
   }
 
+  /// Scrolls the entry's title text.
+  ///
+  /// Ensures the whole title is readible while only allocating one line of
+  /// space.
+  void _scrollText() {
+    double forwardOffset = _titleScrollController.position.maxScrollExtent;
+    double reverseOffest = 0;
+    Duration duration = const Duration(milliseconds: 8000);
+    Curve curve = Curves.ease;
+
+    if (MediaQuery.of(context).size.width > forwardOffset)
+      _titleScrollController
+          .animateTo(
+            forwardOffset,
+            duration: duration,
+            curve: curve,
+          )
+          .then(
+            (v) => _titleScrollController.animateTo(
+              reverseOffest,
+              duration: duration,
+              curve: curve,
+            ),
+          );
+  }
+
   @override
   void initState() {
     super.initState();
     _screenRouter = HOMNavigator(context);
     _colorScheme = DateColorScheme(DateTime.parse(widget.diaryEntry.date));
+    _titleScrollController = ScrollController();
     // Ensure the DateColorScheme is rerendered in case the argument values
     // change.
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _colorScheme = DateColorScheme(DateTime.parse(widget.diaryEntry.date));
+      _scrollText();
     });
   }
 
@@ -106,6 +135,7 @@ class _DiaryListTileState extends State<DiaryListTile> {
                 diaryEntry: widget.diaryEntry,
                 landscapeWidthFactor: widget.landscapeWidthFactor,
                 colorScheme: _colorScheme,
+                titleScrollController: _titleScrollController,
                 onPressed: _onTilePressed,
               ),
             ],
@@ -207,6 +237,7 @@ class _EntryCard extends StatefulWidget {
   final DiaryEntry diaryEntry;
   final double landscapeWidthFactor;
   final DateColorScheme colorScheme;
+  final ScrollController titleScrollController;
   final void Function() onPressed;
   const _EntryCard({
     Key? key,
@@ -215,6 +246,7 @@ class _EntryCard extends StatefulWidget {
     required this.diaryEntry,
     required this.landscapeWidthFactor,
     required this.colorScheme,
+    required this.titleScrollController,
     required this.onPressed,
   }) : super(key: key);
 
@@ -330,10 +362,11 @@ class __EntryCardState extends State<_EntryCard> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            controller: widget.titleScrollController,
                             child: Text(
                               _title,
                               maxLines: 1,
-                              overflow: TextOverflow.visible,
                               style: LitSansSerifStyles.subtitle1,
                             ),
                           ),
