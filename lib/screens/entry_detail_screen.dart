@@ -4,6 +4,7 @@ import 'package:history_of_me/controllers.dart';
 import 'package:history_of_me/localization.dart';
 import 'package:history_of_me/models.dart';
 import 'package:history_of_me/widgets.dart';
+import 'package:history_of_me/extensions.dart';
 import 'package:leitmotif/leitmotif.dart';
 
 /// A `screen` widget showing a preview of the provided entry's data.
@@ -242,6 +243,7 @@ class _EntryDetailScreenState extends State<EntryDetailScreen>
                             ),
                             Divider(color: Colors.black26),
                             _OptionsBar(
+                              diaryEntry: diaryEntry,
                               onPressedOptions: () =>
                                   _onPressedOptions(diaryEntry),
                             ),
@@ -264,11 +266,48 @@ class _EntryDetailScreenState extends State<EntryDetailScreen>
 }
 
 class _OptionsBar extends StatelessWidget {
+  final DiaryEntry diaryEntry;
   final void Function() onPressedOptions;
   const _OptionsBar({
     Key? key,
+    required this.diaryEntry,
     required this.onPressedOptions,
   }) : super(key: key);
+
+  List<DiaryPhoto> get photos => diaryEntry.photos ?? [];
+
+  int get wordCount => diaryEntry.content.wordCount;
+
+  int get visits => diaryEntry.visitCount ?? 0;
+
+  int get edits => diaryEntry.editCount ?? 0;
+
+  List<String> generateLabels(BuildContext context) => [
+        wordCount.toString() +
+            " " +
+            (wordCount == 1
+                ? AppLocalizations.of(context).wordWrittenLabel
+                : AppLocalizations.of(context).wordsWrittenLabel) +
+            ".",
+        photos.length.toString() +
+            " " +
+            (photos.length == 1
+                ? AppLocalizations.of(context).photoAvailableLabel
+                : AppLocalizations.of(context).photosAvailableLabel) +
+            ".",
+        visits.toString() +
+            " " +
+            (visits == 1
+                ? AppLocalizations.of(context).visitLabel
+                : AppLocalizations.of(context).visitsLabel) +
+            ".",
+        edits.toString() +
+            " " +
+            (edits == 1
+                ? AppLocalizations.of(context).timeEditiedLabel
+                : AppLocalizations.of(context).timesEditiedLabel) +
+            ".",
+      ];
 
   @override
   Widget build(BuildContext context) {
@@ -277,15 +316,38 @@ class _OptionsBar extends StatelessWidget {
         horizontal: 16.0,
         vertical: 8.0,
       ),
-      child: Row(
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          SizedBox(),
-          _MoreButton(
-            onPressed: onPressedOptions,
-          ),
-        ],
+      child: LayoutBuilder(
+        builder: (context, constraints) => Row(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Container(
+              height: 36.0,
+              width: constraints.maxWidth - 120.0,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                itemCount: generateLabels(context).length,
+                itemBuilder: ((context, index) => Padding(
+                      padding: const EdgeInsets.only(right: 4.0),
+                      child: LitBadge(
+                        child: SelectableText(
+                          generateLabels(context)[index],
+                          style: LitSansSerifStyles.overline.copyWith(
+                            height: 1.5,
+                            letterSpacing: 0.5,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    )),
+              ),
+            ),
+            _MoreButton(
+              onPressed: onPressedOptions,
+            ),
+          ],
+        ),
       ),
     );
   }

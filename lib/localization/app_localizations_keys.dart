@@ -140,4 +140,8 @@ class AppLocalizationsKeys {
   static const String photoAvailableLabel = "photoAvailableLabel";
   static const String photosAvailableLabel = "photosAvailableLabel";
   static const String moreLabel = "moreLabel";
+  static const String visitLabel = "visitLabel";
+  static const String visitsLabel = "visitsLabel";
+  static const String timeEditiedLabel = "timeEditiedLabel";
+  static const String timesEditiedLabel = "timesEditiedLabel";
 }

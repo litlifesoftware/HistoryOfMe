@@ -444,10 +444,6 @@ class _TextPreview extends StatelessWidget {
     required this.onEdit,
   }) : super(key: key);
 
-  List<DiaryPhoto> get photos => diaryEntry.photos ?? [];
-
-  int get wordCount => diaryEntry.content.wordCount;
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -474,52 +470,12 @@ class _TextPreview extends StatelessWidget {
               child: Builder(
                 builder: (context) {
                   return diaryEntry.content.isNotEmpty
-                      ? Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            SelectableText(
-                              diaryEntry.content,
-                              style: LitSansSerifStyles.body2.copyWith(
-                                height: 1.5,
-                                letterSpacing: 0.5,
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 8.0),
-                              child: SelectableText(
-                                wordCount.toString() +
-                                    " " +
-                                    (wordCount == 1
-                                        ? AppLocalizations.of(context)
-                                            .wordWrittenLabel
-                                        : AppLocalizations.of(context)
-                                            .wordsWrittenLabel) +
-                                    ".",
-                                style: LitSansSerifStyles.overline.copyWith(
-                                  height: 1.5,
-                                  letterSpacing: 0.5,
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 8.0),
-                              child: SelectableText(
-                                photos.length.toString() +
-                                    " " +
-                                    (photos.length == 1
-                                        ? AppLocalizations.of(context)
-                                            .photoAvailableLabel
-                                        : AppLocalizations.of(context)
-                                            .photosAvailableLabel) +
-                                    ".",
-                                style: LitSansSerifStyles.overline.copyWith(
-                                  height: 1.5,
-                                  letterSpacing: 0.5,
-                                ),
-                              ),
-                            ),
-                          ],
+                      ? SelectableText(
+                          diaryEntry.content,
+                          style: LitSansSerifStyles.body2.copyWith(
+                            height: 1.5,
+                            letterSpacing: 0.5,
+                          ),
                         )
                       : _NoContentAvailableCard(
                           onEdit: onEdit,

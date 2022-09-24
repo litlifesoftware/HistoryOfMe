@@ -180,5 +180,9 @@ class DE {
     AppLocalizationsKeys.photoAvailableLabel: "Foto verfügbar",
     AppLocalizationsKeys.photosAvailableLabel: "Fotos verfügbar",
     AppLocalizationsKeys.moreLabel: "mehr",
+    AppLocalizationsKeys.visitLabel: "Aufruf",
+    AppLocalizationsKeys.visitsLabel: "Aufrufe",
+    AppLocalizationsKeys.timeEditiedLabel: "mal bearbeitet",
+    AppLocalizationsKeys.timesEditiedLabel: "mal bearbeitet",
   };
 }

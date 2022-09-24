@@ -169,8 +169,12 @@ class EN {
         'duplicate photos removed',
     AppLocalizationsKeys.creatorName: "Michael Grigorenko",
     AppLocalizationsKeys.inspiredByMovieTitle: "Your Name. (2016)",
-    AppLocalizationsKeys.photoAvailableLabel: "Photo available",
-    AppLocalizationsKeys.photosAvailableLabel: "Photos available",
+    AppLocalizationsKeys.photoAvailableLabel: "photo available",
+    AppLocalizationsKeys.photosAvailableLabel: "photos available",
     AppLocalizationsKeys.moreLabel: "more",
+    AppLocalizationsKeys.visitLabel: "Visit",
+    AppLocalizationsKeys.visitsLabel: "Visits",
+    AppLocalizationsKeys.timeEditiedLabel: "time edited",
+    AppLocalizationsKeys.timesEditiedLabel: "times edited",
   };
 }

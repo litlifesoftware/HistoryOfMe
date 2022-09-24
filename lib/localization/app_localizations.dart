@@ -576,4 +576,20 @@ class AppLocalizations {
   String get moreLabel {
     return localizeValue(AppLocalizationsKeys.moreLabel);
   }
+
+  String get visitLabel {
+    return localizeValue(AppLocalizationsKeys.visitLabel);
+  }
+
+  String get visitsLabel {
+    return localizeValue(AppLocalizationsKeys.visitsLabel);
+  }
+
+  String get timeEditiedLabel {
+    return localizeValue(AppLocalizationsKeys.timeEditiedLabel);
+  }
+
+  String get timesEditiedLabel {
+    return localizeValue(AppLocalizationsKeys.timesEditiedLabel);
+  }
 }
