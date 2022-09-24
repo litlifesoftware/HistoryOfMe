@@ -180,86 +180,80 @@ class _EntryDetailScreenState extends State<EntryDetailScreen>
                   ? diaryEntry.title
                   : AppLocalizations.of(context).untitledLabel,
             ),
-            body: LayoutBuilder(builder: (context, constraints) {
-              return Container(
-                child: Stack(
-                  children: [
-                    LitScrollbar(
-                      child: ScrollableColumn(
-                        controller: _scrollController,
-                        children: [
-                          SizedBox(
-                            height: 384.0,
-                            child: Stack(
-                              alignment: Alignment.center,
-                              children: [
-                                EntryDetailBackdrop(
-                                  diaryEntry: diaryEntry,
-                                  diaryPhotoPicker: _diaryPhotoPicker,
-                                ),
-                                Align(
-                                  alignment: Alignment.bottomRight,
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(
-                                      bottom: 64.0 + 16.0,
-                                      top: 16.0,
-                                      left: 16.0,
-                                      right: 20.0,
-                                    ),
-                                    child: PickPhotosButton(
-                                      onPressed: () {
-                                        _diaryPhotoPicker
-                                            .pickPhotosAndSave(diaryEntry);
-                                      },
+            body: LayoutBuilder(
+              builder: (context, constraints) {
+                return Container(
+                  child: Stack(
+                    children: [
+                      LitScrollbar(
+                        child: ScrollableColumn(
+                          controller: _scrollController,
+                          children: [
+                            SizedBox(
+                              height: 384.0,
+                              child: Stack(
+                                alignment: Alignment.center,
+                                children: [
+                                  EntryDetailBackdrop(
+                                    diaryEntry: diaryEntry,
+                                    diaryPhotoPicker: _diaryPhotoPicker,
+                                  ),
+                                  Align(
+                                    alignment: Alignment.bottomRight,
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(
+                                        bottom: 64.0 + 16.0,
+                                        top: 16.0,
+                                        left: 16.0,
+                                        right: 20.0,
+                                      ),
+                                      child: PickPhotosButton(
+                                        onPressed: () {
+                                          _diaryPhotoPicker
+                                              .pickPhotosAndSave(diaryEntry);
+                                        },
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
-                          ),
-                          Transform(
-                            transform: Matrix4.translationValues(0, -64.0, 0),
-                            child: EntryDetailCard(
-                              boxLength: boxLength,
-                              listIndex: widget.listIndex,
-                              isFirst: isFirst,
-                              isLast: isLast,
-                              diaryEntry: diaryEntry,
-                              onEdit: () => _onEdit(diaryEntry),
-                              queryController: _queryController,
-                              flipPage: _flipPage,
+                            Transform(
+                              transform: Matrix4.translationValues(0, -64.0, 0),
+                              child: EntryDetailCard(
+                                boxLength: boxLength,
+                                listIndex: widget.listIndex,
+                                isFirst: isFirst,
+                                isLast: isLast,
+                                diaryEntry: diaryEntry,
+                                onEdit: () => _onEdit(diaryEntry),
+                                queryController: _queryController,
+                                flipPage: _flipPage,
+                              ),
                             ),
-                          ),
-                          Divider(color: Colors.black26),
-                          _BottomNavigationBar(
-                            showNextButton: _isAvailableNextEntry(diaryEntry),
-                            showPreviousButton:
-                                _isAvailablePreviousEntry(diaryEntry),
-                            onPrevious: () => _onPreviousPressed(diaryEntry),
-                            onNext: () => _onNextPressed(diaryEntry),
-                            onPressedOptions: () =>
-                                _onPressedOptions(diaryEntry),
-                          ),
-                          _isAvailableNextEntry(diaryEntry) &&
-                                  _isAvailablePreviousEntry(diaryEntry)
-                              ? Column(
-                                  children: [
-                                    Divider(color: Colors.black26),
-                                    _OptionsBar(
-                                      onPressedOptions: () =>
-                                          _onPressedOptions(diaryEntry),
-                                    )
-                                  ],
-                                )
-                              : SizedBox(),
-                          SizedBox(height: 16.0),
-                        ],
+                            Divider(color: Colors.black26),
+                            _BottomNavigationBar(
+                              disableNextButton:
+                                  !_isAvailableNextEntry(diaryEntry),
+                              disablePreviousButton:
+                                  !_isAvailablePreviousEntry(diaryEntry),
+                              onPrevious: () => _onPreviousPressed(diaryEntry),
+                              onNext: () => _onNextPressed(diaryEntry),
+                            ),
+                            Divider(color: Colors.black26),
+                            _OptionsBar(
+                              onPressedOptions: () =>
+                                  _onPressedOptions(diaryEntry),
+                            ),
+                            SizedBox(height: 16.0),
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-              );
-            }),
+                    ],
+                  ),
+                );
+              },
+            ),
           );
         }
         // Return empty page if the entry has been deleted.
@@ -321,25 +315,23 @@ class _MoreButton extends StatelessWidget {
 }
 
 class _BottomNavigationBar extends StatelessWidget {
-  /// Flag to force the `next` button to show up.
-  final bool showNextButton;
+  /// Flag to diable the `next` button.
+  final bool disableNextButton;
 
-  /// Flag to force the `previous` button to show up.
-  final bool showPreviousButton;
+  /// Flag to diable the `previous` button.
+  final bool disablePreviousButton;
 
   final void Function() onNext;
   final void Function() onPrevious;
-  final void Function() onPressedOptions;
 
   /// Creates a [_BottomNavigationBar].
-  const _BottomNavigationBar({
-    Key? key,
-    required this.onNext,
-    required this.onPrevious,
-    required this.showNextButton,
-    required this.showPreviousButton,
-    required this.onPressedOptions,
-  }) : super(key: key);
+  const _BottomNavigationBar(
+      {Key? key,
+      required this.onNext,
+      required this.onPrevious,
+      required this.disableNextButton,
+      required this.disablePreviousButton})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -352,66 +344,28 @@ class _BottomNavigationBar extends StatelessWidget {
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          showPreviousButton
-              ? _PreviousNavigationButton(
-                  onPressed: onPrevious,
-                )
-              : _MoreButton(
-                  onPressed: onPressedOptions,
-                ),
-          showNextButton
-              ? _NextNavigationButton(
-                  onPressed: onNext,
-                )
-              : _MoreButton(
-                  onPressed: onPressedOptions,
-                ),
+          _NavigationButton(
+            disabled: disablePreviousButton,
+            label: LeitmotifLocalizations.of(context)
+                .previousLabelShort
+                .toUpperCase(),
+            mode: LitLinearNavigationMode.previous,
+            onPressed: onPrevious,
+          ),
+          _NavigationButton(
+            disabled: disableNextButton,
+            label: LeitmotifLocalizations.of(context).nextLabel.toUpperCase(),
+            mode: LitLinearNavigationMode.next,
+            onPressed: onNext,
+          ),
         ],
       ),
     );
   }
 }
 
-class _NextNavigationButton extends StatelessWidget {
-  final void Function() onPressed;
-
-  /// Creates a [_NextNavigationButton].
-  const _NextNavigationButton({
-    Key? key,
-    required this.onPressed,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return _NavigationButton(
-      label: LeitmotifLocalizations.of(context).nextLabel.toUpperCase(),
-      mode: LitLinearNavigationMode.next,
-      onPressed: onPressed,
-    );
-  }
-}
-
-class _PreviousNavigationButton extends StatelessWidget {
-  final void Function() onPressed;
-
-  /// Creates a [_PreviousNavigationButton].
-  const _PreviousNavigationButton({
-    Key? key,
-    required this.onPressed,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return _NavigationButton(
-      label:
-          LeitmotifLocalizations.of(context).previousLabelShort.toUpperCase(),
-      mode: LitLinearNavigationMode.previous,
-      onPressed: onPressed,
-    );
-  }
-}
-
 class _NavigationButton extends StatelessWidget {
+  final bool disabled;
   final LitLinearNavigationMode mode;
   final String label;
   final void Function() onPressed;
@@ -420,11 +374,13 @@ class _NavigationButton extends StatelessWidget {
     required this.label,
     required this.mode,
     required this.onPressed,
+    required this.disabled,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return LitPushedThroughButton(
+      disabled: disabled,
       child: Row(
         children: [
           LinearNavigationIcon(

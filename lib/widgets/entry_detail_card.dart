@@ -625,7 +625,7 @@ class __MoodScoreIndicatorState extends State<_MoodScoreIndicator>
                     Colors.grey,
                 Color.lerp(
                   Colors.white,
-                  Colors.grey,
+                  LitColors.grey600,
                   _animationController.value,
                 )!,
               ],
@@ -659,7 +659,7 @@ class __MoodScoreIndicatorState extends State<_MoodScoreIndicator>
                     letterSpacing: 0.65,
                     fontWeight: FontWeight.w700,
                     color: Color.lerp(
-                      Colors.grey,
+                      LitColors.grey600,
                       Colors.white,
                       _animationController.value,
                     ),
