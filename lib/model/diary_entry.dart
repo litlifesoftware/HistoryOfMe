@@ -29,6 +29,10 @@ class DiaryEntry {
   final int backdropPhotoId;
   @HiveField(9)
   final List<DiaryPhoto>? photos;
+  @HiveField(10)
+  final int? visitCount;
+  @HiveField(11)
+  final int? editCount;
 
   /// Creates a [DiaryEntry] object.
   const DiaryEntry({
@@ -42,6 +46,8 @@ class DiaryEntry {
     required this.favorite,
     required this.backdropPhotoId,
     required this.photos,
+    required this.visitCount,
+    required this.editCount,
   });
 
   /// Creates a [DiaryEntry] object by serializing the provided `Map` data.
@@ -70,6 +76,8 @@ class DiaryEntry {
       favorite: json['favorite'] as bool,
       backdropPhotoId: json['backdropPhotoId'] as int,
       photos: photos,
+      visitCount: json['visitCount'] as int,
+      editCount: json['editCount'] as int,
     );
   }
 
@@ -93,6 +101,8 @@ class DiaryEntry {
       'favorite': favorite,
       'backdropPhotoId': backdropPhotoId,
       'photos': photosMap,
+      'visitCount': visitCount,
+      'editCount': editCount,
     };
   }
 }

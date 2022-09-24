@@ -57,4 +57,7 @@ class DefaultData {
   static const bool darkMode = false;
   static const int tabIndex = 0;
   static const String lastBackup = "";
+  static const List<DiaryPhoto> photos = [];
+  static const int visitCount = 0;
+  static const int editCount = 0;
 }

@@ -273,16 +273,19 @@ class AppAPI {
   }) {
     final DateTime now = DateTime.now();
     final DiaryEntry diaryEntry = DiaryEntry(
-        uid: _generateUniqueID(),
-        date: date.toIso8601String(),
-        created: now.millisecondsSinceEpoch,
-        lastUpdated: now.millisecondsSinceEpoch,
-        title: DefaultData.diaryEntryTitle,
-        content: DefaultData.diaryEntryContent,
-        moodScore: DefaultData.diaryEntryMoodScore,
-        favorite: false,
-        backdropPhotoId: DefaultData.diaryEntryBackdropId,
-        photos: []);
+      uid: _generateUniqueID(),
+      date: date.toIso8601String(),
+      created: now.millisecondsSinceEpoch,
+      lastUpdated: now.millisecondsSinceEpoch,
+      title: DefaultData.diaryEntryTitle,
+      content: DefaultData.diaryEntryContent,
+      moodScore: DefaultData.diaryEntryMoodScore,
+      favorite: false,
+      backdropPhotoId: DefaultData.diaryEntryBackdropId,
+      photos: DefaultData.photos,
+      visitCount: DefaultData.visitCount,
+      editCount: DefaultData.editCount,
+    );
 
     Hive.box<DiaryEntry>(_diaryEntriesKey).put(diaryEntry.uid, diaryEntry);
     return diaryEntry;
@@ -323,6 +326,8 @@ class AppAPI {
       favorite: diaryEntry.favorite,
       backdropPhotoId: newBackdropPhotoId,
       photos: diaryEntry.photos,
+      visitCount: diaryEntry.visitCount,
+      editCount: diaryEntry.editCount,
     );
 
     updateDiaryEntry(updatedDiaryEntry);
@@ -342,6 +347,8 @@ class AppAPI {
       favorite: !(diaryEntry.favorite),
       backdropPhotoId: diaryEntry.backdropPhotoId,
       photos: diaryEntry.photos,
+      visitCount: diaryEntry.visitCount,
+      editCount: diaryEntry.editCount,
     );
 
     updateDiaryEntry(updatedDiaryEntry);

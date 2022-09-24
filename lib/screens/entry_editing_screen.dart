@@ -115,6 +115,8 @@ class _EntryEditingScreenState extends State<EntryEditingScreen>
       favorite: widget.diaryEntry.favorite,
       backdropPhotoId: widget.diaryEntry.backdropPhotoId,
       photos: _photos,
+      visitCount: widget.diaryEntry.visitCount,
+      editCount: widget.diaryEntry.editCount,
     );
     AppAPI().updateDiaryEntry(updatedDiaryEntry);
     if (App.DEBUG) print('Saved changes on current diary entry');

@@ -286,7 +286,9 @@ class _DiaryBackupDialogState extends State<DiaryBackupDialog> {
           moodScore: item.moodScore,
           favorite: item.favorite,
           backdropPhotoId: item.backdropPhotoId,
-          photos: item.photos ?? [],
+          photos: item.photos ?? DefaultData.photos,
+          visitCount: item.visitCount ?? DefaultData.visitCount,
+          editCount: item.editCount ?? DefaultData.editCount,
         ),
       );
     }

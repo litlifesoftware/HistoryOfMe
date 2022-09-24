@@ -154,6 +154,8 @@ class DiaryPhotoPicker {
         backdropPhotoId: entry.backdropPhotoId,
         // Include picked photos.
         photos: diaryPhotos,
+        visitCount: entry.visitCount,
+        editCount: entry.editCount,
       );
 
       _api.updateDiaryEntry(updated);

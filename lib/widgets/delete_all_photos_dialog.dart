@@ -33,7 +33,9 @@ class _DeleteAllPhotosDialogState extends State<DeleteAllPhotosDialog> {
       moodScore: widget.entry.moodScore,
       favorite: widget.entry.favorite,
       backdropPhotoId: widget.entry.backdropPhotoId,
-      photos: [],
+      photos: DefaultData.photos,
+      visitCount: widget.entry.visitCount,
+      editCount: widget.entry.editCount,
     );
     // Update the diary entry to delete all photos.
     _api.updateDiaryEntry(updated);
