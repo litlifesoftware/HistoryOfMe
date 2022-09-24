@@ -106,6 +106,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.1"
+  cli_util:
+    dependency: transitive
+    description:
+      name: cli_util
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.3.5"
   clock:
     dependency: transitive
     description:
@@ -203,7 +210,7 @@ packages:
       name: flutter_launcher_icons
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.9.3"
+    version: "0.10.0"
   flutter_localizations:
     dependency: "direct main"
     description: flutter
@@ -359,7 +366,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "9f936455048e216fa4fd898c0462151db16d65d6"
+      resolved-ref: "85e0934e146c99a2f372d12f4ab8509fde90ed9e"
       url: "https://github.com/litlifesoftware/leitmotif-flutter.git"
     source: git
     version: "2.1.2"

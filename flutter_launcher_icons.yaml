@@ -1,0 +1,10 @@
+dev_dependencies:
+  flutter_launcher_icons: "^0.10.0"
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/icon/Launcher_Icon_Static.png"
+  adaptive_icon_background: "#FFF7EF"
+  adaptive_icon_foreground: "assets/icon/Launcher_Icon_Adaptive.png"
+  remove_alpha_ios: true
