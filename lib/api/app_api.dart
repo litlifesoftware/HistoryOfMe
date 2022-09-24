@@ -354,6 +354,52 @@ class AppAPI {
     updateDiaryEntry(updatedDiaryEntry);
   }
 
+  /// Increases the `visitCount` value of the provided [DiaryEntry].
+  void increaseEntryVisitCount(DiaryEntry diaryEntry) {
+    int visitCount = (diaryEntry.visitCount ?? 0) + 1;
+
+    /// Updated diary entry
+    final DiaryEntry updatedDiaryEntry = DiaryEntry(
+      uid: diaryEntry.uid,
+      date: diaryEntry.date,
+      created: diaryEntry.created,
+      lastUpdated: diaryEntry.lastUpdated,
+      title: diaryEntry.title,
+      content: diaryEntry.content,
+      moodScore: diaryEntry.moodScore,
+      favorite: diaryEntry.favorite,
+      backdropPhotoId: diaryEntry.backdropPhotoId,
+      photos: diaryEntry.photos,
+      visitCount: visitCount,
+      editCount: diaryEntry.editCount,
+    );
+
+    updateDiaryEntry(updatedDiaryEntry);
+  }
+
+  /// Increases the `editCount` value of the provided [DiaryEntry].
+  void increaseEntryEditCount(DiaryEntry diaryEntry) {
+    int editCount = (diaryEntry.editCount ?? 0) + 1;
+
+    /// Updated diary entry
+    final DiaryEntry updatedDiaryEntry = DiaryEntry(
+      uid: diaryEntry.uid,
+      date: diaryEntry.date,
+      created: diaryEntry.created,
+      lastUpdated: diaryEntry.lastUpdated,
+      title: diaryEntry.title,
+      content: diaryEntry.content,
+      moodScore: diaryEntry.moodScore,
+      favorite: diaryEntry.favorite,
+      backdropPhotoId: diaryEntry.backdropPhotoId,
+      photos: diaryEntry.photos,
+      visitCount: diaryEntry.visitCount,
+      editCount: editCount,
+    );
+
+    updateDiaryEntry(updatedDiaryEntry);
+  }
+
   /// Deletes an existing [DiaryEntry].
   ///
   /// * [diaryEntryUid] is the [DiaryEntry]'s uid value which will act like an key.

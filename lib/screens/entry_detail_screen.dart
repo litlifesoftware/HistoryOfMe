@@ -15,14 +15,13 @@ class EntryDetailScreen extends StatefulWidget {
   /// The entry's index on the chronological list of diary entries.
   final int listIndex;
 
-  /// The entry's uid.
-  final String diaryEntryUid;
+  final DiaryEntry diaryEntry;
 
   /// Creates a [EntryDetailScreen].
   const EntryDetailScreen({
     Key? key,
     required this.listIndex,
-    required this.diaryEntryUid,
+    required this.diaryEntry,
   }) : super(key: key);
 
   @override
@@ -39,9 +38,11 @@ class _EntryDetailScreenState extends State<EntryDetailScreen>
 
   late DiaryPhotoPicker _diaryPhotoPicker;
 
+  late AppAPI _api;
+
   void _onDeleteEntry() {
     LitRouteController(context).clearNavigationStack();
-    AppAPI().deleteDiaryEntry(widget.diaryEntryUid);
+    _api.deleteDiaryEntry(widget.diaryEntry.uid);
   }
 
   void _showConfirmDeleteDialog() {
@@ -81,7 +82,7 @@ class _EntryDetailScreenState extends State<EntryDetailScreen>
         LitRouteController(context).replaceCurrentCupertinoWidget(
           newWidget: EntryDetailScreen(
             listIndex: widget.listIndex,
-            diaryEntryUid: _queryController.getNextDiaryEntry(diaryEntry).uid,
+            diaryEntry: _queryController.getNextDiaryEntry(diaryEntry),
           ),
         );
       },
@@ -94,8 +95,7 @@ class _EntryDetailScreenState extends State<EntryDetailScreen>
         LitRouteController(context).replaceCurrentCupertinoWidget(
           newWidget: EntryDetailScreen(
             listIndex: widget.listIndex,
-            diaryEntryUid:
-                _queryController.getPreviousDiaryEntry(diaryEntry).uid,
+            diaryEntry: _queryController.getPreviousDiaryEntry(diaryEntry),
           ),
         );
       },
@@ -159,6 +159,7 @@ class _EntryDetailScreenState extends State<EntryDetailScreen>
       onPickedUnsupportedFile: _onPickedUnsupportedFile,
       onDeleteAllPhotos: _onDeleteAllPhotos,
     );
+    _api = AppAPI()..increaseEntryVisitCount(widget.diaryEntry);
   }
 
   @override
@@ -170,7 +171,7 @@ class _EntryDetailScreenState extends State<EntryDetailScreen>
   @override
   Widget build(BuildContext context) {
     return QueryDiaryEntryProvider(
-      diaryEntryUid: widget.diaryEntryUid,
+      diaryEntryUid: widget.diaryEntry.uid,
       builder: (context, diaryEntry, isFirst, isLast, boxLength) {
         /// Verify the entry has not been deleted yet.
         if (diaryEntry != null) {

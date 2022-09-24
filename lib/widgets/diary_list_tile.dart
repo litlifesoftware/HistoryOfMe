@@ -62,7 +62,7 @@ class _DiaryListTileState extends State<DiaryListTile> {
   void _onTilePressed() {
     _screenRouter.toDiaryEntryDetailScreen(
       listIndex: widget.listIndex,
-      diaryEntryUid: widget.diaryEntry.uid,
+      diaryEntry: widget.diaryEntry,
     );
   }
 

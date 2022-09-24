@@ -23,11 +23,11 @@ class HOMNavigator {
   /// Provide the arguments that should be passed to the screen widget.
   void toDiaryEntryDetailScreen({
     required int listIndex,
-    required String diaryEntryUid,
+    required DiaryEntry diaryEntry,
   }) {
     final Widget pushedWidget = EntryDetailScreen(
       listIndex: listIndex,
-      diaryEntryUid: diaryEntryUid,
+      diaryEntry: diaryEntry,
     );
     _routeController.pushMaterialWidget(pushedWidget);
   }
