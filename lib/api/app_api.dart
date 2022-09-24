@@ -356,7 +356,7 @@ class AppAPI {
 
   /// Increases the `visitCount` value of the provided [DiaryEntry].
   void increaseEntryVisitCount(DiaryEntry diaryEntry) {
-    int visitCount = (diaryEntry.visitCount ?? 0) + 1;
+    int visitCount = (diaryEntry.visitCount ?? DefaultData.visitCount) + 1;
 
     /// Updated diary entry
     final DiaryEntry updatedDiaryEntry = DiaryEntry(
@@ -379,7 +379,7 @@ class AppAPI {
 
   /// Increases the `editCount` value of the provided [DiaryEntry].
   void increaseEntryEditCount(DiaryEntry diaryEntry) {
-    int editCount = (diaryEntry.editCount ?? 0) + 1;
+    int editCount = (diaryEntry.editCount ?? DefaultData.editCount) + 1;
 
     /// Updated diary entry
     final DiaryEntry updatedDiaryEntry = DiaryEntry(

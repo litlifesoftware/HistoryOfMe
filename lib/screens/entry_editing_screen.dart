@@ -33,6 +33,8 @@ class EntryEditingScreen extends StatefulWidget {
 
 class _EntryEditingScreenState extends State<EntryEditingScreen>
     with TickerProviderStateMixin {
+  late AppAPI _api;
+
   /// The current mood score value the user has set.
   late double _moodScore;
 
@@ -41,6 +43,10 @@ class _EntryEditingScreenState extends State<EntryEditingScreen>
 
   /// The current content text the user is editing.
   late String _content;
+
+  /// States how many times the entry has been edited since navigating to this
+  /// screen.
+  late int _localEditCount;
 
   /// The [FocusNode] to control the focus on the title's [EditableText].
   final FocusNode _titleEditFocusNode = FocusNode();
@@ -85,6 +91,13 @@ class _EntryEditingScreenState extends State<EntryEditingScreen>
     });
   }
 
+  void _increaseLocalEditCount() {
+    setState(() {
+      _localEditCount = _localEditCount + 1;
+    });
+    print("Edits: " + _localEditCount.toString());
+  }
+
   /// Checks whether the user has submitted any unsaved changes.
   bool _isUnsaved(DiaryEntry databaseEntry) {
     bool _titleChanged = _title != databaseEntry.title &&
@@ -98,12 +111,14 @@ class _EntryEditingScreenState extends State<EntryEditingScreen>
         _photosChanged);
   }
 
-  Future<void> _saveChanges() async {
+  void _saveChanges() {
+    _increaseLocalEditCount();
     // Verify the title has been modified (does not equal the localized string).
     String title = (_titleEditingController.text !=
             AppLocalizations.of(context).untitledLabel)
         ? _titleEditingController.text
         : "";
+
     DiaryEntry updatedDiaryEntry = DiaryEntry(
       uid: widget.diaryEntry.uid,
       date: widget.diaryEntry.date,
@@ -116,9 +131,10 @@ class _EntryEditingScreenState extends State<EntryEditingScreen>
       backdropPhotoId: widget.diaryEntry.backdropPhotoId,
       photos: _photos,
       visitCount: widget.diaryEntry.visitCount,
-      editCount: widget.diaryEntry.editCount,
+      editCount: (widget.diaryEntry.editCount ?? DefaultData.editCount) +
+          _localEditCount,
     );
-    AppAPI().updateDiaryEntry(updatedDiaryEntry);
+    _api.updateDiaryEntry(updatedDiaryEntry);
     if (App.DEBUG) print('Saved changes on current diary entry');
   }
 
@@ -198,10 +214,14 @@ class _EntryEditingScreenState extends State<EntryEditingScreen>
   void initState() {
     super.initState();
 
+    _api = AppAPI();
+
+    _localEditCount = 0;
+
     _title = widget.diaryEntry.title;
     _content = widget.diaryEntry.content;
     _moodScore = widget.diaryEntry.moodScore;
-    _photos = widget.diaryEntry.photos ?? [];
+    _photos = widget.diaryEntry.photos ?? DefaultData.photos;
 
     _fadeInAnimationController = AnimationController(
       duration: Duration(milliseconds: 450),
