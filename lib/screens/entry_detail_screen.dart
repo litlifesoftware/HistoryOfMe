@@ -70,9 +70,12 @@ class _EntryDetailScreenState extends State<EntryDetailScreen>
 
   /// Delays the [_onEdit] call by the button animation duration to allow the
   /// animation to fully play back before transitioning to the next screen.
-  void _onEditDelayed(DiaryEntry diaryEntry) {
+  void _onEditDelayed(DiaryEntry diaryEntry, bool closeBottomSheet) {
     Future.delayed(LitAnimationDurations.button).then(
-      (_) => _onEdit(diaryEntry),
+      (v) {
+        if (closeBottomSheet) Navigator.of(context).pop();
+        _onEdit(diaryEntry);
+      },
     );
   }
 
@@ -142,7 +145,7 @@ class _EntryDetailScreenState extends State<EntryDetailScreen>
     showModalBottomSheet(
       context: context,
       builder: (context) => _EntryOptionsBottomSheet(
-        onPressedEdit: () => _onEditDelayed(diaryEntry),
+        onPressedEdit: () => _onEditDelayed(diaryEntry, true),
         onPressedDelete: _showConfirmDeleteDialog,
       ),
     );

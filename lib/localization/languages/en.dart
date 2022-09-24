@@ -172,8 +172,8 @@ class EN {
     AppLocalizationsKeys.photoAvailableLabel: "photo available",
     AppLocalizationsKeys.photosAvailableLabel: "photos available",
     AppLocalizationsKeys.moreLabel: "more",
-    AppLocalizationsKeys.visitLabel: "Visit",
-    AppLocalizationsKeys.visitsLabel: "Visits",
+    AppLocalizationsKeys.visitLabel: "visit",
+    AppLocalizationsKeys.visitsLabel: "visits",
     AppLocalizationsKeys.timeEditiedLabel: "time edited",
     AppLocalizationsKeys.timesEditiedLabel: "times edited",
   };
