@@ -71,26 +71,30 @@ class _DiaryListTileState extends State<DiaryListTile> {
   ///
   /// Ensures the whole title is readible while only allocating one line of
   /// space.
-  void _scrollText() {
+  void _scrollText() async {
+    if (_titleScrollController.positions.isEmpty) return;
+
     double forwardOffset = _titleScrollController.position.maxScrollExtent;
     double reverseOffest = 0;
     Duration duration = const Duration(milliseconds: 8000);
     Curve curve = Curves.ease;
 
-    if (MediaQuery.of(context).size.width > forwardOffset)
-      _titleScrollController
-          .animateTo(
-            forwardOffset,
-            duration: duration,
-            curve: curve,
-          )
-          .then(
-            (v) => _titleScrollController.animateTo(
-              reverseOffest,
-              duration: duration,
-              curve: curve,
-            ),
-          );
+    //if (MediaQuery.of(context).size.width > forwardOffset) return;
+
+    if (_titleScrollController.positions.isNotEmpty) {
+      await _titleScrollController.animateTo(
+        forwardOffset,
+        duration: duration,
+        curve: curve,
+      );
+    }
+    if (_titleScrollController.positions.isNotEmpty) {
+      await _titleScrollController.animateTo(
+        reverseOffest,
+        duration: duration,
+        curve: curve,
+      );
+    }
   }
 
   @override
@@ -105,6 +109,13 @@ class _DiaryListTileState extends State<DiaryListTile> {
       _colorScheme = DateColorScheme(DateTime.parse(widget.diaryEntry.date));
       _scrollText();
     });
+  }
+
+  @override
+  void dispose() {
+    _titleScrollController.dispose();
+
+    super.dispose();
   }
 
   @override
