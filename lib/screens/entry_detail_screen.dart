@@ -144,7 +144,7 @@ class _EntryDetailScreenState extends State<EntryDetailScreen>
   void _onPressedOptions(DiaryEntry diaryEntry) {
     showModalBottomSheet(
       context: context,
-      builder: (context) => _EntryOptionsBottomSheet(
+      builder: (context) => DiaryEntryBottomSheet(
         onPressedEdit: () => _onEditDelayed(diaryEntry, true),
         onPressedDelete: _showConfirmDeleteDialog,
       ),
@@ -462,68 +462,6 @@ class _NavigationButton extends StatelessWidget {
       ),
       accentColor: LitColors.grey100,
       onPressed: onPressed,
-    );
-  }
-}
-
-class _EntryOptionsBottomSheet extends StatelessWidget {
-  final void Function() onPressedEdit;
-  final void Function() onPressedDelete;
-  const _EntryOptionsBottomSheet({
-    Key? key,
-    required this.onPressedEdit,
-    required this.onPressedDelete,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        SizedBox(height: 16.0),
-        Text(
-          AppLocalizations.of(context).optionsLabel.capitalize(),
-          style: LitSansSerifStyles.h6.copyWith(color: LitColors.grey380),
-        ),
-        Divider(),
-        SizedBox(
-          height: 142.0,
-          child: ListView(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 16.0,
-              vertical: 16.0,
-            ),
-            children: [
-              LitPushedThroughButton(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      LitIcons.pencil_alt,
-                      color: LitSansSerifStyles.button.color,
-                      size: LitSansSerifStyles.button.fontSize,
-                    ),
-                    SizedBox(width: 8.0),
-                    ClippedText(
-                      AppLocalizations.of(context).editLabel.toUpperCase(),
-                      textAlign: TextAlign.center,
-                      style: LitSansSerifStyles.button,
-                    ),
-                  ],
-                ),
-                accentColor: LitColors.grey100,
-                onPressed: onPressedEdit,
-              ),
-              SizedBox(height: 16.0),
-              LitDeleteButton(
-                textAlign: TextAlign.center,
-                showIcon: true,
-                onPressed: onPressedDelete,
-              )
-            ],
-          ),
-        )
-      ],
     );
   }
 }
