@@ -67,6 +67,44 @@ class _DiaryListTileState extends State<DiaryListTile> {
     );
   }
 
+  void _onTappedEdit() {
+    // Close the bottom sheet.
+    Navigator.of(context).pop();
+    Future.delayed(LitAnimationDurations.button).then(
+      (_) => _screenRouter.toEntryEditingScreen(diaryEntry: widget.diaryEntry),
+    );
+  }
+
+  void _deleteEntry() {
+    LitRouteController(context).clearNavigationStack();
+    AppAPI().deleteDiaryEntry(widget.diaryEntry.uid);
+  }
+
+  void _onTappedDelete() {
+    // Close the bottom sheet.
+    Navigator.of(context).pop();
+
+    showDialog(
+      context: context,
+      builder: (_) => ConfirmDeleteDialog(
+        onDelete: _deleteEntry,
+      ),
+    );
+  }
+
+  void _onTileLongPressed() {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) => DiaryEntryBottomSheet(
+        title: widget.diaryEntry.title != DefaultData.diaryEntryTitle
+            ? widget.diaryEntry.title
+            : AppLocalizations.of(context).untitledLabel,
+        onPressedEdit: _onTappedEdit,
+        onPressedDelete: _onTappedDelete,
+      ),
+    );
+  }
+
   /// Scrolls the entry's title text.
   ///
   /// Ensures the whole title is readible while only allocating one line of
@@ -148,6 +186,7 @@ class _DiaryListTileState extends State<DiaryListTile> {
                 colorScheme: _colorScheme,
                 titleScrollController: _titleScrollController,
                 onPressed: _onTilePressed,
+                onLongPressed: _onTileLongPressed,
               ),
             ],
           ),
@@ -250,6 +289,7 @@ class _EntryCard extends StatefulWidget {
   final DateColorScheme colorScheme;
   final ScrollController titleScrollController;
   final void Function() onPressed;
+  final void Function() onLongPressed;
   const _EntryCard({
     Key? key,
     required this.listIndex,
@@ -259,6 +299,7 @@ class _EntryCard extends StatefulWidget {
     required this.colorScheme,
     required this.titleScrollController,
     required this.onPressed,
+    required this.onLongPressed,
   }) : super(key: key);
 
   @override
@@ -356,6 +397,7 @@ class __EntryCardState extends State<_EntryCard> {
               children: [
                 LitPushedButton(
                   onPressed: widget.onPressed,
+                  onLongPressed: widget.onLongPressed,
                   minScale: 0.94,
                   animateOnStart: false,
                   child: Container(
