@@ -24,13 +24,6 @@ class _ProfileScreenState extends State<ProfileScreen>
   late LitSnackbarController _snackbarController;
 
   void _onEditBookmark(UserData? userData) {
-    // Navigator.of(context).push(
-    //   MaterialPageRoute(
-    //     builder: (context) => BookmarkEditingScreen(
-    //       initialUserDataModel: userData,
-    //     ),
-    //   ),
-    // );
     _screenRouter.toBookmarkEditingScreen(userData: userData);
   }
 
@@ -119,10 +112,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                     onPressedUserIcon: () => _snackbarController.showSnackBar(),
                   ),
                   StatisticsCard(),
-                  SettingsFooter(
-                    userData: userData,
-                    appSettings: appSettings,
-                  ),
+                  SizedBox(height: 72.0),
                 ],
               ),
             ),

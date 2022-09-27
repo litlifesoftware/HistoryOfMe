@@ -74,7 +74,6 @@ part 'widgets/quote_card.dart';
 part 'widgets/secondary_color_selector_card.dart';
 part 'widgets/selectable_color_tile.dart';
 part 'widgets/selected_create_tile.dart';
-part 'widgets/settings_footer.dart';
 part 'widgets/statistics_card.dart';
 part 'widgets/striped_design.dart';
 part 'widgets/unselected_create_tile.dart';

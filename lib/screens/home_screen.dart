@@ -3,6 +3,7 @@ import 'package:history_of_me/api.dart';
 import 'package:history_of_me/localization.dart';
 import 'package:history_of_me/models.dart';
 import 'package:history_of_me/screens.dart';
+import 'package:history_of_me/widgets.dart';
 
 import 'package:leitmotif/leitmotif.dart';
 
@@ -68,6 +69,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               ),
             ),
           ),
+          materialDrawer: HomeScreenDrawer(appSettings: appSettings),
           initialTabIndex: appSettings.tabIndex,
           transitionListener: (index) => _onTabSwitch(index, appSettings),
           tabs: [

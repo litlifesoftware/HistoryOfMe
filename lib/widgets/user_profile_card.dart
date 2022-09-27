@@ -22,15 +22,6 @@ class UserProfileCard extends StatefulWidget {
 }
 
 class _UserProfileCardState extends State<UserProfileCard> {
-  /// Shows the [ChangeNameDialog] widgets.
-  void _showChangeNameDialog() {
-    LitRouteController(context).showDialogWidget(
-      ChangeNameDialog(
-        userData: widget.userData,
-      ),
-    );
-  }
-
   /// Returns a localized date string based the provided `created` timestamp.
   String get localizedCreatedLabel => DateTime.fromMillisecondsSinceEpoch(
         widget.userData.created,
@@ -97,25 +88,6 @@ class _UserProfileCardState extends State<UserProfileCard> {
                   ),
                 );
               },
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 8.0,
-                vertical: 16.0,
-              ),
-              child: Align(
-                alignment: Alignment.center,
-                child: LitPushedThroughButton(
-                  backgroundColor: LitColors.green100,
-                  accentColor: LitColors.green200,
-                  child: ClippedText(
-                    AppLocalizations.of(context).changeNameLabel.toUpperCase(),
-                    textAlign: TextAlign.center,
-                    style: LitSansSerifStyles.button,
-                  ),
-                  onPressed: _showChangeNameDialog,
-                ),
-              ),
             ),
           ],
         ),
