@@ -13,3 +13,5 @@ export 'screens/profile_screen.dart';
 export 'screens/restore_diary_screen.dart';
 export 'screens/select_backup_screen.dart';
 export 'screens/splash_screen.dart';
+export 'screens/app_privacy_screen.dart';
+export 'screens/app_credits_screen.dart';
