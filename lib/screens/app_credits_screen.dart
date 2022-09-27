@@ -10,7 +10,7 @@ class AppCreditsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LitCreditsScreen(
-      art: HistoryOfMeLauncherIconArt(
+      art: AppLauncherIconArt(
         boxShadow: LitBoxShadows.sm,
       ),
       appName: App.appName,

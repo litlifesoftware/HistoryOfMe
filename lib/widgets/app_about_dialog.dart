@@ -10,10 +10,11 @@ class AppAboutDialog extends StatelessWidget {
     return LitAboutDialog(
       title: LeitmotifLocalizations.of(context).aboutAppLabel,
       appName: App.appName,
-      art: HistoryOfMeLauncherIconArt(
+      art: AppLauncherIconArt(
         boxShadow: LitBoxShadows.sm,
       ),
       infoDescription: AppLocalizations.of(context).aboutAppDescr,
+      copyrightNotice: AppLocalizations.of(context).copyrightNotice,
     );
   }
 }

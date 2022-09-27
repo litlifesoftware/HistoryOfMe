@@ -179,5 +179,7 @@ class EN {
     AppLocalizationsKeys.timeEditiedLabel: "time edited",
     AppLocalizationsKeys.timesEditiedLabel: "times edited",
     AppLocalizationsKeys.manageYourDiaryLabel: "Manage your diary",
+    AppLocalizationsKeys.copyrightNotice:
+        "\u{00A9} 2022 LitLifeSoftware. All rights reserved.",
   };
 }

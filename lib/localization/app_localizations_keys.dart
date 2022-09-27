@@ -147,4 +147,5 @@ class AppLocalizationsKeys {
   static const String timeEditiedLabel = "timeEditiedLabel";
   static const String timesEditiedLabel = "timesEditiedLabel";
   static const String manageYourDiaryLabel = "manageYourDiaryLabel";
+  static const String copyrightNotice = "copyrightNotice";
 }

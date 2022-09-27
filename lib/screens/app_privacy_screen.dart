@@ -11,7 +11,7 @@ class AppPrivacyScreen extends StatelessWidget {
     return LitPrivacyPolicyScreen(
       onAgreeCallback: () => LitRouteController(context).pop(),
       privacyBody: AppLocalizations.of(context).privacyDescr,
-      art: HistoryOfMeLauncherIconArt(),
+      art: AppLauncherIconArt(),
     );
   }
 }

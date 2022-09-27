@@ -187,5 +187,7 @@ class DE {
     AppLocalizationsKeys.timeEditiedLabel: "mal bearbeitet",
     AppLocalizationsKeys.timesEditiedLabel: "mal bearbeitet",
     AppLocalizationsKeys.manageYourDiaryLabel: "Tagebuch verwalten",
+    AppLocalizationsKeys.copyrightNotice:
+        "\u{00A9} 2022 LitLifeSoftware. All rights reserved.",
   };
 }

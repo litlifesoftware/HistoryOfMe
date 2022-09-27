@@ -604,4 +604,8 @@ class AppLocalizations {
   String get manageYourDiaryLabel {
     return localizeValue(AppLocalizationsKeys.manageYourDiaryLabel);
   }
+
+  String get copyrightNotice {
+    return localizeValue(AppLocalizationsKeys.copyrightNotice);
+  }
 }
