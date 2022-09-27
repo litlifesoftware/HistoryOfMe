@@ -21,14 +21,10 @@ class DiaryEntryBottomSheet extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           SizedBox(height: 16.0),
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Text(
-              title ?? AppLocalizations.of(context).optionsLabel.capitalize(),
-              maxLines: 1,
-              style: LitSansSerifStyles.h6.copyWith(
-                color: LitColors.grey380,
-              ),
+          ScrollableText(
+            title ?? AppLocalizations.of(context).optionsLabel.capitalize(),
+            style: LitSansSerifStyles.h6.copyWith(
+              color: LitColors.grey380,
             ),
           ),
           Divider(),

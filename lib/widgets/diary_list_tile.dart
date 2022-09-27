@@ -414,14 +414,10 @@ class __EntryCardState extends State<_EntryCard> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          SingleChildScrollView(
-                            scrollDirection: Axis.horizontal,
+                          ScrollableText(
+                            _title,
                             controller: widget.titleScrollController,
-                            child: Text(
-                              _title,
-                              maxLines: 1,
-                              style: LitSansSerifStyles.subtitle1,
-                            ),
+                            style: LitSansSerifStyles.subtitle1,
                           ),
                           Padding(
                             padding: const EdgeInsets.symmetric(vertical: 2.0),
