@@ -75,6 +75,7 @@ class AppLocalizationsKeys {
       'storagePermissionDeniedDescr';
   static const String requestPermissionLabel = 'requestPermissionLabel';
   static const String foundDiaryTitle = 'foundDiaryTitle';
+  static const String lastLabel = "lastLabel";
   static const String lastEditedLabel = 'lastEditedLabel';
   static const String nextLabel = 'nextLabel';
   static const String previousLabel = 'previousLabel';
@@ -103,6 +104,7 @@ class AppLocalizationsKeys {
   static const String noBackupFoundTitle = 'noBackupFoundTitle';
   static const String backupLabel = 'backupLabel';
   static const String noBackupFoundDescr = 'noBackupFoundDescr';
+  static const String noBackupCreatedLabel = 'noBackupCreatedLabel';
   static const String backupIdLabel = 'backupIdLabel';
   static const String lastestBackupLabel = 'lastestBackupLabel';
   static const String upToDateBackupDescr = 'upToDateBackupDescr';
@@ -144,4 +146,5 @@ class AppLocalizationsKeys {
   static const String visitsLabel = "visitsLabel";
   static const String timeEditiedLabel = "timeEditiedLabel";
   static const String timesEditiedLabel = "timesEditiedLabel";
+  static const String manageYourDiaryLabel = "manageYourDiaryLabel";
 }

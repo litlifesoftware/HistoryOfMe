@@ -91,6 +91,7 @@ class DE {
         'History of Me benötigt zusätzliche Rechte, um auf deinen Speicher zuzugreifen. Dies ist notwendig, damit Backup-Datein ausgelesen werden können.',
     AppLocalizationsKeys.requestPermissionLabel: 'Zulassen',
     AppLocalizationsKeys.foundDiaryTitle: 'Wir haben dein Tagebuch gefunden',
+    AppLocalizationsKeys.lastLabel: 'zuletzt',
     AppLocalizationsKeys.lastEditedLabel: 'Zuletzt geändert',
     AppLocalizationsKeys.nextLabel: 'nächste',
     AppLocalizationsKeys.previousLabel: 'vorherige',
@@ -124,6 +125,7 @@ class DE {
     AppLocalizationsKeys.noBackupFoundTitle: 'keine Sicherung gefunden',
     AppLocalizationsKeys.noBackupFoundDescr:
         'Wir haben keine Sicherungen gefunden. Sichere dein Tagebuch, um einen Datenverlust zu vermeiden.',
+    AppLocalizationsKeys.noBackupCreatedLabel: 'Keine Sicherung erstellt',
     AppLocalizationsKeys.backupLabel: 'sichern',
     AppLocalizationsKeys.backupIdLabel: 'Sicherungs-ID',
     AppLocalizationsKeys.lastestBackupLabel: 'Letzte Sicherung',
@@ -184,5 +186,6 @@ class DE {
     AppLocalizationsKeys.visitsLabel: "Aufrufe",
     AppLocalizationsKeys.timeEditiedLabel: "mal bearbeitet",
     AppLocalizationsKeys.timesEditiedLabel: "mal bearbeitet",
+    AppLocalizationsKeys.manageYourDiaryLabel: "Tagebuch verwalten",
   };
 }

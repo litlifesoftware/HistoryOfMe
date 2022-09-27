@@ -88,6 +88,7 @@ class EN {
         'History of Me needs additional permissions in order to access your storage. This will be required to read your diary backup',
     AppLocalizationsKeys.requestPermissionLabel: 'Request permissions',
     AppLocalizationsKeys.foundDiaryTitle: 'We found your diary',
+    AppLocalizationsKeys.lastLabel: 'last',
     AppLocalizationsKeys.lastEditedLabel: 'Last updated',
     AppLocalizationsKeys.nextLabel: 'next',
     AppLocalizationsKeys.previousLabel: 'previous',
@@ -121,6 +122,7 @@ class EN {
     AppLocalizationsKeys.noBackupFoundTitle: 'no backup found',
     AppLocalizationsKeys.noBackupFoundDescr:
         'We did not find any backups. Backup your diary to prevent possible data loss.',
+    AppLocalizationsKeys.noBackupCreatedLabel: 'No backup created yet',
     AppLocalizationsKeys.backupLabel: 'backup',
     AppLocalizationsKeys.backupIdLabel: 'Backup-ID',
     AppLocalizationsKeys.lastestBackupLabel: 'Last Backup',
@@ -176,5 +178,6 @@ class EN {
     AppLocalizationsKeys.visitsLabel: "visits",
     AppLocalizationsKeys.timeEditiedLabel: "time edited",
     AppLocalizationsKeys.timesEditiedLabel: "times edited",
+    AppLocalizationsKeys.manageYourDiaryLabel: "Manage your diary",
   };
 }

@@ -325,6 +325,10 @@ class AppLocalizations {
     return localizeValue(AppLocalizationsKeys.lastEditedLabel);
   }
 
+  String get lastLabel {
+    return localizeValue(AppLocalizationsKeys.lastLabel);
+  }
+
   String get nextLabel {
     return localizeValue(AppLocalizationsKeys.nextLabel);
   }
@@ -427,6 +431,10 @@ class AppLocalizations {
 
   String get noBackupFoundDescr {
     return localizeValue(AppLocalizationsKeys.noBackupFoundDescr);
+  }
+
+  String get noBackupCreatedLabel {
+    return localizeValue(AppLocalizationsKeys.noBackupCreatedLabel);
   }
 
   String get backupLabel {
@@ -591,5 +599,9 @@ class AppLocalizations {
 
   String get timesEditiedLabel {
     return localizeValue(AppLocalizationsKeys.timesEditiedLabel);
+  }
+
+  String get manageYourDiaryLabel {
+    return localizeValue(AppLocalizationsKeys.manageYourDiaryLabel);
   }
 }

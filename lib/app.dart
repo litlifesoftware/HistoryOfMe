@@ -90,7 +90,15 @@ class _AppState extends State<App> {
           primaryColor: Colors.grey[50],
           useMaterial3: true,
           textTheme: LitSansSerifStyles.theme,
-          iconTheme: IconThemeData(color: LitColors.grey500),
+          iconTheme: IconThemeData(
+            color: LitColors.grey500,
+          ),
+          appBarTheme: AppBarTheme(
+            iconTheme: IconThemeData(color: LitColors.grey500),
+            actionsIconTheme: IconThemeData(
+              color: LitColors.grey500,
+            ),
+          ),
         ),
         localizationsDelegates: const [
           AppLocalizations.delegate,
