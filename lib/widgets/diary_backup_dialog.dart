@@ -9,9 +9,15 @@ class DiaryBackupDialog extends StatefulWidget {
   ///
   /// Used for naming backup files.
   final String installationID;
+
+  final bool closeOnFinish;
+
+  final bool allowDelete;
   const DiaryBackupDialog({
     Key? key,
     required this.installationID,
+    this.closeOnFinish = false,
+    this.allowDelete = true,
   }) : super(key: key);
 
   @override
@@ -69,6 +75,10 @@ class _DiaryBackupDialogState extends State<DiaryBackupDialog> {
     _api.updateLastBackup(appSettings, now);
 
     setState(() => isProcessing = false);
+
+    if (widget.closeOnFinish) {
+      Navigator.of(context).pop();
+    }
   }
 
   String get imagesBackupDirectoryPath =>
@@ -271,6 +281,7 @@ class _DiaryBackupDialogState extends State<DiaryBackupDialog> {
       tabIndex: 0,
       installationID: appSettings.installationID,
       lastBackup: "",
+      backupNoticeIgnored: appSettings.backupNoticeIgnored,
     );
 
     // Add the provided diary entries to the cleaned list.
@@ -373,6 +384,7 @@ class _DiaryBackupDialogState extends State<DiaryBackupDialog> {
                         duplicatesDeleted: duplicatesDeleted,
                         imagesBackupPath: imagesBackupPath,
                         isProcessing: isProcessing,
+                        allowDelete: widget.allowDelete,
                       )
                     : Text("Unsupported Backup!");
               }
@@ -607,6 +619,7 @@ class _ManageBackupDialog extends StatelessWidget {
   final int duplicatesDeleted;
   final String imagesBackupPath;
   final bool isProcessing;
+  final bool allowDelete;
   const _ManageBackupDialog({
     Key? key,
     required this.diaryBackup,
@@ -618,27 +631,37 @@ class _ManageBackupDialog extends StatelessWidget {
     required this.duplicatesDeleted,
     required this.imagesBackupPath,
     required this.isProcessing,
+    required this.allowDelete,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return LitTitledDialog(
-      actionButtons: [
-        DialogActionButton(
-          data: ActionButtonData(
-            title: LeitmotifLocalizations.of(context).deleteLabel,
-            onPressed: deleteBackup,
-            backgroundColor: LitColors.lightPink,
-            accentColor: Colors.white,
-          ),
-        ),
-        DialogActionButton(
-          data: ActionButtonData(
-            title: AppLocalizations.of(context).backupLabel,
-            onPressed: writeBackup,
-          ),
-        ),
-      ],
+      actionButtons: allowDelete
+          ? [
+              DialogActionButton(
+                data: ActionButtonData(
+                  title: LeitmotifLocalizations.of(context).deleteLabel,
+                  onPressed: deleteBackup,
+                  backgroundColor: LitColors.lightPink,
+                  accentColor: Colors.white,
+                ),
+              ),
+              DialogActionButton(
+                data: ActionButtonData(
+                  title: AppLocalizations.of(context).backupLabel,
+                  onPressed: writeBackup,
+                ),
+              ),
+            ]
+          : [
+              DialogActionButton(
+                data: ActionButtonData(
+                  title: AppLocalizations.of(context).backupLabel,
+                  onPressed: writeBackup,
+                ),
+              ),
+            ],
       child: AllDataProvider(
         builder: (
           context,
@@ -824,11 +847,10 @@ class _UpToDateIndicator extends StatefulWidget {
 
 class __UpToDateIndicatorState extends State<_UpToDateIndicator> {
   bool get _isUpToDate {
-    const int MAX_DAYS_ALLOWED = 2;
     DateTime date = DateTime.parse(widget.diaryBackup.backupDate);
     int daysSinceBackup = DateTime.now().difference(date).inDays;
 
-    return daysSinceBackup < MAX_DAYS_ALLOWED;
+    return daysSinceBackup < DefaultData.maxDaysBackupOutdated;
   }
 
   final Color _colorGood = Color(0xFFECFFE9);
