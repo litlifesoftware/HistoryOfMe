@@ -126,7 +126,7 @@ class EN {
     AppLocalizationsKeys.backupLabel: 'backup',
     AppLocalizationsKeys.backupIdLabel: 'Backup-ID',
     AppLocalizationsKeys.lastestBackupLabel: 'Last Backup',
-    AppLocalizationsKeys.upToDateBackupDescr: 'Your backup is up to date!',
+    AppLocalizationsKeys.upToDateBackupDescr: 'Your backup is up-to-date!',
     AppLocalizationsKeys.deprecatedBackupDescr:
         'Your backup is older than two days. We recommend to backup your diary regularly to prevent data loss.',
     AppLocalizationsKeys.bookmarkSavedDescr: 'Your bookmark has been saved.',
@@ -181,5 +181,17 @@ class EN {
     AppLocalizationsKeys.manageYourDiaryLabel: "Manage your diary",
     AppLocalizationsKeys.copyrightNotice:
         "\u{00A9} 2022 LitLifeSoftware. All rights reserved.",
+    AppLocalizationsKeys.backupOutdatedLabel: "Backup Outdated",
+    AppLocalizationsKeys.backupNowLabel: "backup now",
+    AppLocalizationsKeys.backupYourDiaryLabel: "Backup your diary",
+    AppLocalizationsKeys.backupOutdatedDescr:
+        "Your last backup is older than 3 days. Consider to backup your diary to prevent data loss.",
+    AppLocalizationsKeys.updateBackupLabel: "Update Backup",
+    AppLocalizationsKeys.createUpdatedBackupLabel: "Create an updated backup",
+    AppLocalizationsKeys.maybeLaterLabel: "Maybe later",
+    AppLocalizationsKeys.continueWithoutBackupLabel: "Continue without backup",
+    AppLocalizationsKeys.goBackLabel: "Go back",
+    AppLocalizationsKeys.returnToHomescreenLabel: "Return to homescreen",
+    AppLocalizationsKeys.returnLabel: "Return",
   };
 }

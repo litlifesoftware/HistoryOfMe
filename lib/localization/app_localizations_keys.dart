@@ -148,4 +148,15 @@ class AppLocalizationsKeys {
   static const String timesEditiedLabel = "timesEditiedLabel";
   static const String manageYourDiaryLabel = "manageYourDiaryLabel";
   static const String copyrightNotice = "copyrightNotice";
+  static const String backupOutdatedLabel = "backupOutdatedLabel";
+  static const String backupNowLabel = "backupNowLabel";
+  static const String backupYourDiaryLabel = "backupYourDiaryLabel";
+  static const String backupOutdatedDescr = "backupOutdatedDescr";
+  static const String updateBackupLabel = "updateBackupLabel";
+  static const String createUpdatedBackupLabel = "createUpdatedBackupLabel";
+  static const String maybeLaterLabel = "maybeLaterLabel";
+  static const String continueWithoutBackupLabel = "continueWithoutBackupLabel";
+  static const String goBackLabel = "goBackLabel";
+  static const String returnToHomescreenLabel = "returnToHomescreenLabel";
+  static const String returnLabel = "returnLabel";
 }

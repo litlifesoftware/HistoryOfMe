@@ -189,5 +189,18 @@ class DE {
     AppLocalizationsKeys.manageYourDiaryLabel: "Tagebuch verwalten",
     AppLocalizationsKeys.copyrightNotice:
         "\u{00A9} 2022 LitLifeSoftware. All rights reserved.",
+    AppLocalizationsKeys.backupOutdatedLabel: "Backup veraltet",
+    AppLocalizationsKeys.backupNowLabel: "jetzt sichern",
+    AppLocalizationsKeys.backupYourDiaryLabel: "Sichere dein Tagebuch",
+    AppLocalizationsKeys.backupOutdatedDescr:
+        "Das Backup deines Tagebuchs ist älter als 3 Tage. Erstelle jetzt ein Backup, um einen Datenverlust zu vermeiden.",
+    AppLocalizationsKeys.updateBackupLabel: "Backup erneuern",
+    AppLocalizationsKeys.createUpdatedBackupLabel:
+        "Erstelle ein aktuelles Backup",
+    AppLocalizationsKeys.maybeLaterLabel: "Später",
+    AppLocalizationsKeys.continueWithoutBackupLabel: "Ohne Backup fortfahren",
+    AppLocalizationsKeys.goBackLabel: "Zurück",
+    AppLocalizationsKeys.returnToHomescreenLabel: "Zur Hauptansicht wechseln",
+    AppLocalizationsKeys.returnLabel: "Zurück",
   };
 }
