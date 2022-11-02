@@ -96,6 +96,38 @@ class HomeScreenDrawer extends StatelessWidget {
         : AppLocalizations.of(context).noBackupCreatedLabel;
   }
 
+  Widget buildBackupStatusIndicator() {
+    if (appSettings.lastBackup == null) return SizedBox();
+
+    if (appSettings.lastBackup == DefaultData.lastBackup) return SizedBox();
+
+    DateTime last = DateTime.parse(appSettings.lastBackup!);
+    DateTime now = DateTime.now();
+
+    bool isBackupOutdated =
+        now.difference(last).inDays > DefaultData.maxDaysBackupOutdated;
+
+    return Transform(
+      transform: Matrix4.translationValues(8.0, -4.0, 0),
+      child: Align(
+        alignment: Alignment.topRight,
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(12.0),
+            color: isBackupOutdated ? Color(0xFFF2E4E4) : Color(0xFFECFFE9),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(4.0),
+            child: Icon(
+              isBackupOutdated ? LitIcons.times : LitIcons.check,
+              size: 12.0,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -123,10 +155,25 @@ class HomeScreenDrawer extends StatelessWidget {
                 ],
               )),
           Divider(),
-          _HomeScreenDrawerTileBig(
-            title: LeitmotifLocalizations.of(context).manageBackupLabel,
-            subtitle: createLastBackupLabel(context),
-            icon: LitIcons.disk_alt,
+          ListTile(
+            title: Text(
+              LeitmotifLocalizations.of(context).manageBackupLabel,
+              style: LitSansSerifStyles.button,
+            ),
+            leading: SizedBox(
+              height: 36.0,
+              width: 36.0,
+              child: Stack(
+                children: [
+                  Icon(LitIcons.disk_alt, size: 36.0),
+                  buildBackupStatusIndicator(),
+                ],
+              ),
+            ),
+            subtitle: Text(
+              createLastBackupLabel(context),
+              style: LitSansSerifStyles.caption,
+            ),
             onTap: () => _onTappedManageBackup(context),
           ),
           UserDataProvider(
@@ -187,37 +234,6 @@ class _HomeScreenDrawerTile extends StatelessWidget {
         style: LitSansSerifStyles.button,
       ),
       leading: Icon(icon),
-      onTap: onTap,
-    );
-  }
-}
-
-class _HomeScreenDrawerTileBig extends StatelessWidget {
-  final String title;
-  final String subtitle;
-  final IconData icon;
-  final void Function() onTap;
-
-  const _HomeScreenDrawerTileBig({
-    Key? key,
-    required this.title,
-    required this.subtitle,
-    required this.icon,
-    required this.onTap,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return ListTile(
-      title: Text(
-        title,
-        style: LitSansSerifStyles.button,
-      ),
-      leading: Icon(icon, size: 36.0),
-      subtitle: Text(
-        subtitle,
-        style: LitSansSerifStyles.caption,
-      ),
       onTap: onTap,
     );
   }
