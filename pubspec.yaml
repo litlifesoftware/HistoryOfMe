@@ -47,10 +47,10 @@ dependencies:
     # path: ../date_colors/
   lit_relative_date_time: ^1.2.0
   lit_backup_service:
-    ^1.0.2
+    # ^1.0.2
     # Specify alternative leitmotif-flutter locations
-    # git:
-    #   url: https://github.com/litlifesoftware/lit_backup_service.git
+    git:
+      url: https://github.com/litlifesoftware/lit_backup_service.git
     # path: ../lit_backup_service/
 
 dev_dependencies:
