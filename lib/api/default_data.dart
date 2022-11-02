@@ -60,4 +60,6 @@ class DefaultData {
   static const List<DiaryPhoto> photos = [];
   static const int visitCount = 0;
   static const int editCount = 0;
+  static const bool backupNoticeIgnored = false;
+  static const int maxDaysBackupOutdated = 2;
 }

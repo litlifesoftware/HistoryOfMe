@@ -25,6 +25,10 @@ class UserDataProvider extends StatelessWidget {
   }) : super(key: key);
 
   /// Extracts the content stored inside the `Hive` box.
+  ///
+  /// In case the user has not created an initial `UserData` object, null in
+  /// favor of an empty object is returned to check whether or not it's the
+  /// first app startup.
   UserData? extractContent(Box<UserData> box) {
     return box.isEmpty ? null : box.getAt(0);
   }

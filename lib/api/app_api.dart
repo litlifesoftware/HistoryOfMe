@@ -123,18 +123,20 @@ class AppAPI {
       tabIndex: DefaultData.tabIndex,
       installationID: generateInstallationID(),
       lastBackup: DefaultData.lastBackup,
+      backupNoticeIgnored: DefaultData.backupNoticeIgnored,
     );
   }
 
   /// Returns cleaned app settings. This should be used to transfer backed up
   /// data to the database.
-  AppSettings _createClearnAppSettings(AppSettings appSettings) {
+  AppSettings _createCleanAppSettings(AppSettings appSettings) {
     return AppSettings(
       privacyPolicyAgreed: appSettings.privacyPolicyAgreed,
       darkMode: appSettings.darkMode,
       tabIndex: 0,
       installationID: generateInstallationID(),
       lastBackup: DefaultData.lastBackup,
+      backupNoticeIgnored: DefaultData.backupNoticeIgnored,
     );
   }
 
@@ -151,7 +153,7 @@ class AppAPI {
   void restoreAppSettings(AppSettings appSettings) {
     if (Hive.box<AppSettings>(_appSettingsKey).isEmpty) {
       Hive.box<AppSettings>(_appSettingsKey)
-          .add(_createClearnAppSettings(appSettings));
+          .add(_createCleanAppSettings(appSettings));
     } else {
       print("'AppSettings' already existing. Restoring failed.");
     }
@@ -170,6 +172,7 @@ class AppAPI {
       tabIndex: tabIndex,
       installationID: appSettings.installationID,
       lastBackup: appSettings.lastBackup,
+      backupNoticeIgnored: appSettings.backupNoticeIgnored,
     );
     updateAppSettings(updatedAppSettings);
   }
@@ -182,6 +185,23 @@ class AppAPI {
       tabIndex: appSettings.tabIndex,
       installationID: appSettings.installationID,
       lastBackup: lastBackup.toIso8601String(),
+      // Ensure to reset the backup notice.
+      backupNoticeIgnored: false,
+    );
+    updateAppSettings(updatedAppSettings);
+  }
+
+  /// Updates the [AppSettings] instance using the provided
+  /// `backupNoticeIgnored` value.
+  void updateBackupNoticeIgnored(
+      AppSettings appSettings, bool backupNoticeIgnored) {
+    AppSettings updatedAppSettings = AppSettings(
+      privacyPolicyAgreed: appSettings.privacyPolicyAgreed,
+      darkMode: appSettings.darkMode,
+      tabIndex: appSettings.tabIndex,
+      installationID: appSettings.installationID,
+      lastBackup: appSettings.lastBackup,
+      backupNoticeIgnored: backupNoticeIgnored,
     );
     updateAppSettings(updatedAppSettings);
   }

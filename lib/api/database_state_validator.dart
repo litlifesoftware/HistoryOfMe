@@ -24,6 +24,7 @@ class DatabaseStateValidator {
       tabIndex: appSettings.tabIndex,
       installationID: AppAPI.generateInstallationID(),
       lastBackup: appSettings.lastBackup,
+      backupNoticeIgnored: appSettings.backupNoticeIgnored,
     );
     api.updateAppSettings(_appSettings);
   }
@@ -35,6 +36,19 @@ class DatabaseStateValidator {
       tabIndex: appSettings.tabIndex,
       installationID: appSettings.installationID,
       lastBackup: DefaultData.lastBackup,
+      backupNoticeIgnored: appSettings.backupNoticeIgnored,
+    );
+    api.updateAppSettings(_appSettings);
+  }
+
+  void createBackupNoticeIgnored(AppSettings appSettings) {
+    final _appSettings = AppSettings(
+      privacyPolicyAgreed: appSettings.privacyPolicyAgreed,
+      darkMode: appSettings.darkMode,
+      tabIndex: appSettings.tabIndex,
+      installationID: appSettings.installationID,
+      lastBackup: appSettings.lastBackup,
+      backupNoticeIgnored: DefaultData.backupNoticeIgnored,
     );
     api.updateAppSettings(_appSettings);
   }
@@ -52,7 +66,13 @@ class DatabaseStateValidator {
     if (appSettings.lastBackup == null) {
       print("`lastBackup` setting missing.");
       createLastBackup(appSettings);
-      print("`AppSettings` updated using empty date.");
+      print("`AppSettings` updated using default data.");
+    }
+
+    if (appSettings.backupNoticeIgnored == null) {
+      print("`backupNoticeIgnored` setting missing.");
+      createBackupNoticeIgnored(appSettings);
+      print("`AppSettings` updated using default data.");
     }
   }
 }

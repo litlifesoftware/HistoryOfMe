@@ -15,6 +15,8 @@ class AppSettings {
   final String? installationID;
   @HiveField(4)
   final String? lastBackup;
+  @HiveField(5)
+  final bool? backupNoticeIgnored;
 
   /// Creates a [AppSettings] object.
   const AppSettings({
@@ -23,6 +25,7 @@ class AppSettings {
     required this.tabIndex,
     required this.installationID,
     required this.lastBackup,
+    required this.backupNoticeIgnored,
   });
 
   /// Creates a [AppSettings] object by serializing the provided `Map` data.
@@ -35,6 +38,7 @@ class AppSettings {
       tabIndex: json['tabIndex'] as int,
       installationID: json['installationID'] as String?,
       lastBackup: json['lastBackup'] as String?,
+      backupNoticeIgnored: json['backupNoticeIgnored'] as bool,
     );
   }
 
@@ -47,5 +51,6 @@ class AppSettings {
         'tabIndex': tabIndex,
         'installationID': installationID,
         'lastBackup': lastBackup,
+        'backupNoticeIgnored': backupNoticeIgnored,
       };
 }

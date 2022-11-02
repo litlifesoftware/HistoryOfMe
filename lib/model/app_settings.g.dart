@@ -22,13 +22,14 @@ class AppSettingsAdapter extends TypeAdapter<AppSettings> {
       tabIndex: fields[2] as int,
       installationID: fields[3] as String?,
       lastBackup: fields[4] as String?,
+      backupNoticeIgnored: fields[5] as bool?,
     );
   }
 
   @override
   void write(BinaryWriter writer, AppSettings obj) {
     writer
-      ..writeByte(5)
+      ..writeByte(6)
       ..writeByte(0)
       ..write(obj.privacyPolicyAgreed)
       ..writeByte(1)
@@ -38,7 +39,9 @@ class AppSettingsAdapter extends TypeAdapter<AppSettings> {
       ..writeByte(3)
       ..write(obj.installationID)
       ..writeByte(4)
-      ..write(obj.lastBackup);
+      ..write(obj.lastBackup)
+      ..writeByte(5)
+      ..write(obj.backupNoticeIgnored);
   }
 
   @override
