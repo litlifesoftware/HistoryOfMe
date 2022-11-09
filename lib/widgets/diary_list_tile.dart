@@ -252,7 +252,11 @@ class _DateIndicator extends StatelessWidget {
                         date.formatAsLocalizedMonth(context),
                         style: LitSansSerifStyles.caption.copyWith(
                           letterSpacing: 0.75,
-                          color: Colors.white,
+                          color:
+                              colorScheme.colorOfTheSeason.applyColorByContrast(
+                            Colors.white,
+                            LitColors.grey550,
+                          ),
                         ),
                       ),
                     ),
