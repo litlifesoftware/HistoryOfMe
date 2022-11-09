@@ -338,7 +338,6 @@ class _OptionsBar extends StatelessWidget {
                         child: SelectableText(
                           generateLabels(context)[index],
                           style: LitSansSerifStyles.overline.copyWith(
-                            height: 1.5,
                             letterSpacing: 0.5,
                             color: Colors.white,
                           ),
