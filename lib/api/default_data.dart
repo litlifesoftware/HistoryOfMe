@@ -62,4 +62,9 @@ class DefaultData {
   static const int editCount = 0;
   static const bool backupNoticeIgnored = false;
   static const int maxDaysBackupOutdated = 2;
+
+  static const Color colorGood = Color(0xFFECFFE9);
+  static const Color colorBad = Color(0xFFF2E4E4);
+  static const IconData iconGood = LitIcons.check;
+  static const IconData iconBad = LitIcons.times;
 }

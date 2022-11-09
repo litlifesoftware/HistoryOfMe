@@ -114,7 +114,8 @@ class HomeScreenDrawer extends StatelessWidget {
         child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12.0),
-            color: isBackupOutdated ? Color(0xFFF2E4E4) : Color(0xFFECFFE9),
+            color:
+                isBackupOutdated ? DefaultData.colorBad : DefaultData.colorGood,
           ),
           child: Padding(
             padding: const EdgeInsets.all(4.0),

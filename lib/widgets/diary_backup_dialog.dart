@@ -853,17 +853,12 @@ class __UpToDateIndicatorState extends State<_UpToDateIndicator> {
     return daysSinceBackup < DefaultData.maxDaysBackupOutdated;
   }
 
-  final Color _colorGood = Color(0xFFECFFE9);
-  final Color _colorBad = Color(0xFFF2E4E4);
-  final IconData _iconGood = LitIcons.check;
-  final IconData _iconBad = LitIcons.times;
-
   Color get _color {
-    return _isUpToDate ? _colorGood : _colorBad;
+    return _isUpToDate ? DefaultData.colorGood : DefaultData.colorBad;
   }
 
   IconData get _icon {
-    return _isUpToDate ? _iconGood : _iconBad;
+    return _isUpToDate ? DefaultData.iconGood : DefaultData.iconBad;
   }
 
   @override
