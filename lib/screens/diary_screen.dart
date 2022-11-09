@@ -3,6 +3,7 @@ import 'package:history_of_me/api.dart';
 import 'package:history_of_me/controllers.dart';
 import 'package:history_of_me/localization.dart';
 import 'package:history_of_me/models.dart';
+import 'package:history_of_me/screens.dart';
 import 'package:history_of_me/styles.dart';
 import 'package:history_of_me/widgets.dart';
 import 'package:leitmotif/leitmotif.dart';
@@ -12,10 +13,13 @@ class DiaryScreen extends StatefulWidget {
   /// The bookmark's [AnimationController]
   final AnimationController bookmarkAnimation;
 
+  final AppSettings appSettings;
+
   /// Creates a [DiaryScreen].
   const DiaryScreen({
     Key? key,
     required this.bookmarkAnimation,
+    required this.appSettings,
   }) : super(key: key);
 
   @override
@@ -27,6 +31,7 @@ class _DiaryScreenState extends State<DiaryScreen>
   late HOMNavigator _navigator;
   late AnimationController _listViewAniCon;
   late ScrollController _scrollController;
+  bool _isTopOfNavStack = true;
 
   /// States whether to show only the favorite entries.
   bool _showFavoriteEntriesOnly = false;
@@ -45,17 +50,6 @@ class _DiaryScreenState extends State<DiaryScreen>
     if (_listViewAniCon.isCompleted) {
       _listViewAniCon.reverse().then((v) => _listViewAniCon.forward());
     }
-  }
-
-  @override
-  void initState() {
-    _scrollController = ScrollController();
-    _listViewAniCon = AnimationController(
-      duration: Duration(milliseconds: 240),
-      vsync: this,
-    )..forward();
-    _navigator = HOMNavigator(context);
-    super.initState();
   }
 
   /// Returns a diary entry list view or a information card if no entries
@@ -86,6 +80,60 @@ class _DiaryScreenState extends State<DiaryScreen>
         Colors.white;
   }
 
+  /// Shows the `BackupOutdatedScreen` if required by checking the last backup
+  /// timestamp provided by the [AppSettings] argument.
+  void _showBackupOutdatedScreen() {
+    // Abort if the `AppSettings` object is incomplete.
+    if (widget.appSettings.lastBackup == null ||
+        widget.appSettings.backupNoticeIgnored == null) return;
+
+    // Abort if there hasn't been created a backup yet.
+    if (widget.appSettings.lastBackup == DefaultData.lastBackup) return;
+
+    DateTime last = DateTime.parse(widget.appSettings.lastBackup!);
+    DateTime now = DateTime.now();
+    int delayMs = 2500;
+    bool isBackupOutdated =
+        now.difference(last).inDays > DefaultData.maxDaysBackupOutdated;
+
+    // Abort if backup is not outdated
+    if (!isBackupOutdated) return;
+    // Abort if notice is ignored
+    if (widget.appSettings.backupNoticeIgnored!) return;
+    // Abort if any screen other than the diary screen is on top of the stack
+    if (!_isTopOfNavStack) return;
+
+    Future.delayed(
+      Duration(milliseconds: delayMs),
+      () => Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => BackupNoticeScreen(),
+        ),
+      ),
+    );
+
+    setState(() {
+      _isTopOfNavStack = false;
+    });
+  }
+
+  @override
+  void initState() {
+    _scrollController = ScrollController();
+    _listViewAniCon = AnimationController(
+      duration: Duration(milliseconds: 240),
+      vsync: this,
+    )..forward();
+    _navigator = HOMNavigator(context);
+    super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    _isTopOfNavStack = ModalRoute.of(context)?.isCurrent ?? false;
+    super.didChangeDependencies();
+  }
+
   @override
   void dispose() {
     _listViewAniCon.dispose();
@@ -94,6 +142,10 @@ class _DiaryScreenState extends State<DiaryScreen>
 
   @override
   Widget build(BuildContext context) {
+    // Use the WidgetsBinding instance to call the BackupOutdatedScreen once
+    // the first frame is rendered.
+    WidgetsBinding.instance
+        .addPostFrameCallback((ts) => _showBackupOutdatedScreen());
     return UserDataProvider(
       builder: (context, userData) {
         return LitScaffold(

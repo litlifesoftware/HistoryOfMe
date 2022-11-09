@@ -15,3 +15,4 @@ export 'screens/select_backup_screen.dart';
 export 'screens/splash_screen.dart';
 export 'screens/app_privacy_screen.dart';
 export 'screens/app_credits_screen.dart';
+export 'screens/backup_notice_screen.dart';

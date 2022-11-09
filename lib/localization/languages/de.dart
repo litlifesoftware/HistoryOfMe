@@ -193,7 +193,7 @@ class DE {
     AppLocalizationsKeys.backupNowLabel: "jetzt sichern",
     AppLocalizationsKeys.backupYourDiaryLabel: "Sichere dein Tagebuch",
     AppLocalizationsKeys.backupOutdatedDescr:
-        "Das Backup deines Tagebuchs ist älter als 3 Tage. Erstelle jetzt ein Backup, um einen Datenverlust zu vermeiden.",
+        "Das Backup deines Tagebuchs ist älter als 2 Tage. Erstelle jetzt ein Backup, um einen Datenverlust zu vermeiden.",
     AppLocalizationsKeys.updateBackupLabel: "Backup erneuern",
     AppLocalizationsKeys.createUpdatedBackupLabel:
         "Erstelle ein aktuelles Backup",

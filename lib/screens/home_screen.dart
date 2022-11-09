@@ -57,6 +57,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     return AppSettingsProvider(
       api: _api,
+      validator: DatabaseStateValidator(api: _api),
       builder: (BuildContext context, AppSettings appSettings) {
         return LitTabView(
           materialAppBar: AppBar(
@@ -82,6 +83,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               ),
               screen: DiaryScreen(
                 bookmarkAnimation: _bookmarkAnimation,
+                appSettings: appSettings,
               ),
             ),
             LitNavigableTab(

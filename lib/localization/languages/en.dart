@@ -185,7 +185,7 @@ class EN {
     AppLocalizationsKeys.backupNowLabel: "backup now",
     AppLocalizationsKeys.backupYourDiaryLabel: "Backup your diary",
     AppLocalizationsKeys.backupOutdatedDescr:
-        "Your last backup is older than 3 days. Consider to backup your diary to prevent data loss.",
+        "Your last backup is older than 2 days. Consider to backup your diary to prevent data loss.",
     AppLocalizationsKeys.updateBackupLabel: "Update Backup",
     AppLocalizationsKeys.createUpdatedBackupLabel: "Create an updated backup",
     AppLocalizationsKeys.maybeLaterLabel: "Maybe later",
