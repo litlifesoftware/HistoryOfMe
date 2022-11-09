@@ -137,6 +137,7 @@ class _DiaryScreenState extends State<DiaryScreen>
   @override
   void dispose() {
     _listViewAniCon.dispose();
+    _scrollController.dispose();
     super.dispose();
   }
 

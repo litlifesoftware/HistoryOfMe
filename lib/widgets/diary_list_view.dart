@@ -96,7 +96,9 @@ class _DiaryListViewContent extends StatelessWidget {
     return noFavoritesAvailable && showFavoritesOnly;
   }
 
-  DiaryEntry getDiaryEntryByIndex(int index) => diaryEntriesListSorted[index];
+  DiaryEntry getDiaryEntryByIndex(int index) => showFavoritesOnly
+      ? favoriteEntries[index]
+      : diaryEntriesListSorted[index];
 
   @override
   Widget build(BuildContext context) {
@@ -122,7 +124,9 @@ class _DiaryListViewContent extends StatelessWidget {
               itemBuilder: (BuildContext context, int index) => DiaryListTile(
                 animationController: animationController,
                 listIndex: index,
-                listLength: diaryEntriesListSorted.length,
+                listLength: showFavoritesOnly
+                    ? favoriteEntries.length
+                    : diaryEntriesListSorted.length,
                 diaryEntry: getDiaryEntryByIndex(index),
                 showDivider: showFavoritesOnly
                     ? (index != favoriteEntries.length - 1)

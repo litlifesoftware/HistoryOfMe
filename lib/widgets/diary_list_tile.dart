@@ -29,8 +29,8 @@ class DiaryListTile extends StatefulWidget {
 
 class _DiaryListTileState extends State<DiaryListTile> {
   late HOMNavigator _screenRouter;
-  late DateColorScheme _colorScheme;
-  late ScrollController _titleScrollController;
+  //late DateColorScheme _colorScheme;
+  late ScrollController _titleScrollController = ScrollController();
 
   DateTime get _date => DateTime.parse(widget.diaryEntry.date);
 
@@ -139,21 +139,13 @@ class _DiaryListTileState extends State<DiaryListTile> {
   void initState() {
     super.initState();
     _screenRouter = HOMNavigator(context);
-    _colorScheme = DateColorScheme(DateTime.parse(widget.diaryEntry.date));
+    // _colorScheme = DateColorScheme(DateTime.parse(widget.diaryEntry.date));
     _titleScrollController = ScrollController();
     // Ensure the DateColorScheme is rerendered in case the argument values
     // change.
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _colorScheme = DateColorScheme(DateTime.parse(widget.diaryEntry.date));
       _scrollText();
     });
-  }
-
-  @override
-  void dispose() {
-    _titleScrollController.dispose();
-
-    super.dispose();
   }
 
   @override
@@ -173,7 +165,8 @@ class _DiaryListTileState extends State<DiaryListTile> {
               Transform(
                 transform: _staticTransform,
                 child: _DateIndicator(
-                  colorScheme: _colorScheme,
+                  colorScheme:
+                      DateColorScheme(DateTime.parse(widget.diaryEntry.date)),
                   context: context,
                   date: _date,
                 ),
@@ -183,7 +176,8 @@ class _DiaryListTileState extends State<DiaryListTile> {
                 listLength: widget.listLength,
                 diaryEntry: widget.diaryEntry,
                 landscapeWidthFactor: widget.landscapeWidthFactor,
-                colorScheme: _colorScheme,
+                colorScheme:
+                    DateColorScheme(DateTime.parse(widget.diaryEntry.date)),
                 titleScrollController: _titleScrollController,
                 onPressed: _onTilePressed,
                 onLongPressed: _onTileLongPressed,
