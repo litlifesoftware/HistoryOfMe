@@ -55,7 +55,6 @@ part 'widgets/diary_preview_card.dart';
 part 'widgets/dotted_design.dart';
 part 'widgets/editable_item_meta_info.dart';
 part 'widgets/ellipse_icon.dart';
-part 'widgets/entry_day_selection_tile.dart';
 part 'widgets/entry_detail_backdrop.dart';
 part 'widgets/entry_detail_card.dart';
 part 'widgets/greetings_bar.dart';
