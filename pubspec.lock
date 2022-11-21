@@ -21,7 +21,7 @@ packages:
       name: archive
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.3.2"
+    version: "3.3.4"
   args:
     dependency: transitive
     description:
@@ -165,11 +165,9 @@ packages:
   date_colors:
     dependency: "direct main"
     description:
-      path: "."
-      ref: HEAD
-      resolved-ref: "766e151e80822cd40ec9239cbae16ab5bcf7074c"
-      url: "https://github.com/litlifesoftware/date_colors.git"
-    source: git
+      name: date_colors
+      url: "https://pub.dartlang.org"
+    source: hosted
     version: "0.0.1"
   ffi:
     dependency: transitive
@@ -241,7 +239,7 @@ packages:
       name: glob
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.0"
+    version: "2.1.1"
   graphs:
     dependency: transitive
     description:
@@ -364,21 +362,17 @@ packages:
   leitmotif:
     dependency: "direct main"
     description:
-      path: "."
-      ref: HEAD
-      resolved-ref: "953dea6510f226556c9dd3426273c03437881d9a"
-      url: "https://github.com/litlifesoftware/leitmotif-flutter.git"
-    source: git
-    version: "2.1.2"
+      name: leitmotif
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.2.0"
   lit_backup_service:
     dependency: "direct main"
     description:
-      path: "."
-      ref: HEAD
-      resolved-ref: "711a20d2e3515ef278eb76035a78ee4fdccdf3fe"
-      url: "https://github.com/litlifesoftware/lit_backup_service.git"
-    source: git
-    version: "1.0.2"
+      name: lit_backup_service
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.3"
   lit_relative_date_time:
     dependency: "direct main"
     description:
@@ -582,6 +576,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.3"
+  pointycastle:
+    dependency: transitive
+    description:
+      name: pointycastle
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.6.2"
   pool:
     dependency: transitive
     description:
@@ -602,7 +603,7 @@ packages:
       name: pub_semver
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.2"
+    version: "2.1.3"
   pubspec_parse:
     dependency: transitive
     description:
@@ -623,7 +624,7 @@ packages:
       name: shelf_web_socket
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.2"
+    version: "1.0.3"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -670,7 +671,7 @@ packages:
       name: stream_transform
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.1"
+    version: "2.1.0"
   string_scanner:
     dependency: transitive
     description:
@@ -726,7 +727,7 @@ packages:
       name: win32
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.0.1"
+    version: "3.1.1"
   xdg_directories:
     dependency: transitive
     description:
